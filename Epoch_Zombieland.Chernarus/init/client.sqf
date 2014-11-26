@@ -149,23 +149,22 @@ _nil = [] execVM "custom\remote\remote.sqf";
 	{
 		_object = (_x select 0) createVehicleLocal [0,0,0];
 		_object setDir (_x select 2);
-		_object setPosATL (_x select 1);
+		_object setPos (_x select 1);
 		_object allowDamage false;
 		if(count _x > 3 && (_x select 3)) then {
 			_object setVehicleLock "LOCKED";
 		};
-		if (_obj isKindOf "Man") then {
-			removeAllWeapons _obj;
-			_obj switchMove "";
-			_obj setUnitAbility 0.6;
-			_obj disableAI "ANIM";
-			_obj disableAI "AUTOTARGET";
-			_obj disableAI "FSM";
-			_obj disableAI "MOVE";
-			_obj disableAI "TARGET";
-			_obj setBehaviour "CARELESS";
-			_obj forceSpeed 0;
-			_obj enableSimulation false;
+		if (_object isKindOf "Man") then {
+			_object setVehicleInit "this allowDammage false; this disableAI 'FSM'; this disableAI 'MOVE'; this disableAI 'AUTOTARGET'; this disableAI 'TARGET'; this setBehaviour 'CARELESS'; this forceSpeed 0;";
+			_object setUnitAbility 0.6;
+			_object disableAI "ANIM";
+			_object disableAI "AUTOTARGET";
+			_object disableAI "FSM";
+			_object disableAI "MOVE";
+			_object disableAI "TARGET";
+			_object setBehaviour "CARELESS";
+			_object forceSpeed 0;
+			_object enableSimulation false;
 		};
 	} count allObjects;
 
