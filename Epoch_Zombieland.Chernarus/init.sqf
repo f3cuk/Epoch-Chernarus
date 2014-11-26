@@ -26,7 +26,6 @@ progressLoadingScreen 1.0;
 setToneMapping "filmic";
 
 if (isServer) then {
-	_nil = execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\traders.sqf";
 	_nil = execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\init.sqf";
 	_serverMonitor = execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 };
@@ -36,27 +35,40 @@ if (!isDedicated) then {
 
 	waitUntil {sleep .5; !isNil "init_done"};
 	waitUntil {sleep .5; !isNil "sm_done"};
-	waitUntil {sleep .5; !isNil "dayz_loadScreenMsg"}; // stop doing anything until the server is done loading
+	waitUntil {sleep .5; !isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
+
+	diag_log format["%1 - Server done loading",time];
 
 	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
 	_playerMonitor = execVM "custom\character_select\player_monitor.sqf";
 
+	diag_log format["%1 - Player monitor initialized",time];
+
 	waitUntil {sleep .5; !isNil "dayz_clientPreload"};
-	waitUntil {sleep .5; dayz_clientPreload}; // wait until the client is properly setup
+	diag_log format["%1 - dayz_clientPreload has started",time];
+	waitUntil {sleep .5; dayz_clientPreload};
+	diag_log format["%1 - dayz_clientPreload is done",time];
 
 	waitUntil {sleep .5; !isNil "allMarkers"};
+	diag_log format["%1 - Markers received from server",time];
 	waitUntil {sleep .5; !isNil "allObjects"};
+	diag_log format["%1 - Add-on ojects received from server",time];
 	waitUntil {sleep .5; !isNil "localObjects"};
+	diag_log format["%1 - Buildables received from server",time];
 	#include "init\client.sqf"
 
 	waitUntil {sleep .5; !isNil "objectsLoaded"};
+	diag_log format["%1 - Add-ons have loaded",time];
 
 	call compile preprocessFileLineNumbers "admintools\config.sqf";
 	call compile preprocessFileLineNumbers "admintools\variables.sqf";
 
 	waitUntil {sleep .5; !isNil "adminListLoaded"};
+	diag_log format["%1 - Adminlist has loaded",time];
+
 	waitUntil {sleep .5; ((!isNil "spawnedLoaded") && (spawnedLoaded))};
+	diag_log format["%1 - Epoch buildables have loaded",time];
 
 	if(DIFF in ["VETERAN","REGULAR"]) then {
 		execVM "custom\safezone\safezone.sqf";

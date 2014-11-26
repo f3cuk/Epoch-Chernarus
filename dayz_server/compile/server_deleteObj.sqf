@@ -19,6 +19,7 @@ if (isServer) then {
 
 		deleteObjects set[count deleteObjects,_id];
 		publicVariable "deleteObjects";
+
 	} else {
 		_key = format["CHILD:310:%1:",_uid];
 		_key call server_hiveWrite;

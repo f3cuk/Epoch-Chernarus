@@ -138,102 +138,46 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 [] spawn {
 
-	private ["_objects","_total","_spawned","_upd_range","_pos_player","_object","_t","_moved","_a","_r","_i"];
+	private ["_total","_object","_t"];
 
 	waitUntil {sleep .5; !isNil "allObjects"};
 
-	_objects 	= allObjects;
-	allObjects	= nil;
-	_total		= count _objects;
-	_spawned 	= [];
-	_upd_range 	= 300;
-	_pos_player = [player] call FNC_GetPos;
+	_total = count allObjects;
 
-	_t = diag_tickTime;
+	if(DZE_DEBUG) then { _t = diag_tickTime; };
+
 	{
 		_object = (_x select 0) createVehicleLocal [0,0,0];
 		_object setDir (_x select 2);
-		_object setPos (_x select 1);
-
+		_object setPosATL (_x select 1);
+		_object allowDamage false;
 		if(count _x > 3 && (_x select 3)) then {
 			_object setVehicleLock "LOCKED";
 		};
-		_spawned set[count _spawned,[_object,_x]];
-	} count _objects;
+		if (_obj isKindOf "Man") then {
+			removeAllWeapons _obj;
+			_obj switchMove "";
+			_obj setUnitAbility 0.6;
+			_obj disableAI "ANIM";
+			_obj disableAI "AUTOTARGET";
+			_obj disableAI "FSM";
+			_obj disableAI "MOVE";
+			_obj disableAI "TARGET";
+			_obj setBehaviour "CARELESS";
+			_obj forceSpeed 0;
+			_obj enableSimulation false;
+		};
+	} count allObjects;
 
-	_objects = [];
+	_object 	= nil;
+	allObjects 	= nil;
 
-	diag_log format["[DynObj] Initializing %2 objects in %1s ",str(diag_tickTime - _t),_total];
+	if(DZE_DEBUG) then { diag_log format["[DynObj] Initializing %2 objects in %1s ",str(diag_tickTime - _t),_total]; };
 
 	objectsLoaded = true;
 
 	waitUntil {!isNil "dayz_animalCheck"};
 
-	while{alive player} do {
-
-		_moved = _pos_player distance player;
-
-		if(_moved > _upd_range) then { // Only update when player has moved at least _upd_range meters from his last saved position
-
-			if(DZEdebug) then {
-				diag_log format["[DynObj] Player moved %1m since last cycle, checking for new/removable objects",_moved];
-
-				_t = diag_tickTime; // start timer for debug purposes
-				_a = 0; // keep track of how many objects added this cycle
-				_r = 0; // keep track of how many objects removed this cycle
-			};
-
-			_pos_player = [player] call FNC_GetPos;
-			_i 			= 0; // keep track of object index (outperforms forEach / _foreachIndex)
-
-			{
-
-				if(player distance (_x select 1) < 1500) then {
-					_object = (_x select 0) createVehicleLocal [0,0,0];
-					_object setDir (_x select 2);
-					_object setPos (_x select 1);
-
-					if(count _x > 3 && (_x select 3)) then {
-						_object setVehicleLock "LOCKED";
-					};
-
-					if(DZEdebug) then { _a = _a + 1; };
-
-					_spawned set[count _spawned,[_object,_x]];
-					_objects set[_i,-1];
-				};
-				_i = _i + 1;
-			} count _objects;
-
-			_objects = _objects - [-1]; // remove added objects from objects array
-			_i = 0;	// reset counter for use in spawned array
-
-			{
-				if(player distance (_x select 0) > 1750) then {
-					_spawned set[_i,-1];
-					_objects set[count _objects, (_x select 1)];
-					deleteVehicle (_x select 0);
-					if(DZEdebug) then { _r = _r + 1; };
-				};
-				_i = _i + 1;
-			} count _spawned;
-
-			_spawned = _spawned - [-1];
-
-			if(DZEdebug) then { diag_log format["[DynObj] Added % objects - removed %2 objects - total active %3 - cycle took %4s",_a,_r,count _spawned,str (diag_tickTime - _t)]; };
-
-		} else {
-			if(DZEdebug) then { diag_log format["[DynObj] Player moved %1m, not updating until %2m",_moved,_upd_range]; };
-		};
-
-		if(_moved > _upd_range-(_upd_range/4)) then {
-			sleep 3; // almost at the edge, updating faster
-		} else {
-			sleep 6;
-		};
-
-	};
-	
 };
 
 [] spawn {
