@@ -19,7 +19,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 	private["_markers"];
 
-	waitUntil{sleep .5; !isNil "allMarkers"};
+	waitUntil{!isNil "allMarkers"};
 
 	_markers = allMarkers;
 
@@ -75,7 +75,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 	
 	private ["_idKey","_type","_ownerID","_worldspace","_damage","_dir","_pos","_ownerPUID"];
 
-	waitUntil {sleep .5; !isNil "localObjects"};
+	waitUntil {!isNil "localObjects"};
 
 	spawnedObjects 	= [];
 
@@ -140,38 +140,27 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 	private ["_total","_object","_t"];
 
-	waitUntil {sleep .5; !isNil "allObjects"};
+	waitUntil {!isNil "allObjects"};
 
-	_total = count allObjects;
-
-	if(DZE_DEBUG) then { _t = diag_tickTime; };
+	_total 	= count allObjects;
+	_t 		= diag_tickTime;
 
 	{
+
 		_object = (_x select 0) createVehicleLocal [0,0,0];
 		_object setDir (_x select 2);
 		_object setPos (_x select 1);
-		_object allowDamage false;
+		_object allowDammage false;
+		_object enableSimulation false;
 		if(count _x > 3 && (_x select 3)) then {
 			_object setVehicleLock "LOCKED";
-		};
-		if (_object isKindOf "Man") then {
-			_object setVehicleInit "this allowDammage false; this disableAI 'FSM'; this disableAI 'MOVE'; this disableAI 'AUTOTARGET'; this disableAI 'TARGET'; this setBehaviour 'CARELESS'; this forceSpeed 0;";
-			_object setUnitAbility 0.6;
-			_object disableAI "ANIM";
-			_object disableAI "AUTOTARGET";
-			_object disableAI "FSM";
-			_object disableAI "MOVE";
-			_object disableAI "TARGET";
-			_object setBehaviour "CARELESS";
-			_object forceSpeed 0;
-			_object enableSimulation false;
 		};
 	} count allObjects;
 
 	_object 	= nil;
 	allObjects 	= nil;
 
-	if(DZE_DEBUG) then { diag_log format["[DynObj] Initializing %2 objects in %1s ",str(diag_tickTime - _t),_total]; };
+	diag_log format["[DynObj] Initializing %2 objects in %1s ",str(diag_tickTime - _t),_total];
 
 	objectsLoaded = true;
 
@@ -185,7 +174,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 		private ["_removed","_total","_t"];
 
-		waitUntil {sleep .5; (spawnedLoaded)};
+		waitUntil {(spawnedLoaded)};
 
 		_removed	= _this select 1;
 		_total		= 0;
