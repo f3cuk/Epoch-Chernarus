@@ -1,4 +1,4 @@
-private ["_number","_step","_stepLocal","_result","_numberLocal","_add"];
+private ["_number","_step","_stepLocal","_result","_numberLocal"];
 
 _number = [_this,0,0,[0]] call bis_fnc_param;
 
@@ -9,7 +9,6 @@ if (_number < 10) then {
 	_step = 10;
 	_stepLocal = _step;
 	_result = [0];
-	_add = false;
 
 	while {_stepLocal < (_number * _step)} do {
 

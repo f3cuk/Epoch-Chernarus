@@ -1,3 +1,5 @@
+private ["_EXECscript1","_EXECscript2","_EXECscript3","_EXECscript4","_EXECscript5","_EXECscript6","_EXECscript7","_EXECscript8"];
+
 _EXECscript1 = 'player execVM "admintools\tools\%1"';
 _EXECscript2 = '["%1","%2","%3"] execVM "admintools\weaponkits\WeaponKits.sqf"';
 _EXECscript3 = '["%1"] execVM "admintools\weaponkits\BackPack.sqf"';

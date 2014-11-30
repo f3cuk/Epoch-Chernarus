@@ -1,4 +1,4 @@
-private ["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_alreadyPacking","_playerNear","_playerID","_claimedBy","_unlockedClass","_text","_nul","_objType","_characterID","_playerUID"];
+private ["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_alreadyPacking","_playerNear","_playerID","_claimedBy","_unlockedClass","_text","_objType","_characterID","_playerUID"];
 
 if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_21") , "PLAIN DOWN"]; };
 

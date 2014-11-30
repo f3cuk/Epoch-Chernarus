@@ -4,7 +4,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 [] spawn {
 
-	private["_safezones"];
+	private ["_safezones","_state","_z","_r","_startSafeZone","_endSafeZone"];
 
 	_safezones = [
 		[[6325.6772,7807.7412],100],
@@ -41,15 +41,17 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 	_startSafeZone = {
 
-		if (isNil 'outNow') then
-		{
+		private ["_msg","_szs","_swep","_item","_iPos","_radius","_removed","_veh","_notInSafeZone","_cwep"];
+		
+		if (isNil 'outNow') then {
+
 			_msg = 'You entered a Safe Zone!';
 			hint _msg;
 			taskHint [_msg, [0,1,0,1], 'taskDone'];
 			inNow = nil;
 			outNow = true;
-		
 		};
+
 		player_fired2 = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_fired.sqf';
 		player_fired = {
 			_this call player_fired2;
@@ -111,20 +113,22 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 			};
 		};
 	};
-	_endSafeZone =
-	{
-		if (isNil 'inNow') then
-		{
-			if (str fnc_usec_damageHandler == '{}') then
-			{
+	_endSafeZone = {
+		
+		private ["_msg","_szs","_end","_veh"];
+		
+		if (isNil 'inNow') then {
+
+			if (str fnc_usec_damageHandler == '{}') then {
 				_msg = 'You left the Safe Zone!';
 				hint _msg;
 				taskHint [_msg, [1,0,0.1,1], 'taskFailed'];
 			};
+
 			inNow = true;
 			outNow = nil;
-			
 		};
+		
 		player_fired = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_fired.sqf';
 		player_zombieCheck = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_zombieCheck.sqf';
 		fnc_usec_unconscious = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_unconscious.sqf';
@@ -208,6 +212,8 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 [] spawn {
 
+	private ["_log","_cnt"];
+	
 	while {true} do
 	{
 		if (inSafezone) then

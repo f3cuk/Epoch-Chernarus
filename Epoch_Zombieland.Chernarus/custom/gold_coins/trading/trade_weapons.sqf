@@ -1,4 +1,4 @@
-private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_started","_finished","_animState","_isMedic","_removed"];
+private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_finished","_removed","_msg","_config","_configName","_wepType","_isToolBelt","_isBinocs","_abort","_secondaryWeapon","_isPistol","_isRifle","_qtychange","_newM","_myMoney"];
 
 if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") , "PLAIN DOWN"]; };
 

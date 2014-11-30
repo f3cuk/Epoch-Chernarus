@@ -1,10 +1,19 @@
+private ["_nil","_serverMonitor","_id","_playerMonitor"];
+
 if (!isDedicated) then {
+
 	startLoadingScreen ["","RscDisplayLoadCustom"];
+
 	cutText ["","BLACK OUT"];
+
 	enableSaving [false,false];
+
 	player setVariable ["BIS_noCoreConversations",true];
+
 	enableRadio true;
+
 	enableSentences false;
+
 };
 
 #include "config\config.sqf"

@@ -1,5 +1,8 @@
 [] spawn {
-	disableSerialization;
+	
+    private ["_txt1","_txt2","_txtchk1","_display1","_display2","_detectedChannels"];
+    
+    disableSerialization;
 
    _detectedChannels = ["Side channel"];
 

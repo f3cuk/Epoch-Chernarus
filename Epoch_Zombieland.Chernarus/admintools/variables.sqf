@@ -1,4 +1,4 @@
-private["_players"];
+private ["_players"];
 
 AdminList = AdminList + SuperAdminList;
 AdminAndModList = AdminList + ModList;
@@ -37,7 +37,10 @@ if(isDedicated) then {
 			tempList = tempList - _array;
 		};
 		EAT_teleportFixClient = tempList;
-		{(owner _x) publicVariableClient "EAT_teleportFixClient";} count _players;
+
+		{
+			(owner _x) publicVariableClient "EAT_teleportFixClient";
+		} count _players;
 	};
 	"EAT_SetDateServer" addPublicVariableEventHandler {
 		EAT_setDateClient = (_this select 1);

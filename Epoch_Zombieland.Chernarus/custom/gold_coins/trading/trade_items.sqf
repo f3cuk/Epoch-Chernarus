@@ -1,4 +1,4 @@
-private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_textPartIn","_textPartOut","_needed","_started","_finished","_animState","_isMedic","_total_parts_out","_abort","_removed","_tradeCounter","_next_highest_bar","_third_highest_bar","_next_highest_conv","_third_highest_conv","_third_parts_out_raw","_third_parts_out","_remainder","_next_parts_out_raw","_next_parts_out","_traderID","_total_trades"];
+private ["_oldPosition","_qty_in","_qty","_buy_o_sell","_needed","_finished","_abort","_tradeCounter","_traderID","_total_trades","_player_money","_finish_trade","_name","_textPart","_price","_emptySlots","_free_magazine_slots"];
 
 if(DZE_ActionInProgress) exitWith { cutText ["Trade already in progress." , "PLAIN DOWN"]; };
 if (isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };

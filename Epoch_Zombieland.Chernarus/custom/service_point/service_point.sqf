@@ -1,6 +1,6 @@
 // Vehicle Service Point by Axe Cop
  
-private ["_folder","_servicePointClasses","_maxDistance","_actionTitleFormat","_actionCostsFormat","_costsFree","_message","_messageShown","_refuel_enable","_refuel_costs","_refuel_updateInterval","_refuel_amount","_repair_enable","_repair_costs","_repair_repairTime","_rearm_enable","_rearm_costs","_rearm_magazineCount","_lastVehicle","_lastRole","_fnc_removeActions","_fnc_getCosts","_fnc_actionTitle","_fnc_isArmed","_fnc_getWeapons"];
+private ["_folder","_servicePointClasses","_maxDistance","_actionTitleFormat","_actionCostsFormat","_costsFree","_message","_messageShown","_refuel_enable","_refuel_costs","_refuel_updateInterval","_refuel_amount","_repair_enable","_repair_costs","_repair_repairTime","_lastVehicle","_lastRole","_fnc_removeActions","_fnc_getCosts","_fnc_actionTitle","_coinsRepairAir","_coinsRepairVehicles","_coinsRefuelVehicles","_coinsRefuelAir"];
  
 _coinsRepairAir 	= 4000;
 _coinsRepairVehicles 	= 1000;
@@ -46,9 +46,10 @@ SP_rearm_actions 	= [];
 _messageShown 		= false;
  
 _fnc_removeActions = {
-	if (isNull _lastVehicle) exitWith {};
+private ["_lastVehicle","_lastRole"];
+if (isNull _lastVehicle) exitWith {};
 	_lastVehicle removeAction SP_refuel_action;
-	SP_refuel_action = -1;
+    	SP_refuel_action = -1;
 	_lastVehicle removeAction SP_repair_action;
 	SP_repair_action = -1;
 	{
@@ -75,7 +76,7 @@ _fnc_getCosts = {
 };
  
 _fnc_actionTitle = {
-	private ["_actionName","_costs","_costsText","_actionTitle"];
+	private ["_actionName","_costs","_costsText","_actionTitle","_actionCostsFormat","_costsFree","_actionTitleFormat"];
 	_actionName = _this select 0;
 	_costs = _this select 1;
 	_costsText = _costsFree;

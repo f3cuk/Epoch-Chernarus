@@ -1,4 +1,4 @@
-private ["_passArray","_cancel","_position","_reason","_classnametmp","_classname","_tmpbuilt","_dir","_location","_text","_limit","_isOk","_proceed","_counter","_dis","_sfx","_started","_finished","_animState","_isMedic","_num_removed","_lockable","_combinationDisplay","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_combination_1_Display","_playerUID","_OwnerUID"];
+private ["_cancel","_position","_reason","_classnametmp","_classname","_tmpbuilt","_dir","_location","_text","_limit","_isOk","_proceed","_counter","_dis","_sfx","_started","_finished","_animState","_isMedic","_num_removed","_lockable","_combinationDisplay","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_combination_1_Display","_playerUID","_OwnerUID","_y_top","_y_bottom","_isAllowedUnderGround","_isPole","_restricted_area"];
 
 _cancel 				= _this select 0;
 _position 				= _this select 1;
@@ -18,7 +18,6 @@ if (DZE_APlotforLife) then {
 	_OwnerUID = dayz_characterID;
 };
 
-_passArray 	= [];
 _isOk 		= true;
 _proceed 	= false;
 _counter 	= 0;

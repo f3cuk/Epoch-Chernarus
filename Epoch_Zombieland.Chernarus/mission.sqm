@@ -48,7 +48,7 @@ class Mission
 			side="WEST";
 			class Vehicles
 			{
-				items=40;
+				items=46;
 				class Item0
 				{
 					position[]={-7244.9355,365.97467,19534.543};
@@ -485,6 +485,72 @@ class Mission
 					position[]={-7246.0391,365.97614,19536.168};
 					azimut=-17.083944;
 					id=39;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item40
+				{
+					position[]={-7243.9863,366.15912,19535.992};
+					azimut=-17.083944;
+					id=37;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item41
+				{
+					position[]={-7245.8613,365.89417,19534.723};
+					azimut=-17.083944;
+					id=45;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item42
+				{
+					position[]={-7246.5254,365.86578,19535.285};
+					azimut=-17.0839;
+					id=49;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item43
+				{
+					position[]={-7244.4004,366.02261,19534.551};
+					azimut=-17.083944;
+					id=42;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item44
+				{
+					position[]={-7245.1973,365.94858,19534.539};
+					azimut=-17.083944;
+					id=22;
+					side="WEST";
+					vehicle="Survivor1_DZ";
+					player="PLAY CDG";
+					skill=0.60000002;
+					init="this enableSimulation false;this allowDammage false;this disableAI 'FSM';this disableAI 'ANIM';this disableAI 'MOVE';";
+				};
+				class Item45
+				{
+					position[]={-7244.6719,366.08423,19535.789};
+					azimut=-17.083944;
+					id=12;
 					side="WEST";
 					vehicle="Survivor1_DZ";
 					player="PLAY CDG";

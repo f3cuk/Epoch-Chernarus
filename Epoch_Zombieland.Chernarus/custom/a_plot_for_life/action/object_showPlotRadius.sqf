@@ -6,7 +6,7 @@ _BD_radius = DZE_PlotPole select 0;
 _BD_center = getPosASL _nearPlotPole;
 
 [_BD_radius,_BD_center] spawn {
-	private ["_pos","_angle","_count","_radius","_center"];
+	private ["_angle","_count","_radius","_center"];
 
 	_radius		= _this select 0;
 	_center		= _this select 1;

@@ -12,7 +12,7 @@ TraderItemList 			= -1;
 
 TraderDialogLoadItemList = {
 
-	private ["_index","_trader_id","_activatingPlayer","_distance","_objclass","_item_list"];
+	private ["_index","_trader_id","_activatingPlayer","_distance","_item_list"];
 
 	TraderItemList = -1;
 	_index = _this select 0;
@@ -153,7 +153,6 @@ TraderDialogShowPrices = {
 	while {count TraderItemList < 1} do { sleep 1; };
 
 	_item 	= TraderItemList select _index;
-	_qty 	= {_x == (_item select 3)} count magazines player;
 
 	_buyprice 	= [_item select 2] call BIS_fnc_numberText;
 	_sellprice	= [_item select 5] call BIS_fnc_numberText;

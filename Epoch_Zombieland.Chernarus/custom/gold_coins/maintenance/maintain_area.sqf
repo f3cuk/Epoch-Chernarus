@@ -1,4 +1,4 @@
-private ["_total_count","_total_damage","_newWealth","_missing","_missingQty","_proceed","_itemIn","_countIn","_target","_objectClasses","_range","_objects","_requirements","_count","_cost","_option"];
+private ["_maintained","_total_count","_total_damage","_newWealth","_missing","_missingQty","_proceed","_itemIn","_countIn","_target","_objectClasses","_range","_objects","_requirements","_count","_cost","_option","_wealth","_objects_filtered"];
 
 if (DZE_ActionInProgress) exitWith { cutText [(localize "STR_EPOCH_ACTIONS_2") , "PLAIN DOWN"]; };
 
@@ -11,11 +11,19 @@ player removeAction s_player_maintain_area_preview;
 s_player_maintain_area_preview = 1;
 
 _target			= cursorTarget;
+_maintained		= _target getVariable["maintained", false];
 _objectClasses	= DZE_maintainClasses;
 _range			= DZE_maintainRange;
 _objects		= nearestObjects [_target,_objectClasses,_range];
 _total_count	= count _objects;
 _total_damage	= 0;
+
+if(_maintained) exitWith {
+	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit], "PLAIN DOWN"];
+	DZE_ActionInProgress = false;
+	s_player_maintain_area = -1;
+	s_player_maintain_area_preview = -1;
+};
 
 _objects_filtered = [];
 {
@@ -25,16 +33,17 @@ _objects_filtered = [];
 	};
 } count _objects;
 
-_objects		= _objects_filtered;
-_count			= count _objects;
-_total_damage	= (_total_damage / _count) + 0.3;
+_objects	= _objects_filtered;
+_count		= count _objects;
 
 if (_count == 0) exitWith {
-	cutText [format[(localize "STR_EPOCH_ACTIONS_22"),format["(%1\%2) max %3",_count,_total_count,DZE_BuildingLimit]], "PLAIN DOWN"];
+	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit], "PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 	s_player_maintain_area = -1;
 	s_player_maintain_area_preview = -1;
 };
+
+_total_damage = (_total_damage / _count) + 0.1;
 
 _requirements = [];
 
@@ -76,6 +85,7 @@ call {
 
 			PVDZE_maintainArea = [player,1,_target];
 			publicVariableServer "PVDZE_maintainArea";
+			_target setVariable["maintained",true,true];
 			cutText [format[(localize "STR_EPOCH_ACTIONS_4"), format["(%1\%2) max %3",_count,_total_count,DZE_BuildingLimit]], "PLAIN DOWN", 5];			
 		} else {
 			cutText [format[(localize "STR_EPOCH_ACTIONS_6"),_missingQty, CurrencyName], "PLAIN DOWN"];
@@ -92,7 +102,7 @@ call {
 			};
 			_cost = _cost + (str(_countIn) + " " + CurrencyName);
 		} count _requirements;
-		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["(%1\%2) max %3",_count,_total_count,DZE_BuildingLimit],_cost], "PLAIN DOWN"];
+		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["(%1\%2) max %3 (~%4 percent damage)",_count,_total_count,DZE_BuildingLimit,(_total_damage*10)],_cost], "PLAIN DOWN"];
 	};
 };
 

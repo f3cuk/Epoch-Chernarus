@@ -1,4 +1,4 @@
-private ["_dice","_position","_unitTypes","_radius","_method","_agent"];
+private ["_dice","_position","_unitTypes","_radius","_method","_agent","_loot_count","_index","_weights","_loot","_array","_lootType","_favStance","_tooClose","_type","_rnd","_id","_doLoiter","_maxControlledZombies","_cantSee"];
 
 _position 	= _this select 0;
 _doLoiter 	= _this select 1;
@@ -6,7 +6,7 @@ _unitTypes 	= _this select 2;
 _maxControlledZombies = round(dayz_maxLocalZombies);
 
 _cantSee = {
-	private ["_isok"];
+	private ["_isok","_deg","_eye","_ed","_xasl","_zPos","_fov","_safeDistance","_farDistance"];
 
 	_isok = true;
 	_zPos = +(_this select 0);

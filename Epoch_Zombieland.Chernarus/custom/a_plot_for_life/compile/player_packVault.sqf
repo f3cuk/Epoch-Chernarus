@@ -1,7 +1,7 @@
 /*
 [_obj] spawn player_packVault;
 */
-private ["_money","_player_money","_activatingPlayer","_obj","_ownerID","_objectID","_objectUID","_alreadyPacking","_location1","_location2","_dir","_pos","_bag","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_packedClass","_text","_playerNear","_playerUID","_combination"];
+private ["_money","_player_money","_activatingPlayer","_obj","_ownerID","_objectID","_objectUID","_alreadyPacking","_location1","_location2","_dir","_pos","_bag","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_packedClass","_text","_playerNear","_playerUID","_combination","_itemOut","_countOut"];
 
 if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_15") , "PLAIN DOWN"]; };
 DZE_ActionInProgress = true;

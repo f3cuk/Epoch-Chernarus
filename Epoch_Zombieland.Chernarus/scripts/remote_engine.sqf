@@ -1,4 +1,4 @@
-private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_driver","_aigroup"];
+private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle"];
 
 _ownerID 	= _this select 0;
 _player_pos = [player] call FNC_GetPos;

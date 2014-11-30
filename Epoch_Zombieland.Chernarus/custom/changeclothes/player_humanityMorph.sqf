@@ -1,6 +1,5 @@
-private ["_updates","_playerUID","_charID","_humanity","_worldspace","_model","_friendlies","_fractures","_old","_medical","_zombieKills","_headShots","_humanKills","_banditKills","_tagList","_cashMoney"];
+private ["_updates","_charID","_humanity","_worldspace","_model","_friendlies","_fractures","_medical","_zombieKills","_headShots","_humanKills","_banditKills","_tagList","_cashMoney"];
 
-_playerUID 	= _this select 0;
 _charID 	= _this select 1;
 _model 		= _this select 2;
 

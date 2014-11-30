@@ -1,5 +1,3 @@
-private ["_dialog"];
-
 target_vault = _this select 3;
 
 if(typeName target_vault == "OBJECT") then {
@@ -9,7 +7,7 @@ if(typeName target_vault == "OBJECT") then {
 
 	waitUntil {!isNil "vaultResult"};
 
-	_dialog = createdialog "VaultDialog";
+	createdialog "VaultDialog";
 
 	target_vault call VaultUpdateAmounts;
 

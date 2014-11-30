@@ -32,6 +32,7 @@ fnc_removeCoins = {
 };
 
 VaultUpdateAmounts = {
+    private["_vault"];
 	_vault = _this;
 	ctrlSetText [VaultBalance,format["%1 %2",(_vault getVariable ["Money",0] call BIS_fnc_numberText),CurrencyName]];
 };
@@ -116,7 +117,7 @@ VaultDepositAmount = {
 
 GivePlayerAmount = {
 
-	private ["_amount","_target","_wealth"];
+	private ["_amount","_target","_wealth","_twealth"];
 
 	_amount 	= round(parseNumber(_this select 0));
 	_target 	= cursorTarget;

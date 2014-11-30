@@ -1,4 +1,4 @@
-private ["_vehicle","_args","_servicePoint","_costs","_updateInterval","_amount","_type","_name","_textMissing"];
+private ["_vehicle","_args","_servicePoint","_costs","_updateInterval","_amount","_type","_name","_textMissing","_player_money","_repair_cost","_needed"];
 
 _vehicle 	= _this select 0;
 

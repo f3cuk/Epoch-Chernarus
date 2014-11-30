@@ -1,5 +1,3 @@
-private ["_dp"];
-
 disableSerialization;
 
 if ((getPlayerUID player) in AdminList || (getPlayerUID player) in ModList) then {
@@ -8,7 +6,7 @@ if ((getPlayerUID player) in AdminList || (getPlayerUID player) in ModList) then
 		
 	fn_functionkeys = {
 
-		private["_key_pressed"];
+		private ["_key_pressed","_execvm"];
 
 		_key_pressed = _this;
 

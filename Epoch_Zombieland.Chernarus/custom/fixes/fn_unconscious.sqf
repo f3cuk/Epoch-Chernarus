@@ -58,14 +58,14 @@ if ((!r_player_handler1) && (r_handlerCount == 0)) then {
 			r_player_timeout = r_player_timeout - 1;
 		} else {
 			if (!r_player_dead) then {
-				_nul = [] spawn fnc_usec_recoverUncons;
+				[] spawn fnc_usec_recoverUncons;
 			};
 		};
 		if (!(player getVariable ["NORRN_unconscious", true])) then {
-			_nul = [] spawn fnc_usec_recoverUncons;
+			[] spawn fnc_usec_recoverUncons;
 		};
 		if(animationState player == "AmovPpneMstpSnonWnonDnon_healed") then {
-			_nul = [] spawn fnc_usec_recoverUncons;
+			[] spawn fnc_usec_recoverUncons;
 		};
 	};
 

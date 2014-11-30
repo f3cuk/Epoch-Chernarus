@@ -1,4 +1,4 @@
-private ["_display","_body","_playerID","_array","_source","_method","_canHitFree","_isBandit","_punishment","_humanityHit","_myKills","_humanity","_kills","_killsV","_myGroup"];
+private ["_display","_body","_playerID","_array","_source","_method","_canHitFree","_isBandit","_punishment","_humanityHit","_myKills","_kills","_killsV","_infected","_id"];
 disableSerialization;
 if (deathHandled) exitWith {};
 deathHandled = true;

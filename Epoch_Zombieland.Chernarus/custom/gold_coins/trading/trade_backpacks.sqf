@@ -1,4 +1,4 @@
-private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_started","_finished","_animState","_isMedic","_num_removed","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID"];
+private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_finished","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID","_price","_curr_new","_newM","_removed","_myMoney"];
 
 if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") , "PLAIN DOWN"]; };
 

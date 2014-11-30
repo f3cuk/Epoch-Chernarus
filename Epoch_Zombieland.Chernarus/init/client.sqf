@@ -1,3 +1,5 @@
+private ["_nil"];
+
 _nil = [] execVM "custom\remote\remote.sqf";
 
 [] spawn {
@@ -17,7 +19,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 [] spawn {
 
-	private["_markers"];
+	private ["_markers","_color"];
 
 	waitUntil{!isNil "allMarkers"};
 
@@ -73,7 +75,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 [] spawn {
 	
-	private ["_idKey","_type","_ownerID","_worldspace","_damage","_dir","_pos","_ownerPUID"];
+	private ["_idKey","_type","_ownerID","_worldspace","_damage","_dir","_pos","_ownerPUID","_object"];
 
 	waitUntil {!isNil "localObjects"};
 
@@ -131,7 +133,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 			spawnedObjects set[count spawnedObjects, _object];
 		};
 	} count localObjects;
-
+	
 	spawnedLoaded = true;
 
 };
@@ -180,11 +182,11 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		_total		= 0;
 
 		diag_log format["[EpochBuild Remover] Removing %1 objects",count(_removed)];
-
+		
 		_t = diag_tickTime;
 		
 		{
-			if(_x getVariable["ObjectID",false] in _removed) then {
+			if(parseNumber(_x getVariable["ObjectID",false]) in _removed) then {
 				deleteVehicle _x;
 				_total = _total + 1;
 			};

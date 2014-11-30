@@ -1,7 +1,4 @@
-/*
-		Mystery Briefcase addon by Rocu
-		Configuration file
-*/
+private ["_junk_group","_food_group","_military_group","_medical_group","_vehicle_repair_group","_common_group","_assault_group","_lmg_group","_sniper_group","_tools_group","_chainbullets_group","_rares_group","_rare_weapons_group","_legend_group","_chainsaw_group"];
 
 MBT_NAME = "EpochPacks"; //Name of the item that spawns the reward (this is just a visual thing, code won't break if you change this to something random)
 MBT_CRATEDELAY = 900; //How long until the reward crate disappears (in seconds) Default: 900 (15 minutes)

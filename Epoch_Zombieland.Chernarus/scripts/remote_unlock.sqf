@@ -1,4 +1,4 @@
-private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih"];
+private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih","_nul"];
 
 _ownerID 	= _this select 0;
 _sounddist 	= 10;

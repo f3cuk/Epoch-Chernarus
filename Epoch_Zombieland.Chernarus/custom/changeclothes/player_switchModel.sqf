@@ -1,4 +1,4 @@
-private ["_meleeNum","_magType","_oldUnit","_idc","_charidchanged","_charID","_weapons","_backpackWpn","_backpackMag","_currentWpn","_isWeapon","_backpackWpnTypes","_backpackWpnQtys","_countr","_model","_position","_dir","_currentAnim","_tagSetting","_playerUID","_countMags","_magazines","_primweapon","_secweapon","_newBackpackType","_muzzles","_group","_newUnit","_melee"];
+private ["_meleeNum","_magType","_oldUnit","_idc","_charidchanged","_charID","_weapons","_backpackWpn","_backpackMag","_currentWpn","_isWeapon","_backpackWpnTypes","_backpackWpnQtys","_countr","_model","_position","_dir","_currentAnim","_tagSetting","_playerUID","_countMags","_magazines","_primweapon","_secweapon","_newBackpackType","_muzzles","_group","_newUnit","_melee","_oldGroup"];
 
 if (gear_done) then { disableUserInput true; };
 

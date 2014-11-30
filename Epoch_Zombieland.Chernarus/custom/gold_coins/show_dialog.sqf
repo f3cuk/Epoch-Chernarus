@@ -1,12 +1,12 @@
-private ["_trader_data", "_dialog"];
+private ["_trader_data"];
 
 if (DZE_ActionInProgress) exitWith {
 	cutText ["Trading already in progress." , "PLAIN DOWN"];
 };
 
-_trader_data = (_this select 3) + [MetalTradeMenuTID];
+_trader_data = (_this select 3);
 
-_dialog = createdialog "SCTraderDialog";
+createdialog "SCTraderDialog";
 lbClear SCTraderDialogCatList;
 lbClear SCTraderDialogItemList;
 

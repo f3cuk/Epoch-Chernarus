@@ -1,4 +1,4 @@
-private ["_passArray","_classname","_enableGhost","_ghost","_location1","_dir","_object","_objectHelper","_helperColor"];
+private ["_passArray","_classname","_enableGhost","_ghost","_location1","_object","_objectHelper","_helperColor","_offset"];
 
 _classname 		= _this select 0;
 _ghost 			= _this select 1;

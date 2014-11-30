@@ -1,5 +1,7 @@
-private ["_control","_button","_parent","_group","_pos","_item","_conf","_name","_cfgActions","_numActions","_height","_menu","_config","_type","_script","_outputOriented","_compile","_array","_outputClass","_outputType","_key_colors","_ownerKeyId","_itemsPlayer","_hasKey","_objects","_ownerID","_i"];
+private ["_control","_button","_parent","_group","_pos","_item","_conf","_name","_cfgActions","_numActions","_height","_menu","_config","_type","_script","_outputOriented","_compile","_array","_outputClass","_outputType","_key_colors","_ownerKeyId","_itemsPlayer","_hasKey","_objects","_ownerID","_i","_text","_oldOwner","_ownerKeyName","_erc_cfgActions","_erc_numActions","_temp_keys","_temp_keys_names"];
+
 disableSerialization;
+
 _control = 	_this select 0;
 _button =	_this select 1;
 _parent = 	findDisplay 106;

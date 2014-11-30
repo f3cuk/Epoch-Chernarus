@@ -1,3 +1,5 @@
+private ["_recompile","_test","_test2","_itemName","_itemPathItem","_itemPath","_currentItem","_categoryName","_itemPathCat","_currentCategory","_tagName","_itemPathTag","_currentTag","_pathConfig","_pathFile","_cfgFunctions"];
+
 scriptName "Functions\init.sqf";
 textLogFormat ["PRELOAD_ Functions\init.sqf %1", _this];
 /*
@@ -22,7 +24,12 @@ textLogFormat ["PRELOAD_ Functions\init.sqf %1", _this];
 if (!isServer) then {textLogFormat ["MPF_Client FUNCTIONS init.sqf ..."];};
 
 private ["_recompile"];
-_recompile = (count _this) > 0;
+
+if(!isNil "_this" && typeName _this == "ARRAY") then {
+	_recompile = (count _this) > 0;
+} else {
+	_recompile = false;
+};
 
 //--- Functions are already running
 if (!isNil "BIS_fnc_init" && !_recompile) exitwith {textLogFormat["PRELOAD_ Functions already running."];};
@@ -100,10 +107,5 @@ _test2 = (_this select 0) playMove ""; if (isnil "_test2") then {_test2 = false}
 
 waitUntil {!isNil "BIS_MPF_InitDone"}; //functions init must be after MPF init
 BIS_fnc_init = true;
-
-
-//if ((missionStart select 0) != 0) then {endLoadingScreen;textLogFormat["PRELOAD_ HACK isServer %1 endLoadingScreen (init functions EH)", isServer];}; //TODO:FIXME:HACK: - in multiplayer game freezes because init.sqf is not launched in MP preload
-
-
 
 textLogFormat ["Log: [Functions] Init script terminated at %1",time];

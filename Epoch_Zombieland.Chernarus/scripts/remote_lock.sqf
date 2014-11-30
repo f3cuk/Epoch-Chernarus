@@ -1,4 +1,4 @@
-private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih"];
+private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih","_null"];
 
 _ownerID 	= _this select 0;
 _sounddist 	= 10;
@@ -28,7 +28,7 @@ _i = 0;
 					};
 					
 					player action ["lightOn", _vehicle];
-					_nul = [objNull, _vehicle, rSAY, "carLock", _sounddist] call RE;
+					_null = [objNull, _vehicle, rSAY, "carLock", _sounddist] call RE;
 					sleep 0.5;
 					player action ["lightOff", _vehicle];
 					

@@ -1,4 +1,4 @@
-private ["_canDo","_passArray","_objHDiff","_isOk","_zheightchanged","_zheightdirection","_rotate","_dir","_object","_position","_isAllowedUnderGround","_location1","_location2","_cancel","_reason","_lastDir","_objectHelper","_objectHelperDir","_objectHelperPos"];
+private ["_canDo","_passArray","_objHDiff","_isOk","_zheightchanged","_zheightdirection","_rotate","_dir","_object","_position","_isAllowedUnderGround","_location1","_location2","_cancel","_reason","_objectHelper","_objectHelperDir","_objectHelperPos"];
 
 _object 				= _this select 0;
 _isAllowedUnderGround 	= _this select 1;

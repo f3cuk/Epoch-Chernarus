@@ -1,4 +1,4 @@
-private ["_pos","_box","_skin","_okSkin","_result"];
+private ["_skin","_okSkin","_result","_bp","_body"];
 _body =		player;
 _skin = (typeOf _body);
 _skin = "Skin_" + _skin;

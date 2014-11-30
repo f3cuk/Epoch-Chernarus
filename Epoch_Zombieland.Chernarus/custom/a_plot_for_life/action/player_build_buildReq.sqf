@@ -1,6 +1,6 @@
-if(!DZE_ActionInProgress) exitWith {};
+private ["_passArray","_missing","_hasrequireditem","_require","_hastoolweapon","_hasbuilditem","_checkMag","_checkTools","_reason","_text"];
 
-private ["_passArray","_missing","_hasrequireditem","_require","_hastoolweapon","_hasbuilditem","_checkMag","_checkTools","_reason"];
+if(!DZE_ActionInProgress) exitWith {};
 
 _require 			= _this select 0;
 _text 				= _this select 1;

@@ -18,7 +18,7 @@ class Header
 {
 	gameType = COOP;
 	minPlayers = 1;
-	maxPlayers = 40;
+	maxPlayers = 46;
 };
 
 aiKills 				= 1;
@@ -201,7 +201,7 @@ class CfgSounds
 
 #include "custom\snap_pro\snappoints.hpp"
 #include "custom\character_select\RscDisplayCharacterSelect.hpp"
-#include "custom\updated_gui\gui\cen_hud.hpp"
+#include "custom\gui\hud.hpp"
 
 #include "custom\gold_coins\hpp\hw.hpp"
 #include "custom\gold_coins\hpp\common.hpp"
