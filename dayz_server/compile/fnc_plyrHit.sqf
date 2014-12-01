@@ -1,4 +1,4 @@
-private ["_victim"];
+private ["_victim","_vehicle"];
 
 _victim = _this select 0;
 

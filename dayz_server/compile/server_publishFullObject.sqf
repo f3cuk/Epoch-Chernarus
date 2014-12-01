@@ -1,4 +1,4 @@
-private ["_class","_uid","_charID","_object","_worldspace","_key","_allowed"];
+private ["_class","_uid","_charID","_object","_worldspace","_key","_allowed","_inventory","_hitpoints","_damage","_fuel"];
 
 _charID =		_this select 0;
 _object = 		_this select 1;

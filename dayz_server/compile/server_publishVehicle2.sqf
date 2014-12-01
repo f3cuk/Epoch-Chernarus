@@ -1,4 +1,4 @@
-private ["_object","_worldspace","_class","_donotusekey","_keySelected","_activatingPlayer","_isOK","_characterID","_dir","_location","_uid","_key","_result","_outcome","_continue","_object_para"];
+private ["_object","_worldspace","_class","_donotusekey","_keySelected","_activatingPlayer","_isOK","_characterID","_dir","_location","_uid","_key","_result","_outcome","_continue","_object_para","_oid"];
 
 _object 			= _this select 0;
 _worldspace 		= _this select 1;

@@ -21,7 +21,7 @@ find_suitable_ammunition = {
 
 hero_warning = {
 
-	private ["_warned"];
+	private ["_msg","_warning_one","_warning_two","_warning_bandit","_running","_position","_mission"];
 	_position = _this select 0;
 	_mission = _this select 1;
 	_running = (typeName (wai_mission_data select _mission) == "ARRAY");

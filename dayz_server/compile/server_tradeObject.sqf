@@ -1,4 +1,4 @@
-private ["_player","_name","_traderid","_buyorsell","_data","_result","_key","_outcome","_clientID"];
+private ["_player","_name","_traderid","_buyorsell","_data","_result","_key","_outcome","_clientID","_classname","_traderCity","_currency","_qty","_price"];
 
 _player 		= _this select 0;
 _traderID 		= _this select 1;

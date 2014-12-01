@@ -1,4 +1,4 @@
-private["_guaranteedLoot", "_randomizedLoot", "_spawnChance", "_spawnMarker", "_spawnRadius", "_spawnFire", "_fadeFire", "_crashModel", "_lootTable", "_crashName", "_spawnRoll", "_position", "_crash", "_config", "_hasAdjustment", "_newHeight", "_adjustedPos", "_num", "_itemTypes", "_index", "_weights", "_cntWeights", "_nearby", "_itemType", "_needsrelocated", "_istoomany", "_pos", "_lootPos"];
+private ["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_fadeFire","_crashModel","_lootTable","_crashName","_spawnRoll","_position","_crash","_config","_hasAdjustment","_newHeight","_adjustedPos","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
 
 _guaranteedLoot = 3;
 _randomizedLoot = 4;
@@ -21,8 +21,6 @@ if (_spawnRoll <= _spawnChance) then {
 	};
 	_maxLootRadius = _maxLootRadius - _minLootRadius;
 	_crashName = getText(configFile >> "CfgVehicles" >> _crashModel >> "displayName");
-
-	// Loop for a new location without any vehicles
 	_needsrelocated = true;
 	while {
 		_needsrelocated
@@ -35,16 +33,8 @@ if (_spawnRoll <= _spawnChance) then {
 		};
 	};
 
-	//diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4", _crashName, _lootTable, time, str(_position)]);
-
 	_crash = createVehicle[_crashModel, _position, [], 0, "CAN_COLLIDE"];
-	// Randomize the direction the wreck is facing
 	_crash setDir round(random 360);
-
-	// Using "custom" wrecks (using the destruction model of a vehicle vs. a prepared wreck model) will result
-	// in the model spawning halfway in the ground. To combat this, an OPTIONAL configuration can be tied to
-	// the CfgVehicles class you've created for the custom wreck to define how high above the ground it should
-	// spawn. This is optional.
 	_config = configFile >> "CfgVehicles" >> _crashModel >> "heightAdjustment";
 	_hasAdjustment = isNumber(_config);
 	_newHeight = 0;
@@ -52,17 +42,13 @@ if (_spawnRoll <= _spawnChance) then {
 		_newHeight = getNumber(_config);
 	};
 
-	// Must setPos after a setDir otherwise the wreck won't level itself with the terrain
 	_adjustedPos = [(_position select 0), (_position select 1), _newHeight];
-	//diag_log(format["DIAG: Designated Position: %1", str(_adjustedPos)]);
 	_crash setPos _adjustedPos;
-
-	// I don't think this is needed (you can't get "in" a crash), but it was in the original DayZ Crash logic
+    
 	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor, _crash];
 
 	_crash setVariable["ObjectID", "1", true];
 	_pos = [_crash] call FNC_GetPos;
-	// Disable simulation server side
 	_crash enableSimulation false;
 
 	_num = round(random _randomizedLoot) + _guaranteedLoot;
@@ -73,7 +59,6 @@ if (_spawnRoll <= _spawnChance) then {
 	};
 
 	if (_spawnFire) then {
-		//["PVDZE_obj_Fire",[_crash,2,time,false,_fadeFire]] call broadcastRpcCallAll;
 		PVDZE_obj_Fire = [_crash, 2, time, false, _fadeFire];
 		publicVariable "PVDZE_obj_Fire";
 		_crash setvariable["fadeFire", _fadeFire, true];
@@ -98,7 +83,6 @@ if (_spawnRoll <= _spawnChance) then {
 		_itemType = _itemTypes select _index2;
 		[_itemType select 0, _itemType select 1, _lootPos, 5] call spawn_loot;
 	};
-	// ReammoBox is preferred parent class here, as WeaponHolder wouldn't match MedBox0 && other such items.
 	_nearby = _pos nearObjects["ReammoBox", sizeOf(_crashModel)];
 	{
 		_x setVariable["permaLoot", true];

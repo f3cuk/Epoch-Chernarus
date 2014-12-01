@@ -4,7 +4,7 @@
 	Made for DayZ Epoch please ask permission to use/edit/distrubute email vbawol@veteranbastards.com.
 */
 
-private ["_date","_key","_result","_outcome","_handle","_time","_datestr"];
+private ["_date","_key","_result","_outcome","_handle","_datestr"];
 
 diag_log("EPOCH EVENTS INIT");
 EventSchedulerLastTime = "";

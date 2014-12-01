@@ -1,4 +1,4 @@
-private["_guaranteedLoot", "_randomizedLoot", "_spawnChance", "_spawnMarker", "_spawnRadius", "_crashModel", "_lootTable", "_spawnRoll", "_position", "_crash", "_config", "_num", "_itemTypes", "_index", "_weights", "_cntWeights", "_nearby", "_itemType", "_needsrelocated", "_istoomany", "_pos", "_lootPos"];
+private ["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_crashModel","_lootTable","_spawnRoll","_position","_crash","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
 
 _guaranteedLoot = 4;
 _randomizedLoot = 8;

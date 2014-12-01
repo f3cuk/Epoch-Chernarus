@@ -108,9 +108,8 @@ object_handleServerKilled = {
 };
 
 check_publishobject = {
-	private["_object","_playername","_allowed"];
+	private["_object","_allowed"];
 	_object		= _this select 0;
-	_playername = _this select 1;
 	_allowed	= false;
 
 	if ((typeOf _object) in dayz_allowedObjects) then {
@@ -140,13 +139,12 @@ eh_localCleanup = {
 			_unit removeAllEventHandlers "Local";
 			clearVehicleInit _unit;
 			deleteVehicle _unit;
-			if ((count (units _myGroupUnit) == 0) && (_myGroupUnit != grpNull)) then {
+			if ((count (units _myGroupUnit) == 0) && (!isNull _myGroupUnit)) then {
 				deleteGroup _myGroupUnit;
 			};
 		};
 	}];
 };
-
 
 server_hiveWrite = {
 	private["_data"];
@@ -478,6 +476,7 @@ dayz_recordLogin = {
 };
 
 dayz_perform_purge = {
+	private["_group"];
 	if(!isNull(_this)) then {
 		_group = group _this;
 		_this removeAllMPEventHandlers "mpkilled";
@@ -492,14 +491,14 @@ dayz_perform_purge = {
 		_this removeAllEventHandlers "Local";
 		clearVehicleInit _this;
 		deleteVehicle _this;
-		if ((count (units _group) == 0) && (_group != grpNull)) then {
+		if ((count (units _group) == 0) && (!isNull _group)) then {
 			deleteGroup _group;
 		};
 	};
 };
 
 dayz_perform_purge_player = {
-	private ["_countr","_backpack","_backpackType","_backpackWpn","_backpackMag","_objWpnTypes","_objWpnQty","_location","_dir","_holder","_weapons","_magazines"];
+	private ["_countr","_backpack","_backpackType","_backpackWpn","_backpackMag","_objWpnTypes","_objWpnQty","_location","_dir","_holder","_weapons","_magazines","_group"];
 
 	if(!isNull(_this)) then {
 		_location	= getPosATL _this;
@@ -558,14 +557,14 @@ dayz_perform_purge_player = {
 	_this removeAllEventHandlers "Local";
 	clearVehicleInit _this;
 	deleteVehicle _this;
-	if ((count (units _group) == 0) && (_group != grpNull)) then {
+	if ((count (units _group) == 0) && (!isNull _group)) then {
 		deleteGroup _group;
 	};
 };
 
 dayz_removePlayerOnDisconnect = {
+	    
 	if(!isNull(_this)) then {
-		_group = group _this;
 		_this removeAllMPEventHandlers "mphit";
 		deleteVehicle _this;
 		deleteGroup (group _this);
@@ -633,7 +632,7 @@ server_cleanupGroups = {
 	if(!isNil "DZE_DYN_GroupCleanup") exitWith {  DZE_DYN_AntiStuck3rd = DZE_DYN_AntiStuck3rd + 1;};
 	DZE_DYN_GroupCleanup = true;
 	{
-		if ((count (units _x) == 0) && (_x != grpNull)) then {
+		if ((count (units _x) == 0) && (!isNull _x)) then {
 			deleteGroup _x;
 		};
 		sleep 0.001;
@@ -803,7 +802,7 @@ KK_fnc_positionToString = {
 
 "PVDZE_vault_Get" addPublicVariableEventHandler {
 
-	private["_data","_vault","_vault_id","_finished","_key","_result","_clientID"];
+	private["_data","_vault","_vault_id","_clientID"];
 	
 	_data		= _this select 1;
 	_vault		= _data select 0;
@@ -813,7 +812,9 @@ KK_fnc_positionToString = {
 	if(_vault_id != 0) then {
 		
 		[_vault_id,_vault,_clientID] spawn {
-				
+
+			private ["_finished","_key","_result","_vault_id","_vault","_clientID"];
+			
 			_vault_id	= _this select 0;
 			_vault		= _this select 1;
 			_clientID	= _this select 2;
@@ -833,7 +834,6 @@ KK_fnc_positionToString = {
 				
 				sleep .2;
 			};
-		
 		};
 	} else {
 		diag_log format["Could not get ID from vault (%1)",_vault];

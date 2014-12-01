@@ -1,4 +1,4 @@
-private ["_agro","_player","_guarding","_group","_unit","_position"];
+private ["_agro","_player","_guarding","_group","_position","_mission","_count"];
 
 _count 			= count _this;
 _group			= _this select 0;

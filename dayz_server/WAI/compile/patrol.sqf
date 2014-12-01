@@ -2,7 +2,7 @@ if (isServer) then {
 
 	_this spawn {
 
-		private["_vehicle","_position","_unitgroup","_waypoint_data","_num_waypoints","_leader","_count_wp","_waypoints","_waypoint_prev","_msg","_wp"];
+		private ["_vehicle","_position","_unitgroup","_waypoint_data","_num_waypoints","_leader","_count_wp","_waypoint_prev","_msg","_wp","_rand_nr","_waypoint"];
 
 		_vehicle 		= _this select 0;
 		_position 		= _this select 1;
@@ -46,7 +46,7 @@ if (isServer) then {
 
 		[_vehicle,_unitgroup] spawn {
 
-			private["_vehicle","_unitgroup","_runmonitor"];
+			private ["_vehicle","_unitgroup","_runmonitor","_wp"];
 
 			_vehicle 	= _this select 0;
 			_unitgroup 	= _this select 1;

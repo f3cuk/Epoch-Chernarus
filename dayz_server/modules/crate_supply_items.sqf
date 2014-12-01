@@ -1,4 +1,4 @@
-private ["_spawnChance", "_spawnMarker", "_spawnRadius", "_markerRadius", "_item", "_debug", "_start_time", "_loot", "_loot_amount", "_loot_box", "_wait_time", "_spawnRoll", "_position", "_event_marker", "_loot_pos", "_debug_marker","_loot_box", "_hint"];
+private ["_spawnChance","_spawnRadius","_markerRadius","_loot","_loot_box","_wait_time","_spawnRoll","_position","_loot_pos","_loot_lists","_clutter"];
  
 _markerRadius 	= 250;
 _loot_box 		= "SpecialWeaponsBox";
@@ -29,7 +29,6 @@ _loot_lists 	=
 
 _loot 			= _loot_lists call BIS_fnc_selectRandom;
 _wait_time 		= 1800; 
-_start_time 	= time;
 _spawnRadius 	= 6500;
 _spawnChance	= 75;
 _spawnRoll 		= random 100;

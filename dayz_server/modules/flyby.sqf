@@ -1,4 +1,4 @@
-private["_model","_startpos","_endpos","_rand_player"];
+private ["_model","_startpos","_rand_player","_number","_rand_num","_playerpos"];
 
 _model			= ["MV22","F35B","Su25_CDF","A10","Mi24_D","AV8B","Su25_TK_EP1","L39_TK_EP1","C130J_US_EP1","MQ9PredatorB_US_EP1"] call BIS_fnc_selectRandom;
 _startpos		= [[1000.0,2.0],[3500.0,2.0],[5000.0,2.0],[7500.0,2.0],[9712.0,663.067],[12304.0,1175.07],[14736.0,2500.0],[16240.0,5000.0],[16240.0,7500.0],[16240.0,10000.0]] call BIS_fnc_selectRandom;
@@ -16,7 +16,7 @@ if((isPlayer _rand_player) && (alive _rand_player)) then {
 
 		[_number,_model,_startpos,_playerpos] spawn {
 
-			private["_aircraft","_aigroup","_pilot","_wp1","_wp2","_cor_y","_cor_x"];
+			private ["_aircraft","_aigroup","_pilot","_wp1","_wp2","_cor_y","_cor_x","_number","_model","_startpos","_playerpos","_endpos"];
 			
 			_number 	= _this select 0;
 			_model 		= _this select 1;

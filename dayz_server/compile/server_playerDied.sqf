@@ -1,4 +1,4 @@
-private ["_characterID","_minutes","_playerID","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_randmsg","_loc_message","_key","_death_record"];
+private ["_characterID","_minutes","_playerID","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_randmsg","_loc_message","_key","_death_record","_victimGroup"];
 
 _characterID 	= _this select 0;
 _minutes 		= _this select 1;
@@ -30,8 +30,8 @@ if ((typeName _killer) == "OBJECT") then {
 			"killed himself",
 			"should have read a book on physics"
 		] call BIS_fnc_selectRandom;
-		_message 		= format["[DEATH] %1 %2",_victimName, _randmsg];
-		_loc_message 	= format["PDEATH: %1 (%2) killed himself", _victimName,_playerID];
+		_message 		= format["[DEATH] %1 %2",_victimName,_randmsg];
+		_loc_message 	= format["PDEATH: %1 (%2) killed himself",_victimName,_playerID];
 	} else {
 	
 		if(isPlayer _killer) then {
@@ -65,6 +65,8 @@ RemoteMessage = ["global",_message];
 publicVariable "RemoteMessage";
 
 diag_log _loc_message;
+
+RemoteMessage = nil;
 
 _victim setVariable["processedDeath",diag_tickTime];
 

@@ -1,4 +1,4 @@
-private ["_cashMoney","_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_doLoop","_key","_primary","_medical","_stats","_humanity","_lastinstance","_friendlies","_randomSpot","_position","_debug","_distance","_hit","_fractures","_score","_findSpot","_pos","_isIsland","_w","_clientID","_spawnMC","_namespace"];
+private ["_cashMoney","_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_key","_primary","_medical","_stats","_humanity","_lastinstance","_randomSpot","_position","_debug","_distance","_hit","_fractures","_score","_pos","_clientID","_spawnMC","_finished","_searching","_isNew"];
 
 _characterID 	= _this select 0;
 _playerObj 		= _this select 1;

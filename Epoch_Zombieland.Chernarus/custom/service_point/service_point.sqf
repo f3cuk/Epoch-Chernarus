@@ -1,6 +1,6 @@
 // Vehicle Service Point by Axe Cop
  
-private ["_folder","_servicePointClasses","_maxDistance","_actionTitleFormat","_actionCostsFormat","_costsFree","_message","_messageShown","_refuel_enable","_refuel_costs","_refuel_updateInterval","_refuel_amount","_repair_enable","_repair_costs","_repair_repairTime","_lastVehicle","_lastRole","_fnc_removeActions","_fnc_getCosts","_fnc_actionTitle","_coinsRepairAir","_coinsRepairVehicles","_coinsRefuelVehicles","_coinsRefuelAir"];
+private ["_folder","_servicePointClasses","_maxDistance","_actionTitleFormat","_actionCostsFormat","_costsFree","_message","_messageShown","_refuel_enable","_refuel_costs","_refuel_updateInterval","_refuel_amount","_repair_enable","_repair_costs","_repair_repairTime","_fnc_removeActions","_fnc_getCosts","_fnc_actionTitle","_coinsRepairAir","_coinsRepairVehicles","_coinsRefuelVehicles","_coinsRefuelAir"];
  
 _coinsRepairAir 	= 4000;
 _coinsRepairVehicles 	= 1000;
@@ -8,36 +8,36 @@ _coinsRefuelVehicles 	= 100;
 _coinsRefuelAir 	= 500;
   
 // general settings
-_folder 		= "custom\service_point\";
-_servicePointClasses 	= dayz_fuelpumparray;
-_maxDistance 		= 10;
-_actionTitleFormat 	= "%1 (%2)";
-_actionCostsFormat 	= "%2 %1";
-_costsFree 		= "free";
-_message 		= "Vehicle Service Point nearby";
+_folder 				= "custom\service_point\";
+_servicePointClasses	= dayz_fuelpumparray;
+_maxDistance 			= 10;
+_actionTitleFormat 		= "%1 (%2)";
+_actionCostsFormat 		= "%2 %1";
+_costsFree 				= "free";
+_message 				= "Vehicle Service Point nearby";
  
 // refuel settings
 _refuel_enable 		= true; // enable or disable the refuel option
 _refuel_costs 		= [
-				["AllVehicles",[CurrencyName,_coinsRefuelVehicles]],
-				["Air",[CurrencyName,_coinsRefuelAir]]
-			];
+						["AllVehicles",[CurrencyName,_coinsRefuelVehicles]],
+						["Air",[CurrencyName,_coinsRefuelAir]]
+					];
 _refuel_updateInterval 	= 1;
 _refuel_amount 		= 0.05;
  
 // repair settings
 _repair_enable 		= true;
 _repair_costs 		= [
-				["Air",[CurrencyName,_coinsRepairAir]],
-				["AllVehicles",[CurrencyName,_coinsRepairVehicles]]
-			];
+						["Air",[CurrencyName,_coinsRepairAir]],
+						["AllVehicles",[CurrencyName,_coinsRepairVehicles]]
+					];
  
 _repair_repairTime 	= 2;
 
 // ----------------- CONFIG END -----------------
  
-_lastVehicle 		= objNull;
-_lastRole 		= [];
+lastVehicle 		= objNull;
+lastRole 			= [];
  
 SP_refuel_action 	= -1;
 SP_repair_action 	= -1;
@@ -46,18 +46,18 @@ SP_rearm_actions 	= [];
 _messageShown 		= false;
  
 _fnc_removeActions = {
-private ["_lastVehicle","_lastRole"];
-if (isNull _lastVehicle) exitWith {};
-	_lastVehicle removeAction SP_refuel_action;
-    	SP_refuel_action = -1;
-	_lastVehicle removeAction SP_repair_action;
-	SP_repair_action = -1;
-	{
-		_lastVehicle removeAction _x;
-	} forEach SP_rearm_actions;
-	SP_rearm_actions = [];
-	_lastVehicle = objNull;
-	_lastRole = [];
+	if (!isNull lastVehicle) then {
+		lastVehicle removeAction SP_refuel_action;
+		SP_refuel_action = -1;
+		lastVehicle removeAction SP_repair_action;
+		SP_repair_action = -1;
+		{
+			lastVehicle removeAction _x;
+		} count SP_rearm_actions;
+		SP_rearm_actions = [];
+		lastVehicle = objNull;
+		lastRole = [];
+	};
 };
  
 _fnc_getCosts = {
@@ -93,8 +93,10 @@ _fnc_actionTitle = {
 
 while {true} do {
 	private ["_vehicle","_inVehicle"];
+
 	_vehicle = vehicle player;
 	_inVehicle = _vehicle != player;
+
 	if (local _vehicle && _inVehicle) then {
 		private ["_pos","_servicePoints","_inRange"];
 		_pos = getPosATL _vehicle;
@@ -108,11 +110,11 @@ while {true} do {
 			} else {
 				_role = assignedVehicleRole player;
 			};
-			if (((str _role) != (str _lastRole)) || (_vehicle != _lastVehicle)) then {
+			if (((str _role) != (str lastRole)) || (_vehicle != lastVehicle)) then {
 				call _fnc_removeActions;
 			};
-			_lastVehicle = _vehicle;
-			_lastRole = _role;
+			lastVehicle = _vehicle;
+			lastRole = _role;
 			_actionCondition = "vehicle _this == _target && local _target";
 			if (SP_refuel_action < 0 && _refuel_enable) then {
 				_costs = [_vehicle, _refuel_costs] call _fnc_getCosts;

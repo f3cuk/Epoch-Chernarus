@@ -1,7 +1,7 @@
 if(isServer) then {
 	// Mission by Havoc302
 
-    private ["_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
+    private ["_vehclass","_vehicle","_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
 
 	// Get mission number, important we do this early
 	_mission 		= count wai_mission_data -1;

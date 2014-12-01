@@ -6,7 +6,7 @@
 	Script Version: 1.3.1
 */
  
-private["_show_name","_show_marker", "_finder","_timeAdjust","_timeToSpawn","_spawnRoll","_crash","_hasAdjustment","_newHeight","_adjustedPos","_useStatic","_crashDamage","_lootRadius","_preWaypoints","_preWaypointPos","_endTime","_startTime","_safetyPoint","_heliStart","_deadBody","_exploRange","_heliModel","_lootPos","_list","_craters","_dummy","_wp2","_wp3","_landingzone","_aigroup","_wp","_helipilot","_crash","_crashwreck","_smokerand","_staticcoords","_pos","_dir","_mdot","_position","_num","_config","_itemType","_itemChance","_weights","_index","_iArray","_crashModel","_lootTable","_guaranteedLoot","_randomizedLoot","_frequency","_variance","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_permanentFire","_crashName","_marker", "_markerRadius","_hint","_itemTypes"];
+private ["_show_name","_show_marker","_finder","_spawnRoll","_crash","_crashDamage","_preWaypoints","_preWaypointPos","_endTime","_startTime","_safetyPoint","_heliStart","_exploRange","_heliModel","_lootPos","_wp2","_wp3","_landingzone","_aigroup","_wp","_helipilot","_crashwreck","_pos","_dir","_mdot","_position","_num","_itemType","_weights","_crashModel","_lootTable","_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_crashName","_marker","_markerRadius","_itemTypes","_plane","_porh","_vel","_speed","_ran15","_maxLootRadius","_index1","_index2","_nearby","_marker_position","_playerPresent","_CBLBase","_cntWeights","_isWater","_fadeFire","_minLootRadius"];
 
 _spawnChance			= 100;				// Percent chance of spawning a crash number between 0 - 100 
 _guaranteedLoot			= 8;				// Guaranteed Loot Spawns

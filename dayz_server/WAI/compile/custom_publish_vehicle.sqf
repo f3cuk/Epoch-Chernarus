@@ -1,3 +1,5 @@
+
+private ["_isglass","_mission"];
 if (isServer) then {
 
     private ["_unit","_ailist","_keyid","_carkey","_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];

@@ -1,4 +1,4 @@
-private ["_invehicle","_isplayernearby","_playerObj","_myGroup","_id","_playerUID","_playerName","_characterID","_timeout","_message","_magazines","_playerPos"];
+private ["_invehicle","_isplayernearby","_playerObj","_id","_playerUID","_playerName","_characterID","_timeout","_message","_magazines","_playerPos","_i","_pos","_backpack","_weapons","_weapons_backpack","_current_magazine","_magazines_backpack","_money","_loot_box","_removebackpack"];
 
 _playerUID 	= _this select 0;
 _playerName = _this select 1;
