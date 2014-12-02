@@ -1683,7 +1683,7 @@ publicVariable '"+_randvar28+"';
 						publicVariableServer '"+_randvar10+"';
 					};
 				};
-				_fbd = 'no';{if (!isNull (findDisplay _x)) exitWith {_fbd = str _x;};} forEach [17,64,155,156,162,1001,2929,3030,125,69,19,71,45,132,32,165,157,2727,30];
+				_fbd = 'no';{if (!isNull (findDisplay _x)) exitWith {_fbd = str _x;};} forEach [17,155,156,162,1001,2929,3030,125,69,19,71,45,132,32,165,157,2727,30];
 				if (_fbd != 'no') then
 				{
 					[] spawn "+_randvar2+";
