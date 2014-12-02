@@ -31,23 +31,12 @@ fnc_removeCoins = {
 	_return
 };
 
-VaultUpdateAmounts = {
-    private["_vault"];
-	_vault = _this;
-	ctrlSetText [VaultBalance,format["%1 %2",(_vault getVariable ["Money",0] call BIS_fnc_numberText),CurrencyName]];
-};
-
-GivePlayerDialogAmounts = {
-	ctrlSetText [GivePlayerDialogPlayerBalance, format["%1 %2", (player getVariable ["cashMoney", 0] call BIS_fnc_numberText), CurrencyName]];
-	ctrlSetText [14003, format["%1", (name cursorTarget)]];
-};
-
 VaultWithdrawAmount = {
 
 	private ["_amount","_vault","_wealth","_money","_vault_id","_new_money","_new_wealth"];
 
 	_amount 	= round(parseNumber(_this select 0));	
-	_vault		= target_vault;
+	_vault		= targetvault;
 	_money		= _vault getVariable ["Money",0];
 	_vault_id	= parseNumber(_vault getVariable ["ObjectID",0]);
 	_wealth 	= player getVariable ["cashMoney",0];
@@ -84,7 +73,7 @@ VaultDepositAmount = {
 	private ["_amount","_vault","_wealth","_money","_vault_id","_new_wealth","_new_money"];
 
 	_amount 	= round(parseNumber(_this select 0));
-	_vault 		= target_vault;
+	_vault 		= targetvault;
 	
 	_money		= _vault getVariable ["Money",0];
 	_vault_id	= parseNumber(_vault getVariable ["ObjectID",0]);

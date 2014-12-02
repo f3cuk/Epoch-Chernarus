@@ -12,7 +12,7 @@ loadScreen 				= "bg.jpg";
 briefing 				= 0;
 debriefing 				= 0;
 
-onPauseScript 			= "scripts\dupingfix.sqf";
+onPauseScript 			= "";
 
 class Header
 {
@@ -35,7 +35,7 @@ class RscText
 	w = 0.3;
 	style = 0x100; 
 	font = "Bitstream";
-	SizeEx = 0.06;
+	SizeEx = 0.03921;
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0, 0, 0, 0};
 	linespacing = 1;
@@ -49,7 +49,7 @@ class RscPicture
 	colorBackground[]={0,0,0,0};
 	colorText[]={1,1,1,1};
 	font="Bitstream";
-	sizeEx=0;
+	sizeEx = 0;
 	lineSpacing=0;
 	text="";
 };
@@ -195,17 +195,10 @@ class CfgSounds
 	};
 };
 
-#include "admintools\dialog.hpp"
-
 #include "custom\right_click\extra_rc.hpp"
 
 #include "custom\snap_pro\snappoints.hpp"
 #include "custom\character_select\RscDisplayCharacterSelect.hpp"
 #include "custom\gui\hud.hpp"
-
-#include "custom\gold_coins\hpp\hw.hpp"
-#include "custom\gold_coins\hpp\common.hpp"
-#include "custom\gold_coins\hpp\give_player_dialog.hpp"
-#include "custom\gold_coins\hpp\vault_currency.hpp"
 
 #include "custom\mbc\dialogs.hpp"

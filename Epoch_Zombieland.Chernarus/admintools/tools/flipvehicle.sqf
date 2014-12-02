@@ -1,1 +1,0 @@
-private["_pos_player"];_pos_player = [player] call FNC_GetPos;(_pos_player nearestObject "LandVehicle") setVectorUp [0,0,1];titleText ["Vehicle is now right-side up", "PLAIN DOWN"];titleFadeOut 3;

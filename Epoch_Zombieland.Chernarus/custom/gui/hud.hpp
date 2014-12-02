@@ -8,7 +8,7 @@ class RscStructuredText {
 	idc = -1;
 	style = 2; 
 	font = "Bitstream";
-	size = "0.0376 * safezoneH";
+	size = "0.03921";
 	colorText[] = {1,1,1,1};
 	colorBackground[] = {0,0,0,0};
 	text = "";
@@ -38,8 +38,8 @@ class RscTitles
 				w = 0.5;
 				h = 0.1;
 			};
-			class RscPicture_1200: RscPictureGUI {
-				idc = 1200;
+			class RscPicture_81200: RscPictureGUI {
+				idc = 81200;
 				text = "custom\gui\icons\restart.paa";
 				x = safeZoneX + safeZoneW - 0.175;
 				y = safeZoneY + safeZoneH - 0.17;
@@ -47,8 +47,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {1,1,1,0.7};
 			};
-			class RscPicture_1201: RscPictureGUI {
-				idc = 1201;
+			class RscPicture_81201: RscPictureGUI {
+				idc = 81201;
 				text = "custom\gui\icons\humanity.paa";
 				x = safeZoneX + safeZoneW - 0.250;
 				y = safeZoneY + safeZoneH - 0.17;
@@ -56,8 +56,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {1,1,1,0.7};
 			};
-			class RscPicture_1202: RscPictureGUI {
-				idc = 1202;
+			class RscPicture_81202: RscPictureGUI {
+				idc = 81202;
 				text = "custom\gui\icons\money.paa";
 				x = safeZoneX + 0.320;
 				y = safeZoneY + safeZoneH - 0.12;
@@ -65,8 +65,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {0.8,0.6,0,1};
 			};
-			class RscPicture_1203: RscPictureGUI {
-				idc = 1203;
+			class RscPicture_81203: RscPictureGUI {
+				idc = 81203;
 				text = "custom\gui\icons\health.paa";
 				x = safeZoneX + 0.077;
 				y = safeZoneY + safeZoneH - 0.13;
@@ -74,8 +74,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {1,1,1,1};
 			};
-			class RscPicture_1204: RscPictureGUI {
-				idc = 1204;
+			class RscPicture_81204: RscPictureGUI {
+				idc = 81204;
 				text = "custom\gui\icons\food.paa";
 				x = safeZoneX + 0.160;
 				y = safeZoneY + safeZoneH - 0.12;
@@ -83,8 +83,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {1,1,1,1};
 			};
-			class RscPicture_1205: RscPictureGUI {
-				idc = 1205;
+			class RscPicture_81205: RscPictureGUI {
+				idc = 81205;
 				text = "custom\gui\icons\drink.paa";
 				x = safeZoneX + 0.235;
 				y = safeZoneY + safeZoneH - 0.12;
@@ -93,8 +93,8 @@ class RscTitles
 				colorText[] = {1,1,1,1};
 			};
 			// Health border
-			class RscPicture_1206: RscPictureGUI {
-				idc = 1206;
+			class RscPicture_81206: RscPictureGUI {
+				idc = 81206;
 				text = "custom\gui\icons\border_12.paa";
 				x = safeZoneX + 0.07;
 				y = safeZoneY + safeZoneH - 0.14;
@@ -103,8 +103,8 @@ class RscTitles
 				colorText[] = {1,1,1,1};
 			};
 			// Food border
-			class RscPicture_1207: RscPictureGUI {
-				idc = 1207;
+			class RscPicture_81207: RscPictureGUI {
+				idc = 81207;
 				text = "custom\gui\icons\border_s_12.paa";
 				x = safeZoneX + 0.160;
 				y = safeZoneY + safeZoneH - 0.12;
@@ -113,8 +113,8 @@ class RscTitles
 				colorText[] = {1,1,1,1};
 			};
 			// Drink border
-			class RscPicture_1208: RscPictureGUI {
-				idc = 1208;
+			class RscPicture_81208: RscPictureGUI {
+				idc = 81208;
 				text = "custom\gui\icons\border_s_12.paa";
 				x = safeZoneX + 0.235;
 				y = safeZoneY + safeZoneH - 0.12;
@@ -122,8 +122,8 @@ class RscTitles
 				h = 0.06;
 				colorText[] = {1,1,1,1};
 			};
-			class RscPicture_1209: RscPictureGUI {
-				idc = 1209;
+			class RscPicture_81209: RscPictureGUI {
+				idc = 81209;
 				text = "custom\gui\icons\bleed.paa";
 				x = safeZoneX + 0.091;
 				y = safeZoneY + safeZoneH - 0.107;
@@ -132,8 +132,8 @@ class RscTitles
 				colorText[] = {1,0,0,0.8};
 			};
 			// Restart border
-			class RscPicture_1210: RscPictureGUI {
-				idc = 1210;
+			class RscPicture_81210: RscPictureGUI {
+				idc = 81210;
 				text = "custom\gui\icons\border_s_12.paa";
 				x = safeZoneX + safeZoneW - 0.175;
 				y = safeZoneY + safeZoneH - 0.17;
@@ -142,8 +142,8 @@ class RscTitles
 				colorText[] = {1,1,1,0.7};
 			};
 			// Humanity border
-			class RscPicture_1211: RscPictureGUI {
-				idc = 1211;
+			class RscPicture_81211: RscPictureGUI {
+				idc = 81211;
 				text = "custom\gui\icons\border_s_12.paa";
 				x = safeZoneX + safeZoneW - 0.250;
 				y = safeZoneY + safeZoneH - 0.17;
@@ -155,8 +155,8 @@ class RscTitles
 		
 		class Controls {
 			// Restart timer
-			class RscText_1300: RscTextGUIK {
-				idc = 1300;
+			class RscText_81300: RscTextGUIK {
+				idc = 81300;
 				text = "";
 				x = safeZoneX + safeZoneW - 0.182;
 				y = safeZoneY + safeZoneH - 0.11;
@@ -167,8 +167,8 @@ class RscTitles
 				sizeEx = 0.035;
 			};
 			// Humanity
-			class RscText_1301: RscTextGUIK {
-				idc = 1301;
+			class RscText_81301: RscTextGUIK {
+				idc = 81301;
 				text = "";
 				x = safeZoneX + safeZoneW - 0.257;
 				y = safeZoneY + safeZoneH - 0.11;
@@ -179,8 +179,8 @@ class RscTitles
 				sizeEx = 0.035;
 			};
 			// Money
-			class RscText_1302: RscTextGUIK {
-				idc = 1302;
+			class RscText_81302: RscTextGUIK {
+				idc = 81302;
 				style = 0;
 				text = "";
 				x = safeZoneX + 0.370;

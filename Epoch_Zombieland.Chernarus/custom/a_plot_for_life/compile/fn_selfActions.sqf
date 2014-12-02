@@ -573,17 +573,21 @@ if (!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance curso
 	//Single currency
 	if((_typeOfCursorTarget in DZE_LockableStorage) && _ownerID != "0" && (player distance _cursorTarget < 3)) then {
 		if(_typeOfCursorTarget in DZE_LockedStorage) then {
-			if(_ownerID == _playerUID && vault_currency < 0) then {
-				vault_currency 	= player addAction ["Access money","custom\gold_coins\vault_dialog.sqf",_cursorTarget,3,true,true,"",""];
+			if(_ownerID == _playerUID && vault_currency_w < 0) then {
+				vault_currency_w 	= player addAction ["Withdraw money","custom\gold_coins\vault_dialog.sqf",[_cursorTarget,1],3,true,true,"",""];
+				vault_currency_d 	= player addAction ["Deposit money","custom\gold_coins\vault_dialog.sqf",[_cursorTarget,2],3,true,true,"",""];
 			};
 		} else {
-			if(vault_currency < 0) then {
-				vault_currency 	= player addAction ["Access money","custom\gold_coins\vault_dialog.sqf",_cursorTarget,3,true,true,"",""];
+			if(vault_currency_w < 0) then {
+				vault_currency_w 	= player addAction ["Withdraw money","custom\gold_coins\vault_dialog.sqf",[_cursorTarget,1],3,true,true,"",""];
+				vault_currency_d 	= player addAction ["Deposit money","custom\gold_coins\vault_dialog.sqf",[_cursorTarget,2],3,true,true,"",""];
 			};
 		};
 	} else {
-		player removeAction vault_currency;
-		vault_currency = -1;	
+		player removeAction vault_currency_w;
+		vault_currency_w = -1;
+		player removeAction vault_currency_d;
+		vault_currency_d = -1;	
 	};
 
 	//Allow owner to pack vault
@@ -987,8 +991,10 @@ if (!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance curso
 	// single currency
 	player removeAction s_givemoney_dialog;
 	s_givemoney_dialog = -1;
-	player removeAction vault_currency;
-	vault_currency = -1;
+	player removeAction vault_currency_w;
+	vault_currency_w = -1;
+	player removeAction vault_currency_d;
+	vault_currency_d = -1;
 };
 
 //Dog actions on player self

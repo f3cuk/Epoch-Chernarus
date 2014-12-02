@@ -8,7 +8,7 @@ if (!isDedicated) then {
 	fnc_usec_damageActions		= compile preprocessFileLineNumbers "custom\a_plot_for_life\compile\fn_damageActions.sqf";
 	fnc_inAngleSector			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_inAngleSector.sqf";
 	fnc_usec_selfActions		= compile preprocessFileLineNumbers "custom\a_plot_for_life\compile\fn_selfActions.sqf";
-	fnc_usec_unconscious		= compile preprocessFileLineNumbers "custom\fixes\fn_unconscious.sqf";
+	fnc_usec_unconscious		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_unconscious.sqf";
 	player_temp_calculation		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_temperatur.sqf";
 	player_weaponFiredNear		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_weaponFiredNear.sqf";
 	player_animalCheck			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_animalCheck.sqf";
@@ -49,11 +49,11 @@ if (!isDedicated) then {
 	player_crossbowBolt			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_crossbowBolt.sqf";
 	player_music				= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_music.sqf";
 	player_death				= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_death.sqf";
-	player_switchModel			= compile preprocessFileLineNumbers "custom\changeclothes\player_switchModel.sqf";
+	player_switchModel			= compile preprocessFileLineNumbers "custom\fixes\player_switchModel.sqf";
 	player_checkStealth			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_checkStealth.sqf";
 	world_sunRise				= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_sunRise.sqf";
 	world_surfaceNoise			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_surfaceNoise.sqf";
-	player_humanityMorph		= compile preprocessFileLineNumbers "custom\changeclothes\player_humanityMorph.sqf";
+	player_humanityMorph		= compile preprocessFileLineNumbers "custom\fixes\player_humanityMorph.sqf";
 	player_throwObject			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_throwObject.sqf";
 	player_alertZombies			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_alertZombies.sqf";
 	player_fireMonitor			= compile preprocessFileLineNumbers "\z\addons\dayz_code\system\fire_monitor.sqf";
@@ -64,7 +64,7 @@ if (!isDedicated) then {
 	local_roadDebris			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\local_roadDebris.sqf";
 	zombie_findTargetAgent		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_findTargetAgent.sqf";
 	zombie_loiter				= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\zombie_loiter.sqf";
-	zombie_generate				= compile preprocessFileLineNumbers "custom\zombiedrop\zombie_generate.sqf";
+	zombie_generate				= compile preprocessFileLineNumbers "custom\fixes\zombie_generate.sqf";
 	wild_spawnZombies			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\wild_spawnZombies.sqf";
 	pz_attack					= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\pzombie\pz_attack.sqf";
 	dog_findTargetAgent			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\dog_findTargetAgent.sqf";
@@ -102,7 +102,7 @@ if (!isDedicated) then {
 	};
 	
 	FNC_check_owner			= compile preprocessFileLineNumbers "custom\a_plot_for_life\compile\fn_check_owner.sqf";
-	player_wearClothes		= compile preprocessFileLineNumbers "custom\changeclothes\player_wearClothes.sqf";
+	player_wearClothes		= compile preprocessFileLineNumbers "custom\fixes\player_wearClothes.sqf";
 	object_pickup			= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\object_pickup.sqf";
 	player_flipvehicle		= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_flipvehicle.sqf";
 	player_sleep			= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_sleep.sqf";
@@ -142,10 +142,8 @@ if (!isDedicated) then {
 	};
 
 	epoch_totalCurrency = {
-		
-		
-private ["_total_currency","_part","_worth"];
-_total_currency = 0;
+		private ["_total_currency","_part","_worth"];
+		_total_currency = 0;
 		{
 			_part =  (configFile >> "CfgMagazines" >> _x);
 			_worth =  (_part >> "worth");
@@ -157,9 +155,8 @@ _total_currency = 0;
 	};
 
 	epoch_itemCost = {
-		
-private ["_trade_total","_part_inWorth","_part_in_configClass"];
-_trade_total = 0;
+		private ["_trade_total","_part_inWorth","_part_in_configClass"];
+		_trade_total = 0;
 		{
 			_part_in_configClass =  configFile >> "CfgMagazines" >> (_x select 0);
 			if (isClass (_part_in_configClass)) then {
@@ -361,9 +358,8 @@ _trade_total = 0;
 	};
 
 	DZE_getModelName = {
-		
-private ["_i","_objInfo","_lenInfo","_objName"];
-_objInfo = toArray(str(_this));
+		private ["_i","_objInfo","_lenInfo","_objName"];
+		_objInfo = toArray(str(_this));
 		_lenInfo = count _objInfo - 1;
 		_objName = [];
 		_i = 0;

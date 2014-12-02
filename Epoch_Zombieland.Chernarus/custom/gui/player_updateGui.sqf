@@ -65,21 +65,21 @@ if (uiNamespace getVariable ["DZ_displayUI", 0] == 1) then {
 
 	_display = uiNamespace getVariable 'DAYZ_GUI_display';
 
-	_ctrl_restart		= _display displayCtrl 1200;
-	_ctrl_restart_c		= _display displayCtrl 1300;
-	_ctrl_restart_b		= _display displayCtrl 1210;
-	_ctrl_humanity		= _display displayCtrl 1201;
-	_ctrl_humanity_c	= _display displayCtrl 1301;
-	_ctrl_humanity_b	= _display displayCtrl 1211;
-	_ctrl_money			= _display displayCtrl 1202;
-	_ctrl_money_c		= _display displayCtrl 1302;
-	_ctrl_blood			= _display displayCtrl 1203;
-	_ctrl_blood_b		= _display displayCtrl 1206;
-	_ctrl_bleed			= _display displayCtrl 1209;
-	_ctrl_food			= _display displayCtrl 1204;
-	_ctrl_food_b		= _display displayCtrl 1207;
-	_ctrl_drink			= _display displayCtrl 1205;
-	_ctrl_drink_b		= _display displayCtrl 1208;
+	_ctrl_restart		= _display displayCtrl 81200;
+	_ctrl_restart_c		= _display displayCtrl 81300;
+	_ctrl_restart_b		= _display displayCtrl 81210;
+	_ctrl_humanity		= _display displayCtrl 81201;
+	_ctrl_humanity_c	= _display displayCtrl 81301;
+	_ctrl_humanity_b	= _display displayCtrl 81211;
+	_ctrl_money			= _display displayCtrl 81202;
+	_ctrl_money_c		= _display displayCtrl 81302;
+	_ctrl_blood			= _display displayCtrl 81203;
+	_ctrl_blood_b		= _display displayCtrl 81206;
+	_ctrl_bleed			= _display displayCtrl 81209;
+	_ctrl_food			= _display displayCtrl 81204;
+	_ctrl_food_b		= _display displayCtrl 81207;
+	_ctrl_drink			= _display displayCtrl 81205;
+	_ctrl_drink_b		= _display displayCtrl 81208;
 
 	if(!isNil "dayz_animalCheck") then {
 		if(isNil "firstrun") then {

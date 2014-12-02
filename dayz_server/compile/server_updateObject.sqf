@@ -18,8 +18,7 @@ _uid			= _object getVariable ["ObjectUID","0"];
 if (isNil "_objectID") then {_objectID = "0";};
 if (isNil "_uid") then {_uid = "0";};
 
-if ((typeName _objectID != "string") || (typeName _uid != "string")) then
-{ 
+if ((typeName _objectID != "string") || (typeName _uid != "string")) then { 
     diag_log(format["Non-string Object: ID %1 UID %2", _objectID, _uid]);
     _objectID = "0";
     _uid = "0";
@@ -38,12 +37,11 @@ if (!_parachuteWest && !(locked _object)) then {
 if (_isNotOk && _isbuildable) exitWith {};
 if (_isNotOk) exitWith { deleteVehicle _object; diag_log(format["Deleting object %1 with invalid ID at pos [%2,%3,%4]",typeOf _object,_object_position select 0,_object_position select 1, _object_position select 2]); };
 
-
 _lastUpdate = _object getVariable ["lastUpdate",time];
 _needUpdate = _object in needUpdate_objects;
 
 _object_position = {
-	private ["_position","_worldspace","_fuel","_key","_object","_objectID"];
+	private["_position","_worldspace","_fuel","_key"];
 		_position = getPosATL _object;
 		_worldspace = [
 			(getDir _object) call KK_fnc_floatToString,
@@ -58,7 +56,7 @@ _object_position = {
 };
 
 _object_inventory = {
-	private ["_inventory","_previous","_key","_uid","_objectID","_object"];
+	private["_inventory","_previous","_key"];
 		_inventory = [
 			getWeaponCargo _object,
 			getMagazineCargo _object,
@@ -77,7 +75,7 @@ _object_inventory = {
 };
 
 _object_damage = {
-	private ["_hitpoints","_array","_hit","_selection","_key","_damage","_object","_objectID"];
+	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
 		_hitpoints = _object call vehicle_getHitpoints;
 		_damage = damage _object;
 		_array = [];
@@ -94,7 +92,7 @@ _object_damage = {
 	};
 
 _object_killed = {
-	private ["_hitpoints","_array","_hit","_selection","_key","_damage","_uid","_name","_killer","_charID","_objID","_objUID","_worldSpace","_object","_objectID"];
+	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
 	_hitpoints = _object call vehicle_getHitpoints;
 	_damage = 1;
 	_array = [];
@@ -131,7 +129,7 @@ _object_killed = {
 };
 
 _object_repair = {
-	private ["_hitpoints","_array","_hit","_selection","_key","_damage","_object","_objectID"];
+	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
 	
 	_hitpoints = _object call vehicle_getHitpoints;
 	_damage = damage _object;

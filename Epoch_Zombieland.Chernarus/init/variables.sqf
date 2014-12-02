@@ -1,6 +1,7 @@
 //Single currency
 CurrencyName 		= "gold coins";
 dayz_wealth			= -1;
+targetvault 		= nil;
 
 //Model Variables
 Bandit1_DZ = 	"Bandit1_DZ";
@@ -193,7 +194,8 @@ Dayz_GUI_B = 0.26; // -0.26
 
 //Player self-action handles
 dayz_resetSelfActions = {
-	vault_currency = 		-1;
+	vault_currency_w = 		-1;
+	vault_currency_d = 		-1;
 	s_givemoney_dialog = 	-1;
 	target_vault = 			-1;
 	s_crate_money =	 		-1;

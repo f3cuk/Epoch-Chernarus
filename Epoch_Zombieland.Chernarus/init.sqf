@@ -1,19 +1,10 @@
-private ["_nil","_serverMonitor","_id","_playerMonitor"];
-
 if (!isDedicated) then {
-
 	startLoadingScreen ["","RscDisplayLoadCustom"];
-
 	cutText ["","BLACK OUT"];
-
 	enableSaving [false,false];
-
 	player setVariable ["BIS_noCoreConversations",true];
-
 	enableRadio true;
-
 	enableSentences false;
-
 };
 
 #include "config\config.sqf"
@@ -35,9 +26,9 @@ progressLoadingScreen 1.0;
 setToneMapping "filmic";
 
 if (isServer) then {
-	_nil = execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\traders.sqf";
-	_nil = execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\init.sqf";
-	_serverMonitor = execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
+	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\traders.sqf";
+	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\init.sqf";
+	execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 };
 
 if (!isDedicated) then {
@@ -50,8 +41,8 @@ if (!isDedicated) then {
 
 	diag_log format["%1: Server done loading",servertime];
 
-	_id = player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
-	_playerMonitor = execVM "custom\character_select\player_monitor.sqf";
+	player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
+	execVM "custom\character_select\player_monitor.sqf";
 
 	diag_log format["%1: Player monitor initialized",servertime];
 
@@ -59,7 +50,6 @@ if (!isDedicated) then {
 	diag_log format["%1: dayz_clientPreload has started",servertime];
 	waitUntil {dayz_clientPreload};
 	diag_log format["%1: dayz_clientPreload is done",servertime];
-
 	waitUntil {!isNil "allMarkers"};
 	diag_log format["%1: Markers received from server",servertime];
 	waitUntil {!isNil "allObjects"};
@@ -71,22 +61,13 @@ if (!isDedicated) then {
 	waitUntil {!isNil "objectsLoaded"};
 	diag_log format["%1: Add-ons have loaded",servertime];
 
-	call compile preprocessFileLineNumbers "admintools\config.sqf";
-	call compile preprocessFileLineNumbers "admintools\variables.sqf";
-
-	waitUntil {!isNil "adminListLoaded"};
-	diag_log format["%1: Adminlist has loaded",servertime];
-
 	waitUntil {((!isNil "spawnedLoaded") && (spawnedLoaded))};
 	diag_log format["%1: Epoch buildables have loaded",servertime];
 
 	if(DIFF in ["VETERAN","REGULAR"]) then {
 		execVM "custom\safezone\safezone.sqf";
 	};
-
-	execVM "init\admintools.sqf";
 };
 
-#include "\z\addons\dayz_code\system\REsec.sqf"
 execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";
 #include "\z\addons\dayz_code\system\BIS_Effects\init.sqf"

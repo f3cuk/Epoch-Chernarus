@@ -8,8 +8,6 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 	_isNew = player getVariable["isNew",false];
 
-	execVM "custom\service_point\service_point.sqf";
-	execVM "custom\no_voice\no_voice.sqf";
 	execVM "custom\gold_coins\init.sqf";
 
 	if (_isNew) then {
