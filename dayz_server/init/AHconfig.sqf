@@ -1,5 +1,4 @@
-SuperAdminList = [""];
-AdminList = ["76561198117744384","76561198051506785"];/*
+/*
 	File: AHconfig.sqf
 	Author: Chris(tian) "infiSTAR" Lorenzen
 	Contact: infiSTAR23@gmail.com
@@ -14,11 +13,11 @@ AdminList = ["76561198117744384","76561198051506785"];/*
 /* ******************Copyright © 2014 infiSTAR all rights reserved****************** */
 /* *********************************www.infiSTAR.de********************************* */
 /* ********************************************************************************* */
-/*  infiSTAR.de .dll path */  infiSTAR_DLL_PATH = "";    /* "" == empty == arma2oa directory */
+/*  infiSTAR.de .dll path */ infiSTAR_DLL_PATH = "";    /* "" == empty == arma2oa directory */
 /*  Key to open the menu  */ _OpenMenuKey = 0x3C;    /* google DIK_KeyCodes (0x3C is F2) */
 /*  LOW ADMIN HERE        */ _LAdmins = []; //do not have a , at the end.
-/*  NORMAL ADMIN HERE     */ _NAdmins = ["76561198117744384","76561198051506785"]; //do not have a , at the end.
-/*  SUPER ADMIN HERE      */ _SAdmins = ["76561198002236071"]; //do not have a , at the end.
+/*  NORMAL ADMIN HERE     */ _NAdmins = []; //do not have a , at the end.
+/*  SUPER ADMIN HERE      */ _SAdmins = ["76561198002236071","76561198117744384","76561198051506785"]; //do not have at the end.
 /*  BANNED UIDs HERE      */ _BLOCKED = []; //do not have a , at the end.
 
 /*  Use Player White-list */ _UPW = false;	/* true or false */	/* recommended: false */
@@ -55,14 +54,14 @@ AdminList = ["76561198117744384","76561198051506785"];/*
 /*  Close Dialogs ?       */ _CUD = true;	/* true or false */	/* recommended:  true */	/* Closes custom Dialogs (Menus) that are not in _ALLOWED_Dialogs */
 /*  Remove Keybinds ?     */ _RCK = true;	/* true or false */	/* recommended:  true */	/* Removes custom Keybinds and sets back the default ones */
 /*  Check CMDMenus ?      */ _CCM = true;	/* true or false */	/* recommended:  true */	/* only disable this if you know what you are doing. */
-/*  BLOCK ALL CMDMenus    */ _BCM = true;	/* true or false */	/* recommended:  true */	/* we don't need commandingMenus. so have this true. */
+/*  BLOCK ALL CMDMenus    */ _BCM = false;	/* true or false */	/* recommended:  true */	/* we don't need commandingMenus. so have this true. */
 /*  Check Actions ?       */ _CSA = false;	/* true or false */	/* recommended: false */	/* this checks mousewheel actions */
 /*  Force Terrain Grid ?  */ _FTG = 25;		/* 50, 25, 12.5  */	/* recommended:    25 */	/* if set to 50 grass will be very low for better client FPS */
 /* ********************************************************************************* */
 /*  ALLOWED Custom Dialogs "_ALLOWED_Dialogs" are only used if you have "_CUD = true;"  */
 /*  If you want install custom scripts using dialog windows, you can add IDD numbers  */
 /*  from the custom script's desc.h file included through MPMIssions/description.ext  */
-_ALLOWED_Dialogs = [-1,106,2200,6900,6901,6902,6903,420420,41144,711194,81000,64];
+_ALLOWED_Dialogs = [-1,106,2200,6900,6901,6902,6903,420420,41144,711194,81000,64,1001,1002,101,1];
 //	-1			Epoch Safe/Lockbox Keycode UI
 //	106		Inventory (Gear)
 //	2200		Blood Test
@@ -74,7 +73,7 @@ _ALLOWED_Dialogs = [-1,106,2200,6900,6901,6902,6903,420420,41144,711194,81000,64
 //	4444		Radio Communication
 //	65431,65432,65433,65434,65440,65441,65442		R3F ARTY Lift/Tow/Transport.
 //	711194	Plot Management	(http://epochmod.com/forum/index.php?/topic/16166-release-plot-management/)
-// 	EpochPacks
+// 	81000	EpochPacks
 
 /*  Player that have one of these items in their inventory will get punished!  */
 _ForbiddenItems =
@@ -108,7 +107,7 @@ _cMenu =
 	"RscDisplaySpawnSelecter","RscWatchMoreDir","#GETIN","RscStatus",
 	"RscCombatMode","RscFormations","RscTeam","RscSelectTeam","RscReply",
 	"RscCallSupport","#ACTION","#CUSTOM_RADIO","RscRadio","RscGroupRootMenu",
-	"BTC_Hud","PlotManagement"
+	"BTC_Hud","PlotManagement","RscDisplayPassword"
 ];
 
 /*  ALLOWED Actions "_dayzActions" are only used if you have "_CSA = true;"  */

@@ -17,8 +17,12 @@ if (isServer) then {
 		_key call server_hiveWrite;
 		diag_log format["DELETE: Object with ID: %2 deleted by %1",_activatingPlayer,_id];
 
-		deleteObjects set[count deleteObjects,_id];
-		publicVariable "deleteObjects";
+		if(_id in localIds) then {
+			// only send pv when object is rendered local
+			deleteObjects set[count deleteObjects,_id];
+			publicVariable "deleteObjects";
+			deleteVehicle (serverObjects select _id);
+		};
 
 	} else {
 		_key = format["CHILD:310:%1:",_uid];

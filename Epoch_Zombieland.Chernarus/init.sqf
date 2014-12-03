@@ -34,8 +34,8 @@ if (isServer) then {
 if (!isDedicated) then {
 	0 fadeSound 0;
 
-	waitUntil {!isNil "init_done"};
 	waitUntil {!isNil "sm_done"};
+	waitUntil {!isNil "init_done"};
 	waitUntil {!isNil "dayz_loadScreenMsg"};
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
 

@@ -1328,6 +1328,7 @@ publicVariable '"+_randvar28+"';
 		"+_randvar20+" = _PVAH_AdminReq;
 		'PVAH_AdminReq' addPublicVariableEventHandler {_this call "+_randvar20+";};
 		
+		dze_diag_fps = {};
 		_mPos = "+str _mPos+";
 		_debug = createMarker ['respawn_west',_mPos];
 		_cmPos = (getMarkerPos 'respawn_west');
@@ -1683,7 +1684,7 @@ publicVariable '"+_randvar28+"';
 						publicVariableServer '"+_randvar10+"';
 					};
 				};
-				_fbd = 'no';{if (!isNull (findDisplay _x)) exitWith {_fbd = str _x;};} forEach [17,155,156,162,1001,2929,3030,125,69,19,71,45,132,32,165,157,2727,30];
+				_fbd = 'no';{if (!isNull (findDisplay _x)) exitWith {_fbd = str _x;};} forEach [17,155,156,162,2929,3030,125,69,19,71,45,132,32,165,157,2727,30];
 				if (_fbd != 'no') then
 				{
 					[] spawn "+_randvar2+";
@@ -3215,7 +3216,7 @@ publicVariable '"+_randvar28+"';
 					if (typeName TraderItemList == 'CODE') then
 					{
 						[] spawn "+_randvar2+";
-						_log = format['Active Menu:   Trader Menu - not near a Trader! #1 - %1 @%2',_ltxt,getPosATL player];
+						_log = format['Active Menu: Trader Menu - not near a Trader! #1 - %1 @%2',_ltxt,getPosATL player];
 						"+_randvar10+" = [_name,_puid,'BAN',toArray (_log)];
 						publicVariableServer '"+_randvar10+"';
 					};
@@ -4653,7 +4654,7 @@ fnc_handle"+_randvar10+" =
 				_puid = _this select 0;_name = _this select 1;
 				_time = 0;while {1 == 1} do {_time = _time + 1;if (_time >= 20) exitWith {};if ((!isNil 'dayz_animalCheck') || (!isNil 'dayz_medicalH') || (!isNil 'dayz_slowCheck') || (!isNil 'dayz_gui')) exitWith {};uiSleep 1;};
 				lbsetpicture='no';createDiaryRecord='no';createTask='no';
-				createSimpleTask='no';buttonSetAction='no';processDiaryLink='no';createDiaryLink='no';
+				createSimpleTask='no';processDiaryLink='no';createDiaryLink='no';
 				lbSetData='no';createTeam='no';exec='no';addGroupIcon='no';
 				setGroupIconParams='no';addWeaponCargo='no';addMagazineCargo='no';setVehicleAmmoDef='no';
 				setWeaponReloadingTime='no';addMPEventHandler='no';createVehicleLocal='no';inputAction='no';
@@ -4675,7 +4676,7 @@ fnc_handle"+_randvar10+" =
 							publicVariableServer '"+_randvar10+"';
 						};
 						true
-					} count ['lbsetpicture','createDiaryRecord','createTask','createSimpleTask','buttonSetAction','processDiaryLink','createDiaryLink','lbSetData','createTeam',
+					} count ['lbsetpicture','createDiaryRecord','createTask','createSimpleTask','processDiaryLink','createDiaryLink','lbSetData','createTeam',
 					'exec','addGroupIcon','setGroupIconParams','addWeaponCargo','addMagazineCargo','setVehicleAmmoDef','setWeaponReloadingTime','addMPEventHandler','createVehicleLocal',
 					'inputAction','setWaypointStatements','addWaypoint','setMarkerBrushLocal','loadFile','rcallVarcode','saveStatus','loadStatus','saveVar','drawIcon','setMarkerText',
 					'setMarkerType','markerText','setMarkerAlpha','setMarkerBrush','setMarkerColor','setMarkerDir','setMarkerPos','setMarkerShape','setMarkerSize','createMarker',

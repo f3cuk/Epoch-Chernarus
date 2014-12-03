@@ -13,7 +13,7 @@ _worldspace set [0, (_worldspace select 0) call KK_fnc_floatToString];
 _worldspace set [1, (_worldspace select 1) call KK_fnc_positionToString];
 
 //Send request
-_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 , _charID, _worldspace, [], [], 0,_uid];
+_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,0,_charID,_worldspace,[],[],0,_uid];
 _key call server_hiveWrite;
 
 _object setVariable ["lastUpdate",time];

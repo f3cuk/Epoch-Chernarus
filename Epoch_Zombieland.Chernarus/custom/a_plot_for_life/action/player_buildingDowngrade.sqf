@@ -1,13 +1,12 @@
 private ["_location","_dir","_classname","_text","_object","_objectID","_objectUID","_newclassname","_refund","_obj","_upgrade","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_i","_invResult","_itemOut","_countOut","_abortInvAdd","_addedItems","_playerUID"];
 
 if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_48") , "PLAIN DOWN"]; };
-
 DZE_ActionInProgress = true;
 
 player removeAction s_player_downgrade_build;
 s_player_downgrade_build = 1;
 
-_distance = 30;
+_distance = (DZE_PlotPole select 1/2);
 _needText = localize "str_epoch_player_246";
 
 if (DZE_APlotforLife) then {
@@ -50,14 +49,13 @@ if(!_canBuildOnPlot) exitWith {  DZE_ActionInProgress = false; cutText [format[(
 
 _obj 				= _this select 3;
 _objectCharacterID	= _obj getVariable ["CharacterID","0"];
-_ownerID 			= _obj getVariable["ownerPUID","0"];
+_ownerID 			= _obj getVariable ["ownerPUID","0"];
 
 if(DZE_Lock_Door != _objectCharacterID) exitWith {  DZE_ActionInProgress = false; cutText [(localize "str_epoch_player_49") , "PLAIN DOWN"]; };
 
-_objectID 	= _obj getVariable ["ObjectID","0"];
-_objectUID	= _obj getVariable ["ObjectUID","0"];
+_objectID = _obj getVariable ["ObjectID","0"];
 
-if(_objectID == "0" && _objectUID == "0") exitWith {DZE_ActionInProgress = false; s_player_upgrade_build = -1; cutText [(localize "str_epoch_player_50"), "PLAIN DOWN"];};
+if(_objectID == "0") exitWith {DZE_ActionInProgress = false; s_player_upgrade_build = -1; cutText [(localize "str_epoch_player_50"), "PLAIN DOWN"];};
 
 _classname 		= typeOf _obj;
 _text 			= getText (configFile >> "CfgVehicles" >> _classname >> "displayName");
@@ -116,8 +114,11 @@ if ((count _upgrade) > 0) then {
 
 		cutText [format[(localize "str_epoch_player_142"),_text], "PLAIN DOWN", 5];
 
-		_playerUID = [player] call FNC_GetPlayerUID;
-		PVDZE_obj_Swap = [_objectCharacterID,_object,[_dir,_location,_playerUID],_classname,_obj,player];
+		if(local _obj) then {
+			_obj = _objectID;
+		};
+
+		PVDZE_obj_Swap = [_objectCharacterID,_object,[_dir,_location,_ownerID],_classname,_obj,player];
 		publicVariableServer "PVDZE_obj_Swap";
 
 		player reveal _object;

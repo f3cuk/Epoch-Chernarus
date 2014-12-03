@@ -78,6 +78,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 	waitUntil {!isNil "localObjects"};
 
 	spawnedObjects 	= [];
+	removed_objects = [];
 
 	dayz_loadScreenMsg = "Loading Player Bases..";
 
@@ -128,7 +129,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 				_object setVariable ["OEMPos",_pos];
 			};
 
-			spawnedObjects set[count spawnedObjects, _object];
+			spawnedObjects set[parseNumber(_idKey),_object];
 		};
 	} count localObjects;
 	
@@ -172,25 +173,31 @@ _nil = [] execVM "custom\remote\remote.sqf";
 	
 	client_remove_object = {
 
-		private ["_removed","_total","_t"];
+		private ["_removed"];
 
 		waitUntil {(spawnedLoaded)};
 
-		_removed	= _this select 1;
-		_total		= 0;
+		_removed = _this select 1;
 
-		diag_log format["[EpochBuild Remover] Removing %1 objects",count(_removed)];
+		if(!isNil "removed_objects") then { _removed = _removed - removed_objects;};
+
+		diag_log format["[EpochBuild Remover] Removing %1 objects",(count _removed)];
 		
 		_t = diag_tickTime;
 		
 		{
-			if(parseNumber(_x getVariable["ObjectID",false]) in _removed) then {
-				deleteVehicle _x;
-				_total = _total + 1;
-			};
-		} count spawnedObjects;
+			private["_delete_object"];
 
-		diag_log format["[EpochBuild Remover] Removed %2 objects in %1s ",str(diag_tickTime - _t),_total];
+			_delete_object = (spawnedObjects select _x);
+
+			if(!isNil "_delete_object") then {
+				deletevehicle _delete_object;
+				spawnedObjects set[_x, nil];
+				removed_objects set[count removed_objects,_x];
+			};
+		} count _removed;
+
+		diag_log format["[EpochBuild Remover] Removed %1 objects in %1s",(count _removed),str(diag_tickTime - _t)];
 	};
 
 	"deleteObjects" addPublicVariableEventHandler { (_this) spawn client_remove_object; };

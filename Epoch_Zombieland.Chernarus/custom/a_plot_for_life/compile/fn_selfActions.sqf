@@ -2,16 +2,16 @@ scriptName "Functions\misc\fn_selfActions.sqf";
 
 private ["_isWreckBuilding","_temp_keys","_magazinesPlayer","_isPZombie","_vehicle","_inVehicle","_hasFuelE","_hasRawMeat","_hasKnife","_hasToolbox","_onLadder","_nearLight","_canPickLight","_canDo","_text","_isHarvested","_isVehicle","_isVehicletype","_isMan","_traderType","_ownerID","_isAnimal","_isDog","_isZombie","_isDestructable","_isTent","_isFuel","_isAlive","_Unlock","_lock","_buy","_dogHandle","_lieDown","_warn","_hastinitem","_allowedDistance","_menu","_menu1","_humanity_logic","_low_high","_cancel","_traderMenu","_isWreck","_isRemovable","_isDisallowRepair","_rawmeat","_humanity","_speed","_dog","_hasbottleitem","_isAir","_isShip","_playersNear","_findNearestGens","_findNearestGen","_IsNearRunningGen","_cursorTarget","_isnewstorage","_itemsPlayer","_ownerKeyId","_typeOfCursorTarget","_hasKey","_oldOwner","_combi","_key_colors","_player_deleteBuild","_player_flipveh","_player_lockUnlock_crtl","_player_butcher","_player_studybody","_player_cook","_player_boil","_hasFuelBarrelE","_hasHotwireKit","_player_SurrenderedGear","_isSurrendered","_isModular","_isModularDoor","_ownerKeyName","_temp_keys_names","_hasAttached","_allowTow","_liftHeli","_found","_posL","_posC","_height","_liftHelis","_attached","_playerUID","_characterID","_isowner","_plotDistance","_PlotsmarkersNear","_targetmoney"];
 
-if (DZE_ActionInProgress) exitWith {}; // Do not allow if any script is running.
+if (DZE_ActionInProgress) exitWith {};
 
 _vehicle = vehicle player;
 _isPZombie = player isKindOf "PZombie_VB";
 _inVehicle = (_vehicle != player);
 
-_onLadder =		(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
+_onLadder = (getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
 _canDo = (!r_drag_sqf && !r_player_unconscious && !_onLadder);
 
-_nearLight = 	nearestObject [player,"LitObject"];
+_nearLight = nearestObject [player,"LitObject"];
 _canPickLight = false;
 if (!isNull _nearLight) then {
 	if (_nearLight distance player < 4) then {
@@ -19,7 +19,6 @@ if (!isNull _nearLight) then {
 	};
 };
 
-//Grab Flare
 if (_canPickLight && !dayz_hasLight && !_isPZombie) then {
 	if (s_player_grabflare < 0) then {
 		_text = getText (configFile >> "CfgAmmo" >> (typeOf _nearLight) >> "displayName");

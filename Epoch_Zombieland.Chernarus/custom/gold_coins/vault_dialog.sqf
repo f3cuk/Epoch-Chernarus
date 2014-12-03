@@ -25,15 +25,15 @@ if(typeName _vault == "OBJECT" && !isNull _vault) then {
 		targetvault = _vault;
 
 		if(_vault_action == 1) then {
-			ctrlSetText [1001,format['Get money (%1)',_money]];
+			ctrlSetText [1001,format["Get Money - (%1)",_money]];
+			ctrlSetText [1002,format['Max (%1)',_money]];
 			ctrlSetText [101,''];
-			ctrlshow [1002,false];
-			buttonSetAction [1,'[(ctrlText 101)] spawn VaultWithdrawAmount;'];
+			buttonSetAction [1,'[(ctrlText 101)] spawn VaultWithdrawAmount'];
 		} else {
-			ctrlSetText [1001,format['Deposit money (%1)',_money]];
+			ctrlSetText [1001,format["Deposit Money - (%1)",_money]];
+			ctrlSetText [1002,format['Max (%1)',player getVariable["cashMoney",0]]];
 			ctrlSetText [101,''];
-			ctrlshow [1002,false];
-			buttonSetAction [1,'[(ctrlText 101)] spawn VaultDepositAmount;'];		
+			buttonSetAction [1,'[(ctrlText 101)] spawn VaultDepositAmount'];
 		};
 
 	} else {

@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_hresult","_bresult","_delayTime","_marker","_unitGroup","_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission"];
+	private["_marker","_unitGroup","_b_missionTime","_h_missionTime","_h_startTime","_b_startTime","_result","_cnt","_currTime","_mission","_alldead"];
 
 	diag_log "WAI: Initialising missions";
 
@@ -41,6 +41,41 @@ if(isServer) then {
 			wai_bandit_mission set [count wai_bandit_mission, _x select 0];
 		};
 	} count wai_bandit_missions;
+
+	/*
+
+		// remove groups
+		[] spawn {
+
+			while{true} do {
+		
+				{
+
+					private ["_alldead"];
+
+					if(side _x != "WEST") then {
+
+						_alldead = true;
+
+						{
+							if(alive _x) exitWith { _alldead = false; };
+						} count (allUnits _x);
+
+						if(_alldead) then {
+							diag_log format["WAI: DELETED GROUP (%1), NO AI LEFT ALIVE",_x];
+							deleteGroup _x;
+						};
+
+					};
+				} forEach allGroups;
+
+				sleep 30;
+
+			};
+
+		};
+
+	*/
 
 	// Start mission monitor
 	while {true} do
@@ -90,6 +125,7 @@ if(isServer) then {
 			};
 
 		};
+
 		sleep 5;
 	};
 };
