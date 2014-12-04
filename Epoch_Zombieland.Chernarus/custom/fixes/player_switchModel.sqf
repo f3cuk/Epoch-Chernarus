@@ -11,7 +11,7 @@ if(count _this > 1) then {
 	_charidchanged 	= false;
 };
 
-_position 		= getPosATL player;
+_position 		= [player] call FNC_GetPos;
 _dir 			= getDir player;
 _currentAnim 	= animationState player;
 _tagSetting 	= player getVariable["DZE_display_name",false];
@@ -21,17 +21,17 @@ _countMags 		= call player_countMagazines;
 _magazines 		= _countMags select 0;
 _backpackMag	= [];
 
-if ((_playerUID == dayz_playerUID) && (count _magazines == 0) && (count (magazines player) > 0 )) exitWith {cutText [(localize "str_epoch_player_17"), "PLAIN DOWN"]};
+if ((_playerUID == dayz_playerUID) && (count _magazines == 0) && (count (magazines player) > 0 )) exitWith {cutText [(localize "str_epoch_player_17"),"PLAIN DOWN"]};
 
 _primweapon	= primaryWeapon player;
 _secweapon	= secondaryWeapon player;
 
 if(!(_primweapon in _weapons) && _primweapon != "") then {
-	_weapons set [(count _weapons), _primweapon];
+	_weapons set [(count _weapons),_primweapon];
 };
 
 if(!(_secweapon in _weapons) && _secweapon != "") then {
-	_weapons set [(count _weapons), _secweapon];
+	_weapons set [(count _weapons),_secweapon];
 };
 
 //BackUp Backpack
@@ -47,7 +47,7 @@ _currentWpn = currentWeapon player;
 _muzzles = getArray(configFile >> "cfgWeapons" >> _currentWpn >> "muzzles");
 
 //Secure Player for Transformation
-player setPosATL dayz_spawnPos;
+player SetPos dayz_spawnPos;
 
 _oldUnit 	= player;
 _oldGroup 	= group player;
@@ -60,11 +60,11 @@ _oldGroup 	= group player;
 _group 		= createGroup WEST;
 _newUnit 	= _group createUnit [_model,dayz_spawnPos,[],0,"NONE"];
 
-_newUnit 	setPosATL _position;
+_newUnit 	SetPos _position;
 _newUnit 	setDir _dir;
 [_newUnit]	joinSilent createGroup WEST;
 _newUnit	removeAllMPEventHandlers "MPHit";
-_newUnit	addMPEventHandler ["MPHit", {_this spawn fnc_plyrHit;}];
+_newUnit	addMPEventHandler ["MPHit",{_this spawn fnc_plyrHit;}];
 
 //Clear New Character
 {_newUnit removeMagazine _x;} count  magazines _newUnit;
@@ -72,7 +72,7 @@ removeAllWeapons _newUnit;
 
 //Equip New Charactar
 {
-	if (typeName _x == "ARRAY") then {if ((count _x) > 0) then {_newUnit addMagazine [(_x select 0), (_x select 1)]; }; } else { _newUnit addMagazine _x; };
+	if (typeName _x == "ARRAY") then {if ((count _x) > 0) then {_newUnit addMagazine [(_x select 0),(_x select 1)]; }; } else { _newUnit addMagazine _x; };
 } count _magazines;
 
 {
@@ -154,11 +154,11 @@ if ((!isNil "_newBackpackType") && (_newBackpackType != "")) then {
 		if (!_isWeapon) then {
 			_countr = _countr + 1;
 			if ((typeName _x) != "STRING") then {
-				(unitBackpack player) addMagazineCargoGlobal [(_x select 0), 1];
+				(unitBackpack player) addMagazineCargoGlobal [(_x select 0),1];
 				_idc = (4999 + _countr);
 				_idc setIDCAmmoCount (_x select 1);
 			} else {
-				(unitBackpack player) addMagazineCargoGlobal [_x, 1];
+				(unitBackpack player) addMagazineCargoGlobal [_x,1];
 			};
 		};
 	} count _backpackMag;
@@ -234,4 +234,4 @@ if(_primweapon != "") then {
 
 {
 	player reveal _x;
-} forEach (nearestObjects [getPosATL player, dayz_reveal, 50]);
+} forEach (nearestObjects [[player] call FNC_GetPos,dayz_reveal,50]);

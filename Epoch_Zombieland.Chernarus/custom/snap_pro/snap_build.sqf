@@ -66,7 +66,7 @@ fnc_initSnapPointsNearby = {
 			if (surfaceIsWater _posNearby) then {
 				_objectSnapGizmo setPosASL [(_posNearby) select 0,(_posNearby) select 1,(getPosASL _nearbyObject select 2) + (_x select 2)];
 			} else {
-				_objectSnapGizmo setPosATL _posNearby;
+				_objectSnapGizmo SetPos _posNearby;
 			};
 			snapGizmosNearby set [count snapGizmosNearby,_objectSnapGizmo];
 		} count _pointsNearby;
@@ -105,8 +105,8 @@ fnc_snapDistanceCheck = {
 						_distClosestPointFoundPos = getPosASL _distClosestPointFound;
 						_objectHelper setPosASL _distClosestPointFoundPos;
 					} else {
-						_distClosestPointFoundPos = getPosATL _distClosestPointFound;
-						_objectHelper setPosATL _distClosestPointFoundPos;
+						_distClosestPointFoundPos = [_distClosestPointFound] call FNC_GetPos;
+						_objectHelper SetPos _distClosestPointFoundPos;
 					}; 
 					_objectHelper setDir _distClosestPointFoundDir;
 					waitUntil {sleep 0.1; !helperDetach};
@@ -137,12 +137,12 @@ fnc_snapDistanceCheck = {
 						_object attachTo [_objectHelper];
 						_objectHelper setPosASL _distClosestPointFoundPos;
 					} else {
-						_distClosestPointFoundPos = getPosATL _distClosestPointFound;
-						_distClosestAttachedFoundPos = getPosATL _distClosestAttached;
+						_distClosestPointFoundPos = [_distClosestPointFound] call FNC_GetPos;
+						_distClosestAttachedFoundPos = [_distClosestAttached] call FNC_GetPos;
 						detach _object;
-						_objectHelper setPosATL _distClosestAttachedFoundPos;
+						_objectHelper SetPos _distClosestAttachedFoundPos;
 						_object attachTo [_objectHelper];
-						_objectHelper setPosATL _distClosestPointFoundPos;
+						_objectHelper SetPos _distClosestPointFoundPos;
 					};
 					_objectHelper setDir _distClosestPointFoundDir;
 					waitUntil {sleep 0.1; !helperDetach};
@@ -172,7 +172,7 @@ fnc_initSnapTutorial = {
 			_bldTxtFinal = "";
 			
 			//Delete on init
-			800 cutRsc ["Default", "PLAIN"];
+			800 cutRsc ["Default","PLAIN"];
 			sleep 0.1;
 			
 			//Init Tutorial text
@@ -196,12 +196,12 @@ fnc_initSnapTutorial = {
 				};
 
 				[
-					_bldTxtFinal, //structured text
-					0.73 * safezoneW + safezoneX, //number - x
-					0.65 * safezoneH + safezoneY, //number - y
-					30, //number - duration
-					1, // number - fade in time
-					0, // number - delta y
+					_bldTxtFinal,//structured text
+					0.73 * safezoneW + safezoneX,//number - x
+					0.65 * safezoneH + safezoneY,//number - y
+					30,//number - duration
+					1,// number - fade in time
+					0,// number - delta y
 					800 //number - layer ID
 				] spawn bis_fnc_dynamicText;
 			};
@@ -251,11 +251,11 @@ call {
 		{	
 			_x setobjecttexture [0,_objColorInactive];
 			if (_cnt == _selectedAction) then {
-				_newPos = [(getPosATL _x select 0),(getPosATL _x select 1),(getPosATL _x select 2)];
+				_newPos = [([_x] call FNC_GetPos select 0),([_x] call FNC_GetPos select 1),([_x] call FNC_GetPos select 2)];
 				detach _object;
 				detach _objectHelper;
 				_objectHelper setDir (getDir _object);
-				_objectHelper setPosATL _newPos;
+				_objectHelper SetPos _newPos;
 				_object attachTo [_objectHelper];
 				_x setobjecttexture [0,_objColorActive];
 				if (!helperDetach) then {_objectHelper attachTo [player]; _objectHelper setDir ((getDir _objectHelper)-(getDir player));};	

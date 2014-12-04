@@ -26,6 +26,6 @@ if (_ownerUID in _friendlies) then {
 	_friendly = true;
 };
 
-_return = [_owner, _friendly];
+_return = [_owner,_friendly];
 
 _return

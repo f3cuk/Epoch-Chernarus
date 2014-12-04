@@ -1,6 +1,6 @@
 private ["_oldPosition","_qty_in","_qty","_buy_o_sell","_needed","_finished","_abort","_tradeCounter","_traderID","_total_trades","_player_money","_finish_trade","_name","_textPart","_price","_emptySlots","_free_magazine_slots"];
 
-if(DZE_ActionInProgress) exitWith { cutText ["Trade already in progress." , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText ["Trade already in progress." ,"PLAIN DOWN"]; };
 if (isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
 
 DZE_ActionInProgress = true;
@@ -35,7 +35,7 @@ if(_buy_o_sell == "buy") then {
 
 	if(_free_magazine_slots < 1) exitWith { 
 		_needed =  _qty_in - _qty;
-		cutText ["You have no room in your inventory.", "PLAIN DOWN"];
+		cutText ["You have no room in your inventory.","PLAIN DOWN"];
 		DZE_ActionInProgress = false;
 	};
 
@@ -59,9 +59,9 @@ if(_buy_o_sell == "buy") then {
 		_tradeCounter = _tradeCounter + 1;
 
 		if(_total_trades == 1) then { 
-			cutText [format["Starting trade, stand still to complete trade",_tradeCounter,_total_trades] , "PLAIN DOWN"];
+			cutText [format["Starting trade,stand still to complete trade",_tradeCounter,_total_trades] ,"PLAIN DOWN"];
 		} else {
-			cutText [format["Starting trade, stand still to complete trade %1 of %2.",_tradeCounter,_total_trades] , "PLAIN DOWN"];
+			cutText [format["Starting trade,stand still to complete trade %1 of %2.",_tradeCounter,_total_trades] ,"PLAIN DOWN"];
 		};
 
 		// # F3 FAST TRADING
@@ -96,9 +96,9 @@ if(_buy_o_sell == "buy") then {
 				_abort = false;
 				
 				if(_name in ["ItemBriefcase_Base","ItemSilvercase_Base"]) then {
-					cutText ["Good luck with your EpochPack!", "PLAIN DOWN"];
+					cutText ["Good luck with your EpochPack!","PLAIN DOWN"];
 				} else {
-					cutText [format["Traded %1 %2 for %3",_price,CurrencyName,_textPart], "PLAIN DOWN"];
+					cutText [format["Traded %1 %2 for %3",_price,CurrencyName,_textPart],"PLAIN DOWN"];
 				};
 				
 				PVDZE_plr_Save = [player,(magazines player),true,true];
@@ -108,7 +108,7 @@ if(_buy_o_sell == "buy") then {
 				publicVariableServer "PVDZE_log";
 			} else {
 				_needed =  _price - _player_money;
-				cutText [format["You need another %1 %2",_needed,CurrencyName] , "PLAIN DOWN"];
+				cutText [format["You need another %1 %2",_needed,CurrencyName] ,"PLAIN DOWN"];
 				_abort = true;
 			};
 		};
@@ -146,7 +146,7 @@ if(_buy_o_sell == "buy") then {
 	_total_trades 	= _qty;
 
 	if (_total_trades < 1) exitWith {
-		cutText [format["You do not have a %1", _textPart], "PLAIN DOWN"];
+		cutText [format["You do not have a %1",_textPart],"PLAIN DOWN"];
 		call _finish_trade;
 	};
 
@@ -158,9 +158,9 @@ if(_buy_o_sell == "buy") then {
 		_tradeCounter = _tradeCounter + 1;
 
 		if(_total_trades == 1) then { 
-			cutText [format["Starting trade, stand still to complete trade.",_tradeCounter,_total_trades] , "PLAIN DOWN"];
+			cutText [format["Starting trade,stand still to complete trade.",_tradeCounter,_total_trades] ,"PLAIN DOWN"];
 		} else {
-			cutText [format["Starting trade, stand still to complete trade %1 of %2.",_tradeCounter,_total_trades] , "PLAIN DOWN"];
+			cutText [format["Starting trade,stand still to complete trade %1 of %2.",_tradeCounter,_total_trades] ,"PLAIN DOWN"];
 		};
 		
 		// # F3 FAST TRADING
@@ -181,7 +181,7 @@ if(_buy_o_sell == "buy") then {
 
 		if (!_finished) exitWith { 
 			r_interrupt = false;
-			cutText ["Cancelled trade" , "PLAIN DOWN"];
+			cutText ["Cancelled trade" ,"PLAIN DOWN"];
 		};
 
 		if (_finished) then {
@@ -192,15 +192,15 @@ if(_buy_o_sell == "buy") then {
 				_player_money = player getVariable ["cashMoney",0];	
 				player setVariable["cashMoney",(_player_money + _price),true];
 
-				cutText [format[("Traded %1 for %2 %3"),_textPart,_price,CurrencyName], "PLAIN DOWN"];
+				cutText [format[("Traded %1 for %2 %3"),_textPart,_price,CurrencyName],"PLAIN DOWN"];
 
 				PVDZE_plr_Save = [player,(magazines player),true,true] ;
 				publicVariableServer "PVDZE_plr_Save";
 
-				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",name player, (getPlayerUID player),_name,inTraderCity,_price,CurrencyName]];
+				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",name player,(getPlayerUID player),_name,inTraderCity,_price,CurrencyName]];
 				publicVariableServer "PVDZE_log";				
 			} else {
-				cutText [format["Something went wrong. Could not remove %1 from inventory",_name], "PLAIN DOWN"];
+				cutText [format["Something went wrong. Could not remove %1 from inventory",_name],"PLAIN DOWN"];
 				_abort = true;
 			};
 		};

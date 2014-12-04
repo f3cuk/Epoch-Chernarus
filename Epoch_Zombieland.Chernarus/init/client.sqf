@@ -39,7 +39,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 				_radius = _x select 3;
 				_color	= _x select 4;
 
-				_marker = createMarkerLocal [(_type + _name), _pos];
+				_marker = createMarkerLocal [(_type + _name),_pos];
 				_marker setMarkerColorLocal _color;
 				_marker setMarkerShapeLocal "ELLIPSE";
 				_marker setMarkerBrushLocal "SolidBorder";
@@ -97,8 +97,8 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		if (count _worldspace >= 2) then
 		{
 			if ((typeName (_worldspace select 0)) == "STRING") then {
-				_worldspace set [0, call compile (_worldspace select 0)];
-				_worldspace set [1, call compile (_worldspace select 1)];
+				_worldspace set [0,call compile (_worldspace select 0)];
+				_worldspace set [1,call compile (_worldspace select 1)];
 			};
 
 			_dir = _worldspace select 0;
@@ -109,7 +109,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		};
 
 		if (count _worldspace < 3) then {
-			_worldspace set [count _worldspace, "0"];
+			_worldspace set [count _worldspace,"0"];
 		};
 
 		_ownerPUID = _worldspace select 2;
@@ -121,9 +121,9 @@ _nil = [] execVM "custom\remote\remote.sqf";
 			_object setVariable ["OwnerPUID",_ownerPUID];
 			_object setVariable ["CharacterID",_ownerID];
 			_object setdir _dir;
-			_object setposATL _pos;
+			_object SetPos _pos;
 			_object setDamage _damage;
-			_object addEventHandler ["HandleDamage", {false}];
+			_object addEventHandler ["HandleDamage",{false}];
 			_object enableSimulation false;
 
 			if ((typeOf _object) in dayz_allowedObjects) then {
@@ -205,7 +205,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 	sleep 90;
 	if(!preload_done) then {
 		player enableSimulation false;
-		cutText ["Something went wrong with loading the objects, auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
+		cutText ["Something went wrong with loading the objects,auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
 		PVDZE_log = [format["[NO_OBJECTS] Player %1 (%2) was kicked to the lobby because of no objects.",(name player),(getPlayerUID player)]];
 		publicVariableServer "PVDZE_log";
 		sleep 5;

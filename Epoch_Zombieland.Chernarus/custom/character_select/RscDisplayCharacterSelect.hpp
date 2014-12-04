@@ -213,8 +213,8 @@ class RscCharacterSelectInfoText: RscText
 	y = 0.8 * safezoneH + safezoneY;
 	w = 1.0 * safezoneW;
 	h = 0.05 * safezoneH;
-	colorBackground[] = { -1, -1, -1, 0 };
-	colorText[] = { 0.5, 0.5, 0.5, 1 };
+	colorBackground[] = { -1,-1,-1,0 };
+	colorText[] = { 0.5,0.5,0.5,1 };
 	SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.0)";
 };
 
@@ -223,7 +223,7 @@ class RscDisplayCharacterSelect
 	idd = -1;
 	enableDisplay = 1;
 	
-	onLoad = "uiNamespace setVariable ['CharacterSelectDisplay', _this select 0]; diag_log 'CharacterSelectDisplay.onLoad';";
+	onLoad = "uiNamespace setVariable ['CharacterSelectDisplay',_this select 0]; diag_log 'CharacterSelectDisplay.onLoad';";
 
 	class Controls {
 		class CharacterSelectTitle: RscText
@@ -235,7 +235,7 @@ class RscDisplayCharacterSelect
 			y = 0.15 * safezoneH + safezoneY;
 			w = 1.0 * safezoneW;
 			h = 0.05 * safezoneH;
-			colorBackground[] = { -1, -1, -1, 0 };
+			colorBackground[] = { -1,-1,-1,0 };
 			SizeEx = "(((((safezoneW / safezoneH) min 1.2) / 1.2) / 25) * 1.5)";
 		};
 		class CharacterTitle1: RscCharacterSelectText

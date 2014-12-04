@@ -1,4 +1,4 @@
-/*%FSM<COMPILE "D:\Programme\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, DayZ Server Cleanup">*/
+/*%FSM<COMPILE "D:\Programme\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg,DayZ Server Cleanup">*/
 /*%FSM<HEAD>*/
 /*
 item0[] = {"init",0,250,-25.000000,-350.000000,75.000000,-300.000000,0.000000,"init"};

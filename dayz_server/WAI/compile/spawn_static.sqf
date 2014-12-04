@@ -56,9 +56,9 @@ if (isServer) then {
 			if (_class == "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
 		};
 
-		_unit = _unitGroup createUnit [_aiskin, [0,0,0], [], 10, "PRIVATE"];
+		_unit = _unitGroup createUnit [_aiskin,[0,0,0],[],10,"PRIVATE"];
 		
-		_static = createVehicle [_class, [(_position2 select 0),(_position2 select 1),(_position2 select 2)], [], 0, "CAN_COLLIDE"];
+		_static = createVehicle [_class,[(_position2 select 0),(_position2 select 1),(_position2 select 2)],[],0,"CAN_COLLIDE"];
 		_static setDir round(random 360);
 		_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
 		
@@ -154,7 +154,7 @@ if (isServer) then {
 		};
 		
 		ai_emplacement_units = (ai_emplacement_units + 1);
-		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "static"] call on_kill;}];
+		_unit addEventHandler ["Killed",{[_this select 0,_this select 1,"static"] call on_kill;}];
 		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
 		PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_static];
 			
@@ -166,7 +166,7 @@ if (isServer) then {
 
 		if (!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
+			wai_mission_data select _mission set [0,(_ainum + 1)];
 			_static setVariable ["missionclean","static"];
 			_static setVariable ["mission",_mission];
 			_unit setVariable ["mission",_mission];
@@ -180,13 +180,13 @@ if (isServer) then {
 
 	if(_aitype == "Hero") then {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
+			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
+			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};

@@ -51,13 +51,13 @@ if (_spawnRoll > _spawnChance) exitWith {
 _position = [getMarkerPos "center",0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
 _loot_pos = [_position,0,(_markerRadius - 100),10,0,2000,0] call BIS_fnc_findSafePos;
 
-diag_log(format["CRATE: SPAWNING MILITARY CRATE AT %1", _loot_pos]);
+diag_log(format["CRATE: SPAWNING MILITARY CRATE AT %1",_loot_pos]);
 
-_loot_box = createVehicle [_loot_box, _loot_pos,[], 0, "CAN_COLLIDE"];
+_loot_box = createVehicle [_loot_box,_loot_pos,[],0,"CAN_COLLIDE"];
 clearMagazineCargoGlobal _loot_box;
 clearWeaponCargoGlobal _loot_box;
 
-_clutter = createVehicle ["ClutterCutter_small_2_EP1", _loot_pos, [], 0, "CAN_COLLIDE"];
+_clutter = createVehicle ["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
 _clutter setPos _loot_pos;
 
 {
@@ -68,7 +68,7 @@ _clutter setPos _loot_pos;
 	_loot_box addMagazineCargoGlobal [_x,1];
 } count (_loot select 1);
 
-RemoteMessage 	= ["radio",format["[RADIO] A special forces unit lost it's cargo, reports suggest %1 is it approximate position",mapGridPosition _position]];
+RemoteMessage 	= ["radio",format["[RADIO] A special forces unit lost it's cargo,reports suggest %1 is it approximate position",mapGridPosition _position]];
 RemoteMarker 	= ["ItemRadio",_position,"ELLIPSE","ColorRed",_markerRadius,0.5,_wait_time,"military_drop_marker"];
 
 publicVariable "RemoteMessage";

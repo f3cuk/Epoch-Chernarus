@@ -10,7 +10,7 @@ fnc_remote_message = {
 			if(player hasWeapon "ItemRadio") then { 
 				if(player getVariable["radiostate",true]) then {
 					systemChat _message;
-					[objNull, player, rSAY, "Radio_Message_Sound", 30] call RE;
+					[objNull,player,rSAY,"Radio_Message_Sound",30] call RE;
 				};
 			}; 
 		};
@@ -42,7 +42,7 @@ fnc_remote_marker = {
 		_marker setMarkerAlphaLocal _alpha;
 		_marker setMarkerSizeLocal [(_size),(_size)];
 
-		[_timeout, _marker] spawn {
+		[_timeout,_marker] spawn {
 			sleep (_this select 0);
 			deleteMarkerLocal (_this select 1);
 		};

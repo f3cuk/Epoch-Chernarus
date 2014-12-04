@@ -1,5 +1,5 @@
 if (!isDedicated) then {
-	"filmic" setToneMappingParams [0.07, 0.31, 0.23, 0.37, 0.011, 3.750, 6, 4]; setToneMapping "Filmic";
+	"filmic" setToneMappingParams [0.07,0.31,0.23,0.37,0.011,3.750,6,4]; setToneMapping "Filmic";
 	BIS_fnc_numberDigits		= compile preprocessFileLineNumbers "custom\gold_coins\functions\numberDigits.sqf";
 	BIS_fnc_numberText			= compile preprocessFileLineNumbers "custom\gold_coins\functions\numberText.sqf";
 	BIS_Effects_Burn			= compile preprocessFile "\ca\Data\ParticleEffects\SCRIPTS\destruction\burn.sqf";
@@ -26,11 +26,11 @@ if (!isDedicated) then {
 	player_removeNearby			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\object_removeNearby.sqf";
 
 	player_removeTankTrap = {
-		[["Hedgehog_DZ"], 1,"STR_EPOCH_ACTIONS_14"] call player_removeNearby;
+		[["Hedgehog_DZ"],1,"STR_EPOCH_ACTIONS_14"] call player_removeNearby;
 	};
 
 	player_removeNet = {
-		[["DesertCamoNet","ForestCamoNet_DZ","DesertLargeCamoNet_DZ","ForestLargeCamoNet_DZ"], 5,"str_epoch_player_8"] call player_removeNearby;
+		[["DesertCamoNet","ForestCamoNet_DZ","DesertLargeCamoNet_DZ","ForestLargeCamoNet_DZ"],5,"str_epoch_player_8"] call player_removeNearby;
 	};
 
 	player_login = {
@@ -185,7 +185,7 @@ if (!isDedicated) then {
 	};
 
 	ui_initDisplay = {
-		private["_control","_ctrlBleed","_display","_ctrlFracture","_ctrlDogFood","_ctrlDogWater","_ctrlDogWaterBorder", "_ctrlDogFoodBorder"];
+		private["_control","_ctrlBleed","_display","_ctrlFracture","_ctrlDogFood","_ctrlDogWater","_ctrlDogWaterBorder","_ctrlDogFoodBorder"];
 		disableSerialization;
 		_display = uiNamespace getVariable 'DAYZ_GUI_display';
 		_control = 	_display displayCtrl 1204;
@@ -219,9 +219,9 @@ if (!isDedicated) then {
 			_tPos set [2,(_tPos select 2)+1];
 			_zPos set [2,(_zPos select 2)+1];
 			if ((count _tPos > 0) && (count _zPos > 0)) then {
-				_cantSee = terrainIntersectASL [_tPos, _zPos];
+				_cantSee = terrainIntersectASL [_tPos,_zPos];
 				if (!_cantSee) then {
-					_cantSee = lineIntersects [_tPos, _zPos, _agent, vehicle _target];
+					_cantSee = lineIntersects [_tPos,_zPos,_agent,vehicle _target];
 				};
 			};
 		};
@@ -284,7 +284,7 @@ if (!isDedicated) then {
 		openMap false;
 		closeDialog 0;
 		if (gear_done) then {sleep 0.001;};
-		player action ["Gear", player];
+		player action ["Gear",player];
 		if (gear_done) then {sleep 0.001;};
 		_dialog = findDisplay 106;
 		_i = 0;
@@ -294,7 +294,7 @@ if (!isDedicated) then {
 			if (gear_done) then {sleep 0.001;};
 			if (_i in [100,200,299]) then {
 				closeDialog 0;
-				player action ["Gear", player];
+				player action ["Gear",player];
 			};
 			if (_i > 300) exitWith {};
 		};
@@ -329,7 +329,7 @@ if (!isDedicated) then {
 	};
 
 	dze_surrender_off = {
-		player setVariable ["DZE_Surrendered", false, true];
+		player setVariable ["DZE_Surrendered",false,true];
 		DZE_Surrender = false;
 	};
 
@@ -370,7 +370,7 @@ if (!isDedicated) then {
 		} count _objInfo;
 		_i = _i + 2; 
 		for "_k" from _i to _lenInfo do {
-			_objName set [(count _objName), (_objInfo select _k)];
+			_objName set [(count _objName),(_objInfo select _k)];
 		};
 		_objName = toLower(toString(_objName));
 		_objName
@@ -379,7 +379,7 @@ if (!isDedicated) then {
 	dze_isnearest_player = {
 		private ["_notClosest","_playerDistance","_nearPlayers","_playerNear"];
 		if(!isNull _this) then {
-			_nearPlayers = _this nearEntities ["CAManBase", 12];
+			_nearPlayers = _this nearEntities ["CAManBase",12];
 			_playerNear = ({isPlayer _x} count _nearPlayers) > 1;
 			_notClosest = false;
 			if (_playerNear) then {
@@ -450,7 +450,7 @@ if (!isDedicated) then {
 			};
 			_timeOut = _timeOut + 1;
 			if (_timeOut >= _maxtimeOut) then {
-				1 cutText [localize "str_player_login_timeout", "PLAIN DOWN"];
+				1 cutText [localize "str_player_login_timeout","PLAIN DOWN"];
 				sleep 5;
 				endLoadingScreen;
 				endMission "END1";
@@ -523,7 +523,7 @@ FNC_GetPlayerUID = {
 			_PID = call (compile "GetPlayerUIDOld _object");
 		} else {
 			_PID = GetPlayerUID _object;
-			diag_log format["Your game version, %1, is less than the required for the old UID system; using Steam ID system instead. Update to 1.63.125548 (or latest steam beta)", _version];
+			diag_log format["Your game version,%1,is less than the required for the old UID system; using Steam ID system instead. Update to 1.63.125548 (or latest steam beta)",_version];
 		};
 	};
 	_PID
@@ -536,7 +536,7 @@ FNC_GetSetPos = {
 	if (surfaceIsWater _pos) then {
 		_thingy setPosASL _pos;
 	} else {
-		_thingy setPosATL (ASLToATL _pos);
+		_thingy SetPos (ASLToATL _pos);
 	};
 };
 
@@ -562,10 +562,10 @@ zombie_initialize = {
 	private ["_unit","_id"];
 	_unit = _this select 0;
 	if (isServer) then {
-		_unit addEventHandler ["local", {_this call zombie_findOwner}];
+		_unit addEventHandler ["local",{_this call zombie_findOwner}];
 	};
-	_id = _unit addeventhandler ["HandleDamage", { _this call local_zombieDamage }];
-	_id = _unit addeventhandler ["Killed", { [_this, "zombieKills"] call local_eventKill }];
+	_id = _unit addeventhandler ["HandleDamage",{ _this call local_zombieDamage }];
+	_id = _unit addeventhandler ["Killed",{ [_this,"zombieKills"] call local_eventKill }];
 };
 
 dayz_EjectPlayer = {
@@ -575,7 +575,7 @@ dayz_EjectPlayer = {
 	if(_inVehicle) then {
 		_noDriver = ((_vehicle emptyPositions "driver") > 0);
 		if (_noDriver && (speed _vehicle) != 0) then {
-			player action ["eject", _vehicle];
+			player action ["eject",_vehicle];
 		};
 	};
 };
@@ -595,7 +595,7 @@ player_sumMedical = {
 	_arms = _character getVariable ["hit_arms",0];
 	_medical = [
 		_character getVariable["USEC_isDead",false],
-		_character getVariable["NORRN_unconscious", false],
+		_character getVariable["NORRN_unconscious",false],
 		_character getVariable["USEC_infected",false],
 		_character getVariable["USEC_injured",false],
 		_character getVariable["USEC_inPain",false],

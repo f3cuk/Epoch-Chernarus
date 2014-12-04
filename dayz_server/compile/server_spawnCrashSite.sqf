@@ -29,7 +29,7 @@ while {true} do {
 
 	_crashName	= getText (configFile >> "CfgVehicles" >> _crashModel >> "displayName");
 
-	diag_log(format["CRASHSPAWNER: %1%2 chance to spawn '%3' with loot table '%4' in %5 seconds", round(_spawnChance * 100), '%', _crashName, _lootTable, _timeToSpawn]);
+	diag_log(format["CRASHSPAWNER: %1%2 chance to spawn '%3' with loot table '%4' in %5 seconds",round(_spawnChance * 100),'%',_crashName,_lootTable,_timeToSpawn]);
 
 	while {time < _timeToSpawn} do {
 		sleep 5;
@@ -41,9 +41,9 @@ while {true} do {
 
 		_position = [getMarkerPos _spawnMarker,0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
 
-		diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4", _crashName, _lootTable, time, str(_position)]);
+		diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4",_crashName,_lootTable,time,str(_position)]);
 
-		_crash = createVehicle [_crashModel,_position, [], 0, "CAN_COLLIDE"];
+		_crash = createVehicle [_crashModel,_position,[],0,"CAN_COLLIDE"];
 		_crash setDir round(random 360);
 
 		_config = configFile >> "CfgVehicles" >> _crashModel >> "heightAdjustment";
@@ -54,7 +54,7 @@ while {true} do {
 			_newHeight = getNumber(_config);
 		};
 
-		_adjustedPos = [(_position select 0), (_position select 1), _newHeight];
+		_adjustedPos = [(_position select 0),(_position select 1),_newHeight];
 		_crash setPos _adjustedPos;
 		_crash setVariable ["ObjectID","1",true];
 		_crash enableSimulation false;
@@ -86,11 +86,11 @@ while {true} do {
 			_index = floor(random _cntWeights);
 			_index = _weights select _index;
 			_itemType = _itemTypes select _index;
-			[_itemType select 0, _itemType select 1, _position, 5] call spawn_loot;
+			[_itemType select 0,_itemType select 1,_position,5] call spawn_loot;
 
-			diag_log(format["CRASHSPAWNER: Loot spawn at '%1' with loot table '%2'", _crashName, _lootTable]);
+			diag_log(format["CRASHSPAWNER: Loot spawn at '%1' with loot table '%2'",_crashName,_lootTable]);
 
-			_nearby = _position nearObjects ["ReammoBox", sizeOf(_crashModel)];
+			_nearby = _position nearObjects ["ReammoBox",sizeOf(_crashModel)];
 			{
 				_x setVariable ["permaLoot",true];
 			} count _nearBy;

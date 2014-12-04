@@ -2,7 +2,7 @@ private ["_unit","_variable","_arraytosend","_owner","_vehicle","_qty"];
 
 _unit = _this select 0;
 
-if(isNull _unit) exitWith {diag_log format ["ERROR: sendToClient is Null: %1", _unit]};
+if(isNull _unit) exitWith {diag_log format ["ERROR: sendToClient is Null: %1",_unit]};
 
 _variable 		= _this select 1;
 _arraytosend 	= _this select 2;

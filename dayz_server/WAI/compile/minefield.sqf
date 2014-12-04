@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private["_bomb","_area_max","_area_min","_position", "_area", "_num_mines","_allmines"];
+	private["_bomb","_area_max","_area_min","_position","_area","_num_mines","_allmines"];
 
 	_position 	= _this select 0;
 	_area_min 	= _this select 1;
@@ -13,7 +13,7 @@ if(isServer) then {
 		private["_mine_pos","_mine"];
 		
 		_mine_pos = [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
-		_mine = createVehicle ["Mine", _mine_pos, [], 0, "CAN_COLLIDE"];
+		_mine = createVehicle ["Mine",_mine_pos,[],0,"CAN_COLLIDE"];
 
 		_mine spawn {
 
@@ -29,13 +29,13 @@ if(isServer) then {
 				} count playableUnits;
 				(_vehicle_near)
 			};
-			_bomb = "Bo_GBU12_lgb" createVehicle (getPosATL _this);
+			_bomb = "Bo_GBU12_lgb" createVehicle ([_this] call FNC_GetPos);
 			sleep 3;
 			deleteVehicle _bomb;
 			deleteVehicle _this;
 		};
 
-		_allmines set [(count _allmines), _mine];
+		_allmines set [(count _allmines),_mine];
 
 	};
 	

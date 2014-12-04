@@ -27,8 +27,8 @@ if(isServer) then {
 
 	{
 		
-		if (_x getVariable ["mission", nil] == _mission) then {
-			_mission_units set [count _mission_units, _x];
+		if (_x getVariable ["mission",nil] == _mission) then {
+			_mission_units set [count _mission_units,_x];
 		};
 
 	} count allUnits;
@@ -46,7 +46,7 @@ if(isServer) then {
 	_crate setVariable ["ObjectID","1",true];
 	_crate setVariable ["permaLoot",true];
 
-	_crate addEventHandler ["HandleDamage", {}];
+	_crate addEventHandler ["HandleDamage",{}];
 	
 	markerready = true;
 
@@ -139,7 +139,7 @@ if(isServer) then {
 
 			if (_type == "resource") exitWith {
 				_node 		= (_this select 1) select 1;
-				_resource 	= _node getVariable ["Resource", 0];
+				_resource 	= _node getVariable ["Resource",0];
 				if (_resource == 0) then {
 					{
 						if((isPlayer _x) && (_x distance _position <= 80)) then {
@@ -158,15 +158,15 @@ if(isServer) then {
 		if (typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 
 			if(wai_crates_smoke && sunOrMoon == 1) then {
-				_marker = "smokeShellPurple" createVehicle getPosATL _crate;
-				_marker setPosATL (getPosATL _crate);
+				_marker = "smokeShellPurple" createVehicle [_crate] call FNC_GetPos;
+				_marker SetPos ([_crate] call FNC_GetPos);
 				_marker attachTo [_crate,[0,0,0]];
 			};
 
 			if (wai_crates_flares && sunOrMoon != 1) then {
-				_marker = "RoadFlare" createVehicle getPosATL _crate;
-				_marker setPosATL (getPosATL _crate);
-				_marker attachTo [_crate, [0,0,0]];
+				_marker = "RoadFlare" createVehicle [_crate] call FNC_GetPos;
+				_marker SetPos ([_crate] call FNC_GetPos);
+				_marker attachTo [_crate,[0,0,0]];
 				
 				_in_range = _crate nearEntities ["CAManBase",1250];
 				
@@ -233,13 +233,13 @@ if(isServer) then {
 							if(typeName _x == "ARRAY") then {
 							
 								{
-									if ((_x getVariable ["ObjectID", nil]) == nil) then {
+									if ((_x getVariable ["ObjectID",nil]) == nil) then {
 										deleteVehicle _x;
 									};
 								} count _x;
 							
 							} else {
-								if ((_x getVariable ["ObjectID", nil]) == nil) then {
+								if ((_x getVariable ["ObjectID",nil]) == nil) then {
 									deleteVehicle _x;
 								};
 							};
@@ -260,7 +260,7 @@ if(isServer) then {
 
 		{
 		
-			if (_x getVariable ["mission", nil] == _mission) then {
+			if (_x getVariable ["mission",nil] == _mission) then {
 			
 				if (alive _x) then {
 
@@ -307,7 +307,7 @@ if(isServer) then {
 	
 	_map_marker = (wai_mission_data select _mission) select 1;
 	wai_mission_markers = wai_mission_markers - [(_map_marker + str(_mission))];
-	wai_mission_data set [_mission, -1];
+	wai_mission_data set [_mission,-1];
 	_complete
 
 };

@@ -27,8 +27,8 @@ if(isServer) then {
 
 		ai_friendly_behaviour		= false;		// make ai friendly towards comrades
 
-		player_bandit				= -5000;		// this is the amount you declare someone to be a bandit on your server, bandit AI will not attack you if ai_friendly_behaviour is true
-		player_hero					= 5000;			// this is the amount you declare someone to be a hero on your server, hero AI will not attack you if ai_friendly_behaviour is true
+		player_bandit				= -5000;		// this is the amount you declare someone to be a bandit on your server,bandit AI will not attack you if ai_friendly_behaviour is true
+		player_hero					= 5000;			// this is the amount you declare someone to be a hero on your server,hero AI will not attack you if ai_friendly_behaviour is true
 
 		ai_share_info				= true;			// AI share info on player position
 		ai_share_distance			= 300;			// distance from killed AI for AI to share your rough position
@@ -79,9 +79,9 @@ if(isServer) then {
 		wai_mission_system			= true;			// use built in mission system
 
 		wai_mission_markers			= ["DZMSMajMarker","DZMSMinMarker","DZMSBMajMarker","DZMSBMinMarker"];
-		wai_avoid_missions			= 750;			// avoid spawning missions this close to other missions, these are defined in wai_mission_markers
+		wai_avoid_missions			= 750;			// avoid spawning missions this close to other missions,these are defined in wai_mission_markers
 		wai_avoid_traders			= 750;			// avoid spawning missions this close to traders
-		wai_avoid_town				= 0;			// avoid spawning missions this close to towns, *** doesn't function with infiSTAR enabled ***
+		wai_avoid_town				= 0;			// avoid spawning missions this close to towns,*** doesn't function with infiSTAR enabled ***
 		wai_avoid_road				= 0;			// avoid spawning missions this close to roads
 		wai_avoid_water				= 50;			// avoid spawning missions this close to water
 

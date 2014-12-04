@@ -1,6 +1,6 @@
 private ["_number","_mod","_digitsCount","_modBase","_numberText","_foreachindex","_digits"];
 
-_number = [_this,0,0,[0, ""]] call bis_fnc_param;
+_number = [_this,0,0,[0,""]] call bis_fnc_param;
 _mod = [_this,1,3,[0]] call bis_fnc_param;
 
 if (typeName _number == "STRING") then {

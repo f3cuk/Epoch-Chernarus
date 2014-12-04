@@ -1,6 +1,6 @@
 private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_finished","_removed","_msg","_config","_configName","_wepType","_isToolBelt","_isBinocs","_abort","_secondaryWeapon","_isPistol","_isRifle","_qtychange","_newM","_myMoney"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -68,13 +68,13 @@ if(_buy_o_sell == "sell") then {
 };
 
 if (_abort) exitWith {
-	cutText [_msg, "PLAIN DOWN"];
+	cutText [_msg,"PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 };
 
 if (_qty >= _qty_in) then {
 
-	cutText [(localize "str_epoch_player_105"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 	
@@ -94,7 +94,7 @@ if (_qty >= _qty_in) then {
 
 		if (!_finished) exitWith {
 			DZE_ActionInProgress = false;
-			cutText ["Cancelled trade", "PLAIN DOWN"];
+			cutText ["Cancelled trade","PLAIN DOWN"];
 		};
 
 	// # F3 FAST TRADING
@@ -126,7 +126,7 @@ if (_qty >= _qty_in) then {
 				if(_buy_o_sell == "buy") then {
 
 					_qtychange = _qty - _qty_in;
-					player setVariable ["cashMoney", _qtychange , true];	
+					player setVariable ["cashMoney",_qtychange ,true];	
 					_newM = player getVariable ["cashMoney",0];
 					_removed = _qty - _newM; // 
 								
@@ -134,7 +134,7 @@ if (_qty >= _qty_in) then {
 						for "_x" from 1 to _qty_out do {
 							player addWeapon _part_out;
 						};
-						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut], "PLAIN DOWN"];
+						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					};
 
 				} else {
@@ -145,9 +145,9 @@ if (_qty >= _qty_in) then {
 
 						_myMoney = player getVariable ["cashMoney",0];
 						_myMoney = _myMoney + _qty_out;
-						player setVariable ["cashMoney", _myMoney , true];	
+						player setVariable ["cashMoney",_myMoney ,true];	
 									
-						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut], "PLAIN DOWN"];
+						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					};
 				};
 		
@@ -159,7 +159,7 @@ if (_qty >= _qty_in) then {
 				s_player_parts_crtl = -1;
 
 			} else {
-				cutText [format[(localize "str_epoch_player_183"),_textPartOut] , "PLAIN DOWN"];
+				cutText [format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 
 			dayzTradeResult = nil;
@@ -168,7 +168,7 @@ if (_qty >= _qty_in) then {
 
 } else {
 	_needed =  _qty_in - _qty;
-	cutText [format[(localize "str_epoch_player_184"),_needed,_textPartIn] , "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_184"),_needed,_textPartIn] ,"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

@@ -20,7 +20,7 @@ dayz_unsaved = true;
 //Logout
 _humanity		= player getVariable["humanity",0];
 _medical 		= player call player_sumMedical;
-_worldspace 	= [round(direction player),getPosATL player];
+_worldspace 	= [round(direction player),[player] call FNC_GetPos];
 _zombieKills 	= player getVariable ["zombieKills",0];
 _headShots 		= player getVariable ["headShots",0];
 _humanKills 	= player getVariable ["humanKills",0];
@@ -35,7 +35,7 @@ _cashMoney		= player getVariable ["cashMoney",0];
 //set medical values
 if (count _medical > 0) then {
 	player setVariable["USEC_isDead",(_medical select 0),true];
-	player setVariable["NORRN_unconscious", (_medical select 1), true];
+	player setVariable["NORRN_unconscious",(_medical select 1),true];
 	player setVariable["USEC_infected",(_medical select 2),true];
 	player setVariable["USEC_injured",(_medical select 3),true];
 	player setVariable["USEC_inPain",(_medical select 4),true];
@@ -54,8 +54,8 @@ if (count _medical > 0) then {
 	
 	//Add fractures
 	_fractures = (_medical select 9);
-	[player,"legs", (_fractures select 0)] call object_setHit;
-	[player,"hands", (_fractures select 1)] call object_setHit;
+	[player,"legs",(_fractures select 0)] call object_setHit;
+	[player,"hands",(_fractures select 1)] call object_setHit;
 } else {
 	//Reset Fractures
 	player setVariable ["hit_legs",0,true];

@@ -39,7 +39,7 @@ if (_button == 1) then {
 		_outputOriented = 	getNumber	(_config >> "outputOriented") == 1;
 		_height = _height + (0.025 * safezoneH);
 		_compile =  format["_id = '%2' %1;",_script,_item];
-		uiNamespace setVariable ['uiControl', _control];
+		uiNamespace setVariable ['uiControl',_control];
 		if (_outputOriented) then {
 			/*
 				This flag means that the action is output oriented
@@ -69,7 +69,7 @@ if (_button == 1) then {
 			_text =  getText (_config >> "text");
 			_script =  getText (_config >> "script");
 			_height = _height + (0.025 * safezoneH);
-			uiNamespace setVariable ['uiControl', _control];
+			uiNamespace setVariable ['uiControl',_control];
 			_menu ctrlSetText _text;
 			_menu ctrlSetEventHandler ["ButtonClick",_script];
 		};
@@ -88,11 +88,11 @@ if (_button == 1) then {
 			_ownerKeyName = getText(configFile >> "CfgWeapons" >> _item >> "displayName");
 			_temp_keys_names set [_ownerKeyId,_ownerKeyName];
 			
-			_objects = nearestObjects [[player] call FNC_GetPos, ["LandVehicle","Helicopter","Plane","Ship"], 50];
+			_objects = nearestObjects [[player] call FNC_GetPos,["LandVehicle","Helicopter","Plane","Ship"],50];
 			_i = 0;
 			{
 				if (alive _x) then {
-					_ownerID = _x getVariable ["CharacterID", "0"];
+					_ownerID = _x getVariable ["CharacterID","0"];
 					_hasKey = (_ownerID == str(_ownerKeyId));
 					_oldOwner = (_ownerID == dayz_playerUID);
 
@@ -104,7 +104,7 @@ if (_button == 1) then {
 							_text =  "Unlock";
 							_script =  "[""" + _ownerID + """] execVM ""scripts\remote_unlock.sqf""";
 							_height = _height + (0.025 * safezoneH);
-							uiNamespace setVariable ['uiControl', _control];
+							uiNamespace setVariable ['uiControl',_control];
 							_menu ctrlSetText _text;
 							_menu ctrlSetEventHandler ["ButtonClick",_script];
 						} else {
@@ -114,7 +114,7 @@ if (_button == 1) then {
 							_text =  "Lock";
 							_script =  "[""" + _ownerID + """] execVM ""scripts\remote_lock.sqf""";
 							_height = _height + (0.025 * safezoneH);
-							uiNamespace setVariable ['uiControl', _control];
+							uiNamespace setVariable ['uiControl',_control];
 							_menu ctrlSetText _text;
 							_menu ctrlSetEventHandler ["ButtonClick",_script];
 						};
@@ -124,7 +124,7 @@ if (_button == 1) then {
 						_text =  "Engine";
 						_script =  "[""" + _ownerID + """] execVM ""scripts\remote_engine.sqf""";
 						_height = _height + (0.025 * safezoneH);
-						uiNamespace setVariable ['uiControl', _control];
+						uiNamespace setVariable ['uiControl',_control];
 						_menu ctrlSetText _text;
 						_menu ctrlSetEventHandler ["ButtonClick",_script];
 					};

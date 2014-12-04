@@ -16,16 +16,16 @@ if (_spawnRoll <= _spawnChance) then {
 
 	_needsrelocated = true;
 	while { _needsrelocated } do {
-		_position = [getMarkerPos _spawnMarker, 0, _spawnRadius, 10, 0, 2000, 0] call BIS_fnc_findSafePos;
-		_istoomany = _position nearObjects["AllVehicles", 10];
+		_position = [getMarkerPos _spawnMarker,0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
+		_istoomany = _position nearObjects["AllVehicles",10];
 		if ((count _istoomany) == 0) then {
 			_needsrelocated = false;
 		};
 	};
 
-	diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4", _crashModel, _lootTable, time, str(_position)]);
+	diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4",_crashModel,_lootTable,time,str(_position)]);
 
-	_crash = createVehicle[_crashModel, _position, [], 0, "CAN_COLLIDE"];
+	_crash = createVehicle[_crashModel,_position,[],0,"CAN_COLLIDE"];
 
 	_crash setDir round(random 360);
 
@@ -46,16 +46,16 @@ if (_spawnRoll <= _spawnChance) then {
 
 	for "_x" from 1 to _num do {
 		_maxLootRadius = (random _maxLootRadius) + _minLootRadius;
-		_lootPos = [_pos, _maxLootRadius, random 360] call BIS_fnc_relPos;
+		_lootPos = [_pos,_maxLootRadius,random 360] call BIS_fnc_relPos;
 		_index1 = floor(random _cntWeights);
 		_index2 = _weights select _index1;
 		_itemType = _itemTypes select _index2;
-		[_itemType select 0, _itemType select 1, _lootPos, 5] call spawn_loot;
+		[_itemType select 0,_itemType select 1,_lootPos,5] call spawn_loot;
 	};
 
-	_nearby = _position nearObjects["ReammoBox", sizeOf(_crashModel)]; 
+	_nearby = _position nearObjects["ReammoBox",sizeOf(_crashModel)]; 
 
 	{
-		_x setVariable["permaLoot", true];
+		_x setVariable["permaLoot",true];
 	} count _nearBy;
 };

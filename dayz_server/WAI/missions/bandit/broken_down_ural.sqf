@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private			["_complete","_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [30] call find_position;
@@ -31,8 +31,8 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],		// mission number and crate
-		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 		// cleanup objects
+		["kill"],				// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_baserunover],		// cleanup objects
 		"Heroes are defending a broken down Ural! Check your map for the location!",	// mission announcement
 		"The supplies have been secured by bandits!",									// mission success
 		"Bandits failed to secure the supplies"											// mission fail

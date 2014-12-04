@@ -25,7 +25,7 @@ if (_option == 1) then {
 		};
 	} count _objects;
 	_name = if (alive _player) then { name _player; } else { "Dead Player"; };
-	diag_log format ["MAINTAIN AREA BY %1 - %2 Objects at %3",_name,_i,(getPosATL _player)];
+	diag_log format ["MAINTAIN AREA BY %1 - %2 Objects at %3",_name,_i,([_player] call FNC_GetPos)];
 };
 
 if (_option == 2) then {

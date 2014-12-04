@@ -70,7 +70,7 @@ if (isServer) then {
 
 	};
 
-	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended, aborting para drop",_position]; }; };
+	if(!_missionrunning) exitWith { if(debug_mode) then { diag_log format["WAI: Mission at %1 already ended,aborting para drop",_position]; }; };
 
 	if(debug_mode) then { diag_log format ["WAI: Spawning a %1 with %2 units to be para dropped at %3",_heli_class,_paranumber,_position]; };
 
@@ -108,9 +108,9 @@ if (isServer) then {
 	[_gunner2] joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity", ai_add_humanity]; } count [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity", ai_remove_humanity]; } count [_pilot, _gunner, _gunner2]; };
-		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity", ai_special_humanity]; } count [_pilot, _gunner, _gunner2]; };
+		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity",ai_add_humanity]; } count [_pilot,_gunner,_gunner2]; };
+		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity",ai_remove_humanity]; } count [_pilot,_gunner,_gunner2]; };
+		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity",ai_special_humanity]; } count [_pilot,_gunner,_gunner2]; };
 	};
 	
 	ai_air_units = (ai_air_units +1);
@@ -139,20 +139,20 @@ if (isServer) then {
 
 	if(_aitype == "Hero") then {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
+			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
+			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};
 	};
 
 	// Add waypoints to the chopper group.
-	_wp = _unitGroup addWaypoint [[(_position select 0), (_position select 1)], 0];
+	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1)],0];
 	_wp setWaypointType "MOVE";
 	_wp setWaypointCompletionRadius 100;
 
@@ -267,8 +267,8 @@ if (isServer) then {
 				} count _aicskill;
 				
 				ai_ground_units = (ai_ground_units + 1);
-				_para addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
-				_chute = createVehicle ["ParachuteEast", [(_helipos select 0), (_helipos select 1), (_helipos select 2)], [], 0, "NONE"];
+				_para addEventHandler ["Killed",{[_this select 0,_this select 1,"ground"] call on_kill;}];
+				_chute = createVehicle ["ParachuteEast",[(_helipos select 0),(_helipos select 1),(_helipos select 2)],[],0,"NONE"];
 				_para moveInDriver _chute;
 				[_para] joinSilent _pgroup;
 
@@ -280,9 +280,9 @@ if (isServer) then {
 
 					if (typeName _mission_data == "ARRAY") then {
 						_ainum = _mission_data select 0;
-						wai_mission_data select _mission set [0, (_ainum + 1)];
-						_para setVariable ["missionclean", "ground"];
-						_para setVariable ["mission", _mission, true];
+						wai_mission_data select _mission set [0,(_ainum + 1)];
+						_para setVariable ["missionclean","ground"];
+						_para setVariable ["mission",_mission,true];
 					};
 
 				};
@@ -303,13 +303,13 @@ if (isServer) then {
 			
 			if(_aitype == "Hero") then {
 				if (!isNil "_mission") then {
-					[_pgroup, _mission] spawn hero_behaviour;
+					[_pgroup,_mission] spawn hero_behaviour;
 				} else {
 					[_pgroup] spawn hero_behaviour;
 				};
 			} else {
 				if (!isNil "_mission") then {
-					[_pgroup, _mission] spawn bandit_behaviour;
+					[_pgroup,_mission] spawn bandit_behaviour;
 				} else {
 					[_pgroup] spawn bandit_behaviour;
 				};
@@ -319,7 +319,7 @@ if (isServer) then {
 
 	if (_helipatrol) then { 
 		
-		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)], 100];
+		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)],100];
 		_wp1 setWaypointType "SAD";
 		_wp1 setWaypointCompletionRadius 150;
 		_unitGroup setBehaviour "AWARE";
@@ -327,26 +327,26 @@ if (isServer) then {
 
 		if(_aitype == "Hero") then {
 			if (!isNil "_mission") then {
-				[_unitGroup, _mission] spawn hero_behaviour;
+				[_unitGroup,_mission] spawn hero_behaviour;
 			} else {
 				[_unitGroup] spawn hero_behaviour;
 			};
 		} else {
 			if (!isNil "_mission") then {
-				[_unitGroup, _mission] spawn bandit_behaviour;
+				[_unitGroup,_mission] spawn bandit_behaviour;
 			} else {
 				[_unitGroup] spawn bandit_behaviour;
 			};
 		};
 
 		{
-			_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
+			_x addEventHandler ["Killed",{[_this select 0,_this select 1,"air"] call on_kill;}];
 		} forEach (units _unitgroup);
 
 	} else {
 
 		{
-			_x doMove [(_startingpos select 0), (_startingpos select 1), 100]
+			_x doMove [(_startingpos select 0),(_startingpos select 1),100]
 		} count (units _unitGroup);
 		
 		_unitGroup setBehaviour "CARELESS";
@@ -354,13 +354,13 @@ if (isServer) then {
 
 		if(_aitype == "Hero") then {
 			if (!isNil "_mission") then {
-				[_unitGroup, _mission] spawn hero_behaviour;
+				[_unitGroup,_mission] spawn hero_behaviour;
 			} else {
 				[_unitGroup] spawn hero_behaviour;
 			};
 		} else {
 			if (!isNil "_mission") then {
-				[_unitGroup, _mission] spawn bandit_behaviour;
+				[_unitGroup,_mission] spawn bandit_behaviour;
 			} else {
 				[_unitGroup] spawn bandit_behaviour;
 			};

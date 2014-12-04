@@ -12,7 +12,7 @@ _cantSee = {
 	_zPos = +(_this select 0);
 
 	if (count _zPos < 3) exitWith {
-		diag_log format["%1::_cantSee illegal pos %2", __FILE__, _zPos];
+		diag_log format["%1::_cantSee illegal pos %2",__FILE__,_zPos];
 		false
 	};
 
@@ -20,7 +20,7 @@ _cantSee = {
 	_fov 			= _this select 1;
 	_safeDistance 	= _this select 2;
 	_farDistance 	= _this select 3;
-	_zPos set [2, (_zPos select 2) + 1.7];
+	_zPos set [2,(_zPos select 2) + 1.7];
 
 	{
 		_xasl = getPosASL _x;
@@ -32,12 +32,12 @@ _cantSee = {
 				_eye = eyePos _x;
 				_ed = eyeDirection _x;
 				_ed = (_ed select 0) atan2 (_ed select 1);
-				_deg = [_xasl, _zPos] call BIS_fnc_dirTo;
+				_deg = [_xasl,_zPos] call BIS_fnc_dirTo;
 				_deg = (_deg - _ed + 720) % 360;
 				if (_deg > 180) then { _deg = _deg - 360; };
 				if ((abs(_deg) < _fov) && {(
-						(!(terrainIntersectASL [_zPos, _eye])
-						&& {(!(lineIntersects [_zPos, _eye]))})
+						(!(terrainIntersectASL [_zPos,_eye])
+						&& {(!(lineIntersects [_zPos,_eye]))})
 					)}) then {
 					_isok = false;
 				};
@@ -52,7 +52,7 @@ _cantSee = {
 waitUntil {sleep .5; !isNil "inSafezone"};
 
 if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < dayz_maxNearByZombies) && (dayz_currentGlobalZombies < dayz_maxGlobalZeds) && !(inSafezone)) then {
-	if ([_position, dayz_cantseefov, 10, dayz_cantseeDist] call _cantSee) then {
+	if ([_position,dayz_cantseefov,10,dayz_cantseeDist] call _cantSee) then {
 
 		_tooClose = {isPlayer _x} count (_position nearEntities ["CAManBase",30]) > 0;
 		if (_tooClose) exitwith {};
@@ -78,7 +78,7 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 		//Check if point is in water
 		if (surfaceIsWater _position) exitwith {  };
 
-		_agent = createAgent [_type, _position, [], _radius, _method];
+		_agent = createAgent [_type,_position,[],_radius,_method];
 		sleep 0.001;
 
 		//add to global counter
@@ -94,7 +94,7 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 			if (isText _lootType) then {
 				_array = [];
 				{
-					_array set [count _array, _x select 0]
+					_array set [count _array,_x select 0]
 				} forEach getArray (configFile >> "cfgLoot" >> getText(_lootType));
 				if (count _array > 0) then {
 					_index = dayz_CLBase find getText(_lootType);
@@ -103,7 +103,7 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 					if(!isNil "_array") then {
 						_loot_count =	getNumber(configFile >> "CfgMagazines" >> _loot >> "count");
 						if(_loot_count > 1) then {
-							_agent addMagazine [_loot, ceil(random _loot_count)];
+							_agent addMagazine [_loot,ceil(random _loot_count)];
 						} else {
 							_agent addMagazine _loot;
 						};
@@ -126,7 +126,7 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 			_agent setDir random 360;
 			sleep 0.001;
 
-			_position = getPosATL _agent;
+			_position = [_agent] call FNC_GetPos;
 
 			_favStance = (
 				switch ceil(random(3^0.5)^2) do {
@@ -141,10 +141,10 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 			_agent setVariable ["doLoiter",true];
 			_agent setVariable ["myDest",_position];
 			_agent setVariable ["newDest",_position];
-			[_agent, _position] call zombie_loiter;
+			[_agent,_position] call zombie_loiter;
 		};
 
-		PVDZE_Server_Simulation = [_agent, false];
+		PVDZE_Server_Simulation = [_agent,false];
 		publicVariableServer "PVDZE_Server_Simulation";
 
 		_id = [_position,_agent] execFSM "\z\AddOns\dayz_code\system\zombie_agent.fsm";

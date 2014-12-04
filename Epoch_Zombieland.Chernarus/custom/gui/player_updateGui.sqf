@@ -7,7 +7,7 @@ _thirstVal	= 1 - (dayz_thirst / SleepWater);
 _combatVal	= 1 - dayz_combat;
 _bloodVal 	= r_player_blood;
 
-if (uiNamespace getVariable ["DZ_displayUI", 0] == 1) then {
+if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 	_array = [_foodVal,_thirstVal];
 	_array
 } else {
@@ -237,17 +237,17 @@ if (uiNamespace getVariable ["DZ_displayUI", 0] == 1) then {
 		if (_distance < DZE_HumanityTargetDistance) then {
 
 			_size			= (1-(floor(_distance/5)*0.1)) max 0.1;
-			_friendlies		= player getVariable ["friendlies", []];
+			_friendlies		= player getVariable ["friendlies",[]];
 			_playerUID		= getPlayerUID player;
 			_rplayerUID		= getPlayerUID _humanityTarget;
-			_rfriendlies	= _humanityTarget getVariable ["friendlies", []];
-			_rfriendlyTo	= _humanityTarget getVariable ["friendlyTo", []];
+			_rfriendlies	= _humanityTarget getVariable ["friendlies",[]];
+			_rfriendlyTo	= _humanityTarget getVariable ["friendlyTo",[]];
 
 			if ((_rplayerUID in _friendlies) && (_playerUID in _rfriendlies)) then {
 			
 				if !(_playerUID in _rfriendlyTo) then {
-					_rfriendlyTo set [count _rfriendlyTo, _playerUID];
-					_humanityTarget setVariable ["friendlyTo", _rfriendlyTo, true];
+					_rfriendlyTo set [count _rfriendlyTo,_playerUID];
+					_humanityTarget setVariable ["friendlyTo",_rfriendlyTo,true];
 				};
 		
 				_color	= "color='#339933'";
@@ -266,7 +266,7 @@ if (uiNamespace getVariable ["DZ_displayUI", 0] == 1) then {
 					};
 				};
 				
-				if((_humanityTarget getVariable ["DZE_display_name", false]) || (DZE_ForceNameTagsInTrader && isInTraderCity)) then {
+				if((_humanityTarget getVariable ["DZE_display_name",false]) || (DZE_ForceNameTagsInTrader && isInTraderCity)) then {
 					_string = format["<t %2 align='center' size='%3'>%1</t>",(name _humanityTarget),_color,_size];
 				};
 			};

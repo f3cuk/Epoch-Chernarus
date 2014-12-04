@@ -10,7 +10,7 @@ if (isPlayer _victim) then {
 	_damage 	= _this select 2;
 
 	if ((owner _victim) == (owner _attacker)) exitWith {
-		_victim setVariable["AttackedBy", _victim];
+		_victim setVariable["AttackedBy",_victim];
 	};
 
 	_weapon = weaponState _attacker;
@@ -40,7 +40,7 @@ if (isPlayer _victim) then {
 
 	_distance = _victim distance _attacker;
 
-	diag_log format["PHIT: %1 was hit by %2 with %3 from %4m with %5 dmg",name _victim, name _attacker,_weapon,_distance,_damage];
+	diag_log format["PHIT: %1 was hit by %2 with %3 from %4m with %5 dmg",name _victim,name _attacker,_weapon,_distance,_damage];
 
 	_victim setVariable["AttackedBy",_attacker];
 	_victim setVariable["AttackedByName",(name _attacker)];

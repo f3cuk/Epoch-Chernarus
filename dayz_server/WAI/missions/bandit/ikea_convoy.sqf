@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private			["_complete","_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [40] call find_position;
@@ -23,9 +23,9 @@ if(isServer) then {
 
 	//Static Guns
 	[[
-		[(_position select 0) + 25, (_position select 1) + 25, 0],
-		[(_position select 0) - 25, (_position select 1) - 25, 0],
-		[(_position select 0) + 25, (_position select 1) - 25, 0]
+		[(_position select 0) + 25,(_position select 1) + 25,0],
+		[(_position select 0) - 25,(_position select 1) - 25,0],
+		[(_position select 0) + 25,(_position select 1) - 25,0]
 	],"M2StaticMG","Hard","Hero","Hero",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Heli Para Drop
@@ -51,9 +51,9 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],				// mission number and crate
-		["crate"], 						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		["crate"],						// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
 		[_vehicle,_vehicle2,_vehicle3],	// cleanup objects
-		"A heavily guarded Ikea convoy is taking a lunch break, heroes are securing the parameter. See if you can make the building supplies yours.",	// mission announcement
+		"A heavily guarded Ikea convoy is taking a lunch break,heroes are securing the parameter. See if you can make the building supplies yours.",	// mission announcement
 		"Bandits have successfully ambushed the Ikea convoy and secured the building supplies!",			// mission success
 		"Bandits were unable to surprise the heroes on their lunchbreak"									// mission fail
 	] call mission_winorfail;

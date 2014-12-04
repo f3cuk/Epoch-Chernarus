@@ -45,7 +45,7 @@ isNearWater = {
 	_radius		= _this select 1;
 	
 	for "_i" from 0 to 359 step 45 do {
-		_position = [(_position select 0) + (sin(_i)*_radius), (_position select 1) + (cos(_i)*_radius)];
+		_position = [(_position select 0) + (sin(_i)*_radius),(_position select 1) + (cos(_i)*_radius)];
 		if (surfaceIsWater _position) exitWith {
 			_result = true; 
 		};
@@ -76,7 +76,7 @@ if(_restricted_area) then { _cancel = true; _reason = "[Restricted] Cannot build
 if(!_cancel) then {
 
 	_classname 	= _classnametmp;
-	_tmpbuilt 	= createVehicle [_classname, _location, [], 0, "CAN_COLLIDE"];
+	_tmpbuilt 	= createVehicle [_classname,_location,[],0,"CAN_COLLIDE"];
 	_tmpbuilt setdir _dir;
 	_location 	= _position;
 
@@ -88,10 +88,10 @@ if(!_cancel) then {
 		_tmpbuilt setPosASL _location;
 		_location = ASLtoATL _location;
 	} else {
-		_tmpbuilt setPosATL _location;
+		_tmpbuilt SetPos _location;
 	};
 
-	cutText [format[(localize "str_epoch_player_138"),_text], "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_138"),_text],"PLAIN DOWN"];
 
 	_limit = 3;
 
@@ -113,7 +113,7 @@ if(!_cancel) then {
 		_sfx = "repair";
 
 		[player,_sfx,0,false,_dis] call dayz_zombieSpeak;
-		[player,_dis,true,(getPosATL player)] spawn player_alertZombies;
+		[player,_dis,true,([player] call FNC_GetPos)] spawn player_alertZombies;
 
 		r_interrupt = false;
 		r_doLoop = true;
@@ -132,7 +132,7 @@ if(!_cancel) then {
 				r_doLoop = false;
 				_finished = true;
 			};
-			if (r_interrupt || (player getVariable["combattimeout", 0] >= time)) then {
+			if (r_interrupt || (player getVariable["combattimeout",0] >= time)) then {
 				r_doLoop = false;
 			};
 			if (DZE_cancelBuilding) exitWith {
@@ -153,7 +153,7 @@ if(!_cancel) then {
 			_counter = _counter + 1;
 		};
 
-		cutText [format[(localize "str_epoch_player_139"),_text, _counter,_limit], "PLAIN DOWN"];
+		cutText [format[(localize "str_epoch_player_139"),_text,_counter,_limit],"PLAIN DOWN"];
 
 		if(_counter == _limit) exitWith {
 			_isOk = false;
@@ -168,7 +168,7 @@ if(!_cancel) then {
 
 		if(_num_removed == 1) then {
 
-			cutText [format[localize "str_build_01",_text], "PLAIN DOWN"];
+			cutText [format[localize "str_build_01",_text],"PLAIN DOWN"];
 
 			if (_isPole) then {
 				[] spawn player_plotPreview;
@@ -227,7 +227,7 @@ if(!_cancel) then {
 				PVDZE_obj_Publish = [_combination,_tmpbuilt,[_dir,_location,_playerUID],_classname];
 				publicVariableServer "PVDZE_obj_Publish";
 
-				cutText [format[(localize "str_epoch_player_140"),_combinationDisplay,_text], "PLAIN DOWN", 5];
+				cutText [format[(localize "str_epoch_player_140"),_combinationDisplay,_text],"PLAIN DOWN",5];
 
 			} else {
 
@@ -245,7 +245,7 @@ if(!_cancel) then {
 
 		} else {
 			deleteVehicle _tmpbuilt;
-			cutText [(localize "str_epoch_player_46") , "PLAIN DOWN"];
+			cutText [(localize "str_epoch_player_46") ,"PLAIN DOWN"];
 		};
 
 	} else {
@@ -253,17 +253,17 @@ if(!_cancel) then {
 		r_interrupt = false;
 
 		if (vehicle player == player) then {
-			[objNull, player, rSwitchMove,""] call RE;
+			[objNull,player,rSwitchMove,""] call RE;
 			player playActionNow "stop";
 		};
 
 		deleteVehicle _tmpbuilt;
 
-		cutText [(localize "str_epoch_player_46") , "PLAIN DOWN"];
+		cutText [(localize "str_epoch_player_46") ,"PLAIN DOWN"];
 	};
 
 } else {
-	cutText [format[(localize "str_epoch_player_47"),_text,_reason], "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_47"),_text,_reason],"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

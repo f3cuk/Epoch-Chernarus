@@ -16,11 +16,11 @@ if ((count _this) > 5) then {
 };
 
 if (isNull _character) exitWith {
-	diag_log ("Player is Null FAILED: Exiting, player sync: " + str(_character));
+	diag_log ("Player is Null FAILED: Exiting,player sync: " + str(_character));
 };
 
 _characterID	= _character getVariable ["CharacterID","0"];
-_charPos		= getPosATL _character;
+_charPos		= [_character] call FNC_GetPos;
 _isInVehicle	= vehicle _character != _character;
 _timeSince		= 0;
 _humanity		= 0;
@@ -32,7 +32,7 @@ _name = if (alive _character) then { name _character; } else { "Dead Player"; };
 if (_character isKindOf "Animal") 	exitWith { diag_log ("ERROR: Cannot Sync Character " + (_name) + " is an Animal class"); };
 if (isnil "_characterID") 			exitWith { diag_log ("ERROR: Cannot Sync Character " + (_name) + " has nil characterID"); };
 if (_characterID == "0") 			exitWith { diag_log ("ERROR: Cannot Sync Character " + (_name) + " as no characterID"); };
-if (_inTransit) 					exitWith { diag_log ("NOTICE: Cannot update " + (_name) + ", player is in transit"); };
+if (_inTransit) 					exitWith { diag_log ("NOTICE: Cannot update " + (_name) + ",player is in transit"); };
 if (typename _charPos != "ARRAY")	exitWith { diag_log ("ERROR: Cannot Sync Character " + (_name) + "position cannot be found") };
 
 _debug 		= getMarkerpos "respawn_west";
@@ -79,9 +79,9 @@ if (_characterID != "0") then {
 
 		if(_playerwasNearby) then {
 			_empty = [[],[]];
-			_playerBackp = [typeOf _backpack, _empty, _empty];
+			_playerBackp = [typeOf _backpack,_empty,_empty];
 		} else {
-			_playerBackp = [typeOf _backpack, getWeaponCargo _backpack, getMagazineCargo _backpack];
+			_playerBackp = [typeOf _backpack,getWeaponCargo _backpack,getMagazineCargo _backpack];
 		};
 	};
 
@@ -156,7 +156,7 @@ if (_characterID != "0") then {
 			_currentState set [(count _currentState),_friendlies];
 		};
 		/*
-			Everything is ready, now publish to HIVE
+			Everything is ready,now publish to HIVE
 		*/
 		if (count _playerPos > 0) then {
 			_array = [];
@@ -177,13 +177,13 @@ if (_characterID != "0") then {
 
 		if (vehicle _character != _character) then {
 			if (!(vehicle _character in needUpdate_objects)) then {
-				needUpdate_objects set [count needUpdate_objects, vehicle _character];
+				needUpdate_objects set [count needUpdate_objects,vehicle _character];
 			};
 		};
 		
 		{
-			[_x, "gear"] call server_updateObject;
-		} count (nearestObjects [_charPos, dayz_updateObjects, 10]);
+			[_x,"gear"] call server_updateObject;
+		} count (nearestObjects [_charPos,dayz_updateObjects,10]);
 
 		if (_timeSince > 0) then {
 			_character setVariable ["lastTime",(time - _timeLeft)];

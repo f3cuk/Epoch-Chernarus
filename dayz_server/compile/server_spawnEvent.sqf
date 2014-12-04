@@ -43,7 +43,7 @@ while {1 == 1} do {
 		if (EventSchedulerLastTime != _datestr) then {
 			
 			// internal timestamp
-			ServerCurrentTime = [(_date select 3), (_date select 4)];
+			ServerCurrentTime = [(_date select 3),(_date select 4)];
 
 			// Once a minute.
 			EventSchedulerLastTime = _datestr;

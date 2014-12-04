@@ -1,6 +1,6 @@
 private ["_maintained","_total_count","_total_damage","_newWealth","_missing","_missingQty","_proceed","_itemIn","_countIn","_target","_objectClasses","_range","_objects","_requirements","_count","_cost","_option","_wealth","_objects_filtered"];
 
-if (DZE_ActionInProgress) exitWith { cutText [(localize "STR_EPOCH_ACTIONS_2") , "PLAIN DOWN"]; };
+if (DZE_ActionInProgress) exitWith { cutText [(localize "STR_EPOCH_ACTIONS_2") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -11,7 +11,7 @@ player removeAction s_player_maintain_area_preview;
 s_player_maintain_area_preview = 1;
 
 _target			= cursorTarget;
-_maintained		= _target getVariable["maintained", false];
+_maintained		= _target getVariable["maintained",false];
 _objectClasses	= DZE_maintainClasses;
 _range			= DZE_maintainRange;
 _objects		= nearestObjects [_target,_objectClasses,_range];
@@ -19,7 +19,7 @@ _total_count	= count _objects;
 _total_damage	= 0;
 
 if(_maintained) exitWith {
-	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit], "PLAIN DOWN"];
+	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit],"PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 	s_player_maintain_area = -1;
 	s_player_maintain_area_preview = -1;
@@ -28,7 +28,7 @@ if(_maintained) exitWith {
 _objects_filtered = [];
 {
 	if (damage _x >= DZE_DamageBeforeMaint) then {
-		_objects_filtered set [count _objects_filtered, _x];
+		_objects_filtered set [count _objects_filtered,_x];
 		_total_damage = _total_damage + damage _x;
 	};
 } count _objects;
@@ -37,7 +37,7 @@ _objects	= _objects_filtered;
 _count		= count _objects;
 
 if (_count == 0) exitWith {
-	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit], "PLAIN DOWN"];
+	cutText [format["Everything is maintained (total objects %1 - max objects %2)",_total_count,DZE_BuildingLimit],"PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 	s_player_maintain_area = -1;
 	s_player_maintain_area_preview = -1;
@@ -76,7 +76,7 @@ call {
 		if (_proceed) then {
 			_newWealth = (_wealth - _countIn);
 			player playActionNow "Medic";
-			[player,_range,true,(getPosATL player)] spawn player_alertZombies;
+			[player,_range,true,([player] call FNC_GetPos)] spawn player_alertZombies;
 
 			player setVariable["cashMoney",_newWealth,true];
 
@@ -86,9 +86,9 @@ call {
 			PVDZE_maintainArea = [player,1,_target];
 			publicVariableServer "PVDZE_maintainArea";
 			_target setVariable["maintained",true,true];
-			cutText [format[(localize "STR_EPOCH_ACTIONS_4"), format["(%1\%2) max %3",_count,_total_count,DZE_BuildingLimit]], "PLAIN DOWN", 5];			
+			cutText [format[(localize "STR_EPOCH_ACTIONS_4"),format["(%1\%2) max %3",_count,_total_count,DZE_BuildingLimit]],"PLAIN DOWN",5];			
 		} else {
-			cutText [format[(localize "STR_EPOCH_ACTIONS_6"),_missingQty, CurrencyName], "PLAIN DOWN"];
+			cutText [format[(localize "STR_EPOCH_ACTIONS_6"),_missingQty,CurrencyName],"PLAIN DOWN"];
 		};
 	};
 
@@ -102,7 +102,7 @@ call {
 			};
 			_cost = _cost + (str(_countIn) + " " + CurrencyName);
 		} count _requirements;
-		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["\n%1 of %2 objects need maintainance (~%3 percent damage)\n",_count,_total_count,round(_total_damage*100)],_cost], "PLAIN DOWN"];
+		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["\n%1 of %2 objects need maintainance (~%3 percent damage)\n",_count,_total_count,round(_total_damage*100)],_cost],"PLAIN DOWN"];
 	};
 };
 

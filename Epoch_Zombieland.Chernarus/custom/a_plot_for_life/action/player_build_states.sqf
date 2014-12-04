@@ -8,29 +8,29 @@ _inVehicle = (_vehicle != player);
 
 if (dayz_isSwimming) exitWith {
 	DZE_ActionInProgress = false;
-	cutText [localize "str_player_26", "PLAIN DOWN"];
+	cutText [localize "str_player_26","PLAIN DOWN"];
 	_isFine = "Swimming";
 	_isFine
 };
 
 if (_inVehicle) exitWith {
 	DZE_ActionInProgress = false;
-	cutText [(localize "str_epoch_player_42"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_42"),"PLAIN DOWN"];
 	_isFine = "In vehicle";
 	_isFine
 };
 
 if (_onLadder) exitWith {
 	DZE_ActionInProgress = false;
-	cutText [localize "str_player_21", "PLAIN DOWN"];
+	cutText [localize "str_player_21","PLAIN DOWN"];
 	_isFine = "On ladder";
 	_isFine
 };
 
 /* Dont want this
-	if (player getVariable["combattimeout", 0] >= time) exitWith {
+	if (player getVariable["combattimeout",0] >= time) exitWith {
 		DZE_ActionInProgress = false;
-		cutText [(localize "str_epoch_player_43"), "PLAIN DOWN"];
+		cutText [(localize "str_epoch_player_43"),"PLAIN DOWN"];
 		_isFine = "In combat";
 		_isFine
 	};

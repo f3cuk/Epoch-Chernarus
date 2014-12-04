@@ -1,6 +1,6 @@
 private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_finished","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID","_price","_curr_new","_newM","_removed","_myMoney"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -30,7 +30,7 @@ if(_buy_o_sell == "buy") then {
 
 if (_qty >= _qty_in) then {
 
-	cutText [(localize "str_epoch_player_105"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 
@@ -50,7 +50,7 @@ if (_qty >= _qty_in) then {
 
 		if (!_finished) exitWith { 
 			r_interrupt = false;
-			cutText ["Cancelled trade" , "PLAIN DOWN"];
+			cutText ["Cancelled trade" ,"PLAIN DOWN"];
 		};
 
 	// # F3 FAST TRADING
@@ -102,7 +102,7 @@ if (_qty >= _qty_in) then {
 						removeBackpack player;
 						player addBackpack _part_out;
 
-						cutText [format["[Trade] Bought a %1 for %2 %3",_textPartOut,_price,CurrencyName], "PLAIN DOWN"];
+						cutText [format["[Trade] Bought a %1 for %2 %3",_textPartOut,_price,CurrencyName],"PLAIN DOWN"];
 
 					};
 				} else {
@@ -116,7 +116,7 @@ if (_qty >= _qty_in) then {
 						_myMoney = _myMoney + _qty_out;
 						player setVariable ["cashMoney",_myMoney,true];
 						
-						cutText [format["[Trade] Sold a %1 for %2 %3",_textPartIn,_price,CurrencyName], "PLAIN DOWN"];
+						cutText [format["[Trade] Sold a %1 for %2 %3",_textPartIn,_price,CurrencyName],"PLAIN DOWN"];
 
 					};
 				};
@@ -129,7 +129,7 @@ if (_qty >= _qty_in) then {
 				s_player_parts_crtl = -1;
 	
 			} else {
-				cutText [format[(localize "str_epoch_player_183"),_textPartOut] , "PLAIN DOWN"];
+				cutText [format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 			dayzTradeResult = nil;
 		};
@@ -137,7 +137,7 @@ if (_qty >= _qty_in) then {
 	
 } else {
 	_needed =  _qty_in - _qty;
-	cutText [format["You need %1 more %2",_needed,_textPartIn] , "PLAIN DOWN"];
+	cutText [format["You need %1 more %2",_needed,_textPartIn] ,"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

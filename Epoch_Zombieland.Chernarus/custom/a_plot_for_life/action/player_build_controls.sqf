@@ -136,7 +136,7 @@ while {_isOk} do {
 		if (surfaceIsWater _position) then {
 			_objectHelper setPosASL _position;
 		} else {
-			_objectHelper setPosATL _position;
+			_objectHelper SetPos _position;
 		};
 
 		if (!helperDetach) then {
@@ -192,7 +192,7 @@ while {_isOk} do {
 
 	/* Dont want this
 
-	if (player getVariable["combattimeout", 0] >= time) exitWith {
+	if (player getVariable["combattimeout",0] >= time) exitWith {
 		_isOk = false;
 		_cancel = true;
 		_reason = (localize "str_epoch_player_43");

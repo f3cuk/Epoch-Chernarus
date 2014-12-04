@@ -40,7 +40,7 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
-	_pilot 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_pilot 				= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	
 	[_pilot] joinSilent _unitGroup;
 	
@@ -52,7 +52,7 @@ if (isServer) then {
 	
 	ai_air_units 		= (ai_air_units +1);
 
-	_helicopter 		= createVehicle [_heli_class, [(_startingpos select 0),(_startingpos select 1), 200], [], 0, "FLY"];
+	_helicopter 		= createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),200],[],0,"FLY"];
 	_helicopter 		setFuel 1;
 	_helicopter 		engineOn true;
 	_helicopter 		setVehicleAmmo 1;
@@ -63,7 +63,7 @@ if (isServer) then {
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
 
-	_gunner 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_gunner 			= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner 			assignAsGunner _helicopter;
 	_gunner 			moveInTurret [_helicopter,[0]];
 
@@ -77,7 +77,7 @@ if (isServer) then {
 	
 	ai_air_units 		= (ai_air_units + 1);
 
-	_gunner2 			= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_gunner2 			= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner2			assignAsGunner _helicopter;
 	_gunner2 			moveInTurret [_helicopter,[1]];
 	[_gunner2] 			joinSilent _unitGroup;
@@ -106,7 +106,7 @@ if (isServer) then {
 	} count (units _unitgroup);
 
 	{
-		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "air"] call on_kill;}];
+		_x addEventHandler ["Killed",{[_this select 0,_this select 1,"air"] call on_kill;}];
 	} forEach (units _unitgroup);
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
@@ -118,13 +118,13 @@ if (isServer) then {
 
 	if(_aitype == "Hero") then {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
+			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
+			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};

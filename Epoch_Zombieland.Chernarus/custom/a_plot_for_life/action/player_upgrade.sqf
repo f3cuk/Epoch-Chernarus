@@ -1,6 +1,6 @@
 private ["_location","_dir","_classname","_missing","_text","_proceed","_num_removed","_object","_missingQty","_itemIn","_countIn","_qty","_removed","_removed_total","_tobe_removed_total","_objectID","_temp_removed_array","_textMissing","_newclassname","_requirements","_obj","_upgrade","_lockable","_combination_1","_combination_2","_combination_3","_combination","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_playerUID"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_52") , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_52") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
 
 player removeAction s_player_upgrade_build;
@@ -46,7 +46,7 @@ if(_IsNearPlot == 0) then {
 
 if(!_canBuildOnPlot) exitWith { 
 	DZE_ActionInProgress = false;
-	cutText [format[(localize "str_epoch_player_157"),_needText,_distance], "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_157"),_needText,_distance],"PLAIN DOWN"];
 };
 
 _obj = _this select 3;
@@ -56,7 +56,7 @@ _objectUID = _obj getVariable ["ObjectUID","0"];
 if(_objectID == "0") exitWith {
 	DZE_ActionInProgress = false;
 	s_player_upgrade_build = -1;
-	cutText [(localize "str_epoch_player_50"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_50"),"PLAIN DOWN"];
 };
 
 _classname	= typeOf _obj;
@@ -88,7 +88,7 @@ if ((count _upgrade) > 0) then {
 	if (_proceed) then {
 		[1,1] call dayz_HungerThirst;
 		player playActionNow "Medic";
-		[player,20,true,(getPosATL player)] spawn player_alertZombies;
+		[player,20,true,([player] call FNC_GetPos)] spawn player_alertZombies;
 	
 		_temp_removed_array = [];
 		_removed_total = 0;
@@ -114,15 +114,15 @@ if ((count _upgrade) > 0) then {
 		} forEach _requirements;
 
 		if (_tobe_removed_total == _removed_total) then {
-			_location			= _obj getVariable["OEMPos",(getposATL _obj)];
+			_location			= _obj getVariable["OEMPos",([_obj] call FNC_GetPos)];
 			_dir				= getDir _obj;
 			_objectCharacterID	= _obj getVariable ["CharacterID","0"];
 			_ownerID			= _obj getVariable ["ownerPUID","0"];
 			_classname			= _newclassname;
 
-			_object = createVehicle [_classname, [0,0,0], [], 0, "CAN_COLLIDE"];
+			_object = createVehicle [_classname,[0,0,0],[],0,"CAN_COLLIDE"];
 			_object setDir _dir;
-			_object setPosATL _location;
+			_object SetPos _location;
 			_object setVariable ["ownerPUID",_ownerID,true];
 
 			if (_lockable == 3) then {
@@ -133,9 +133,9 @@ if ((count _upgrade) > 0) then {
 				
 				_objectCharacterID = _combination;
 				
-				cutText [format[(localize "str_epoch_player_158"),_combination,_text], "PLAIN DOWN", 5];
+				cutText [format[(localize "str_epoch_player_158"),_combination,_text],"PLAIN DOWN",5];
 			} else {	
-				cutText [format[(localize "str_epoch_player_159"),_text], "PLAIN DOWN", 5];
+				cutText [format[(localize "str_epoch_player_159"),_text],"PLAIN DOWN",5];
 			};
 
 			if(parseNumber(_objectID) in spawnedIds) then {
@@ -149,14 +149,14 @@ if ((count _upgrade) > 0) then {
 			_object = nil;
 		} else {
 			{player addMagazine _x;} count _temp_removed_array;
-			cutText [format[(localize "str_epoch_player_145"),_removed_total,_tobe_removed_total], "PLAIN DOWN"];
+			cutText [format[(localize "str_epoch_player_145"),_removed_total,_tobe_removed_total],"PLAIN DOWN"];
 		};
 	} else {
 		_textMissing = getText(configFile >> "CfgMagazines" >> _missing >> "displayName");
-		cutText [format[(localize "str_epoch_player_146"),_missingQty, _textMissing], "PLAIN DOWN"];
+		cutText [format[(localize "str_epoch_player_146"),_missingQty,_textMissing],"PLAIN DOWN"];
 	};
 } else {
-	cutText [(localize "str_epoch_player_82"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_82"),"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

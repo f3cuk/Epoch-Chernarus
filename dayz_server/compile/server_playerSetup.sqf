@@ -5,21 +5,21 @@ _playerObj 		= _this select 1;
 _playerID 		= getPlayerUID _playerObj;
 _isNew			= _this select 2;
 
-diag_log format["Player %1 (%2) logging in, isnew: %3",name _playerObj,_playerID,_isNew];
+diag_log format["Player %1 (%2) logging in,isnew: %3",name _playerObj,_playerID,_isNew];
 
 if (isNull _playerObj) exitWith {
-	diag_log ("SETUP INIT FAILED: Exiting, player object null: " + str(_playerObj));
+	diag_log ("SETUP INIT FAILED: Exiting,player object null: " + str(_playerObj));
 };
 
 _playerObj removeAllMPEventHandlers "MPHit";
-_playerObj addMPEventHandler ["MPHit", {_this spawn fnc_plyrHit;}];
+_playerObj addMPEventHandler ["MPHit",{_this spawn fnc_plyrHit;}];
 
 if (_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;
 };
 
 if (_playerID == "") exitWith {
-	diag_log ("SETUP INIT FAILED: Exiting, no player ID: " + str(_playerObj));
+	diag_log ("SETUP INIT FAILED: Exiting,no player ID: " + str(_playerObj));
 };
 
 private["_dummy"];
@@ -45,7 +45,7 @@ while {!_finished} do {
 };
 
 if (isNull _playerObj || !isPlayer _playerObj) exitWith {
-	diag_log ("SETUP RESULT: Exiting, player object null: " + str(_playerObj));
+	diag_log ("SETUP RESULT: Exiting,player object null: " + str(_playerObj));
 };
 
 _medical 		= _primary select 1;
@@ -88,7 +88,7 @@ if (count _worldspace > 0) then {
 //set medical values
 if (count _medical > 0) then {
 	_playerObj setVariable["USEC_isDead",(_medical select 0),true];
-	_playerObj setVariable["NORRN_unconscious", (_medical select 1), true];
+	_playerObj setVariable["NORRN_unconscious",(_medical select 1),true];
 	_playerObj setVariable["USEC_infected",(_medical select 2),true];
 	_playerObj setVariable["USEC_injured",(_medical select 3),true];
 	_playerObj setVariable["USEC_inPain",(_medical select 4),true];
@@ -207,7 +207,7 @@ dayz_players set [count dayz_players,_playerObj];
 _playerObj setVariable["CharacterID",_characterID,true];
 _playerObj setVariable["humanity",_humanity,true];
 _playerObj setVariable["humanity_CHK",_humanity];
-_playerObj setVariable["lastPos",getPosATL _playerObj];
+_playerObj setVariable["lastPos",([_playerObj] call FNC_GetPos)];
 _playerObj setVariable["cashMoney",_cashMoney,true];
 _playerObj setVariable["cashMoney_CHK",_cashMoney];
 _playerObj setVariable["isNew",_isNew,true];

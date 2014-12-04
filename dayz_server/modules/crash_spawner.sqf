@@ -12,7 +12,7 @@ _maxLootRadius = 4;
 _spawnRoll = random 1;
 if (_spawnRoll <= _spawnChance) then {
 
-	_crashModel = ["UH60Wreck_DZ", "UH1Wreck_DZ", "UH60_NAVY_Wreck_DZ", "UH60_ARMY_Wreck_DZ", "UH60_NAVY_Wreck_burned_DZ", "UH60_ARMY_Wreck_burned_DZ", "Mass_grave_DZ"] call BIS_fnc_selectRandom;
+	_crashModel = ["UH60Wreck_DZ","UH1Wreck_DZ","UH60_NAVY_Wreck_DZ","UH60_ARMY_Wreck_DZ","UH60_NAVY_Wreck_burned_DZ","UH60_ARMY_Wreck_burned_DZ","Mass_grave_DZ"] call BIS_fnc_selectRandom;
 
 	if (_crashModel == "Mass_grave_DZ") then {
 		_lootTable = "MassGrave";
@@ -26,14 +26,14 @@ if (_spawnRoll <= _spawnChance) then {
 		_needsrelocated
 	}
 	do {
-		_position = [getMarkerPos _spawnMarker, 0, _spawnRadius, 10, 0, 2000, 0] call BIS_fnc_findSafePos;
-		_istoomany = _position nearObjects["AllVehicles", 10];
+		_position = [getMarkerPos _spawnMarker,0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
+		_istoomany = _position nearObjects["AllVehicles",10];
 		if ((count _istoomany) == 0) then {
 			_needsrelocated = false;
 		};
 	};
 
-	_crash = createVehicle[_crashModel, _position, [], 0, "CAN_COLLIDE"];
+	_crash = createVehicle[_crashModel,_position,[],0,"CAN_COLLIDE"];
 	_crash setDir round(random 360);
 	_config = configFile >> "CfgVehicles" >> _crashModel >> "heightAdjustment";
 	_hasAdjustment = isNumber(_config);
@@ -42,12 +42,12 @@ if (_spawnRoll <= _spawnChance) then {
 		_newHeight = getNumber(_config);
 	};
 
-	_adjustedPos = [(_position select 0), (_position select 1), _newHeight];
+	_adjustedPos = [(_position select 0),(_position select 1),_newHeight];
 	_crash setPos _adjustedPos;
     
-	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor, _crash];
+	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_crash];
 
-	_crash setVariable["ObjectID", "1", true];
+	_crash setVariable["ObjectID","1",true];
 	_pos = [_crash] call FNC_GetPos;
 	_crash enableSimulation false;
 
@@ -59,9 +59,9 @@ if (_spawnRoll <= _spawnChance) then {
 	};
 
 	if (_spawnFire) then {
-		PVDZE_obj_Fire = [_crash, 2, time, false, _fadeFire];
+		PVDZE_obj_Fire = [_crash,2,time,false,_fadeFire];
 		publicVariable "PVDZE_obj_Fire";
-		_crash setvariable["fadeFire", _fadeFire, true];
+		_crash setvariable["fadeFire",_fadeFire,true];
 	};
 
 	if (DZE_MissionLootTable) then {
@@ -77,14 +77,14 @@ if (_spawnRoll <= _spawnChance) then {
 	from 1 to _num do {
 		//create loot
 		_maxLootRadius = (random _maxLootRadius) + _minLootRadius;
-		_lootPos = [_pos, _maxLootRadius, random 360] call BIS_fnc_relPos;
+		_lootPos = [_pos,_maxLootRadius,random 360] call BIS_fnc_relPos;
 		_index1 = floor(random _cntWeights);
 		_index2 = _weights select _index1;
 		_itemType = _itemTypes select _index2;
-		[_itemType select 0, _itemType select 1, _lootPos, 5] call spawn_loot;
+		[_itemType select 0,_itemType select 1,_lootPos,5] call spawn_loot;
 	};
-	_nearby = _pos nearObjects["ReammoBox", sizeOf(_crashModel)];
+	_nearby = _pos nearObjects["ReammoBox",sizeOf(_crashModel)];
 	{
-		_x setVariable["permaLoot", true];
+		_x setVariable["permaLoot",true];
 	} count _nearBy;
 };

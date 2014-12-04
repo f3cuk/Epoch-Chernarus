@@ -8,7 +8,7 @@ _dateNow = (DateToNumber date);
 _maxWildZombies = 3;
 _age = -1;
 _radius = 200;
-_position = getPosATL player;
+_position = [player] call FNC_GetPos;
 
 dayz_spawnZombies = 0;
 dayz_CurrentZombies = 0;
@@ -23,7 +23,7 @@ _soundLimit = 2;
 		};
 	};
 	if (_soundLimit == 0) exitWith {};
-} count (nearestObjects [player, ["CAManBase"], 8]);
+} count (nearestObjects [player,["CAManBase"],8]);
 
 _players = _position nearEntities ["CAManBase",_radius+200];
 dayz_maxGlobalZombies = dayz_maxGlobalZombiesInit;
@@ -47,35 +47,35 @@ if ("ItemMap_Debug" in items player) then {
 	deleteMarkerLocal "Loot120";
 	deleteMarkerLocal "Agro80";
 
-	_markerstr = createMarkerLocal ["MaxZeds", _position];
+	_markerstr = createMarkerLocal ["MaxZeds",_position];
 	_markerstr setMarkerColorLocal "ColorYellow";
 	_markerstr setMarkerShapeLocal "ELLIPSE";
 	_markerstr setMarkerBrushLocal "Border";
-	_markerstr setMarkerSizeLocal [_radius, _radius];
+	_markerstr setMarkerSizeLocal [_radius,_radius];
 
-	_markerstr1 = createMarkerLocal ["Counter", _position];
+	_markerstr1 = createMarkerLocal ["Counter",_position];
 	_markerstr1 setMarkerColorLocal "ColorRed";
 	_markerstr1 setMarkerShapeLocal "ELLIPSE";
 	_markerstr1 setMarkerBrushLocal "Border";
-	_markerstr1 setMarkerSizeLocal [_radius+100, _radius+100];
+	_markerstr1 setMarkerSizeLocal [_radius+100,_radius+100];
 
-	_markerstr2 = createMarkerLocal ["Agro80", _position];
+	_markerstr2 = createMarkerLocal ["Agro80",_position];
 	_markerstr2 setMarkerColorLocal "ColorRed";
 	_markerstr2 setMarkerShapeLocal "ELLIPSE";
 	_markerstr2 setMarkerBrushLocal "Border";
-	_markerstr2 setMarkerSizeLocal [80, 80];
+	_markerstr2 setMarkerSizeLocal [80,80];
 
-	_markerstr2 = createMarkerLocal ["Loot30", _position];
+	_markerstr2 = createMarkerLocal ["Loot30",_position];
 	_markerstr2 setMarkerColorLocal "ColorRed";
 	_markerstr2 setMarkerShapeLocal "ELLIPSE";
 	_markerstr2 setMarkerBrushLocal "Border";
-	_markerstr2 setMarkerSizeLocal [30, 30];
+	_markerstr2 setMarkerSizeLocal [30,30];
 
-	_markerstr3 = createMarkerLocal ["Loot120", _position];
+	_markerstr3 = createMarkerLocal ["Loot120",_position];
 	_markerstr3 setMarkerColorLocal "ColorBlue";
 	_markerstr3 setMarkerShapeLocal "ELLIPSE";
 	_markerstr3 setMarkerBrushLocal "Border";
-	_markerstr3 setMarkerSizeLocal [120, 120];
+	_markerstr3 setMarkerSizeLocal [120,120];
 
 	diag_log ("SpawnWait: " +str(time - dayz_spawnWait));
 	diag_log ("LocalZombies: " +str(dayz_spawnZombies) + "/" +str(dayz_maxLocalZombies));
@@ -115,7 +115,7 @@ if (_nearbyCount < 1) exitwith
 			_age = (_dateNow - _looted) * 525948;
 			//diag_log ("SPAWN LOOT: " + _type + " Building is " + str(_age) + " old" );
 			if ((_age > DZE_LootSpawnTimer) && (!_cleared)) then {
-				_nearByObj = nearestObjects [(getPosATL _x), ["WeaponHolder","WeaponHolderBase"],((sizeOf _type)+5)];
+				_nearByObj = nearestObjects [([_x] call FNC_GetPos),["WeaponHolder","WeaponHolderBase"],((sizeOf _type)+5)];
 				{deleteVehicle _x} count _nearByObj;
 				_x setVariable ["cleared",true,true];
 				_x setVariable ["looted",_dateNow,true];

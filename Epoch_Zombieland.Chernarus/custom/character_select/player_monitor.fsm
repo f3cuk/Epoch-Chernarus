@@ -1,4 +1,4 @@
-/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, DayZ Player Monitor">*/
+/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg,DayZ Player Monitor">*/
 /*%FSM<HEAD>*/
 /*
 item0[] = {"init",0,250,-75.000000,-350.000000,25.000000,-300.000000,0.000000,"init"};
@@ -284,7 +284,7 @@ class FSM
            "_gearSave = false;" \n
            "" \n
            "if (!dialog) then {" \n
-           "  createGearDialog [player, ""RscDisplayGear""];" \n
+           "  createGearDialog [player,""RscDisplayGear""];" \n
            "  _gearSave = true;" \n
            "};" \n
            "" \n
@@ -340,12 +340,12 @@ class FSM
            "  _isInVehicle = vehicle player != player;" \n
            "  //_wpnDisabled =  (getNumber (_config >> ""disableWeapons"")) == 1;" \n
            "  _currentModel = typeOf player;" \n
-           "  _charPos = getPosATL player;" \n
+           "  _charPos = [player] call FNC_GetPos;" \n
            "  _playerPos =  [round(direction player),_charPos];" \n
            "  " \n
            "  if (_onLadder || _isInVehicle || _isTerminal) then {" \n
            "    _currentAnim = """";" \n
-           "    //If position to be updated, make sure it is at ground level!" \n
+           "    //If position to be updated,make sure it is at ground level!" \n
            "    if ((count _playerPos > 0) && !_isTerminal) then {" \n
            "      _charPos set [2,0];" \n
            "      _playerPos set[1,_charPos];" \n
@@ -451,7 +451,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"endLoadingScreen;" \n
        "selectNoPlayer;" \n
        "_myTime = diag_tickTime;" \n
-       "1 cutText [localize ""str_player_14"", ""PLAIN"",15];"/*%FSM</STATEINIT""">*/;
+       "1 cutText [localize ""str_player_14"",""PLAIN"",15];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -553,12 +553,12 @@ class FSM
        "" \n
        "if (isNil ""_model"") then {" \n
        "  _model = ""Survivor2_DZ"";" \n
-       "  diag_log (""PLOGIN: Model was nil, loading as survivor"");" \n
+       "  diag_log (""PLOGIN: Model was nil,loading as survivor"");" \n
        "};" \n
        "" \n
        "if (_model == """") then {" \n
        "  _model = ""Survivor2_DZ"";" \n
-       "  diag_log (""PLOGIN: Model was empty, loading as survivor"");" \n
+       "  diag_log (""PLOGIN: Model was empty,loading as survivor"");" \n
        "};" \n
        "" \n
        "if (_model == ""Survivor1_DZ"") then {" \n
@@ -613,7 +613,7 @@ class FSM
        "selectNoPlayer;" \n
        "" \n
        "_myTime = diag_tickTime;" \n
-       "1 cutText [(localize ""str_epoch_player_112""), ""PLAIN"",5];"/*%FSM</STATEINIT""">*/;
+       "1 cutText [(localize ""str_epoch_player_112""),""PLAIN"",5];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -769,24 +769,24 @@ class FSM
        "" \n
        "if(dayz_paraSpawn && (freshSpawn == 2)) then {" \n
        "  player setDir _setDir;" \n
-       "  player setPosATL [(_setPos select 0),(_setPos select 1),2000];" \n
+       "  player SetPos [(_setPos select 0),(_setPos select 1),2000];" \n
        "  [player,2000] spawn BIS_fnc_halo;" \n
        "} else {" \n
        "" \n
        "  // make protective box" \n
-       "  DZE_PROTOBOX = createVehicle [""DebugBoxPlayer_DZ"", _setPos, [], 0, ""CAN_COLLIDE""];" \n
+       "  DZE_PROTOBOX = createVehicle [""DebugBoxPlayer_DZ"",_setPos,[],0,""CAN_COLLIDE""];" \n
        "  DZE_PROTOBOX setDir _setDir;" \n
-       "  DZE_PROTOBOX setPosATL _setPos;" \n
+       "  DZE_PROTOBOX SetPos _setPos;" \n
        "" \n
        "  player setDir _setDir;" \n
-       "  player setPosATL _setPos;" \n
+       "  player SetPos _setPos;" \n
        "};" \n
        "" \n
        "{" \n
        "  if (player getVariable[""hit_""+_x,false]) then { " \n
        "    [player,_x,_x] spawn fnc_usec_damageBleed; " \n
        "    usecBleed = [player,_x,_x];" \n
-       "    publicVariable ""usecBleed""; // draw blood stream on character, on all gameclients" \n
+       "    publicVariable ""usecBleed""; // draw blood stream on character,on all gameclients" \n
        "  };" \n
        "} count USEC_typeOfWounds;" \n
        "//Legs && Arm fractures" \n
@@ -810,7 +810,7 @@ class FSM
        "dayz_playerUID = _playerUID;" \n
        "" \n
        "if ((_isNew) || (count _inventory == 0)) then {" \n
-       "  //player is new, add initial loadout only if player is not pzombie" \n
+       "  //player is new,add initial loadout only if player is not pzombie" \n
        "  if(!(player isKindOf ""PZombie_VB"")) then {" \n
        "    _config = (configFile >> ""CfgSurvival"" >> ""Inventory"" >> ""Default"");" \n
        "    _mags = getArray (_config >> ""magazines"");" \n
@@ -852,12 +852,12 @@ class FSM
        "        if (isClass(configFile >> ""CfgWeapons"" >> _x)) then {" \n
        "          dayz_myBackpack addWeaponCargoGlobal [_x,1];" \n
        "        } else {" \n
-       "          dayz_myBackpack addMagazineCargoGlobal [_x, 1];" \n
+       "          dayz_myBackpack addMagazineCargoGlobal [_x,1];" \n
        "        };" \n
        "      } count _bcpkItems;" \n
        "    } else {" \n
        "      if (_bcpkItems != """") then {" \n
-       "        dayz_myBackpack addMagazineCargoGlobal [_bcpkItems, 1];" \n
+       "        dayz_myBackpack addMagazineCargoGlobal [_bcpkItems,1];" \n
        "      };" \n
        "    };" \n
        "  };" \n
@@ -874,7 +874,7 @@ class FSM
        "dayz_characterID =    _charID;" \n
        "dayz_hasFire =      objNull;    //records players Fireplace object" \n
        "dayz_myCursorTarget =   objNull;" \n
-       "dayz_myPosition =     getPosATL player; //Last recorded position" \n
+       "dayz_myPosition =     [player] call FNC_GetPos; //Last recorded position" \n
        "dayz_lastMeal =     (_lastAte * 60);" \n
        "dayz_lastDrink =    (_lastDrank * 60);" \n
        "dayz_zombiesLocal =   0;      //Used to record how many local zombies being tracked" \n
@@ -882,7 +882,7 @@ class FSM
        "" \n
        "//load in medical details" \n
        "r_player_dead =     player getVariable[""USEC_isDead"",false];" \n
-       "r_player_unconscious =  player getVariable[""NORRN_unconscious"", false];" \n
+       "r_player_unconscious =  player getVariable[""NORRN_unconscious"",false];" \n
        "r_player_infected = player getVariable[""USEC_infected"",false];" \n
        "r_player_injured =  player getVariable[""USEC_injured"",false];" \n
        "r_player_inpain =     player getVariable[""USEC_inPain"",false];" \n
@@ -895,7 +895,7 @@ class FSM
        "dayz_hunger =   _messing select 0;" \n
        "dayz_thirst =     _messing select 1;" \n
        "" \n
-       "//player setVariable [""humanity"",-3000, true];"/*%FSM</STATEINIT""">*/;
+       "//player setVariable [""humanity"",-3000,true];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -951,12 +951,12 @@ class FSM
     {
       name = "Position";
       init = /*%FSM<STATEINIT""">*/"//Location" \n
-       "_myLoc = getPosATL player;" \n
+       "_myLoc = [player] call FNC_GetPos;" \n
        "" \n
-       "dayz_loadScreenMsg = ""Setup Completed, please wait..."";" \n
+       "dayz_loadScreenMsg = ""Setup Completed,please wait..."";" \n
        "" \n
        "//GUI" \n
-       "3 cutRsc [""playerStatusGUI"", ""PLAIN"",0];" \n
+       "3 cutRsc [""playerStatusGUI"",""PLAIN"",0];" \n
        "" \n
        "//Update GUI" \n
        "call player_updateGui;" \n
@@ -1008,11 +1008,11 @@ class FSM
       name = "Load_In";
       init = /*%FSM<STATEINIT""">*/"//Reveal action types" \n
        "" \n
-       "{player reveal _x} count (nearestObjects [getPosATL player, dayz_reveal, 50]);" \n
+       "{player reveal _x} count (nearestObjects [[player] call FNC_GetPos,dayz_reveal,50]);" \n
        "" \n
        "dayz_clientPreload = true;" \n
        "3 fadeSound 1;" \n
-       "1 cutText ["""", ""PLAIN""];" \n
+       "1 cutText ["""",""PLAIN""];" \n
        "0 fadeMusic 0.5;" \n
        "" \n
        "//Check mission objects" \n
@@ -1047,9 +1047,9 @@ class FSM
        "selectNoPlayer;" \n
        "_myTime = diag_tickTime;" \n
        "" \n
-       "dayz_loadScreenMsg = ""You are running an incorrect version, please download update from dayzepoch.com."";" \n
+       "dayz_loadScreenMsg = ""You are running an incorrect version,please download update from dayzepoch.com."";" \n
        "" \n
-       "1 cutText [format[localize ""str_player_18"",dayz_versionNo,_version], ""PLAIN""];" \n
+       "1 cutText [format[localize ""str_player_18"",dayz_versionNo,_version],""PLAIN""];" \n
        "" \n
        "progressLoadingScreen 0.5;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -1127,7 +1127,7 @@ class FSM
        "reload player;" \n
        "" \n
        "if (_currentAnim != """" && !dayz_paraSpawn) then {" \n
-       "  [objNull, player, rSwitchMove,_currentAnim] call RE;" \n
+       "  [objNull,player,rSwitchMove,_currentAnim] call RE;" \n
        "};" \n
        "" \n
        "if (_currentWpn != """") then {" \n
@@ -1135,7 +1135,7 @@ class FSM
        "} else {" \n
        "  if (count weapons player > 0) then" \n
        "  {" \n
-       "    private['_type', '_muzzles'];" \n
+       "    private['_type','_muzzles'];" \n
        "" \n
        "    _type = ((weapons player) select 0);" \n
        "    _muzzles = getArray(configFile >> ""cfgWeapons"" >> _type >> ""muzzles"");" \n
@@ -1185,16 +1185,16 @@ class FSM
        "};" \n
        "player allowDamage true;" \n
        "player enableSimulation true;" \n
-       "0 cutText ["""", ""BLACK IN"",3];" \n
+       "0 cutText ["""",""BLACK IN"",3];" \n
        "dayz_playerName = name player;" \n
        "" \n
        "//Add core tools" \n
        "player addWeapon ""Loot"";" \n
        "player addWeapon ""Flare"";" \n
-       "if ((currentWeapon player == """")) then { player action [""SWITCHWEAPON"", player,player,1]; };" \n
+       "if ((currentWeapon player == """")) then { player action [""SWITCHWEAPON"",player,player,1]; };" \n
        "//load in medical details" \n
        "r_player_dead =     player getVariable[""USEC_isDead"",false];" \n
-       "r_player_unconscious =  player getVariable[""NORRN_unconscious"", false];" \n
+       "r_player_unconscious =  player getVariable[""NORRN_unconscious"",false];" \n
        "r_player_infected =   player getVariable[""USEC_infected"",false];" \n
        "r_player_injured =    player getVariable[""USEC_injured"",false];" \n
        "r_player_inpain =     player getVariable[""USEC_inPain"",false];" \n
@@ -1204,7 +1204,7 @@ class FSM
        "selfTransfusionTime = time; //time to keep for last  self transfusion." \n
        "" \n
        """colorCorrections"" ppEffectEnable true;" \n
-       """colorCorrections"" ppEffectAdjust [1, 1, 0, [1, 1, 1, 0.0], [1, 1, 1, 1 min (4*r_player_blood/3/r_player_bloodTotal)],  [1, 1, 1, 0.0]];" \n
+       """colorCorrections"" ppEffectAdjust [1,1,0,[1,1,1,0.0],[1,1,1,1 min (4*r_player_blood/3/r_player_bloodTotal)], [1,1,1,0.0]];" \n
        """colorCorrections"" ppEffectCommit 0;" \n
        "" \n
        "dayz_gui = [] spawn {" \n
@@ -1269,7 +1269,7 @@ class FSM
        "" \n
        "private[""_fadeFire""];" \n
        "{" \n
-       "  _fadeFire = _x getVariable['fadeFire', true];" \n
+       "  _fadeFire = _x getVariable['fadeFire',true];" \n
        "  if (!_fadeFire) then {" \n
        "    _nul = [_x,2,0,false,false] spawn BIS_Effects_Burn;" \n
        "  };" \n
@@ -1280,7 +1280,7 @@ class FSM
        "  private [""_counter""];" \n
        "  _counter = 0;" \n
        "  while {true} do {" \n
-       "    if ((player getVariable[""combattimeout"", 0] >= time) || (_counter >= 60) || (player distance DZE_PROTOBOX > 2)) exitWith {" \n
+       "    if ((player getVariable[""combattimeout"",0] >= time) || (_counter >= 60) || (player distance DZE_PROTOBOX > 2)) exitWith {" \n
        "      deleteVehicle DZE_PROTOBOX;" \n
        "    };" \n
        "    sleep 1;" \n
@@ -1318,7 +1318,7 @@ class FSM
     {
       name = "Finish";
       init = /*%FSM<STATEINIT""">*/"dayzGearSave = true;" \n
-       "dayz_myPosition = getPosATL player;" \n
+       "dayz_myPosition = [player] call FNC_GetPos;" \n
        "" \n
        "PVDZE_plr_LoginRecord = [_playerUID,_charID,0];" \n
        "publicVariableServer ""PVDZE_plr_LoginRecord"";" \n
@@ -1377,7 +1377,7 @@ class FSM
     {
       name = "Gender_Selection";
       init = /*%FSM<STATEINIT""">*/"dayz_selectGender = ""Survivor2_DZ"";" \n
-       "1 cutText ["""", ""BLACK"",0];" \n
+       "1 cutText ["""",""BLACK"",0];" \n
        "endLoadingScreen;" \n
        "createDialog ""RscDisplayGenderSelect"";" \n
        "freshSpawn = 2;"/*%FSM</STATEINIT""">*/;
@@ -1425,7 +1425,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"endLoadingScreen;" \n
        "selectNoPlayer;" \n
        "_myTime = diag_tickTime;" \n
-       "1 cutText [(localize ""str_epoch_player_113""), ""PLAIN"",15];" \n
+       "1 cutText [(localize ""str_epoch_player_113""),""PLAIN"",15];" \n
        "diag_log format [""VERSION CHECK: Anim:%1 Epoch:%2 EpochB:%3 Sfx:%4 DayZ:%5"",_myEpochAnim,_myEpoch,_myEpochB,_myEpochSfx,_myEpochDayZ];" \n
        ""/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -1448,7 +1448,7 @@ class FSM
     class Stream
     {
       name = "Stream";
-      init = /*%FSM<STATEINIT""">*/"_zombies = (getPosATL player) nearEntities [""zZombie_Base"",25];" \n
+      init = /*%FSM<STATEINIT""">*/"_zombies = ([player] call FNC_GetPos) nearEntities [""zZombie_Base"",25];" \n
        "{deleteVehicle _x} count _zombies;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -1557,7 +1557,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"endLoadingScreen;" \n
        "selectNoPlayer;" \n
        "_myTime = diag_tickTime;" \n
-       "1 cutText [(localize ""str_epoch_player_114""), ""PLAIN"",5];"/*%FSM</STATEINIT""">*/;
+       "1 cutText [(localize ""str_epoch_player_114""),""PLAIN"",5];"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -1581,7 +1581,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"//diag_log (""PLOGIN:Wrong DayZ Version ("" + dayz_versionNo + "")"");" \n
        "diag_log format[localize ""str_player_18"",dayz_versionNo,_version];" \n
        "" \n
-       "dayz_loadScreenMsg = ""You are running an incorrect version of DAYZ_CODE, please download this file from dayzepoch.com."";" \n
+       "dayz_loadScreenMsg = ""You are running an incorrect version of DAYZ_CODE,please download this file from dayzepoch.com."";" \n
        "" \n
        "progressLoadingScreen 1;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
@@ -1679,7 +1679,7 @@ class FSM
     class Character_Selection
     {
       name = "Character_Selection";
-      init = /*%FSM<STATEINIT""">*/"1 cutText ["""", ""BLACK"",0];" \n
+      init = /*%FSM<STATEINIT""">*/"1 cutText ["""",""BLACK"",0];" \n
        "endLoadingScreen;" \n
        "" \n
        "diag_log [time,""createDialog RscDisplayCharacterSelect""];" \n
@@ -1742,7 +1742,7 @@ class FSM
        "      _switchBlock = true;" \n
        "    };" \n
        "  } else {" \n
-       "    diag_log format [""invalid character slot %1 for character %2"", _slot, _charId];" \n
+       "    diag_log format [""invalid character slot %1 for character %2"",_slot,_charId];" \n
        "  };" \n
        "} forEach _charArray;" \n
        "" \n
@@ -1750,11 +1750,11 @@ class FSM
        "_dialog = createDialog ""RscDisplayCharacterSelect"";" \n
        "" \n
        "_playerName = name player;" \n
-       "ctrlSetText [501, format [""%1, Select your Character"", _playerName]]; // title" \n
+       "ctrlSetText [501,format [""%1,Select your Character"",_playerName]]; // title" \n
        "" \n
        "_waitTime = 0;" \n
        "if (_switchBlock) then {" \n
-       "  ctrlSetText [502, format [""You can only switch to another living character every %1"", DZE_CharacterSwitchTimeout call _fnc_formatTime]]; // info 1" \n
+       "  ctrlSetText [502,format [""You can only switch to another living character every %1"",DZE_CharacterSwitchTimeout call _fnc_formatTime]]; // info 1" \n
        "  _waitTime = DZE_CharacterSwitchTimeout - _lastLoginMin;" \n
        "};" \n
        "" \n
@@ -1791,17 +1791,17 @@ class FSM
        "    _deadBodyNearby = false;" \n
        "    if (count _wordspace > 1) then {" \n
        "      _position = _wordspace select 1;" \n
-       "      _nearestCities = nearestLocations [_position, [""NameCityCapital"",""NameCity"",""NameVillage""], 1000];" \n
+       "      _nearestCities = nearestLocations [_position,[""NameCityCapital"",""NameCity"",""NameVillage""],1000];" \n
        "      if (count _nearestCities > 0) then {" \n
        "        _nearestCity = _nearestCities select 0;" \n
-       "        _locationName = format [""Near %1"", text _nearestCity];" \n
+       "        _locationName = format [""Near %1"",text _nearestCity];" \n
        "      };" \n
        "      // check for dead bodies near the spawn position" \n
        "      if (DZE_CharacterMinDistance > 0) then {" \n
        "        {" \n
-       "          if ((_x isKindOf ""CAManBase"") && {(_x getVariable [""bodyName"", """"]) == _playerName} && {(_position distance _x) < DZE_CharacterMinDistance}) exitWith {" \n
+       "          if ((_x isKindOf ""CAManBase"") && {(_x getVariable [""bodyName"",""""]) == _playerName} && {(_position distance _x) < DZE_CharacterMinDistance}) exitWith {" \n
        "            _deadBodyNearby = true;" \n
-       "            ctrlSetText [503, format [""You can not spawn near your dead body (at least %1 m distance)"", DZE_CharacterMinDistance]]; // info 2" \n
+       "            ctrlSetText [503,format [""You can not spawn near your dead body (at least %1 m distance)"",DZE_CharacterMinDistance]]; // info 2" \n
        "          };" \n
        "        } forEach allDead;" \n
        "      };" \n
@@ -1828,20 +1828,20 @@ class FSM
        "      };" \n
        "      if (_alive == 1) then {" \n
        "        // alive" \n
-       "        _titleControl ctrlSetText format [""Character %1 ID:%2"", _slot, _charId];" \n
+       "        _titleControl ctrlSetText format [""Character %1 ID:%2"",_slot,_charId];" \n
        "        if (_slot != _currentSlot && (_switchBlock || _deadBodyNearby)) then {" \n
        "          if (_deadBodyNearby) then {" \n
        "            _buttonControl ctrlSetText ""Dead body nearby"";" \n
        "          } else { // _switchBlock" \n
-       "            _buttonControl ctrlSetText format [""Wait %1"", _waitTime call _fnc_formatTime];" \n
+       "            _buttonControl ctrlSetText format [""Wait %1"",_waitTime call _fnc_formatTime];" \n
        "          };" \n
        "          _buttonControl ctrlEnable false;" \n
        "        }" \n
        "      } else {" \n
        "        // dead" \n
-       "        _titleControl ctrlSetText format [""Character %1 (DEAD) ID:%2"", _slot, _charId];" \n
-       "        _titleControl ctrlSetTextColor [1, 0, 0, 1]; // red" \n
-       "        _pictureControl ctrlSetTextColor [1, 0, 0, 0.4]; // red" \n
+       "        _titleControl ctrlSetText format [""Character %1 (DEAD) ID:%2"",_slot,_charId];" \n
+       "        _titleControl ctrlSetTextColor [1,0,0,1]; // red" \n
+       "        _pictureControl ctrlSetTextColor [1,0,0,0.4]; // red" \n
        "        _buttonControl ctrlSetText ""Respawn"";" \n
        "      };" \n
        "      _text = parseText format [""" \n

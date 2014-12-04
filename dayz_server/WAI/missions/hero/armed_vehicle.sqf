@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private 		["_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	//Armed Land Vehicle
@@ -16,7 +16,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
 	
 	//Troops
 	_rndnum = (2 + round (random 4));
@@ -27,7 +27,7 @@ if(isServer) then {
 	//Static Guns
 	_static_gun = ai_static_weapons call BIS_fnc_selectRandom;
 	[[
-		[(_position select 0),(_position select 1) + 10, 0]
+		[(_position select 0),(_position select 1) + 10,0]
 	],_static_gun,"Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 	
 	//Spawn Vehicle
@@ -40,8 +40,8 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
-		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_vehicle], 		// cleanup objects
+		["crate"],			// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_vehicle],		// cleanup objects
 		"Bandits have disabled an armed vehicle with lots of chain gun ammo in the gear! Check your map for the location!",	// mission announcement
 		"Survivors have secured the armed vehicle!",																		// mission success
 		"Survivors did not secure the armed vehicle in time"																// mission fail

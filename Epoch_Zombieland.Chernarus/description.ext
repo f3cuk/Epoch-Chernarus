@@ -37,7 +37,7 @@ class RscText
 	font = "Bitstream";
 	SizeEx = 0.03921;
 	colorText[] = {1,1,1,1};
-	colorBackground[] = {0, 0, 0, 0};
+	colorBackground[] = {0,0,0,0};
 	linespacing = 1;
 };
 class RscPicture
@@ -158,7 +158,7 @@ class RscTextGUIK {
 	idc = -1;
 	style = 0x02;
 	colorBackground[] = {0,0,0,0};
-	colorText[] = {1, 1, 1, 0.5};
+	colorText[] = {1,1,1,0.5};
 	font = "Bitstream";
 	size = 0.03;
 	sizeEx = 0.03;

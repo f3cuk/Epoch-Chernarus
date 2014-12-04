@@ -50,10 +50,10 @@ if (_dikCode in actionKeys "Surrender") then {
 
 		if (_dropPrimary || _dropSecondary) then {
 			player playActionNow "PutDown";
-			_iPos = getPosATL player;
+			_iPos = [player] call FNC_GetPos;
 			_radius = 1;
-			_item = createVehicle ["WeaponHolder", _iPos, [], _radius, "CAN_COLLIDE"];
-			_item setposATL _iPos;
+			_item = createVehicle ["WeaponHolder",_iPos,[],_radius,"CAN_COLLIDE"];
+			_item SetPos _iPos;
 			if (_dropPrimary) then {
 				_iItem = _primaryWeapon;
 				_removed = ([player,_iItem,1] call BIS_fnc_invRemove);
@@ -72,7 +72,7 @@ if (_dikCode in actionKeys "Surrender") then {
 		};
 
 		// set publicvariable that allows other player to access gear
-		player setVariable ["DZE_Surrendered", true, true];
+		player setVariable ["DZE_Surrendered",true,true];
 		// surrender animation
 		player playMove "AmovPercMstpSsurWnonDnon";
 	};
@@ -86,7 +86,7 @@ if (_dikCode in actionKeys "MoveBack") exitWith {r_interrupt = true; if (DZE_Sur
 
 //Prevent exploit of glitching through doors
 if (_dikCode in actionKeys "Prone") then {
-	_doors = nearestObjects [player, DZE_DoorsLocked, 3];
+	_doors = nearestObjects [player,DZE_DoorsLocked,3];
 	if (count _doors > 0) then {
 		_handled = true;
 	};
@@ -100,9 +100,9 @@ _shift = 	_this select 2;
 _ctrl = 	_this select 3;
 _alt =		_this select 4;
 
-//diag_log format["Keypress: %1", _this];
+//diag_log format["Keypress: %1",_this];
 if ((_dikCode in actionKeys "Gear") && (vehicle player != player) && !_shift && !_ctrl && !_alt && !dialog) then {
-			createGearDialog [player, "RscDisplayGear"];
+			createGearDialog [player,"RscDisplayGear"];
 			_handled = true;
 };
 
@@ -112,10 +112,10 @@ if (_dikCode in (actionKeys "GetOver")) then {
 		_handled = true;
 		DZE_PZATTACK = true;
 	} else {
-		_nearbyObjects = nearestObjects[getPosATL player, dayz_disallowedVault, 8];
+		_nearbyObjects = nearestObjects[[player] call FNC_GetPos,dayz_disallowedVault,8];
 		if (count _nearbyObjects > 0) then {
 			if((diag_tickTime - dayz_lastCheckBit > 4)) then {
-				[objNull, player, rSwitchMove,"GetOver"] call RE;
+				[objNull,player,rSwitchMove,"GetOver"] call RE;
 				player playActionNow "GetOver";
 				dayz_lastCheckBit = diag_tickTime;
 			} else {
@@ -133,19 +133,19 @@ if (_dikCode == 210) then {
 if (_dikCode in actionKeys "ForceCommandingMode") then {_handled = true};
 if (_dikCode in actionKeys "PushToTalk" && (diag_tickTime - dayz_lastCheckBit > 10)) then {
 	dayz_lastCheckBit = diag_tickTime;
-	[player,50,true,(getPosATL player)] spawn player_alertZombies;
+	[player,50,true,([player] call FNC_GetPos)] spawn player_alertZombies;
 };
 if (_dikCode in actionKeys "VoiceOverNet" && (diag_tickTime - dayz_lastCheckBit > 10)) then {
 	dayz_lastCheckBit = diag_tickTime;
-	[player,50,true,(getPosATL player)] spawn player_alertZombies;
+	[player,50,true,([player] call FNC_GetPos)] spawn player_alertZombies;
 };
 if (_dikCode in actionKeys "PushToTalkDirect" && (diag_tickTime - dayz_lastCheckBit > 10)) then {
 	dayz_lastCheckBit = diag_tickTime;
-	[player,15,false,(getPosATL player)] spawn player_alertZombies;
+	[player,15,false,([player] call FNC_GetPos)] spawn player_alertZombies;
 };
 if (_dikCode in actionKeys "Chat" && (diag_tickTime - dayz_lastCheckBit > 10)) then {
 	dayz_lastCheckBit = diag_tickTime;
-	[player,15,false,(getPosATL player)] spawn player_alertZombies;
+	[player,15,false,([player] call FNC_GetPos)] spawn player_alertZombies;
 };
 if (_dikCode in actionKeys "User20" && (diag_tickTime - dayz_lastCheckBit > 5)) then {
 	dayz_lastCheckBit = diag_tickTime;

@@ -17,13 +17,13 @@ if (isServer) then {
 		_veh setFuel 1;
 		if ({alive _x} count crew _veh == 0) then {
 			_veh setDamage 1;
-			_veh setVariable ["killedat", time];
+			_veh setVariable ["killedat",time];
 		};
 		sleep 1;
 	};
 	
 	_veh setDamage 1;
-	_veh setVariable ["killedat", time];
+	_veh setVariable ["killedat",time];
 
 	waitUntil
 	{

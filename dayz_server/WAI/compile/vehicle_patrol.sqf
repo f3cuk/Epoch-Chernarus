@@ -1,6 +1,6 @@
 if (isServer) then {
 
-	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill", "_gunner", "_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill","_gunner","_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -46,7 +46,7 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 
-	_pilot 					= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_pilot 					= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	[_pilot] 				joinSilent _unitGroup;
 	
 	call {
@@ -57,7 +57,7 @@ if (isServer) then {
 	
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
 
-	_vehicle 				= createVehicle [_veh_class, [(_startingpos select 0),(_startingpos select 1), 0], [], 0, "CAN_COLLIDE"];
+	_vehicle 				= createVehicle [_veh_class,[(_startingpos select 0),(_startingpos select 1),0],[],0,"CAN_COLLIDE"];
 	_vehicle 				setFuel 1;
 	_vehicle 				engineOn true;
 	_vehicle 				setVehicleAmmo 1;
@@ -70,7 +70,7 @@ if (isServer) then {
 	_pilot assignAsDriver 	_vehicle;
 	_pilot moveInDriver 	_vehicle;
 
-	_gunner 				= _unitGroup createUnit [_aiskin, [0,0,0], [], 1, "NONE"];
+	_gunner 				= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	_gunner 				assignAsGunner _vehicle;
 	_gunner 				moveInTurret [_vehicle,[0]];
 	[_gunner] 				joinSilent _unitGroup;
@@ -98,7 +98,7 @@ if (isServer) then {
 	} count (units _unitgroup);
 
 	{
-		_x addEventHandler ["Killed",{[_this select 0, _this select 1, "vehicle"] call on_kill;}];
+		_x addEventHandler ["Killed",{[_this select 0,_this select 1,"vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
 	if (!isNil "_mission") then {
@@ -106,7 +106,7 @@ if (isServer) then {
 		_vehicle setVariable ["mission",_mission];
 		{
 			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0, (_ainum + 1)];
+			wai_mission_data select _mission set [0,(_ainum + 1)];
 			_x setVariable ["mission",_mission]; 
 		} count (crew _vehicle);
 	};
@@ -117,13 +117,13 @@ if (isServer) then {
 
 	if(_aitype == "Hero") then {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
+			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
+			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};

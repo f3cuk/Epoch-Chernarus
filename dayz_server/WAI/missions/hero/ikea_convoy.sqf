@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private			["_complete","_dir","_rndnum","_crate_type","_mission","_position","_vehclass3","_vehclass2","_vehicle3","_vehicle2","_playerPresent","_vehicle","_vehclass","_crate"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [40] call find_position;
@@ -12,7 +12,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	
 	//Troops
 	_rndnum = 5 + round (random 3);
@@ -23,9 +23,9 @@ if(isServer) then {
 
 	//Static Guns
 	[[
-		[(_position select 0) + 25, (_position select 1) + 25, 0],
-		[(_position select 0) - 25, (_position select 1) - 25, 0],
-		[(_position select 0) + 25, (_position select 1) - 25, 0]
+		[(_position select 0) + 25,(_position select 1) + 25,0],
+		[(_position select 0) - 25,(_position select 1) - 25,0],
+		[(_position select 0) + 25,(_position select 1) - 25,0]
 	],"M2StaticMG","Hard","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 	//Heli Para Drop
@@ -51,9 +51,9 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],				// mission number and crate
-		["crate"], 						// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
+		["crate"],						// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
 		[_vehicle,_vehicle2,_vehicle3],	// cleanup objects
-		"An Ikea delivery has been hijacked by bandits, take over the convoy and the building supplies are yours!",	// mission announcement
+		"An Ikea delivery has been hijacked by bandits,take over the convoy and the building supplies are yours!",	// mission announcement
 		"Survivors have secured the building supplies!",															// mission success
 		"Survivors did not secure the convoy in time"																// mission fail
 	] call mission_winorfail;

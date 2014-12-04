@@ -22,10 +22,10 @@ closeDialog 0;
 
 _inVehicle = (vehicle player) != player;
 if(_inVehicle) exitWith {
-	cutText [format["You cannot open %1 in a vehicle.", MBT_NAME], "PLAIN DOWN"];
+	cutText [format["You cannot open %1 in a vehicle.",MBT_NAME],"PLAIN DOWN"];
 };
 
-cutText [format["Opening EpochPack %1 (%2 items)..",_type,_slots], "PLAIN DOWN"];
+cutText [format["Opening EpochPack %1 (%2 items)..",_type,_slots],"PLAIN DOWN"];
 player playActionNow "Medic";
 
 r_interrupt = false;
@@ -41,7 +41,7 @@ while {r_doLoop} do {
 	_isMedic = ["medic",_animState] call fnc_inString;
 	_briefSoundCount = _briefSoundCount + 1;
 	if (_briefSoundCount > 10 && !_briefSoundPlay) then { //Just to delay the sound a bit
-		[objNull, player, rSAY, "Brief_Open_Sound", 30] call RE;
+		[objNull,player,rSAY,"Brief_Open_Sound",30] call RE;
 		_briefSoundPlay = true;
 	};
 	if (_isMedic) then {
@@ -61,10 +61,10 @@ r_doLoop = false;
 if (!_finished) exitWith { 
 	r_interrupt = false;
 	if (vehicle player == player) then {
-		[objNull, player, rSwitchMove,""] call RE;
+		[objNull,player,rSwitchMove,""] call RE;
 		player playActionNow "stop";
 	};
-	cutText [format["Cancelled opening.."], "PLAIN DOWN"];
+	cutText [format["Cancelled opening.."],"PLAIN DOWN"];
 };
 
 if (_finished) then {
@@ -79,19 +79,19 @@ if (_finished) then {
 	};
 	
 	if (!_canContinue) exitWith { //Anti-duping
-		cutText [format["Opening EpochPack %1 failed.", _type] , "PLAIN DOWN"];
+		cutText [format["Opening EpochPack %1 failed.",_type] ,"PLAIN DOWN"];
 	};
 
 	_crateClass = "USOrdnanceBox";
 
 	_dir = getdir player;
-	_pos = getposATL player;
-	_pos = [(_pos select 0)+1*sin(_dir),(_pos select 1)+1*cos(_dir), (_pos select 2)];
+	_pos = [player] call FNC_GetPos;
+	_pos = [(_pos select 0)+1*sin(_dir),(_pos select 1)+1*cos(_dir),(_pos select 2)];
 
 	_spawnCrate = _crateClass createVehicleLocal _pos;
 
 	_spawnCrate setDir _dir;
-	_spawnCrate setposATL _pos;
+	_spawnCrate SetPos _pos;
 	
 	clearWeaponCargoGlobal _spawnCrate;
 	clearMagazineCargoGlobal _spawnCrate;
@@ -104,7 +104,7 @@ if (_finished) then {
 		private ["_forEachTempIndexNo"];
 		_forEachTempIndexNo = _forEachIndex;
 		for "_i" from 1 to (_x select 4) do {
-			_lootRandomizer set [count _lootRandomizer, _forEachTempIndexNo];
+			_lootRandomizer set [count _lootRandomizer,_forEachTempIndexNo];
 		};
 	} forEach MBC_REWARDLIST;
 	
@@ -118,25 +118,25 @@ if (_finished) then {
 		_loot		= _loot select _lootIndex;
 		_lootType	= _loot select 0;
 		
-		//Let's pick the random items out of groups right away, so we can properly display it on the UI
+		//Let's pick the random items out of groups right away,so we can properly display it on the UI
 		call {
 			if(_lootType == "group_wep") exitWith {
 				_groupingArray = _loot select 1;
 				_weapon = _groupingArray call BIS_fnc_selectRandom;
-				_loot set [1, _weapon]; // Random weapon
-				_loot set [2, (1 + floor(random 4))]; // Random amount of mags
+				_loot set [1,_weapon]; // Random weapon
+				_loot set [2,(1 + floor(random 4))]; // Random amount of mags
 			};
 			if(_lootType == "group_tool") exitWith  {
 				_groupingArray = _loot select 1;
 				_tool = _groupingArray call BIS_fnc_selectRandom;
-				_loot set [1, _tool]; // Random tool
+				_loot set [1,_tool]; // Random tool
 			};
 			if(_lootType == "group_mag") exitWith {
 				_mag = (_loot select 1) call BIS_fnc_selectRandom;
-				_loot set [1, _mag]; // Random item
+				_loot set [1,_mag]; // Random item
 			};
 		};
-		mbc_rewardlist_temp set [count mbc_rewardlist_temp, _loot];
+		mbc_rewardlist_temp set [count mbc_rewardlist_temp,_loot];
 		_loot = [];
 	};
 	
@@ -144,9 +144,9 @@ if (_finished) then {
 		{
 			private ["_pic","_text","_itemName","_qty","_addInfo","_className","_type","_rarity"];
 			
-			ctrlSetText [81401, MBT_DIALOG_TITLE];
-			ctrlSetText [81402, MBT_DIALOG_CLAIM];
-			ctrlSetText [81403, MBT_DIALOG_NOTE];
+			ctrlSetText [81401,MBT_DIALOG_TITLE];
+			ctrlSetText [81402,MBT_DIALOG_CLAIM];
+			ctrlSetText [81403,MBT_DIALOG_NOTE];
 			
 			_addInfo	= "";
 			_type		= _x select 0;
@@ -156,12 +156,12 @@ if (_finished) then {
 					_pic = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'picture');
 					_itemName = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'displayName');
 					_qty = _x select 2;
-					_text = format["%1\n+%2 magazines", _itemName, _qty];
+					_text = format["%1\n+%2 magazines",_itemName,_qty];
 				};
 				if(_type == "group_tool") exitWith {
 					_pic = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'picture');
 					_itemName = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'displayName');
-					_text = format["%1", _itemName];
+					_text = format["%1",_itemName];
 				};
 				if(_type == "group_mag") exitWith {
 					_pic = getText (configFile >> 'CfgMagazines' >> _x select 1 >> 'picture');
@@ -170,12 +170,12 @@ if (_finished) then {
 					if (_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
-					_text = format["%1%2", _itemName, _addInfo];
+					_text = format["%1%2",_itemName,_addInfo];
 				};
 				if(_type == "coins") exitWith {
 					_pic = getText (configFile >> 'CfgWeapons' >> 'EvMoney' >> 'picture');
 					_qty = _x select 2;
-					_text = format["%1 %2", _qty call BIS_fnc_numberText, _x select 1];
+					_text = format["%1 %2",_qty call BIS_fnc_numberText,_x select 1];
 				};
 				if(_type == "weapon") exitWith {
 					_pic = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'picture');
@@ -184,7 +184,7 @@ if (_finished) then {
 					if (_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
-					_text = format["%1%2", _itemName, _addInfo];
+					_text = format["%1%2",_itemName,_addInfo];
 				};
 				if(_type == "magazine") exitWith {
 					_pic 		= getText (configFile >> 'CfgMagazines' >> _x select 1 >> 'picture');
@@ -200,7 +200,7 @@ if (_finished) then {
 					if (_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
-					_text = format["%1%2", _itemName, _addInfo];
+					_text = format["%1%2",_itemName,_addInfo];
 				};
 				if(_type == "script") exitWith {
 					_pic = "";
@@ -208,8 +208,8 @@ if (_finished) then {
 				};
 			};
 			
-			ctrlSetText [81201 + _forEachIndex, _pic];
-			ctrlSetText [81301 + _forEachIndex, _text];
+			ctrlSetText [81201 + _forEachIndex,_pic];
+			ctrlSetText [81301 + _forEachIndex,_text];
 			
 			_display	= findDisplay 81000;
 			_frame_ctrl = _display displayCtrl 81101 + _forEachIndex;
@@ -255,32 +255,32 @@ if (_finished) then {
 		
 		call {
 			if (_type == "group_wep") exitWith {
-				_spawnCrate addWeaponCargoGlobal [_x select 1, 1];
+				_spawnCrate addWeaponCargoGlobal [_x select 1,1];
 				_magazines = getArray (configFile >> "CfgWeapons" >> _x select 1 >> "magazines");
 				if (count _magazines > 0) then
 				{
 					_magazineClass = _magazines select 0;
-					_spawnCrate addMagazineCargoGlobal [_magazineClass, _x select 2];
+					_spawnCrate addMagazineCargoGlobal [_magazineClass,_x select 2];
 				}
 			};
-			if (_type == "group_tool") 	exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1, 1]; };
-			if (_type == "group_mag") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1, _x select 2];};
+			if (_type == "group_tool") 	exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,1]; };
+			if (_type == "group_mag") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2];};
 			if (_type == "coins") 		exitWith { _cashToAdd = _cashToAdd + (_x select 2); };
-			if (_type == "weapon") 		exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1, _x select 2]; };
-			if (_type == "magazine") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1, _x select 2]; };
+			if (_type == "weapon") 		exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,_x select 2]; };
+			if (_type == "magazine") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2]; };
 			if (_type == "script") exitWith { [_x select 2] execVM _x select 1; };
 		};
 	} count mbc_rewardlist_temp;
 
 	if (_cashToAdd > 0) then {
 		_currentMoney = player getVariable["cashMoney",0];
-		player setVariable["cashMoney",_currentMoney + _cashToAdd, true];
+		player setVariable["cashMoney",_currentMoney + _cashToAdd,true];
 	};
 
 	PVDZE_plr_Save = [player,(magazines player),true,true] ;
 	publicVariableServer "PVDZE_plr_Save";
 
-	PVDZE_log = [format["EPOCHPACK: Player %1 (%2) - Reward: %3",name player, getPlayerUID player, mbc_rewardlist_temp]];
+	PVDZE_log = [format["EPOCHPACK: Player %1 (%2) - Reward: %3",name player,getPlayerUID player,mbc_rewardlist_temp]];
 	publicVariableServer "PVDZE_log";
 
 	cutText [format["Reward claimed - the contents have been put inside the box which will auto-remove in %1 minutes",(MBT_CRATEDELAY/60)],"PLAIN DOWN"];

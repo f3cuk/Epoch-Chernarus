@@ -3,7 +3,7 @@ if(isServer) then {
 
     private ["_vehclass","_vehicle","_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position = [30] call find_position;
@@ -15,7 +15,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type  = crates_small call BIS_fnc_selectRandom;
-	_crate  = createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
+	_crate  = createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
 
 
 	//Civil vehicle
@@ -35,11 +35,11 @@ if(isServer) then {
 
 	//Condition
 	_complete = [
-		[_mission,_crate], // mission number and crate
-		["kill"],  // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_vehicle],  // cleanup objects
-		"A bandit scout patrol is checking out a new base location, stop them before they get back and report!", // mission announcement
-		"Survivors have dealt with the scout patrol!", // mission success
+		[_mission,_crate],// mission number and crate
+		["kill"], // ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_vehicle], // cleanup objects
+		"A bandit scout patrol is checking out a new base location,stop them before they get back and report!",// mission announcement
+		"Survivors have dealt with the scout patrol!",// mission success
 		"Survivors did not deal with the scout patrol in time! A bandit base might appear here soon!" // mission fail
 	] call mission_winorfail;
 

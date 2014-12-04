@@ -14,16 +14,16 @@ if (isServer) then {
 		if(_type == "static") 	exitWith { ai_emplacement_units = (ai_emplacement_units -1); };
 	};
 	
-	_unit setVariable["missionclean", nil];
+	_unit setVariable["missionclean",nil];
 	
-	_mission = _unit getVariable ["mission", nil];
+	_mission = _unit getVariable ["mission",nil];
 		
 	if (!isNil "_mission") then {
 		if (typeName(wai_mission_data select _mission) == "ARRAY") then {
-			wai_mission_data select _mission set [0, ((wai_mission_data select _mission) select 0) - 1];
+			wai_mission_data select _mission set [0,((wai_mission_data select _mission) select 0) - 1];
 		};
 	};
-	_unit setVariable ["killedat", time];
+	_unit setVariable ["killedat",time];
 
 	if(ai_add_skin) then {
 
@@ -45,16 +45,16 @@ if (isServer) then {
 		_humankills 	= _player getVariable["humanKills",0];
 
 		if (ai_humanity_gain) then {
-			_gain = _unit getVariable ["humanity", 0];
+			_gain = _unit getVariable ["humanity",0];
 			call {
-				if (_unit getVariable ["Hero", false]) exitWith { _player setVariable ["humanity",(_humanity - _gain),true]; };
-				if (_unit getVariable ["Bandit", false]) exitWith { _player setVariable ["humanity",(_humanity + _gain),true]; };					
-				if (_unit getVariable ["Special", false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - _gain),true]; } else { _player setVariable ["humanity",(_humanity + _gain),true]; }; };
+				if (_unit getVariable ["Hero",false]) exitWith { _player setVariable ["humanity",(_humanity - _gain),true]; };
+				if (_unit getVariable ["Bandit",false]) exitWith { _player setVariable ["humanity",(_humanity + _gain),true]; };					
+				if (_unit getVariable ["Special",false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - _gain),true]; } else { _player setVariable ["humanity",(_humanity + _gain),true]; }; };
 			};
 		};
 
 		if (ai_kills_gain) then {
-			if (_unit getVariable ["Hero", false]) then {
+			if (_unit getVariable ["Hero",false]) then {
 				_player setVariable ["humanKills",(_humankills + 1),true];
 			} else {
 				_player setVariable ["banditKills",(_banditkills + 1),true];
@@ -69,7 +69,7 @@ if (isServer) then {
 		if (ai_share_info) then {
 			{
 				if (((position _x) distance (position _unit)) <= ai_share_distance) then {
-					_x reveal [_player, 4.0];
+					_x reveal [_player,4.0];
 				};
 			} count allUnits;
 		};

@@ -15,7 +15,7 @@ if (_enableGhost) then {
 	};
 };
 
-_object = createVehicle [_classname, [0,0,0], [], 0, "CAN_COLLIDE"];
+_object = createVehicle [_classname,[0,0,0],[],0,"CAN_COLLIDE"];
 
 _objectHelper 	= "Sign_sphere10cm_EP1" createVehicle [0,0,0];
 _helperColor 	= "#(argb,8,8,3)color(0,0,0,0,ca)";

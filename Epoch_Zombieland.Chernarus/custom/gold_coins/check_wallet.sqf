@@ -3,7 +3,7 @@ private ["_body","_player_near","_hisMoney","_myMoney"];
 _body 			= _this select 3;
 _player_near 	= _body call dze_isnearest_player;
 
-if (_player_near) exitWith {cutText [localize "str_pickup_limit_4", "PLAIN DOWN"]};
+if (_player_near) exitWith {cutText [localize "str_pickup_limit_4","PLAIN DOWN"]};
 
 _hisMoney 	= _body getVariable ["cashMoney",0];
 _myMoney 	= player getVariable ["cashMoney",0];

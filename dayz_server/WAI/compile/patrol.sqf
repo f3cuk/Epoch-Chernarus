@@ -42,7 +42,7 @@ if (isServer) then {
 
 		waitUntil {(_vehicle emptyPositions "DRIVER" == 0)};	// Wait until driver gets inside vehicle
 
-		diag_log format["WAI: Driver is inside vehicle, continue.."];
+		diag_log format["WAI: Driver is inside vehicle,continue.."];
 
 		[_vehicle,_unitgroup] spawn {
 
@@ -55,17 +55,17 @@ if (isServer) then {
 			while {(canMove _vehicle && _runmonitor)} do {
 				if (fuel _vehicle < 0.2) then { _vehicle setfuel 1; };
 				if (!(alive leader _unitgroup)) then {
-					diag_log "WAI: Driver was killed, ejecting AI and removing waypoints.";
+					diag_log "WAI: Driver was killed,ejecting AI and removing waypoints.";
 					_runmonitor = false;
 				};
 				sleep .5;
 			};
 
 			if(_runmonitor) then {
-				diag_log "WAI: Vehicle became undriveable, ejecting crew.";
+				diag_log "WAI: Vehicle became undriveable,ejecting crew.";
 			};
 
-			deleteWaypoint [_unitgroup, all];
+			deleteWaypoint [_unitgroup,all];
 
 			waitUntil { (speed _vehicle < 10) };	// Wait until vehicle slows down before ejecting crew
 
@@ -98,7 +98,7 @@ if (isServer) then {
 			_wp setWaypointCombatMode "YELLOW";
 
 			if(_waypoint_prev != "") then {
-				_msg = format["[RADIO] The patrol arrived at %1, heading towards %2",_waypoint_prev,(_waypoint select 0)];
+				_msg = format["[RADIO] The patrol arrived at %1,heading towards %2",_waypoint_prev,(_waypoint select 0)];
 			} else {
 				_msg = format["[RADIO] The patrol is seen moving towards %1",(_waypoint select 0)];
 			};

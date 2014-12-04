@@ -42,7 +42,7 @@ if (!isDedicated) then {
 
 	diag_log format["%1: Server done loading",servertime];
 
-	player addEventHandler ["Respawn", {_id = [] spawn player_death;}];
+	player addEventHandler ["Respawn",{_id = [] spawn player_death;}];
 	execVM "custom\character_select\player_monitor.sqf";
 
 	diag_log format["%1: Player monitor initialized",servertime];

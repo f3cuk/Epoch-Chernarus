@@ -12,7 +12,7 @@ if (_playerName == '__SERVER__' || _playerID == '' || local player) exitWith {};
 
 if (isNil "sm_done") exitWith { 
 #ifdef DZE_SERVER_DEBUG
-	diag_log ("Login cancelled, server is not ready. " + str(_playerObj)); 
+	diag_log ("Login cancelled,server is not ready. " + str(_playerObj)); 
 #endif
 };
 
@@ -56,13 +56,13 @@ while {_doLoop < 5} do {
 
 if (isNull _playerObj || !isPlayer _playerObj) exitWith {
 #ifdef DZE_SERVER_DEBUG
-	diag_log ("LOGIN RESULT: Exiting, player object null: " + str(_playerObj));
+	diag_log ("LOGIN RESULT: Exiting,player object null: " + str(_playerObj));
 #endif
 };
 
 if ((_primary select 0) == "ERROR") exitWith {
 #ifdef DZE_SERVER_DEBUG
-    diag_log format ["LOGIN RESULT: Exiting, failed to load _primary: %1 for player: %2 ",_primary,_playerID];
+    diag_log format ["LOGIN RESULT: Exiting,failed to load _primary: %1 for player: %2 ",_primary,_playerID];
 #endif
 };
 
@@ -133,7 +133,7 @@ if (!_isNew) then {
 };
 
 #ifdef DZE_SERVER_DEBUG
-diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj) + " at location: " + (getPosATL _playerObj));
+diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj) + " at location: " + ([_playerObj] call FNC_GetPos));
 #endif
 
 _isHiveOk = false;

@@ -48,7 +48,7 @@ deleteVehicle _object;
 
 _newObject = createVehicle [_class,[0,0,0],[],0,"CAN_COLLIDE"];
 _newObject setDir _dir;
-_newObject setPosATL _location;
+_newObject SetPos _location;
 
 _objWpnTypes	= _weapons select 0;
 _objWpnQty		= _weapons select 1;

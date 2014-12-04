@@ -106,12 +106,12 @@ if (isServer) then {
 		[_unit] joinSilent _unitGroup;
 
 		call {
-			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity", ai_remove_humanity]; };
-			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity", ai_add_humanity]; };
-			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity", ai_special_humanity]; };
+			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true]; _unit setVariable ["humanity",ai_remove_humanity]; };
+			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true]; _unit setVariable ["humanity",ai_add_humanity]; };
+			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true]; _unit setVariable ["humanity",ai_special_humanity]; };
 		};
 
-		if (!isNil "_gain") then { _unit setVariable ["humanity", _gain]; };
+		if (!isNil "_gain") then { _unit setVariable ["humanity",_gain]; };
 
 		call {
 			if(_backpack == "random") 	exitWith { _aipack = ai_packs call BIS_fnc_selectRandom; };
@@ -171,12 +171,12 @@ if (isServer) then {
 		
 		ai_ground_units = (ai_ground_units + 1);
 
-		_unit addEventHandler ["Killed",{[_this select 0, _this select 1, "ground"] call on_kill;}];
+		_unit addEventHandler ["Killed",{[_this select 0,_this select 1,"ground"] call on_kill;}];
 
 		if (!isNil "_mission") then {
-			wai_mission_data select _mission set [0, (((wai_mission_data select _mission) select 0) + 1)];
-			_unit setVariable ["missionclean", "ground"];
-			_unit setVariable ["mission", _mission, true];
+			wai_mission_data select _mission set [0,(((wai_mission_data select _mission) select 0) + 1)];
+			_unit setVariable ["missionclean","ground"];
+			_unit setVariable ["mission",_mission,true];
 		};
 
 	};
@@ -198,13 +198,13 @@ if (isServer) then {
 
 	if(_aitype == "Hero") then {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn hero_behaviour;
+			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
 		if (!isNil "_mission") then {
-			[_unitGroup, _mission] spawn bandit_behaviour;
+			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
 		};

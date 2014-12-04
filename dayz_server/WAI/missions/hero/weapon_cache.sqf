@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_position","_crate","_playerPresent","_rndnum","_rndgro","_num_guns","_num_tools","_num_items"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [30] call find_position;
@@ -26,14 +26,14 @@ if(isServer) then {
 
 	//Static Guns
 	[[
-		[(_position select 0) + 10, (_position select 1) + 10, 0],
-		[(_position select 0) - 10, (_position select 1) - 10, 0]
+		[(_position select 0) + 10,(_position select 1) + 10,0],
+		[(_position select 0) - 10,(_position select 1) - 10,0]
 	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
-		["crate"],			// ["crate"], or ["kill",wai_kill_percent], or ["assassinate", _unitGroup],
+		["crate"],			// ["crate"],or ["kill",wai_kill_percent],or ["assassinate",_unitGroup],
 		[],					// cleanup objects
 		"Bandits have obtained a weapon crate. Check your map for the location!",	// mission announcement
 		"Survivors have secured the weapon cache!",									// mission success

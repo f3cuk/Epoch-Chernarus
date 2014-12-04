@@ -4,13 +4,13 @@ _ownerID 	= _this select 0;
 _sounddist 	= 10;
 _player_pos = [player] call FNC_GetPos;
 
-_objects = nearestObjects [_player_pos, ["LandVehicle","Helicopter","Plane","Ship"], 50];
+_objects = nearestObjects [_player_pos,["LandVehicle","Helicopter","Plane","Ship"],50];
 _i = 0;
 
 {
 	_vehicle = _x;
 	if (alive _vehicle) then {
-		_ownerID2 = _vehicle getVariable ["CharacterID", "0"];
+		_ownerID2 = _vehicle getVariable ["CharacterID","0"];
 
 		if(_ownerID == _ownerID2) then {
 			if(!locked _vehicle) then {
@@ -27,13 +27,13 @@ _i = 0;
 						publicVariable "PVDZE_veh_Lock"; 
 					};
 					
-					player action ["lightOn", _vehicle];
-					_null = [objNull, _vehicle, rSAY, "carLock", _sounddist] call RE;
+					player action ["lightOn",_vehicle];
+					_null = [objNull,_vehicle,rSAY,"carLock",_sounddist] call RE;
 					sleep 0.5;
-					player action ["lightOff", _vehicle];
+					player action ["lightOff",_vehicle];
 					
 					_tvih = typeOf _vehicle;
-					cutText [format["%1 has been locked",_tvih], "PLAIN DOWN"];
+					cutText [format["%1 has been locked",_tvih],"PLAIN DOWN"];
 					
 					s_player_lockUnlock_crtl = -1;
 					DZE_ActionInProgress = false;
@@ -45,4 +45,4 @@ _i = 0;
 	};
 } count _objects;
 
-[_vehicle,100,true,(getPosATL _vehicle)] spawn player_alertZombies;
+[_vehicle,100,true,([_vehicle] call FNC_GetPos)] spawn player_alertZombies;

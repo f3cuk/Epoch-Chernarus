@@ -21,21 +21,21 @@ _infected = 0;
 if (r_player_infected && DZE_PlayerZed) then {
 	_infected = 1;
 };
-PVDZE_plr_Died = [dayz_characterID,0,_body,_playerID,_infected, dayz_playerName];
+PVDZE_plr_Died = [dayz_characterID,0,_body,_playerID,_infected,dayz_playerName];
 publicVariableServer "PVDZE_plr_Died";
 
-_id = [player,20,true,getPosATL player] call player_alertZombies;
+_id = [player,20,true,[player] call FNC_GetPos] call player_alertZombies;
 
 sleep 0.5;
 
 player setDamage 1;
 0.1 fadeSound 0;
 
-player setVariable ["NORRN_unconscious", false, true];
-player setVariable ["unconsciousTime", 0, true];
+player setVariable ["NORRN_unconscious",false,true];
+player setVariable ["unconsciousTime",0,true];
 player setVariable ["USEC_isCardiac",false,true];
 player setVariable ["medForceUpdate",true,true];
-player setVariable ["startcombattimer", 0];
+player setVariable ["startcombattimer",0];
 r_player_unconscious = false;
 r_player_cardiac = false;
 
@@ -81,7 +81,7 @@ call compile preprocessFileLineNumbers "custom\take_clothes\take_clothes.sqf";
 "dynamicBlur" ppEffectEnable true;"dynamicBlur" ppEffectAdjust [4]; "dynamicBlur" ppEffectCommit 0.2;
 
 "colorCorrections" ppEffectEnable true;
-"colorCorrections" ppEffectAdjust [1, 1, 0, [1, 1, 1, 0.0], [1, 1, 1, 0.01],  [1, 1, 1, 0.0]];
+"colorCorrections" ppEffectAdjust [1,1,0,[1,1,1,0.0],[1,1,1,0.01], [1,1,1,0.0]];
 "colorCorrections" ppEffectCommit 1;
 
 //Player is Dead!
@@ -94,8 +94,8 @@ addSwitchableUnit dayz_originalPlayer;
 setPlayable dayz_originalPlayer;
 selectPlayer dayz_originalPlayer;
 
-3 cutRsc ["default", "PLAIN",3];
-4 cutRsc ["default", "PLAIN",3];
+3 cutRsc ["default","PLAIN",3];
+4 cutRsc ["default","PLAIN",3];
 
 _body setVariable["combattimeout",0,true];
 
@@ -107,16 +107,16 @@ sleep 2;
 playMusic "dayz_track_death_1";
 
 "dynamicBlur" ppEffectAdjust [0]; "dynamicBlur" ppEffectCommit 5;
-"colorCorrections" ppEffectAdjust [1, 1, 0, [1, 1, 1, 0.0], [1, 1, 1, 1],  [1, 1, 1, 1]];"colorCorrections" ppEffectCommit 5;
+"colorCorrections" ppEffectAdjust [1,1,0,[1,1,1,0.0],[1,1,1,1], [1,1,1,1]];"colorCorrections" ppEffectCommit 5;
 
 sleep 2;
 
 for  "_x" from 5 to 1 step -1 do {
-	titleText [format[localize "str_return_lobby", _x], "PLAIN DOWN", 1];
+	titleText [format[localize "str_return_lobby",_x],"PLAIN DOWN",1];
 	sleep 1;
 };
 
-PVDZE_Server_Simulation = [_body, false];
+PVDZE_Server_Simulation = [_body,false];
 publicVariableServer "PVDZE_Server_Simulation";
 
 endMission "END1";

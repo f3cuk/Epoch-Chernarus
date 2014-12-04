@@ -1,6 +1,6 @@
 private ["_junk_group","_food_group","_military_group","_medical_group","_vehicle_repair_group","_common_group","_assault_group","_lmg_group","_sniper_group","_tools_group","_chainbullets_group","_rares_group","_rare_weapons_group","_legend_group","_chainsaw_group"];
 
-MBT_NAME = "EpochPacks"; //Name of the item that spawns the reward (this is just a visual thing, code won't break if you change this to something random)
+MBT_NAME = "EpochPacks"; //Name of the item that spawns the reward (this is just a visual thing,code won't break if you change this to something random)
 MBT_CRATEDELAY = 900; //How long until the reward crate disappears (in seconds) Default: 900 (15 minutes)
 MBT_DIALOG_TITLE = "EpochPack opening"; //Reward dialog title
 MBT_DIALOG_CLAIM = "Claim Your Reward"; //Claim reward button
@@ -39,17 +39,17 @@ MBC_REWARDLIST = [
 	//Reward List format:
 	//[type,item,quantity,raritylevel,rarity]
 	//		type - item type. Available options: 
-	//			magazine - any type of magazine and most general items (briefcases, cinder blocks, ammunition, etc)
-	//			weapon - any type of weapon, note that toolbelt items are also considered weapons in Arma
+	//			magazine - any type of magazine and most general items (briefcases,cinder blocks,ammunition,etc)
+	//			weapon - any type of weapon,note that toolbelt items are also considered weapons in Arma
 	//			group_mag - a group of magazines. This is an array of items from which only 1 will be randomly picked
 	//			group_wep - a group of weapons. An array of weapons from which only 1 will be randomly picked
 	//			group_tool - a group of tools. An array of tools from which only 1 will be randomly picked
 	//			coins - this is for Zupa's Single Currency script only. Only use it if you have that script. If you don't do not use coins as a type for reward
 	//			script - this is an experimental feature for more advanced users. I haven't tested it thoroughly so use it at your own risk.
-	//				It was meant to work as a power-up rather than having an item as a reward. If you use "script" as a type, you must type the script's full path to the "item" field
-	//		item - class name of item. If type is group, insert the group's variable. Example: 30m_plot_pole, ItemHotwireKit, _sniper_group, _junk_group
-	//		quantity - number of items, set it to 1 if you're using grouping. Example: 15 (in case item is ItemHotwireKit then it will give you 15 Hotwire Kits)
-	//		raritylevel - the level of rarity from 1 to 4 (1 = least rare, 4 = rarest), this is just visual for the UI
+	//				It was meant to work as a power-up rather than having an item as a reward. If you use "script" as a type,you must type the script's full path to the "item" field
+	//		item - class name of item. If type is group,insert the group's variable. Example: 30m_plot_pole,ItemHotwireKit,_sniper_group,_junk_group
+	//		quantity - number of items,set it to 1 if you're using grouping. Example: 15 (in case item is ItemHotwireKit then it will give you 15 Hotwire Kits)
+	//		raritylevel - the level of rarity from 1 to 4 (1 = least rare,4 = rarest),this is just visual for the UI
 	//		rarity - how likely this item will be picked in percentage (from 0 to 100)
 	//			Note: total sum of rarity must equal 100
 	

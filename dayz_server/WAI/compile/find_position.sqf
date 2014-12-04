@@ -29,7 +29,7 @@ if(isServer) then {
 
 		if (_validspot && isNil "infiSTAR_LoadStatus1" && wai_avoid_town != 0) then {
 			if ([_position,wai_avoid_town] call isNearTown) then {  if(debug_mode) then {diag_log("WAI: Invalid Position (Town)");}; _validspot = false; };
-		}; // ELSE infoSTAR is enabled, need to find another method of finding near towns
+		}; // ELSE infoSTAR is enabled,need to find another method of finding near towns
 
 		if(_validspot && wai_avoid_road != 0) then {
 			if ([_position,wai_avoid_road] call isNearRoad) then { if(debug_mode) then {diag_log("WAI: Invalid Position (Road)");}; _validspot = false; };
@@ -51,11 +51,11 @@ if(isServer) then {
 
 		if(_validspot) then {
 
-			if(debug_mode) then { diag_log("Loop complete, valid position " +str(_position) + " in " + str(_i) + " attempts"); };
+			if(debug_mode) then { diag_log("Loop complete,valid position " +str(_position) + " in " + str(_i) + " attempts"); };
 	
 		};
 
 	};
-	_position set [2, 0];
+	_position set [2,0];
 	_position
 };

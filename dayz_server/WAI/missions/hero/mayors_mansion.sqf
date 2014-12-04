@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private			["_room","_complete","_mayor_himself","_crate_type","_mission","_position","_crate","_baserunover","_mayor"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [40] call find_position;
@@ -12,10 +12,10 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	 
 	//Mayors Mansion
-	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0), (_position select 1),0],[], 0, "CAN_COLLIDE"];
+	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -50,17 +50,17 @@ if(isServer) then {
 
 	//Static mounted guns
 	[[
-		[(_position select 0) - 15, (_position select 1) + 15, 8],
-		[(_position select 0) + 15, (_position select 1) - 15, 8]
+		[(_position select 0) - 15,(_position select 1) + 15,8],
+		[(_position select 0) + 15,(_position select 1) - 15,8]
 	],"M2StaticMG","Easy","Bandit","Bandit",1,2,"Random","Random",_mission] call spawn_static;
 
 	_complete = [
 		[_mission,_crate],		// mission number and crate
-		["assassinate",_mayor], // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 		// cleanup objects
-		"The Mayor has gone rogue, go take him and his task force out to claim the black market weapons!",	// mission announcement
-		"The rogue mayor has been taken out, who will be the next Mayor of Cherno?",						// mission success
-		"Survivors were unable to capture the mansion, time is up"										// mission fail
+		["assassinate",_mayor],// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_baserunover],		// cleanup objects
+		"The Mayor has gone rogue,go take him and his task force out to claim the black market weapons!",	// mission announcement
+		"The rogue mayor has been taken out,who will be the next Mayor of Cherno?",						// mission success
+		"Survivors were unable to capture the mansion,time is up"										// mission fail
 	] call mission_winorfail;
 
 	if(_complete) then {

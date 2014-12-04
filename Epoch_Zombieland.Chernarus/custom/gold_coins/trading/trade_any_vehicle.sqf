@@ -1,6 +1,6 @@
 private ["_oldPosition","_veh","_location","_isOk","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_obj","_objectID","_objectUID","_bos","_finished","_dir","_helipad","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_config","_damage","_tireDmg","_tires","_okToSell","_hitpoints","_needed","_activatingPlayer","_textPartIn","_textPartOut","_traderID","_price","_object_name","_curr_new","_newM","_myMoney"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -21,9 +21,9 @@ if(_buy_o_sell == "buy") then {
 } else {
 
 	if (_part_in isKindOf "Air") then {
-		_obj = nearestObjects [(getPosATL player), [_part_in], dayz_sellDistance_air];
+		_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_air];
 	} else {
-		_obj = nearestObjects [(getPosATL player), [_part_in], dayz_sellDistance_vehicle];
+		_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_vehicle];
 	};
 	_qty = count _obj;
 	_bos = 1;
@@ -31,7 +31,7 @@ if(_buy_o_sell == "buy") then {
 
 if (_qty >= _qty_in) then {
 
-	cutText [(localize "str_epoch_player_105"), "PLAIN DOWN"];
+	cutText [(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 
@@ -51,7 +51,7 @@ if (_qty >= _qty_in) then {
 
 		if (!_finished) exitWith { 
 			r_interrupt = false;
-			cutText ["Trade cancelled", "PLAIN DOWN"];
+			cutText ["Trade cancelled","PLAIN DOWN"];
 		};
 		
 	// # F3 FAST TRADING
@@ -62,9 +62,9 @@ if (_qty >= _qty_in) then {
 			_qty = player getVariable ["cashMoney",0];
 		} else {
 			if (_part_in isKindOf "AIR") then {
-				_obj = nearestObjects [(getPosATL player), [_part_in], dayz_sellDistance_air];
+				_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_air];
 			} else {
-				_obj = nearestObjects [(getPosATL player), [_part_in], dayz_sellDistance_vehicle];
+				_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_vehicle];
 			};
 			_qty = count _obj;	
 		};
@@ -125,17 +125,17 @@ if (_qty >= _qty_in) then {
 	
 							_veh = createVehicle ["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
 
-							_location = (getPosATL _veh);
+							_location = ([_veh] call FNC_GetPos);
 
 							PVDZE_veh_Publish2 = [_veh,[_dir,_location],_part_out,false,_keySelected,_activatingPlayer];
 							publicVariableServer  "PVDZE_veh_Publish2";
 						
-							cutText [format[("Bought %3 for %1 %2, key added to toolbelt"),_qty_in,_textPartIn,_textPartOut], "PLAIN DOWN"];
+							cutText [format[("Bought %3 for %1 %2,key added to toolbelt"),_qty_in,_textPartIn,_textPartOut],"PLAIN DOWN"];
 						} else {
 							player removeMagazine _keySelected;
 						};
 					} else {
-						cutText [(localize "str_epoch_player_107"), "PLAIN DOWN"];
+						cutText [(localize "str_epoch_player_107"),"PLAIN DOWN"];
 					};
 				} else {
 					
@@ -169,7 +169,7 @@ if (_qty >= _qty_in) then {
 							
 							_myMoney = player getVariable ["cashMoney",0];
 							_myMoney = _myMoney + _qty_out;
-							player setVariable ["cashMoney", _myMoney , true];
+							player setVariable ["cashMoney",_myMoney ,true];
 
 							_objectID 	= _obj getVariable ["ObjectID","0"];
 							_objectUID	= _obj getVariable ["ObjectUID","0"];
@@ -179,13 +179,13 @@ if (_qty >= _qty_in) then {
 
 							deleteVehicle _obj; 
 
-							cutText [format[(localize "str_epoch_player_181"),_qty_in,_textPartIn,_qty_out,_textPartOut], "PLAIN DOWN"];
+							cutText [format[(localize "str_epoch_player_181"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 							
 						} else {
-							cutText [format[(localize "str_epoch_player_182"),_textPartIn] , "PLAIN DOWN"];
+							cutText [format[(localize "str_epoch_player_182"),_textPartIn] ,"PLAIN DOWN"];
 						};
 					} else {
-						cutText [(localize "str_epoch_player_245"), "PLAIN DOWN"];
+						cutText [(localize "str_epoch_player_245"),"PLAIN DOWN"];
 					};
 					
 				};
@@ -194,7 +194,7 @@ if (_qty >= _qty_in) then {
 				s_player_parts_crtl = -1;
 
 			} else {
-				cutText [format[(localize "str_epoch_player_183"),_textPartOut] , "PLAIN DOWN"];
+				cutText [format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 			dayzTradeResult = nil;
 		};
@@ -203,9 +203,9 @@ if (_qty >= _qty_in) then {
 } else {
 	_needed =  _qty_in - _qty;
 	if(_buy_o_sell == "buy") then {
-		cutText [format["You need %1 %2",_needed,_textPartIn] , "PLAIN DOWN"];
+		cutText [format["You need %1 %2",_needed,_textPartIn] ,"PLAIN DOWN"];
 	} else {
-		cutText [format[(localize "str_epoch_player_185"),_textPartIn] , "PLAIN DOWN"];
+		cutText [format[(localize "str_epoch_player_185"),_textPartIn] ,"PLAIN DOWN"];
 	};	
 };
 

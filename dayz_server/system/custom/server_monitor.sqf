@@ -119,7 +119,7 @@ if (isServer && isNil "sm_done") then {
 				_object setVariable ["OwnerPUID",_ownerPUID];
 				_object setVariable ["CharacterID",_ownerID];
 				_object setdir _dir;
-				_object setposATL _pos;
+				_object SetPos _pos;
 				_object setDamage _damage;
 				_object addEventHandler ["HandleDamage",{false}];
 				_object enableSimulation false;
@@ -177,7 +177,7 @@ if (isServer && isNil "sm_done") then {
 				clearWeaponCargoGlobal _object;
 				clearMagazineCargoGlobal _object;
 				_object setdir _dir;
-				_object setposATL _pos;
+				_object SetPos _pos;
 				_object setDamage _damage;
 
 				if ((typeOf _object) in dayz_allowedObjects) then {

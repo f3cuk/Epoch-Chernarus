@@ -1,7 +1,7 @@
 private ["_recompile","_test","_test2","_itemName","_itemPathItem","_itemPath","_currentItem","_categoryName","_itemPathCat","_currentCategory","_tagName","_itemPathTag","_currentTag","_pathConfig","_pathFile","_cfgFunctions"];
 
 scriptName "Functions\init.sqf";
-textLogFormat ["PRELOAD_ Functions\init.sqf %1", _this];
+textLogFormat ["PRELOAD_ Functions\init.sqf %1",_this];
 /*
 	File: init.sqf
 	Author: Karel Moricky
@@ -96,7 +96,7 @@ for "_t" from 0 to 2 do {
 
 //"
 
-private ["_test", "_test2"];
+private ["_test","_test2"];
 _test = (_this select 0) setPos (position (_this select 0)); if (isnil "_test") then {_test = false};
 _test2 = (_this select 0) playMove ""; if (isnil "_test2") then {_test2 = false};
 (_test || _test2) call (compile (preprocessFileLineNumbers "ca\modules\functions\misc\fn_initCounter.sqf"));

@@ -40,14 +40,14 @@ if (_spawnRoll > _spawnChance) exitWith {
 _position = [getMarkerPos "center",0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
 _loot_pos = [_position,0,(_markerRadius - 100),10,0,2000,0] call BIS_fnc_findSafePos;
 
-diag_log(format["CRATE: SPAWNING RANDOM CRATE AT %1", _loot_pos]);
+diag_log(format["CRATE: SPAWNING RANDOM CRATE AT %1",_loot_pos]);
 
 _loot_box = createVehicle [_loot_box,_loot_pos,[],0,"NONE"];
 
 clearMagazineCargoGlobal _loot_box;
 clearWeaponCargoGlobal _loot_box;
 
-_clutter = createVehicle ["ClutterCutter_small_2_EP1", _loot_pos, [], 0, "CAN_COLLIDE"];
+_clutter = createVehicle ["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
 _clutter setPos _loot_pos;
 
 {

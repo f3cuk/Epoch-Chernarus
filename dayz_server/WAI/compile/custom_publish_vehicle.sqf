@@ -67,7 +67,7 @@ if (isServer) then {
 				_dam = 0.8
 			};
 
-			_isglass = ["glass", _selection] call KK_fnc_inString;
+			_isglass = ["glass",_selection] call KK_fnc_inString;
 
 			if(!_isglass && _dam > 0.1) then {
 				_hit = [_vehicle,_selection,_dam] call object_setHitServer;
@@ -99,7 +99,7 @@ if (isServer) then {
 
 		_ailist = [];
 		{
-			if (_x getVariable ["mission",nil] == _mission) then {_ailist set [count _ailist, _x];};
+			if (_x getVariable ["mission",nil] == _mission) then {_ailist set [count _ailist,_x];};
 		} count allUnits;
 
 		_unit = _ailist select (floor(random(count _ailist)));
@@ -114,13 +114,13 @@ if (isServer) then {
 
 	if(wai_keep_vehicles) then {
 		
-		_vehicle addEventHandler ["GetIn", {
+		_vehicle addEventHandler ["GetIn",{
 			_vehicle 		= _this select 0;
 			if(debug_mode) then { diag_log ("PUBLISH: Attempt " + str(_vehicle)); };
 
 			_class 			= typeOf _vehicle;
-			_characterID 	= _vehicle getVariable ["CharacterID", "0"];
-			_worldspace		= [getDir _vehicle, getPosATL _vehicle];
+			_characterID 	= _vehicle getVariable ["CharacterID","0"];
+			_worldspace		= [getDir _vehicle,[_vehicle] call FNC_GetPos];
 			_hitpoints 		= _vehicle call vehicle_getHitpoints;
 			_damage 		= damage _vehicle;
 			_array 			= [];
@@ -164,7 +164,7 @@ if (isServer) then {
 
 					if(_outcome == "PASS") then {
 						_oid = _result select 1;
-						_vehicle setVariable ["ObjectID", _oid, true];
+						_vehicle setVariable ["ObjectID",_oid,true];
 						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
 						_done  = true;
 					} else {

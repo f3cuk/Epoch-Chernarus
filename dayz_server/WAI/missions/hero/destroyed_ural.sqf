@@ -2,7 +2,7 @@ if(isServer) then {
 
     private			["_complete","_baserunover","_crate_type","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [30] call find_position;
@@ -12,7 +12,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0], [], 0, "CAN_COLLIDE"];
+	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
 
 	//Base
 	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
@@ -31,8 +31,8 @@ if(isServer) then {
 	//Condition
 	_complete = [
 		[_mission,_crate],		// mission number and crate
-		["kill"], 				// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 		// cleanup objects
+		["kill"],				// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_baserunover],		// cleanup objects
 		"Bandits have destroyed a Ural with supplies and are securing the cargo! Check your map for the location!",	// mission announcement
 		"The supplies have been secured by survivors!",																// mission success
 		"Survivors did not secure the supplies in time"																// mission fail

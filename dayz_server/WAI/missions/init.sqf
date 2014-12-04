@@ -32,13 +32,13 @@ if(isServer) then {
 	// Set mission frequencies from config
 	{
 		for "_i" from 1 to (_x select 1) do {
-			wai_hero_mission set [count wai_hero_mission, _x select 0];
+			wai_hero_mission set [count wai_hero_mission,_x select 0];
 		};
 	} count wai_hero_missions;
 
 	{
 		for "_i" from 1 to (_x select 1) do {
-			wai_bandit_mission set [count wai_bandit_mission, _x select 0];
+			wai_bandit_mission set [count wai_bandit_mission,_x select 0];
 		};
 	} count wai_bandit_missions;
 
@@ -52,7 +52,7 @@ if(isServer) then {
 				if(str(side _x) != "WEST") then {
 
 					if(count (units _x) == 0) then {
-						diag_log format["WAI: DELETED GROUP (%1), NO ONE LEFT IN GROUP",_x];
+						diag_log format["WAI: DELETED GROUP (%1),NO ONE LEFT IN GROUP",_x];
 						deleteGroup _x;
 					};
 
@@ -90,7 +90,7 @@ if(isServer) then {
 				_delayTime			= floor(time);
 				_h_missionTime		= nil;
 				_hresult 			= 0;
-				wai_mission_markers set [(count wai_mission_markers), ("MainHero" + str(count wai_mission_data))];
+				wai_mission_markers set [(count wai_mission_markers),("MainHero" + str(count wai_mission_data))];
 				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
 
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
@@ -105,7 +105,7 @@ if(isServer) then {
 				_delayTime			= floor(time);
 				_b_missionTime		= nil;
 				_bresult 			= 0;
-				wai_mission_markers set [(count wai_mission_markers), ("MainBandit" + str(count wai_mission_data))];
+				wai_mission_markers set [(count wai_mission_markers),("MainBandit" + str(count wai_mission_data))];
 				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
 				
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;

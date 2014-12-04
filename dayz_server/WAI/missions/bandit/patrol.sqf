@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private ["_pos_location","_location","_units","_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 	
 	//Armed Land Vehicle
@@ -70,9 +70,9 @@ if(isServer) then {
 	
 	//Condition
 	_complete = [
-		[_mission,_vehicle], // mission number and crate
-		["patrol"], 		 // ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_vehicle], 		 // cleanup objects
+		[_mission,_vehicle],// mission number and crate
+		["patrol"],		 // ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_vehicle],		 // cleanup objects
 		format["Heroes have started to patrol in %1",(_location select 0)],	// mission announcement
 		"Bandits have taken out the hero patrol!",		// mission success
 		"Heroes managed to reach their destination"		// mission fail

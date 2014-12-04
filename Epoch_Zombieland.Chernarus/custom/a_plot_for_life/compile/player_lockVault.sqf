@@ -1,6 +1,6 @@
 private ["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_alreadyPacking","_lockedClass","_text","_playerNear","_characterID","_PlayerUID","_objType"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_10") , "PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_10") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -21,7 +21,7 @@ sleep 1;
 sleep 5;
 
 _playerNear = _obj call dze_isnearest_player;
-if(_playerNear) exitWith { DZE_ActionInProgress = false; cutText [(localize "str_epoch_player_11") , "PLAIN DOWN"]; };
+if(_playerNear) exitWith { DZE_ActionInProgress = false; cutText [(localize "str_epoch_player_11") ,"PLAIN DOWN"]; };
 
 _characterID 	= _obj getVariable["CharacterID","0"];
 _objectID 		= _obj getVariable["ObjectID","0"];
@@ -37,7 +37,7 @@ if (DZE_APlotforLife) then {
 if((_characterID != dayz_combination) && (_ownerID != _PlayerUID)) exitWith { 
 	DZE_ActionInProgress 	= false; 
 	s_player_lockvault 		= -1; 
-	cutText [format[(localize "str_epoch_player_115"),_text], "PLAIN DOWN"]; 
+	cutText [format[(localize "str_epoch_player_115"),_text],"PLAIN DOWN"]; 
 };
 
 _alreadyPacking = _obj getVariable["packing",0];
@@ -45,12 +45,12 @@ _alreadyPacking = _obj getVariable["packing",0];
 if (_alreadyPacking == 1) exitWith {
 	DZE_ActionInProgress = false;
 	s_player_lockvault = -1;
-	cutText [format[(localize "str_epoch_player_116"),_text], "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_116"),_text],"PLAIN DOWN"];
 };
 
 _obj setVariable["packing",1];
 _dir = direction _obj;
-_pos = _obj getVariable["OEMPos",(getposATL _obj)];
+_pos = _obj getVariable["OEMPos",([_obj] call FNC_GetPos)];
 
 if(!isNull _obj) then {
 
@@ -62,9 +62,9 @@ if(!isNull _obj) then {
 	deleteVehicle _obj;
 
 	//place vault
-	_holder = createVehicle [_lockedClass,_pos,[], 0, "CAN_COLLIDE"];
+	_holder = createVehicle [_lockedClass,_pos,[],0,"CAN_COLLIDE"];
 	_holder setdir _dir;
-	_holder setPosATL _pos;
+	_holder SetPos _pos;
 	player reveal _holder;
 	
 	_holder setVariable["CharacterID",_characterID,true];
@@ -81,7 +81,7 @@ if(!isNull _obj) then {
 	PVDZE_log = [format["SAFE LOCKED: ID:%1 by %2(%3)",_objectID,(name player),(getPlayerUID player)]];
 	publicVariableServer "PVDZE_log";
 
-	cutText [format[(localize "str_epoch_player_117"),_text], "PLAIN DOWN"];
+	cutText [format[(localize "str_epoch_player_117"),_text],"PLAIN DOWN"];
 };
 s_player_lockvault = -1;
 DZE_ActionInProgress = false;

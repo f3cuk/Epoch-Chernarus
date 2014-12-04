@@ -47,7 +47,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 			_msg = 'You entered a Safe Zone!';
 			hint _msg;
-			taskHint [_msg, [0,1,0,1], 'taskDone'];
+			taskHint [_msg,[0,1,0,1],'taskDone'];
 			inNow = nil;
 			outNow = true;
 		};
@@ -60,7 +60,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		};
 		fnc_usec_damageHandler = {};
 		player removeAllEventHandlers 'handleDamage';
-		player addEventHandler ['handleDamage', {false}];
+		player addEventHandler ['handleDamage',{false}];
 		player allowDamage false;
 		_veh = vehicle player;
 		if (player != _veh) then
@@ -70,15 +70,15 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 			if (_szs == 0) then
 			{
 				_veh removeAllEventHandlers 'Fired';
-				_veh addEventHandler ['Fired', {_this call player_fired;}];
+				_veh addEventHandler ['Fired',{_this call player_fired;}];
 				{
 					_x removeAllEventHandlers 'Fired';
-					_x addEventHandler ['Fired', {_this call player_fired;}];
+					_x addEventHandler ['Fired',{_this call player_fired;}];
 				} count (crew _veh);
 
-				_veh setVariable ['inSafeZone', 1, true];
+				_veh setVariable ['inSafeZone',1,true];
 				_veh removeAllEventHandlers 'HandleDamage';
-				_veh addEventHandler ['HandleDamage', {false}];
+				_veh addEventHandler ['HandleDamage',{false}];
 				_veh allowDamage false;
 			};
 		};
@@ -98,12 +98,12 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 			if (_swep == '') then
 			{
 				player playActionNow 'PutDown';
-				_iPos = getPosATL player;
+				_iPos = [player] call FNC_GetPos;
 				_radius = 1;
 				_removed = ([player,_cwep,1] call BIS_fnc_invRemove);
 				if (_removed == 1) then
 				{
-					_item = createVehicle ['WeaponHolder', _iPos, [], _radius, 'CAN_COLLIDE'];
+					_item = createVehicle ['WeaponHolder',_iPos,[],_radius,'CAN_COLLIDE'];
 					_item addWeaponCargoGlobal [_cwep,1];
 				};
 			}
@@ -122,7 +122,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 			if (str fnc_usec_damageHandler == '{}') then {
 				_msg = 'You left the Safe Zone!';
 				hint _msg;
-				taskHint [_msg, [1,0,0.1,1], 'taskFailed'];
+				taskHint [_msg,[1,0,0.1,1],'taskFailed'];
 			};
 
 			inNow = true;
@@ -218,7 +218,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 	{
 		if (inSafezone) then
 		{
-			_cnt = {isPlayer _x && _x != player} count (player nearEntities [['CAManBase'], 3]);
+			_cnt = {isPlayer _x && _x != player} count (player nearEntities [['CAManBase'],3]);
 			if ((_cnt > 0) && (!isNull (findDisplay 106))) then
 			{
 				(findDisplay 106) closedisplay 0;

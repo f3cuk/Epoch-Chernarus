@@ -24,10 +24,10 @@ TraderDialogLoadItemList = {
 	_activatingPlayer = player;
 
 	lbClear TraderDialogItemList;
-	ctrlSetText [TraderDialogBuyPrice, ""];
-	ctrlSetText [TraderDialogSellPrice, ""];
+	ctrlSetText [TraderDialogBuyPrice,""];
+	ctrlSetText [TraderDialogSellPrice,""];
 
-	lbAdd [TraderDialogItemList, "Loading items..."];
+	lbAdd [TraderDialogItemList,"Loading items..."];
 
 	PVDZE_plr_TradeMenuResult = missionNamespace getVariable (format["tcacheBuy_%1;",_trader_id]);
 
@@ -106,7 +106,7 @@ TraderDialogLoadItemList = {
 					if (_name isKindOf "Ship") then {
 						_distance = dayz_sellDistance_boat;
 					};
-					_count = {(typeOf _x) == _name} count (nearestObjects [player, [_name], _distance]);
+					_count = {(typeOf _x) == _name} count (nearestObjects [player,[_name],_distance]);
 				};
 			};
 		};
@@ -121,19 +121,19 @@ TraderDialogLoadItemList = {
 		
 		if(_name in ["ItemBriefcase_Base","ItemSilvercase_Base"]) then {
 			call {
-				if(_name == "ItemBriefcase_Base") 	exitWith { _index = lbAdd [TraderDialogItemList, "EpochPack Premium"]; };
-				if(_name == "ItemSilvercase_Base") 	exitWith { _index = lbAdd [TraderDialogItemList, "EpochPack Silver"]; };
+				if(_name == "ItemBriefcase_Base") 	exitWith { _index = lbAdd [TraderDialogItemList,"EpochPack Premium"]; };
+				if(_name == "ItemSilvercase_Base") 	exitWith { _index = lbAdd [TraderDialogItemList,"EpochPack Silver"]; };
 			};
 		} else {
-			_index = lbAdd [TraderDialogItemList, format["%1 (%2)",_textPart,_name]];
+			_index = lbAdd [TraderDialogItemList,format["%1 (%2)",_textPart,_name]];
 		};
 
 		if (_count > 0) then {
-			lbSetColor [TraderDialogItemList, _index, [0, 1, 0, 1]];
+			lbSetColor [TraderDialogItemList,_index,[0,1,0,1]];
 		};
 
 		_image = getText(configFile >> _type >> _name >> "picture");
-		lbSetPicture [TraderDialogItemList, _index, _image];
+		lbSetPicture [TraderDialogItemList,_index,_image];
 
 		_item_list set [count _item_list,[_name,_textPart,_bqty,"bname",_btextCurrency,_sqty,"sname",_stextCurrency,_header,_File]];
 
@@ -157,9 +157,9 @@ TraderDialogShowPrices = {
 	_buyprice 	= [_item select 2] call BIS_fnc_numberText;
 	_sellprice	= [_item select 5] call BIS_fnc_numberText;
 
-	ctrlSetText [TraderDialogBuyPrice, format["%1 %2",_buyprice,_item select 4]];
-	ctrlEnable [TraderDialogBuyBtn, true];
-	ctrlSetText [TraderDialogSellPrice, format["%1 %2",_sellprice,_item select 7]];
+	ctrlSetText [TraderDialogBuyPrice,format["%1 %2",_buyprice,_item select 4]];
+	ctrlEnable [TraderDialogBuyBtn,true];
+	ctrlSetText [TraderDialogSellPrice,format["%1 %2",_sellprice,_item select 7]];
 };
 
 TraderDialogBuy = {
@@ -168,11 +168,11 @@ TraderDialogBuy = {
 
 	_index = _this select 0;
 
-	if (_index < 0) exitWith { 	cutText [(localize "str_epoch_player_6"), "PLAIN DOWN"]; };
+	if (_index < 0) exitWith { 	cutText [(localize "str_epoch_player_6"),"PLAIN DOWN"]; };
 		
 	_item = TraderItemList select _index;
-	_data = [_item select 0, _item select 3, 1, _item select 2, "buy", _item select 4, _item select 1, _item select 8];
-	[0, player,'',_data] execVM (_item select 9);
+	_data = [_item select 0,_item select 3,1,_item select 2,"buy",_item select 4,_item select 1,_item select 8];
+	[0,player,'',_data] execVM (_item select 9);
 
 	TraderItemList = -1;
 };
@@ -183,11 +183,11 @@ TraderDialogSell = {
 
 	_index = _this select 0;
 
-	if (_index < 0) exitWith { cutText [(localize "str_epoch_player_6"), "PLAIN DOWN"]; };
+	if (_index < 0) exitWith { cutText [(localize "str_epoch_player_6"),"PLAIN DOWN"]; };
 
 	_item = TraderItemList select _index;
-	_data = [_item select 6, _item select 0, _item select 5, 1, "sell", _item select 1, _item select 7, _item select 8];
-	[0, player, '', _data] execVM (_item select 9);
+	_data = [_item select 6,_item select 0,_item select 5,1,"sell",_item select 1,_item select 7,_item select 8];
+	[0,player,'',_data] execVM (_item select 9);
 
 	TraderItemList = -1;
 };

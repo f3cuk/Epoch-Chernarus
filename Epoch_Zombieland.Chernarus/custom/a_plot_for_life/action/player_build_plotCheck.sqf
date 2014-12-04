@@ -1,6 +1,6 @@
 if(!DZE_ActionInProgress) exitWith {};
 
-private ["_passArray","_isPole","_needText","_distance","_findNearestPoles","_findNearestPole","_IsNearPlot","_requireplot","_isLandFireDZ","_canBuildOnPlot","_nearestPole","_ownerID","_friendlies", "_playerUID"];
+private ["_passArray","_isPole","_needText","_distance","_findNearestPoles","_findNearestPole","_IsNearPlot","_requireplot","_isLandFireDZ","_canBuildOnPlot","_nearestPole","_ownerID","_friendlies","_playerUID"];
 
 _isPole 		= _this select 0;
 _requireplot 	= _this select 1;
@@ -18,7 +18,7 @@ if(_isPole) then {
 	_distance = DZE_PlotPole select 0;
 };
 
-_findNearestPoles	= nearestObjects [(vehicle player), ["Plastic_Pole_EP1_DZ"], _distance];
+_findNearestPoles	= nearestObjects [(vehicle player),["Plastic_Pole_EP1_DZ"],_distance];
 _findNearestPole	= [];
 
 {
@@ -68,13 +68,13 @@ _passArray = [_IsNearPlot,_nearestPole,_ownerID,_friendlies];
 
 if(_isPole && _IsNearPlot > 0) exitWith { 
 	DZE_ActionInProgress = false;
-	cutText [(format [localize "str_epoch_player_44", DZE_PlotPole select 1]) , "PLAIN DOWN"];
+	cutText [(format [localize "str_epoch_player_44",DZE_PlotPole select 1]) ,"PLAIN DOWN"];
 	_passArray
 };
 
 if(!_canBuildOnPlot) exitWith {
 	DZE_ActionInProgress = false;
-	cutText [format[(localize "STR_EPOCH_PLAYER_135"),_needText,_distance] , "PLAIN DOWN"];
+	cutText [format[(localize "STR_EPOCH_PLAYER_135"),_needText,_distance] ,"PLAIN DOWN"];
 	_passArray
 };
 

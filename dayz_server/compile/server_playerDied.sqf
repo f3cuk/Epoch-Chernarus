@@ -35,9 +35,9 @@ if ((typeName _killer) == "OBJECT") then {
 	} else {
 	
 		if(isPlayer _killer) then {
-			_killerName = format["[Human] %1", _killerName];
+			_killerName = format["[Human] %1",_killerName];
 		} else {
-			_killerName = format["[AI] %1", _killerName];
+			_killerName = format["[AI] %1",_killerName];
 		};
 	
 		_message 		= format["[KILL] %1 was killed with a %2 from about %3m",_victimName,_weapon,round(_distance)];
@@ -50,7 +50,7 @@ if ((typeName _killer) == "OBJECT") then {
 } else {
 
 	_randmsg = [
-		"got eaten by zombies, lal noob",
+		"got eaten by zombies,lal noob",
 		"was trolled by a zombie xD",
 		"became breakfast for a zed",
 		"met Chuck Norris as a zombie",

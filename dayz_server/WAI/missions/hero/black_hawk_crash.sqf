@@ -2,7 +2,7 @@ if(isServer) then {
 
 	private 		["_complete","_crate_type","_mission","_position","_crate","_baserunover"];
 
-	// Get mission number, important we do this early
+	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
 
 	_position		= [30] call find_position;
@@ -15,7 +15,7 @@ if(isServer) then {
 	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 
 	//Base
-	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5), ((_position select 1) + 5), 0],[],10,"FORM"];
+	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5),((_position select 1) + 5),0],[],10,"FORM"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -25,15 +25,15 @@ if(isServer) then {
 
 	//Static Guns
 	[[
-		[(_position select 0) + 20, (_position select 1) + 20, 0],
-		[(_position select 0) - 20, (_position select 1) - 20, 0]
+		[(_position select 0) + 20,(_position select 1) + 20,0],
+		[(_position select 0) - 20,(_position select 1) - 20,0]
 	],"M2StaticMG","Easy","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
 
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
-		["crate"], 			// ["crate"], or ["kill"], or ["assassinate", _unitGroup],
-		[_baserunover], 	// cleanup objects
+		["crate"],			// ["crate"],or ["kill"],or ["assassinate",_unitGroup],
+		[_baserunover],	// cleanup objects
 		"A Black Hawk carrying supplies has crashed and bandits are securing the site! Check your map for the location!",	// mission announcement
 		"Survivors have secured the crashed Black Hawk!",																	// mission success
 		"Survivors did not secure the crashed Black Hawk in time"															// mission fail

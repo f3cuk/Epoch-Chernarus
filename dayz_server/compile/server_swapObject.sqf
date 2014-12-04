@@ -79,7 +79,7 @@ _key call server_hiveWrite;
 
 	_object setVariable["ObjectID",(_result select 1),true];
 
-	diag_log format["PUBLISH: Assigned %1 to Object with UID %2",(_result select 1), _uid];
+	diag_log format["PUBLISH: Assigned %1 to Object with UID %2",(_result select 1),_uid];
 	
 };
 

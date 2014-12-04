@@ -37,7 +37,7 @@ if(typeName (_this select 4) == "ARRAY") then {
 };
 
 if(debug_mode) then {
-	diag_log format["WAI: Spawning in a dynamic crate with %1 guns, %2 tools, %3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
+	diag_log format["WAI: Spawning in a dynamic crate with %1 guns,%2 tools,%3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
 };
 
 PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crate];
@@ -53,7 +53,7 @@ if(_num_weapons > 0) then {
 		_weapon = _weapons_array call BIS_fnc_selectRandom;
 		_ammo = _weapon call find_suitable_ammunition;
 		_crate addWeaponCargoGlobal [_weapon,1];
-		_crate addMagazineCargoGlobal [_ammo, (1 + floor(random 5))];
+		_crate addMagazineCargoGlobal [_ammo,(1 + floor(random 5))];
 	};
 
 };

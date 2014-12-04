@@ -7,7 +7,7 @@ isNearWater = {
 	_radius		= _this select 1;
 	
 	for "_i" from 0 to 359 step 45 do {
-		_position = [(_position select 0) + (sin(_i)*_radius), (_position select 1) + (cos(_i)*_radius)];
+		_position = [(_position select 0) + (sin(_i)*_radius),(_position select 1) + (cos(_i)*_radius)];
 		if (surfaceIsWater _position) exitWith {
 			_result = true; 
 		};
@@ -67,7 +67,7 @@ isSlope = {
 	_min 		= getTerrainHeightASL [_posx,_posy];
 
 	for "_i" from 0 to 359 step 45 do {
-		_pos = [_posx + (sin(_i)*_radius), _posy + (cos(_i)*_radius)];
+		_pos = [_posx + (sin(_i)*_radius),_posy + (cos(_i)*_radius)];
 		_min = _min min getTerrainHeightASL _pos;
 		_max = _max max getTerrainHeightASL _pos;
 	};

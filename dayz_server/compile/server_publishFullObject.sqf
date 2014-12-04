@@ -9,7 +9,7 @@ _hitpoints =	_this select 5;
 _damage =		_this select 6;
 _fuel =			_this select 7;
 
-_allowed = [_object, "Server"] call check_publishobject;
+_allowed = [_object,"Server"] call check_publishobject;
 if (!_allowed) exitWith { deleteVehicle _object; };
 
 diag_log ("PUBLISH: Attempt " + str(_object));
@@ -18,16 +18,16 @@ diag_log ("PUBLISH: Attempt " + str(_object));
 _uid = _worldspace call dayz_objectUID2;
 
 //Send request
-_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, _damage, _charID, _worldspace, _inventory, _hitpoints, _fuel,_uid];
+_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance,_class,_damage,_charID,_worldspace,_inventory,_hitpoints,_fuel,_uid];
 //diag_log ("HIVE: WRITE: "+ str(_key));
 _key call server_hiveWrite;
 
 _object setVariable ["lastUpdate",time];
-_object setVariable ["ObjectUID", _uid,true];
+_object setVariable ["ObjectUID",_uid,true];
 // _object setVariable ["CharacterID",_charID,true];
 
 if (DZE_GodModeBase) then {
-	_object addEventHandler ["HandleDamage", {false}];
+	_object addEventHandler ["HandleDamage",{false}];
 }else{
 	_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
 };

@@ -37,8 +37,8 @@ server_updateNearbyObjects = {
 	private["_pos"];
 	_pos = _this select 0;
 	{
-		[_x, "gear"] call server_updateObject;
-	} count nearestObjects [_pos, dayz_updateObjects, 10];
+		[_x,"gear"] call server_updateObject;
+	} count nearestObjects [_pos,dayz_updateObjects,10];
 };
 
 server_handleZedSpawn = {
@@ -60,7 +60,7 @@ vehicle_handleInteract = {
 	private["_object"];
 	_object = _this select 0;
 	needUpdate_objects = needUpdate_objects - [_object];
-	[_object, "all"] call server_updateObject;
+	[_object,"all"] call server_updateObject;
 };
 
 array_reduceSizeReverse = {
@@ -123,7 +123,7 @@ check_publishobject = {
 eh_localCleanup = {
 	private ["_object"];
 	_object = _this select 0;
-	_object addEventHandler ["local", {
+	_object addEventHandler ["local",{
 		if(_this select 1) then {
 			private["_type","_unit"];
 			_unit = _this select 0;
@@ -176,7 +176,7 @@ server_checkIfTowed = {
 		_player		= _this select 2;
 		_attached	= _vehicle getVariable["attached",false];
 		if (typeName _attached == "OBJECT") then {
-			_player action ["eject", _vehicle];
+			_player action ["eject",_vehicle];
 			detach _vehicle;
 			_vehicle setVariable["attached",false,true];
 			_attached setVariable["hasAttached",false,true];
@@ -242,7 +242,7 @@ spawn_vehicles = {
 		_lastIndex = (count AllowedVehiclesList) - 1;
 
 		if (_lastIndex != _index) then {
-			AllowedVehiclesList set [_index, AllowedVehiclesList select _lastIndex];
+			AllowedVehiclesList set [_index,AllowedVehiclesList select _lastIndex];
 		};
 
 		AllowedVehiclesList resize _lastIndex;
@@ -287,18 +287,18 @@ spawn_vehicles = {
 			if((count _istoomany) > 0) exitWith { diag_log("DEBUG: Too many vehicles at " + str(_position)); };
 		
 		
-			_veh = createVehicle [_vehicle, _position, [], 0, "CAN_COLLIDE"];
+			_veh = createVehicle [_vehicle,_position,[],0,"CAN_COLLIDE"];
 			_veh setdir _dir;
 			_veh setpos _position;		
 			
 			if(DZEdebug) then {
-				_marker = createMarker [str(_position) , _position];
+				_marker = createMarker [str(_position) ,_position];
 				_marker setMarkerShape "ICON";
 				_marker setMarkerType "DOT";
 				_marker setMarkerText _vehicle;
 			};	
 		
-			_objPosition = getPosATL _veh;
+			_objPosition = [_veh] call FNC_GetPos;
 		
 			clearWeaponCargoGlobal  _veh;
 			clearMagazineCargoGlobal  _veh;
@@ -311,12 +311,12 @@ spawn_vehicles = {
 				_itemTypes = [];
 				if (DZE_MissionLootTable) then{
 					{
-						_itemTypes set[count _itemTypes, _x select 0]
+						_itemTypes set[count _itemTypes,_x select 0]
 					} count getArray(missionConfigFile >> "cfgLoot" >> _iClass);
 				}
 				else {
 					{
-						_itemTypes set[count _itemTypes, _x select 0]
+						_itemTypes set[count _itemTypes,_x select 0]
 					} count getArray(configFile >> "cfgLoot" >> _iClass);
 				};
 
@@ -350,12 +350,12 @@ spawn_ammosupply = {
 			if((count _istoomany) > 0) exitWith { diag_log("DEBUG AMMO: Too many at " + str(_position)); };
 			_spawnveh = _WreckList call BIS_fnc_selectRandom;
 			if(DZEdebug) then {
-				_marker = createMarker [str(_position) , _position];
+				_marker = createMarker [str(_position) ,_position];
 				_marker setMarkerShape "ICON";
 				_marker setMarkerType "DOT";
 				_marker setMarkerText str(_spawnveh);
 			};
-			_veh = createVehicle [_spawnveh,_position, [], 0, "CAN_COLLIDE"];
+			_veh = createVehicle [_spawnveh,_position,[],0,"CAN_COLLIDE"];
 			_veh enableSimulation false;
 			_veh setDir round(random 360);
 			_veh setpos _position;
@@ -376,9 +376,9 @@ if(isnil "DZE_DiagVerbose") 			then { DZE_DiagVerbose = false; };
 
 dze_diag_fps = {
 	if(DZE_DiagVerbose) then {
-		diag_log format["DEBUG FPS : %1 OBJECTS: %2 : PLAYERS: %3", diag_fps,(count (allMissionObjects "")),(playersNumber west)];
+		diag_log format["DEBUG FPS : %1 OBJECTS: %2 : PLAYERS: %3",diag_fps,(count (allMissionObjects "")),(playersNumber west)];
 	} else {
-		diag_log format["DEBUG FPS : %1", diag_fps];
+		diag_log format["DEBUG FPS : %1",diag_fps];
 	};
 };
 
@@ -435,7 +435,7 @@ server_getDiff2 =	{
 dayz_objectUID = {
 	private["_position","_dir","_key","_object"];
 	_object		= _this;
-	_position	= getPosATL _object;
+	_position	= [_object] call FNC_GetPos;
 
 	_dir = direction _object;
 	_key = [_dir,_position] call dayz_objectUID2;
@@ -506,11 +506,11 @@ dayz_perform_purge_player = {
 	private ["_countr","_backpack","_backpackType","_backpackWpn","_backpackMag","_objWpnTypes","_objWpnQty","_location","_dir","_holder","_weapons","_magazines","_group"];
 
 	if(!isNull(_this)) then {
-		_location	= getPosATL _this;
+		_location	= [_this] call FNC_GetPos;
 		_dir		= getDir _this;
-		_holder	= createVehicle ["GraveDZE", _location, [], 0, "CAN_COLLIDE"];
+		_holder	= createVehicle ["GraveDZE",_location,[],0,"CAN_COLLIDE"];
 		_holder setDir _dir;
-		_holder setPosATL _location;
+		_holder SetPos _location;
 		_holder enableSimulation false;
 		_weapons	= weapons _this;
 		_magazines	= magazines _this;
@@ -542,11 +542,11 @@ dayz_perform_purge_player = {
 	};
 
 	{ 
-		_holder addWeaponCargoGlobal [_x, 1];
+		_holder addWeaponCargoGlobal [_x,1];
 	} count _weapons;
 
 	{ 
-		_holder addMagazineCargoGlobal [_x, 1];
+		_holder addMagazineCargoGlobal [_x,1];
 	} count _magazines;
 
 	_group = group _this;
@@ -614,7 +614,7 @@ server_spawncleanDead = {
 				_delQtyZ = _delQtyZ + 1;
 			} else {
 				if (_x isKindOf "CAManBase") then {
-					_deathTime = _x getVariable ["processedDeath", diag_tickTime];
+					_deathTime = _x getVariable ["processedDeath",diag_tickTime];
 					if (diag_tickTime - _deathTime > 1800) then {
 						_x call dayz_perform_purge_player;
 						sleep 0.025;
@@ -697,17 +697,17 @@ server_spawnCleanLoot = {
 
 	{
 		if (!isNull _x) then {
-			_keep = _x getVariable["permaLoot", false];
+			_keep = _x getVariable["permaLoot",false];
 			if (!_keep) then {
-				_created = _x getVariable["created", -0.1];
+				_created = _x getVariable["created",-0.1];
 				if (_created == -0.1) then {
-					_x setVariable["created", _dateNow, false];
+					_x setVariable["created",_dateNow,false];
 					_created = _dateNow;
 				} else {
 					_age = (_dateNow - _created) * 525948;
 
 					if (_age > 20) then {
-						_nearby = { (isPlayer _x) && (alive _x) } count(_x nearEntities[["CAManBase", "AllVehicles"], 130]);
+						_nearby = { (isPlayer _x) && (alive _x) } count(_x nearEntities[["CAManBase","AllVehicles"],130]);
 						if (_nearby == 0) then {
 							deleteVehicle _x;
 							sleep 0.025;
@@ -740,9 +740,9 @@ server_spawnCleanAnimals = {
 			_delQtyAnimal = _delQtyAnimal + 1;
 		} else {
 			if (!alive _x) then {
-				_pos = getPosATL _x;
+				_pos = [_x] call FNC_GetPos;
 				if (count _pos > 0) then {
-					_nearby = {(isPlayer _x) && (alive _x)} count (_pos nearEntities [["CAManBase","AllVehicles"], 130]);
+					_nearby = {(isPlayer _x) && (alive _x)} count (_pos nearEntities [["CAManBase","AllVehicles"],130]);
 					if (_nearby==0) then {
 						_x call dayz_perform_purge;
 						sleep 0.05;
@@ -766,7 +766,7 @@ KK_fnc_floatToString = {
 	if (abs (_this - _this % 1) == 0) exitWith { str _this };
 
 	_arr = toArray str abs (_this % 1); 
-	_arr set [0, 32];
+	_arr set [0,32];
 	
 	toString (toArray str ( abs (_this - _this % 1) * _this / abs _this ) + _arr - [32])
 };

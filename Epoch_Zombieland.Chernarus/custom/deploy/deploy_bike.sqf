@@ -11,7 +11,7 @@ if(_canDeployBike) then {
 
 	_dist 	= 6;
 	_dir 	= getDir vehicle player;
-	_pos 	= getPosATL vehicle player;
+	_pos 	= [vehicle] call FNC_GetPos player;
 	_pos 	= [(_pos select 0)+_dist*sin(_dir),(_pos select 1)+_dist*cos(_dir),0];
 
 	_veh = createVehicle ["Old_bike_TK_CIV_EP1",_pos,[],0,"CAN_COLLIDE"];
@@ -21,7 +21,7 @@ if(_canDeployBike) then {
 	clearMagazineCargoGlobal _veh;
 	clearWeaponCargoGlobal _veh;
 
-	cutText ["You have built a bike!\nNote: Bikes get removed on restart!", "PLAIN DOWN",3];
+	cutText ["You have built a bike!\nNote: Bikes get removed on restart!","PLAIN DOWN",3];
 
 	[] spawn {
 		
@@ -31,6 +31,6 @@ if(_canDeployBike) then {
 
 } else {
 	
-	cutText ["You can only spawn one bike every 10 minutes", "PLAIN DOWN",3];	
+	cutText ["You can only spawn one bike every 10 minutes","PLAIN DOWN",3];	
 
 };

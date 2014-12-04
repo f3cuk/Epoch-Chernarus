@@ -15,8 +15,8 @@ if(isServer) then {
 	};
 
 	if(debug_mode) then { diag_log("WAI: Starting Mission number " + str(_mission)); };
-	wai_mission_data select _mission set [1, _type];
-	wai_mission_data select _mission set [3, _position];
+	wai_mission_data select _mission set [1,_type];
+	wai_mission_data select _mission set [3,_position];
 
 	if(wai_enable_minefield && _mines) then {
 		call {
@@ -25,7 +25,7 @@ if(isServer) then {
 			if(_difficulty == "hard")		exitWith {_mines = [_position,50,75,100] call minefield;};
 			if(_difficulty == "extreme")	exitWith {_mines = [_position,60,90,150] call minefield;};
 		};
-		wai_mission_data select _mission set [2, _mines];
+		wai_mission_data select _mission set [2,_mines];
 	};
 
 	_marker	= "";
@@ -48,7 +48,7 @@ if(isServer) then {
 
 	if(_show_marker) then {
 
-		[_position, _color, _name, _mission] spawn {
+		[_position,_color,_name,_mission] spawn {
 
 			private["_position","_color","_name","_running","_mission","_type","_marker","_dot"];
 
@@ -62,14 +62,14 @@ if(isServer) then {
 
 				_type = (wai_mission_data select _mission) select 1;
 				
-				_marker = createMarker [_type + str(_mission), _position];
+				_marker = createMarker [_type + str(_mission),_position];
 				_marker setMarkerColor _color;
 				_marker setMarkerShape "ELLIPSE";
 				_marker	setMarkerBrush "Solid";
 				_marker setMarkerSize [300,300];
 				_marker setMarkerText _name;
 
-				_dot = createMarker [_type + str(_mission) + "dot", _position];
+				_dot = createMarker [_type + str(_mission) + "dot",_position];
 				_dot setMarkerColor "ColorBlack";
 				_dot setMarkerType "mil_dot";
 				_dot setMarkerText _name;

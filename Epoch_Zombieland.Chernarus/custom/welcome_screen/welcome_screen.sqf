@@ -1,10 +1,10 @@
 waitUntil {!isNil "dayz_animalCheck"};
 
-private ["_messages", "_timeout"];
+private ["_messages","_timeout"];
 
 _messages = [
-	[format["Hello %1, welcome to",(name player)],"ZeroDays Epoch Chernarus"],
-	["Admins","CHeeR, Brick and f3cuk"],
+	[format["Hello %1,welcome to",(name player)],"ZeroDays Epoch Chernarus"],
+	["Admins","CHeeR,Brick and f3cuk"],
 	["Teamspeak","ts.dayzepoch.nl"],
 	["Website","dayzepoch.nl"]
 ];
@@ -13,7 +13,7 @@ _timeout = 7;
  
 {
 
-	private ["_title", "_content", "_titleText"];
+	private ["_title","_content","_titleText"];
 
 	sleep 2;
 
