@@ -43,14 +43,12 @@ while {!_continue} do {
 	};
 };
 
-_oid = _result select 1;
-
 deleteVehicle _object;
 
 if(DZE_TRADER_SPAWNMODE) then {
-	_object_para = createVehicle ["ParachuteMediumWest", [0,0,0], [], 0, "CAN_COLLIDE"];
-	_object_para setPos [_location select 0, _location select 1,(_location select 2) + 65];
-	_object = createVehicle [_class, [0,0,0], [], 0, "CAN_COLLIDE"];
+	_object_para = createVehicle ["ParachuteMediumWest",[0,0,0],[],0,"CAN_COLLIDE"];
+	_object_para setPos [_location select 0,_location select 1,(_location select 2) + 65];
+	_object = createVehicle [_class,[0,0,0],[],0,"CAN_COLLIDE"];
 } else {
 	_object = createVehicle [_class,_location,[],0,"CAN_COLLIDE"];
 };
@@ -62,12 +60,12 @@ if(!_donotusekey) then {
 clearWeaponCargoGlobal _object;
 clearMagazineCargoGlobal _object;
 
-_object setVariable ["ObjectID", _oid, true];	
+_object setVariable ["ObjectID",(_result select 1),true];	
 _object setVariable ["lastUpdate",time];
-_object setVariable ["CharacterID", _characterID, true];
+_object setVariable ["CharacterID",_characterID,true];
 
 if(DZE_TRADER_SPAWNMODE) then {
-	_object attachTo [_object_para, [0,0,-1.6]];
+	_object attachTo [_object_para,[0,0,-1.6]];
 	sleep 1.0;
 	WaitUntil{(([_object] call FNC_GetPos) select 2) < 0.1};
 	detach _object;

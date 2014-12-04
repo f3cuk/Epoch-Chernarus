@@ -79,6 +79,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 	spawnedObjects 	= [];
 	removed_objects = [];
+	spawnedIds		= [];
 
 	dayz_loadScreenMsg = "Loading Player Bases..";
 
@@ -129,7 +130,8 @@ _nil = [] execVM "custom\remote\remote.sqf";
 				_object setVariable ["OEMPos",_pos];
 			};
 
-			spawnedObjects set[parseNumber(_idKey),_object];
+			spawnedObjects set[count spawnedObjects,[parseNumber(_idKey),_object]];
+			spawnedIds set[count spawnedIds,parseNumber(_idKey)];
 		};
 	} count localObjects;
 	
@@ -186,20 +188,27 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		_t = diag_tickTime;
 		
 		{
-			private["_delete_object"];
-
-			_delete_object = (spawnedObjects select _x);
-
-			if(!isNil "_delete_object") then {
-				deletevehicle _delete_object;
-				spawnedObjects set[_x, nil];
-				removed_objects set[count removed_objects,_x];
+			if((_x select 0) in _removed) then {
+				deletevehicle (_x select 1);
+				removed_objects set[count removed_objects,(_x select 0)];
 			};
-		} count _removed;
+		} count spawnedObjects;
 
 		diag_log format["[EpochBuild Remover] Removed %1 objects in %1s",(count _removed),str(diag_tickTime - _t)];
 	};
 
 	"deleteObjects" addPublicVariableEventHandler { (_this) spawn client_remove_object; };
 
+};
+
+[] spawn {
+	sleep 90;
+	if(!preload_done) then {
+		player enableSimulation false;
+		cutText ["Something went wrong with loading the objects, auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
+		PVDZE_log = [format["[NO_OBJECTS] Player %1 (%2) was kicked to the lobby because of no objects.",(name player),(getPlayerUID player)]];
+		publicVariableServer "PVDZE_log";
+		sleep 5;
+		endMission "END1";
+	};
 };

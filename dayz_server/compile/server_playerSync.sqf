@@ -24,8 +24,8 @@ _charPos		= getPosATL _character;
 _isInVehicle	= vehicle _character != _character;
 _timeSince		= 0;
 _humanity		= 0;
+_cashMoney		= 0;
 _inTransit		= _character getVariable ["inTransit",false];
-_cashMoney		= _character getVariable ["cashMoney",0];
 
 _name = if (alive _character) then { name _character; } else { "Dead Player"; };
 
@@ -152,7 +152,7 @@ if (_characterID != "0") then {
 		if(DZE_FriendlySaving) then {
 			_arrayToSave = (_character getVariable ["friendlies",[]]);
 			if (isNil "_arrayToSave") then {_arrayToSave = [];};
-			_friendlies = [_arrayToSave,5] call array_reduceSizeReverse;
+			_friendlies = [_arrayToSave,4] call array_reduceSizeReverse;
 			_currentState set [(count _currentState),_friendlies];
 		};
 		/*

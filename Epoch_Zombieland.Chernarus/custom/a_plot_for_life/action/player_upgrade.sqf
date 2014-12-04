@@ -138,7 +138,7 @@ if ((count _upgrade) > 0) then {
 				cutText [format[(localize "str_epoch_player_159"),_text], "PLAIN DOWN", 5];
 			};
 
-			if(local _obj) then {
+			if(parseNumber(_objectID) in spawnedIds) then {
 				_obj = _objectID;
 			};
 

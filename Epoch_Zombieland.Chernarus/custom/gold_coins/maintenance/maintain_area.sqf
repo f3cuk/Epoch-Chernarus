@@ -102,7 +102,7 @@ call {
 			};
 			_cost = _cost + (str(_countIn) + " " + CurrencyName);
 		} count _requirements;
-		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["(%1\%2) max %3 (~%4 percent damage)",_count,_total_count,DZE_BuildingLimit,(_total_damage*10)],_cost], "PLAIN DOWN"];
+		cutText [format[(localize "STR_EPOCH_ACTIONS_7"),format["\n%1 of %2 objects need maintainance (~%3 percent damage)\n",_count,_total_count,round(_total_damage*100)],_cost], "PLAIN DOWN"];
 	};
 };
 

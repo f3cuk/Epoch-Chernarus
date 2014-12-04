@@ -36,6 +36,17 @@ if ( (isClass(_config >> _itemNew)) ) then {
 				if(([player,_item] call BIS_fnc_invRemove) == 1) then {
 					player addMagazine _itemNew;
 					player setVariable["inTransit",true,true];
+					[] spawn {
+						sleep 10;
+						if((player getVariable["inTransit",false])) then {
+							player enableSimulation false;
+							cutText ["Something went wrong with changing clothes. Auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
+							PVDZE_log = [format["[CHANGE CLOTHES] Player %1 (%2) was kicked to the lobby because changing clothes got stuck.",(name player),(getPlayerUID player)]];
+							publicVariableServer "PVDZE_log";
+							sleep 5;
+							endMission "END1";
+						};
+					};
 					[dayz_playerUID,dayz_characterID,_model] call player_humanityMorph;
 					player setVariable["inTransit",false,true];
 				};

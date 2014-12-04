@@ -211,7 +211,7 @@ if (count _muzzles > 1) then {
 	player selectWeapon _currentWpn;
 };
 
-[objNull, player, rSwitchMove,_currentAnim] call RE;
+[objNull,player,rSwitchMove,_currentAnim] call RE;
 
 player disableConversation true;
 
@@ -233,5 +233,5 @@ if(_primweapon != "") then {
 };
 
 {
-	player reveal _x
-} count (nearestObjects [getPosATL player, dayz_reveal, 50]);
+	player reveal _x;
+} forEach (nearestObjects [getPosATL player, dayz_reveal, 50]);

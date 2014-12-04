@@ -5,6 +5,7 @@ if (!isDedicated) then {
 	player setVariable ["BIS_noCoreConversations",true];
 	enableRadio true;
 	enableSentences false;
+	preload_done = false;
 };
 
 #include "config\config.sqf"
@@ -58,7 +59,7 @@ if (!isDedicated) then {
 	diag_log format["%1: Buildables received from server",servertime];
 	#include "init\client.sqf"
 
-	waitUntil {!isNil "objectsLoaded"};
+	waitUntil {((!isNil "objectsLoaded") && (objectsLoaded))};
 	diag_log format["%1: Add-ons have loaded",servertime];
 
 	waitUntil {((!isNil "spawnedLoaded") && (spawnedLoaded))};
@@ -67,6 +68,9 @@ if (!isDedicated) then {
 	if(DIFF in ["VETERAN","REGULAR"]) then {
 		execVM "custom\safezone\safezone.sqf";
 	};
+
+	preload_done = true;
+
 };
 
 execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";

@@ -289,8 +289,9 @@ if (!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance curso
 	if (DZE_HeliLift) then {
 		_liftHeli = objNull;
 		_found = false;
-	
 		_allowTow = false;
+		_attached = false;
+
 		if ((count (crew _cursorTarget)) == 0) then {
 			{
 				if(!_allowTow) then {
@@ -316,7 +317,6 @@ if (!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance curso
 				};
 			} count _liftHelis;
 		};
-
 		_attached = _cursorTarget getVariable["attached",false];
 		if(_found && _allowTow && _canDo && !locked _cursorTarget && !_isPZombie && (typeName _attached != "OBJECT")) then {
 			if (s_player_heli_lift < 0) then {

@@ -460,7 +460,7 @@ if (!isDedicated) then {
 	};
 
 	dayz_meleeMagazineCheck = {
-		private ["_meleeNum","_magType","_wpnType"];
+		private ["_meleeNum","_magType"];
 		_magType = ([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
 		_meleeNum = ({_x == _magType} count magazines player);
 		if (_meleeNum < 1) then {

@@ -42,40 +42,28 @@ if(isServer) then {
 		};
 	} count wai_bandit_missions;
 
-	/*
+	// remove groups
+	[] spawn {
 
-		// remove groups
-		[] spawn {
+		while {true} do {
+	
+			{
 
-			while{true} do {
-		
-				{
+				if(str(side _x) != "WEST") then {
 
-					private ["_alldead"];
-
-					if(side _x != "WEST") then {
-
-						_alldead = true;
-
-						{
-							if(alive _x) exitWith { _alldead = false; };
-						} count (allUnits _x);
-
-						if(_alldead) then {
-							diag_log format["WAI: DELETED GROUP (%1), NO AI LEFT ALIVE",_x];
-							deleteGroup _x;
-						};
-
+					if(count (units _x) == 0) then {
+						diag_log format["WAI: DELETED GROUP (%1), NO ONE LEFT IN GROUP",_x];
+						deleteGroup _x;
 					};
-				} forEach allGroups;
 
-				sleep 30;
+				};
+			} forEach allGroups;
 
-			};
+			sleep 60;
 
 		};
 
-	*/
+	};
 
 	// Start mission monitor
 	while {true} do

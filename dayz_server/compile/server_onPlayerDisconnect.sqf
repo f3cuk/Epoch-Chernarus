@@ -41,7 +41,7 @@ if (!isNull _playerObj) then {
 		_playerObj setVariable["NORRN_unconscious",true,true];
 		_playerObj setVariable["unconsciousTime",60,true];
 
-		_pos 				= getPosAtl _playerObj;
+		_pos 				= [_playerObj] call FNC_GetPos;
 		_backpack			= unitBackpack _playerObj;
 		_weapons			= weapons _playerObj;
 		_weapons_backpack 	= getWeaponCargo _backpack;
