@@ -23,7 +23,7 @@ _BD_center = getPosASL _nearPlotPole;
 		
 		_obj = "Sign_sphere100cm_EP1" createVehicleLocal [0,0,0];
 		_obj setPosASL [_a,_b,_center select 2];
-		_obj setVariable ["Inventory",["PPMarker"],true];
+		_obj setVariable["Inventory",["PPMarker"],true];
 		_angle = _angle + (360/_count);
 	};
 	
@@ -36,7 +36,7 @@ _BD_center = getPosASL _nearPlotPole;
 		
 		_obj = "Sign_sphere100cm_EP1" createVehicleLocal [0,0,0];
 		_obj setPosASL [_a,_center select 1,_b];
-		_obj setVariable ["Inventory",["PPMarker"],true];
+		_obj setVariable["Inventory",["PPMarker"],true];
 		_angle = _angle + (360/_count);
 	};
 	
@@ -49,7 +49,7 @@ _BD_center = getPosASL _nearPlotPole;
 		
 		_obj = "Sign_sphere100cm_EP1" createVehicleLocal [0,0,0];
 		_obj setPosASL [_center select 0,_a,_b];
-		_obj setVariable ["Inventory",["PPMarker"],true];
+		_obj setVariable["Inventory",["PPMarker"],true];
 		_angle = _angle + (360/_count);
 	};
 };

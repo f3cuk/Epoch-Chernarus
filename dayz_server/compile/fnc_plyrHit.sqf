@@ -2,23 +2,23 @@ private ["_victim","_vehicle"];
 
 _victim = _this select 0;
 
-if (isPlayer _victim) then {
+if(isPlayer _victim) then {
 
 	private ["_attacker","_weapon","_distance","_damage"];
 
 	_attacker 	= _this select 1;
 	_damage 	= _this select 2;
 
-	if ((owner _victim) == (owner _attacker)) exitWith {
+	if((owner _victim) == (owner _attacker)) exitWith {
 		_victim setVariable["AttackedBy",_victim];
 	};
 
 	_weapon = weaponState _attacker;
 
-	if (!isNil "_weapon") then {
+	if(!isNil "_weapon") then {
 
-		if (count _weapon != 0) then {
-			if (_weapon select 0 == "Throw") then {
+		if(count _weapon != 0) then {
+			if(_weapon select 0 == "Throw") then {
 				_weapon = _weapon select 3;
 			} else {
 				_weapon = _weapon select 0;
@@ -27,11 +27,11 @@ if (isPlayer _victim) then {
 
 	};
 
-	if (isNil "_weapon") then {
+	if(isNil "_weapon") then {
 
 		_vehicle = typeOf (vehicle _attacker);
 		
-		if (!isNil "_vehicle") then {
+		if(!isNil "_vehicle") then {
 			_weapon = getText (configFile >> "CfgVehicles" >> _vehicle >> "displayName");
 		} else {
 			_weapon = "an unknown weapon";

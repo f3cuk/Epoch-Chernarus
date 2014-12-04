@@ -4,13 +4,13 @@ _ownerID 	= _this select 0;
 _sounddist 	= 10;
 _player_pos = [player] call FNC_GetPos;
 
-_objects = nearestObjects [_player_pos,["LandVehicle","Helicopter","Plane","Ship"],50];
+_objects = nearestObjects[_player_pos,["LandVehicle","Helicopter","Plane","Ship"],50];
 _i = 0;
 
 {
 	_vehicle = _x;
-	if (alive _vehicle) then {
-		_ownerID2 = _vehicle getVariable ["CharacterID","0"];
+	if(alive _vehicle) then {
+		_ownerID2 = _vehicle getVariable["CharacterID","0"];
 
 		if(_ownerID == _ownerID2) then {
 			if(!locked _vehicle) then {
@@ -21,19 +21,19 @@ _i = 0;
 
 					PVDZE_veh_Lock = [_vehicle,true];
 					
-					if (local _vehicle) then {
+					if(local _vehicle) then {
 						PVDZE_veh_Lock spawn local_lockUnlock;
 					} else {
 						publicVariable "PVDZE_veh_Lock"; 
 					};
 					
-					player action ["lightOn",_vehicle];
+					player action["lightOn",_vehicle];
 					_null = [objNull,_vehicle,rSAY,"carLock",_sounddist] call RE;
 					sleep 0.5;
-					player action ["lightOff",_vehicle];
+					player action["lightOff",_vehicle];
 					
 					_tvih = typeOf _vehicle;
-					cutText [format["%1 has been locked",_tvih],"PLAIN DOWN"];
+					cutText[format["%1 has been locked",_tvih],"PLAIN DOWN"];
 					
 					s_player_lockUnlock_crtl = -1;
 					DZE_ActionInProgress = false;

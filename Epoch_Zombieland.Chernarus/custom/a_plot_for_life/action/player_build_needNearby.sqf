@@ -19,7 +19,7 @@ _pos = [player] call FNC_GetPos;
 	};
 	if(_x == "workshop") exitWith {
 		_distance 	= 3;
-		_isNear 	= count (nearestObjects [_pos,["Wooden_shed_DZ","WoodShack_DZ","WorkBench_DZ"],_distance]);
+		_isNear 	= count (nearestObjects[_pos,["Wooden_shed_DZ","WoodShack_DZ","WorkBench_DZ"],_distance]);
 		if(_isNear == 0) then {
 			_abort = true;
 			_reason = "workshop";
@@ -27,7 +27,7 @@ _pos = [player] call FNC_GetPos;
 	};
 	if(_x == "workshop") exitWith {
 		_distance = 30;
-		_isNear = count (nearestObjects [_pos,dayz_fuelsources,_distance]);
+		_isNear = count (nearestObjects[_pos,dayz_fuelsources,_distance]);
 		if(_isNear == 0) then {
 			_abort = true;
 			_reason = "fuel tank";
@@ -35,7 +35,7 @@ _pos = [player] call FNC_GetPos;
 	};
 } count _needNear;
 
-if (_abort) exitWith {
-	cutText [format[(localize "str_epoch_player_135"),_reason,_distance],"PLAIN DOWN"];
+if(_abort) exitWith {
+	cutText[format[(localize "str_epoch_player_135"),_reason,_distance],"PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 };

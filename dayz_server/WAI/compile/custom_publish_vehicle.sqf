@@ -1,6 +1,6 @@
 
 private ["_isglass","_mission"];
-if (isServer) then {
+if(isServer) then {
 
     private ["_unit","_ailist","_keyid","_carkey","_hit","_classnames","_count","_vehpos","_max_distance","_vehicle","_position_fixed","_position","_dir","_class","_dam","_damage","_hitpoints","_selection","_fuel","_key"];
 
@@ -11,7 +11,7 @@ if (isServer) then {
 	_max_distance 	= 35;
 	_vehpos			= [];
 
-	if (typeName(_classnames) == "ARRAY") then {
+	if(typeName(_classnames) == "ARRAY") then {
 		_class = _classnames call BIS_fnc_selectRandom;
 	} else {
 		_class = _classnames;
@@ -32,7 +32,7 @@ if (isServer) then {
 		_dir = floor(round(random 360));
 	};
 
-	if (!_position_fixed) then {	
+	if(!_position_fixed) then {	
 		while{count _vehpos < 1} do { 
 			_vehpos = _position findEmptyPosition[10,_max_distance,_class]; 
 			_max_distance = (_max_distance + 15);
@@ -46,14 +46,14 @@ if (isServer) then {
 	_vehicle setVectorUp surfaceNormal position _vehicle;
 	_vehicle setvelocity [0,0,1];
 	
-	_vehicle setVariable ["ObjectID","1",true];
+	_vehicle setVariable["ObjectID","1",true];
 	
 	clearWeaponCargoGlobal _vehicle;
 	clearMagazineCargoGlobal _vehicle;
 	
 	_fuel = 0;
 
-	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
+	if(getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 
 		_hitpoints = _vehicle call vehicle_getHitpoints;
 		
@@ -63,7 +63,7 @@ if (isServer) then {
 			_dam 		= (random((wai_vehicle_damage select 1) - (wai_vehicle_damage select 0)) + (wai_vehicle_damage select 0)) / 100;
 			_selection	= getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 
-			if ((_selection in dayZ_explosiveParts) && _dam > 0.8) then {
+			if((_selection in dayZ_explosiveParts) && _dam > 0.8) then {
 				_dam = 0.8
 			};
 
@@ -85,21 +85,21 @@ if (isServer) then {
 	
 	_vehicle addeventhandler ["HandleDamage",{ _this call vehicle_handleDamage } ];
 	
-	if (wai_lock_vehicles) then {
+	if(wai_lock_vehicles) then {
 		_keyid = ceil(random(12500));
-		_vehicle setVariable ["CharacterID",str(_keyid),true];
+		_vehicle setVariable["CharacterID",str(_keyid),true];
 
 		call {
-			if ((_keyid > 0) && (_keyid <= 2500)) 		exitWith {_carkey = format["ItemKeyGreen%1",_keyid];};
-			if ((_keyid > 2500) && (_keyid <= 5000))	exitWith {_carkey = format["ItemKeyRed%1",_keyid-2500];};
-			if ((_keyid > 5000) && (_keyid <= 7500)) 	exitWith {_carkey = format["ItemKeyBlue%1",_keyid-5000];};
-			if ((_keyid > 7500) && (_keyid <= 10000)) 	exitWith {_carkey = format["ItemKeyYellow%1",_keyid-7500];};
-			if ((_keyid > 10000) && (_keyid <= 12500)) 	exitWith {_carkey = format["ItemKeyBlack%1",_keyid-10000];};
+			if((_keyid > 0) && (_keyid <= 2500)) 		exitWith {_carkey = format["ItemKeyGreen%1",_keyid];};
+			if((_keyid > 2500) && (_keyid <= 5000))	exitWith {_carkey = format["ItemKeyRed%1",_keyid-2500];};
+			if((_keyid > 5000) && (_keyid <= 7500)) 	exitWith {_carkey = format["ItemKeyBlue%1",_keyid-5000];};
+			if((_keyid > 7500) && (_keyid <= 10000)) 	exitWith {_carkey = format["ItemKeyYellow%1",_keyid-7500];};
+			if((_keyid > 10000) && (_keyid <= 12500)) 	exitWith {_carkey = format["ItemKeyBlack%1",_keyid-10000];};
 		};
 
 		_ailist = [];
 		{
-			if (_x getVariable ["mission",nil] == _mission) then {_ailist set [count _ailist,_x];};
+			if(_x getVariable["mission",nil] == _mission) then {_ailist set [count _ailist,_x];};
 		} count allUnits;
 
 		_unit = _ailist select (floor(random(count _ailist)));
@@ -107,7 +107,7 @@ if (isServer) then {
 		
 		_vehicle setvehiclelock "locked";
 	} else {
-		_vehicle setVariable ["CharacterID","0",true];
+		_vehicle setVariable["CharacterID","0",true];
 	};
 
 	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
@@ -119,7 +119,7 @@ if (isServer) then {
 			if(debug_mode) then { diag_log ("PUBLISH: Attempt " + str(_vehicle)); };
 
 			_class 			= typeOf _vehicle;
-			_characterID 	= _vehicle getVariable ["CharacterID","0"];
+			_characterID 	= _vehicle getVariable["CharacterID","0"];
 			_worldspace		= [getDir _vehicle,[_vehicle] call FNC_GetPos];
 			_hitpoints 		= _vehicle call vehicle_getHitpoints;
 			_damage 		= damage _vehicle;
@@ -128,7 +128,7 @@ if (isServer) then {
 			{
 				_hit = [_vehicle,_x] call object_getHit;
 				_selection = getText (configFile >> "CfgVehicles" >> (typeOf _vehicle) >> "HitPoints" >> _x >> "name");
-				if (_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+				if(_hit > 0) then {_array set [count _array,[_selection,_hit]]};
 			} count _hitpoints;
 
 			_fuel 	= fuel _vehicle;
@@ -164,7 +164,7 @@ if (isServer) then {
 
 					if(_outcome == "PASS") then {
 						_oid = _result select 1;
-						_vehicle setVariable ["ObjectID",_oid,true];
+						_vehicle setVariable["ObjectID",_oid,true];
 						if(debug_mode) then { diag_log("CUSTOM: Selected " + str(_oid)); };
 						_done  = true;
 					} else {
@@ -177,7 +177,7 @@ if (isServer) then {
 					deleteVehicle _vehicle;
 					if(debug_mode) then { diag_log("CUSTOM: failed to get id for : " + str(_uid)); };
 				} else {
-					_vehicle setVariable ["lastUpdate",time];
+					_vehicle setVariable["lastUpdate",time];
 				};
 			};
 

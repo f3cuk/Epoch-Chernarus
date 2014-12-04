@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private["_killedat"];
 
@@ -6,11 +6,11 @@ if (isServer) then {
 
 	while {true} do {
 	
-		if (ai_clean_dead) then {
+		if(ai_clean_dead) then {
 			{
 				_killedat = _x getVariable "killedat";
-				if (!isNil "_killedat") then {
-					if ((time - _killedat) >= ai_cleanup_time) then {
+				if(!isNil "_killedat") then {
+					if((time - _killedat) >= ai_cleanup_time) then {
 						deleteVehicle _x;
 					};
 				};

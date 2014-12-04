@@ -21,7 +21,7 @@ textLogFormat ["PRELOAD_ Functions\init.sqf %1",_this];
 	Nothing
 */
 
-if (!isServer) then {textLogFormat ["MPF_Client FUNCTIONS init.sqf ..."];};
+if(!isServer) then {textLogFormat ["MPF_Client FUNCTIONS init.sqf ..."];};
 
 private ["_recompile"];
 
@@ -32,7 +32,7 @@ if(!isNil "_this" && typeName _this == "ARRAY") then {
 };
 
 //--- Functions are already running
-if (!isNil "BIS_fnc_init" && !_recompile) exitwith {textLogFormat["PRELOAD_ Functions already running."];};
+if(!isNil "BIS_fnc_init" && !_recompile) exitwith {textLogFormat["PRELOAD_ Functions already running."];};
 textLogFormat ["Log: [Functions] Init script executed at %1",time];
 
 
@@ -50,7 +50,7 @@ for "_t" from 0 to 2 do {
 		_currentTag = _cfgFunctions select _c;
 
 		//--- Is Tag
-		if (isclass _currentTag) then {
+		if(isclass _currentTag) then {
 			_tagName = configname _currentTag;
 			_itemPathTag = gettext (_currentTag >> "file");
 
@@ -58,7 +58,7 @@ for "_t" from 0 to 2 do {
 				_currentCategory = _currentTag select _i;
 
 				//--- Is Category
-				if (isclass _currentCategory) then {
+				if(isclass _currentCategory) then {
 					_categoryName = configname _currentCategory;
 					_itemPathCat = gettext (_currentCategory >> "file");
 
@@ -66,20 +66,20 @@ for "_t" from 0 to 2 do {
 						_currentItem = _currentCategory select _n;
 
 						//--- Is Item
-						if (isclass _currentItem) then {
+						if(isclass _currentItem) then {
 
 							_itemName = configname _currentItem;
 							_itemPathItem = gettext (_currentItem >> "file");
-							_itemPath = if (_itemPathItem != "") then {_itemPathItem} else {
-								if (_itemPathCat != "") then {_itemPathCat + "\fn_" + _itemName + ".sqf"} else {
-									if (_itemPathTag != "") then {_itemPathTag + "\fn_" + _itemName + ".sqf"} else {""};
+							_itemPath = if(_itemPathItem != "") then {_itemPathItem} else {
+								if(_itemPathCat != "") then {_itemPathCat + "\fn_" + _itemName + ".sqf"} else {
+									if(_itemPathTag != "") then {_itemPathTag + "\fn_" + _itemName + ".sqf"} else {""};
 								};
 							};
-							_itemPath = if (_itemPath == "") then {_pathFile + "\" + _categoryName + "\fn_" + _itemName + ".sqf"} else {_itemPath};
+							_itemPath = if(_itemPath == "") then {_pathFile + "\" + _categoryName + "\fn_" + _itemName + ".sqf"} else {_itemPath};
 							call compile format ["
-								if (isnil '%2_fnc_%3' || %4) then {
+								if(isnil '%2_fnc_%3' || %4) then {
 									%2_fnc_%3 = {
-										if (!%4) then {debuglog ('Log: [Functions] %2_fnc_%3 loaded (%1)')};
+										if(!%4) then {debuglog ('Log: [Functions] %2_fnc_%3 loaded (%1)')};
 										%2_fnc_%3 = compile preprocessFileLineNumbers '%1';
 										_this call %2_fnc_%3;
 									};
@@ -97,8 +97,8 @@ for "_t" from 0 to 2 do {
 //"
 
 private ["_test","_test2"];
-_test = (_this select 0) setPos (position (_this select 0)); if (isnil "_test") then {_test = false};
-_test2 = (_this select 0) playMove ""; if (isnil "_test2") then {_test2 = false};
+_test = (_this select 0) setPos (position (_this select 0)); if(isnil "_test") then {_test = false};
+_test2 = (_this select 0) playMove ""; if(isnil "_test2") then {_test2 = false};
 (_test || _test2) call (compile (preprocessFileLineNumbers "ca\modules\functions\misc\fn_initCounter.sqf"));
 
 //--------------------------------------------------------------------------------------------------------

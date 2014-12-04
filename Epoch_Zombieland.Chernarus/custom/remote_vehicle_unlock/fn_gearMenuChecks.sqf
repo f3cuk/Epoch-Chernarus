@@ -15,6 +15,6 @@ _isOk = false;
 } forEach ["LandVehicle","Air","Ship"];
 
 if((locked _cTarget) and _isOk and !_inVehicle and(((vehicle player) distance _cTarget) < 12)) then {
-	cutText [(localize "str_epoch_player_7") ,"PLAIN DOWN"];
+	cutText[(localize "str_epoch_player_7") ,"PLAIN DOWN"];
 	_display closeDisplay 1;
 };

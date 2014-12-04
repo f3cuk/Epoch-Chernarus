@@ -2,7 +2,7 @@ private ["_number","_step","_stepLocal","_result","_numberLocal"];
 
 _number = [_this,0,0,[0]] call bis_fnc_param;
 
-if (_number < 10) then {
+if(_number < 10) then {
 	[_number]
 } else {
 
@@ -18,11 +18,11 @@ if (_number < 10) then {
 		} foreach _result;
 		_numberLocal = floor (_numberLocal / _stepLocal * _step);
 
-		if (_numberLocal < 0) then {_numberLocal = 9};
+		if(_numberLocal < 0) then {_numberLocal = 9};
 		_result = [_numberLocal] + _result;
 		_stepLocal = _stepLocal * (_step);
 	};
-	if ((_result select 0) == 0) then {_result = [1] + _result;};
+	if((_result select 0) == 0) then {_result = [1] + _result;};
 	_result resize (count _result - 1);
 	_result
 };

@@ -56,7 +56,7 @@ if(isServer) then {
 	//Load config
 	ExecVM "\z\addons\dayz_server\WAI\config.sqf";
 	waitUntil {WAIconfigloaded};
-	if ((preProcessFileLineNumbers ("\z\addons\dayz_server\WAI\customsettings.sqf")) != "") then {
+	if((preProcessFileLineNumbers ("\z\addons\dayz_server\WAI\customsettings.sqf")) != "") then {
 		ExecVM "\z\addons\dayz_server\WAI\customsettings.sqf";
 		diag_log "WAI: Custom Config File Loaded";
 	};
@@ -69,7 +69,7 @@ if(isServer) then {
 		waitUntil {wai_staticloaded};
 	};
 
-	if (wai_mission_system) then {
+	if(wai_mission_system) then {
 		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 	};
 

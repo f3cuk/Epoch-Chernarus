@@ -3,7 +3,7 @@ private ["_number","_mod","_digitsCount","_modBase","_numberText","_foreachindex
 _number = [_this,0,0,[0,""]] call bis_fnc_param;
 _mod = [_this,1,3,[0]] call bis_fnc_param;
 
-if (typeName _number == "STRING") then {
+if(typeName _number == "STRING") then {
 	_number = parseNumber _number;
 };
 
@@ -14,6 +14,6 @@ _modBase = _digitsCount % _mod;
 _numberText = "";
 {
 	_numberText = _numberText + str _x;
-	if ((_foreachindex - _modBase) % (_mod) == 0 && _foreachindex != _digitsCount) then {_numberText = _numberText + ",";};
+	if((_foreachindex - _modBase) % (_mod) == 0 && _foreachindex != _digitsCount) then {_numberText = _numberText + ",";};
 } foreach _digits;
 _numberText

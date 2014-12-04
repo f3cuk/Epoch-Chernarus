@@ -9,8 +9,8 @@ _passArray 		= [];
 _objectHelper 	= objNull;
 _location1 		= [player] call FNC_GetPos;
 
-if (_enableGhost) then {
-	if (_ghost != "") then {
+if(_enableGhost) then {
+	if(_ghost != "") then {
 		_classname = _ghost;
 	};
 };
@@ -24,7 +24,7 @@ _objectHelper attachTo [player,_offset];
 _object attachTo [_objectHelper,[0,0,0]];
 
 
-if (isClass (missionConfigFile >> "SnapBuilding" >> _classname)) then {	
+if(isClass (missionConfigFile >> "SnapBuilding" >> _classname)) then {	
 	["","","",["Init",_object,_classname,_objectHelper]] spawn snap_build;
 };
 

@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
 
@@ -8,16 +8,16 @@ if (isServer) then {
 	_skin 				= _this select 3;
 	_aitype				= _this select 4;
 
-	if (ai_static_useweapon) then {
+	if(ai_static_useweapon) then {
 		_gun 			= _this select 5;
 		_mags 			= _this select 6;
 		_backpack 		= _this select 7;
 		_gear 			= _this select 8;
 	};
 	
-	if ((count _this == 10) OR (count _this == 6)) then {
-		if (count _this == 10) 	then { _mission = _this select 9; };
-		if (count _this == 6) 	then { _mission = _this select 5; };
+	if((count _this == 10) OR (count _this == 6)) then {
+		if(count _this == 10) 	then { _mission = _this select 9; };
+		if(count _this == 6) 	then { _mission = _this select 5; };
 	} else {
 		_mission = nil;
 	};
@@ -35,7 +35,7 @@ if (isServer) then {
 		_unitGroup	= createGroup EAST;
 	};
 	
-	if (!isServer) exitWith {};
+	if(!isServer) exitWith {};
 
 	{
 		_position2 = _x;
@@ -53,7 +53,7 @@ if (isServer) then {
 		};
 
 		call {
-			if (_class == "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
+			if(_class == "Random") exitWith { _class = ai_static_weapons call BIS_fnc_selectRandom; };
 		};
 
 		_unit = _unitGroup createUnit [_aiskin,[0,0,0],[],10,"PRIVATE"];
@@ -65,9 +65,9 @@ if (isServer) then {
 		[_unit] joinSilent _unitGroup;
 
 		call {
-			if(_aitype == "hero") 		exitWith { _unit setVariable ["Hero",true,true]; };
-			if(_aitype == "bandit") 	exitWith { _unit setVariable ["Bandit",true,true]; };
-			if(_aitype == "special") 	exitWith { _unit setVariable ["Special",true,true]; };
+			if(_aitype == "hero") 		exitWith { _unit setVariable["Hero",true,true]; };
+			if(_aitype == "bandit") 	exitWith { _unit setVariable["Bandit",true,true]; };
+			if(_aitype == "special") 	exitWith { _unit setVariable["Special",true,true]; };
 		};
 		
 		_unit enableAI "TARGET";
@@ -79,7 +79,7 @@ if (isServer) then {
 		removeAllWeapons _unit;
 		removeAllItems _unit;
 		
-		if (ai_static_useweapon) then {
+		if(ai_static_useweapon) then {
 		
 			call {
 				if(typeName(_gun) == "SCALAR") then {
@@ -131,7 +131,7 @@ if (isServer) then {
 			} count _geartools;
 		};
 		
-		if (ai_static_skills) then {
+		if(ai_static_skills) then {
 
 			{
 				_unit setSkill [(_x select 0),(_x select 1)]
@@ -158,18 +158,18 @@ if (isServer) then {
 		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
 		PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_static];
 			
-		if (sunOrMoon != 1) then {
+		if(sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";
 		};
 		
 		_unit moveingunner _static;
 
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0,(_ainum + 1)];
-			_static setVariable ["missionclean","static"];
-			_static setVariable ["mission",_mission];
-			_unit setVariable ["mission",_mission];
+			_static setVariable["missionclean","static"];
+			_static setVariable["mission",_mission];
+			_unit setVariable["mission",_mission];
 		};
 
 		[_static] spawn vehicle_monitor;
@@ -179,13 +179,13 @@ if (isServer) then {
 	_unitGroup selectLeader ((units _unitGroup) select 0);
 
 	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;

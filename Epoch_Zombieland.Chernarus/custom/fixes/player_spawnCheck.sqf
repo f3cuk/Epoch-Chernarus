@@ -16,14 +16,14 @@ dayz_CurrentZombies = 0;
 // experiment with adding fly sounds locally for both zombies && players.
 _soundLimit = 2;
 {
-	if (!alive _x) then {
-		if (!(_x isKindOf "zZombie_Base")) then {
+	if(!alive _x) then {
+		if(!(_x isKindOf "zZombie_Base")) then {
 			[player,"flysound",1,true] call dayz_zombieSpeak;
 			_soundLimit = _soundLimit - 1;
 		};
 	};
-	if (_soundLimit == 0) exitWith {};
-} count (nearestObjects [player,["CAManBase"],8]);
+	if(_soundLimit == 0) exitWith {};
+} count (nearestObjects[player,["CAManBase"],8]);
 
 _players = _position nearEntities ["CAManBase",_radius+200];
 dayz_maxGlobalZombies = dayz_maxGlobalZombiesInit;
@@ -31,8 +31,8 @@ dayz_maxGlobalZombies = dayz_maxGlobalZombiesInit;
 	if(isPlayer _x) then {
 		dayz_maxGlobalZombies = dayz_maxGlobalZombies + dayz_maxGlobalZombiesIncrease;
 	} else {
-		if (_x isKindOf "zZombie_Base") then {
-			if (local _x) then {
+		if(_x isKindOf "zZombie_Base") then {
+			if(local _x) then {
 				dayz_spawnZombies = dayz_spawnZombies + 1;
 			};
 			dayz_CurrentZombies = dayz_CurrentZombies + 1;
@@ -40,7 +40,7 @@ dayz_maxGlobalZombies = dayz_maxGlobalZombiesInit;
 	};
 } count _players;
 
-if ("ItemMap_Debug" in items player) then {
+if("ItemMap_Debug" in items player) then {
 	deleteMarkerLocal "MaxZeds";
 	deleteMarkerLocal "Counter";
 	deleteMarkerLocal "Loot30";
@@ -87,9 +87,9 @@ if ("ItemMap_Debug" in items player) then {
 
 _nearby = _position nearObjects ["building",_radius];
 _nearbyCount = count _nearby;
-if (_nearbyCount < 1) exitwith
+if(_nearbyCount < 1) exitwith
 {
-	if ((dayz_spawnZombies < _maxWildZombies) && !_inVehicle)  then {
+	if((dayz_spawnZombies < _maxWildZombies) && !_inVehicle)  then {
 		[_position] call wild_spawnZombies;
 	};
 };
@@ -98,7 +98,7 @@ if (_nearbyCount < 1) exitwith
 {
 	_type = typeOf _x;
 	_config = configFile >> "CfgBuildingLoot" >> _type;
-	if (DZE_MissionLootTable) then {
+	if(DZE_MissionLootTable) then {
 		_config = missionConfigFile >> "CfgBuildingLoot" >> _type;
 	};
 	_canLoot = isClass (_config);
@@ -108,38 +108,38 @@ if (_nearbyCount < 1) exitwith
 		_dis = _x distance player;
 
 		//Loot
-		if ((_dis < 120) && (_dis > 30) && !_inVehicle) then {
-			_looted = (_x getVariable ["looted",-0.1]);
-			_cleared = (_x getVariable ["cleared",true]);
+		if((_dis < 120) && (_dis > 30) && !_inVehicle) then {
+			_looted = (_x getVariable["looted",-0.1]);
+			_cleared = (_x getVariable["cleared",true]);
 			_dateNow = (DateToNumber date);
 			_age = (_dateNow - _looted) * 525948;
 			//diag_log ("SPAWN LOOT: " + _type + " Building is " + str(_age) + " old" );
-			if ((_age > DZE_LootSpawnTimer) && (!_cleared)) then {
-				_nearByObj = nearestObjects [([_x] call FNC_GetPos),["WeaponHolder","WeaponHolderBase"],((sizeOf _type)+5)];
+			if((_age > DZE_LootSpawnTimer) && (!_cleared)) then {
+				_nearByObj = nearestObjects[([_x] call FNC_GetPos),["WeaponHolder","WeaponHolderBase"],((sizeOf _type)+5)];
 				{deleteVehicle _x} count _nearByObj;
-				_x setVariable ["cleared",true,true];
-				_x setVariable ["looted",_dateNow,true];
+				_x setVariable["cleared",true,true];
+				_x setVariable["looted",_dateNow,true];
 			};
-			if ((_age > DZE_LootSpawnTimer) && (_cleared)) then {
+			if((_age > DZE_LootSpawnTimer) && (_cleared)) then {
 				//Register
-				_x setVariable ["looted",_dateNow,true];
+				_x setVariable["looted",_dateNow,true];
 				//cleanup
 				_x call building_spawnLoot;
 			};
 		};
 
 		// do not spawn zeds if player is moving faster then 10kmh
-		if (!_onTheMove) then {
+		if(!_onTheMove) then {
 			//Zeds
-			if ((time - dayz_spawnWait) > dayz_spawnDelay) then {
-				if (dayz_maxCurrentZeds < dayz_maxZeds) then {
-					if (dayz_CurrentZombies < dayz_maxGlobalZombies) then {
-						if (dayz_spawnZombies < dayz_maxLocalZombies) then {
-								_zombied = (_x getVariable ["zombieSpawn",-0.1]);
+			if((time - dayz_spawnWait) > dayz_spawnDelay) then {
+				if(dayz_maxCurrentZeds < dayz_maxZeds) then {
+					if(dayz_CurrentZombies < dayz_maxGlobalZombies) then {
+						if(dayz_spawnZombies < dayz_maxLocalZombies) then {
+								_zombied = (_x getVariable["zombieSpawn",-0.1]);
 								_dateNow = (DateToNumber date);
 								_age = (_dateNow - _zombied) * 525948;
-								if (_age > 3) then {
-									_x setVariable ["zombieSpawn",_dateNow,true];
+								if(_age > 3) then {
+									_x setVariable["zombieSpawn",_dateNow,true];
 									[_x] call building_spawnZombies;
 								};
 						} else {

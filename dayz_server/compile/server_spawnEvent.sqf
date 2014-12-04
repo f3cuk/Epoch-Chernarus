@@ -19,12 +19,12 @@ epoch_eventIsAny = {
 	_index = 0;
 	{
 		_bool = false;
-		if (typeName _x == "STRING") then {
+		if(typeName _x == "STRING") then {
 			_boolReturn = true;
 		} else {
 			_boolReturn = ((_date select _index) == _x);
 		};
-		if (!_boolReturn) exitWith {};
+		if(!_boolReturn) exitWith {};
 		_index = _index + 1;	
 	} count _event;
 
@@ -40,7 +40,7 @@ while {1 == 1} do {
 	if(_outcome == "PASS") then {
 		_date = _result select 1;
 		_datestr  = str(_date);
-		if (EventSchedulerLastTime != _datestr) then {
+		if(EventSchedulerLastTime != _datestr) then {
 			
 			// internal timestamp
 			ServerCurrentTime = [(_date select 3),(_date select 4)];

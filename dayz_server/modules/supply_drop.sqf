@@ -9,7 +9,7 @@ _minLootRadius = 4;
 _maxLootRadius = 4;
 _spawnRoll = random 1;
 
-if (_spawnRoll <= _spawnChance) then {
+if(_spawnRoll <= _spawnChance) then {
 
 	_crashModel = "Supply_Crate_DZE";
 	_lootTable = "SupplyDrop";
@@ -18,7 +18,7 @@ if (_spawnRoll <= _spawnChance) then {
 	while { _needsrelocated } do {
 		_position = [getMarkerPos _spawnMarker,0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
 		_istoomany = _position nearObjects["AllVehicles",10];
-		if ((count _istoomany) == 0) then {
+		if((count _istoomany) == 0) then {
 			_needsrelocated = false;
 		};
 	};
@@ -35,7 +35,7 @@ if (_spawnRoll <= _spawnChance) then {
 
 	_num = (round(random _randomizedLoot)) + _guaranteedLoot;
 
-	if (DZE_MissionLootTable) then {
+	if(DZE_MissionLootTable) then {
 		_itemTypes = [] + getArray(missionConfigFile >> "CfgBuildingLoot" >> _lootTable >> "lootType");
 	} else {
 		_itemTypes = [] + getArray(configFile >> "CfgBuildingLoot" >> _lootTable >> "lootType");

@@ -7,36 +7,36 @@ _playerPos 	= [];
 _removebackpack = false;
 
 {
-	if ((getPlayerUID _x) == _playerUID) exitWith { _playerObj = _x; };
+	if((getPlayerUID _x) == _playerUID) exitWith { _playerObj = _x; };
 } count playableUnits;
 
-if (isNil "_playerObj") then {
+if(isNil "_playerObj") then {
 	diag_log format["nil player object attempting PV,:%1",_this];
 	
 	_playerObj = call compile format["PVDZE_player%1",_playerUID];
 };
 
-if (isNil "_playerObj") exitWith {
+if(isNil "_playerObj") exitWith {
 	diag_log format["%1: nil player object,_this:%2",__FILE__,_this];
 };
 
 diag_log format["get: %1 (%2),sent: %3 (%4)",typeName (getPlayerUID _playerObj),getPlayerUID _playerObj,typeName _playerUID,_playerUID];
 
-if (!isNull _playerObj) then {
+if(!isNull _playerObj) then {
 
 	_playerPos 		= [_playerObj] call FNC_GetPos;
-	_characterID 	= _playerObj getVariable ["CharacterID","0"];
-	_timeout 		= _playerObj getVariable ["combattimeout",0];
+	_characterID 	= _playerObj getVariable["CharacterID","0"];
+	_timeout 		= _playerObj getVariable["combattimeout",0];
 
 	_invehicle = false;
 
-	if (vehicle _playerObj != _playerObj) then {
-		_playerObj action ["eject",vehicle _playerObj];
+	if(vehicle _playerObj != _playerObj) then {
+		_playerObj action["eject",vehicle _playerObj];
 		_invehicle = true;
 		diag_log format["LOGOUT IN VEHICLE: %1 at location %2",_playerName,([_playerObj] call FNC_GetPos)];
 	};
 
-	if ((_timeout - time) > 0) then {
+	if((_timeout - time) > 0) then {
 
 		_playerObj setVariable["NORRN_unconscious",true,true];
 		_playerObj setVariable["unconsciousTime",60,true];
@@ -66,7 +66,7 @@ if (!isNull _playerObj) then {
 			_loot_box addMagazineCargoGlobal [_x,1];
 		} count (_magazines);
 
-		if (typename _weapons_backpack == "ARRAY") then {
+		if(typename _weapons_backpack == "ARRAY") then {
 
 			_i = 0;
 
@@ -77,7 +77,7 @@ if (!isNull _playerObj) then {
 
 		};
 
-		if (typename _magazines_backpack == "ARRAY") then {
+		if(typename _magazines_backpack == "ARRAY") then {
 
 			_i = 0;
 
@@ -113,7 +113,7 @@ if (!isNull _playerObj) then {
 
 	_id = [_playerUID,_characterID,2] spawn dayz_recordLogin;
 
-	if (alive _playerObj) then {
+	if(alive _playerObj) then {
 		_isplayernearby = (DZE_BackpackGuard && !_invehicle && ({(isPlayer _x) && (alive _x)} count (_playerPos nearEntities ["AllVehicles",5]) > 1));
 		_magazines = [(magazines _playerObj),20] call array_reduceSize;
 
@@ -122,6 +122,6 @@ if (!isNull _playerObj) then {
 	} else {
 		{ 
 			[_x,"gear"] call server_updateObject;
-		} count (nearestObjects [_playerPos,dayz_updateObjects,10]);
+		} count (nearestObjects[_playerPos,dayz_updateObjects,10]);
 	};
 };

@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	_this spawn {
 
@@ -53,8 +53,8 @@ if (isServer) then {
 			_runmonitor = true;
 
 			while {(canMove _vehicle && _runmonitor)} do {
-				if (fuel _vehicle < 0.2) then { _vehicle setfuel 1; };
-				if (!(alive leader _unitgroup)) then {
+				if(fuel _vehicle < 0.2) then { _vehicle setfuel 1; };
+				if(!(alive leader _unitgroup)) then {
 					diag_log "WAI: Driver was killed,ejecting AI and removing waypoints.";
 					_runmonitor = false;
 				};
@@ -70,7 +70,7 @@ if (isServer) then {
 			waitUntil { (speed _vehicle < 10) };	// Wait until vehicle slows down before ejecting crew
 
 			{
-				_x action ["eject",vehicle _x];
+				_x action["eject",vehicle _x];
 			} forEach crew _vehicle;
 
 			_wp = _unitgroup addWaypoint [(getPos _vehicle),0];
@@ -105,7 +105,7 @@ if (isServer) then {
 			
 			sleep random(10);
 			
-			if (wai_radio_announce) then {
+			if(wai_radio_announce) then {
 				RemoteMessage = ["radio",_msg];
 				publicVariable "RemoteMessage";
 			} else {

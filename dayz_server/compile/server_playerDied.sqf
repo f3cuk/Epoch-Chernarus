@@ -11,18 +11,18 @@ _victimGroup	= group _victim;
 
 deleteGroup _victimGroup;
 
-_victim setVariable ["bodyName",_victimName,true];
+_victim setVariable["bodyName",_victimName,true];
 
 sleep 2;
 
 _killer 	= _victim getVariable["AttackedBy","nil"];
 _killerName = _victim getVariable["AttackedByName","unknown"];
 
-if ((typeName _killer) == "OBJECT") then {
+if((typeName _killer) == "OBJECT") then {
 	_weapon 	= _victim getVariable["AttackedByWeapon","unknown"];
 	_distance 	= _victim getVariable["AttackedFromDistance","unknown"];
 
-	if ((owner _victim) == (owner _killer)) then  {
+	if((owner _victim) == (owner _killer)) then  {
 		_randmsg = [
 			"did not see the point in life any more",
 			"thought it was best to end his life",
@@ -70,11 +70,11 @@ RemoteMessage = nil;
 
 _victim setVariable["processedDeath",diag_tickTime];
 
-if (typeName _minutes == "STRING") then {
+if(typeName _minutes == "STRING") then {
 	_minutes = parseNumber _minutes;
 };
 
-if (_characterID != "0") then {
+if(_characterID != "0") then {
 	_key = format["CHILD:202:%1:%2:%3:",_characterID,_minutes,_infected];
 	#ifdef DZE_SERVER_DEBUG_HIVE
 	diag_log ("HIVE: WRITE: "+ str(_key));

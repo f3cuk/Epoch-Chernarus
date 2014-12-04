@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill","_gunner","_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
@@ -11,7 +11,7 @@ if (isServer) then {
 	_skin					= _this select 6;
 	_aitype					= _this select 7;
 
-	if (count _this > 8) then {
+	if(count _this > 8) then {
 		_mission = _this select 8;
 	} else {
 		_mission = nil;
@@ -50,9 +50,9 @@ if (isServer) then {
 	[_pilot] 				joinSilent _unitGroup;
 	
 	call {
-		if (_aitype == "hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
-		if (_aitype == "bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
-		if (_aitype == "special") 	exitWith { _pilot setVariable ["Special",true,true]; };
+		if(_aitype == "hero") 		exitWith { _pilot setVariable["Hero",true,true]; };
+		if(_aitype == "bandit") 	exitWith { _pilot setVariable["Bandit",true,true]; };
+		if(_aitype == "special") 	exitWith { _pilot setVariable["Special",true,true]; };
 	};
 	
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
@@ -76,9 +76,9 @@ if (isServer) then {
 	[_gunner] 				joinSilent _unitGroup;
 	
 	call {
-		if (_aitype == "hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
-		if (_aitype == "bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
-		if (_aitype == "special") 	exitWith { _gunner setVariable ["Special",true,true]; };
+		if(_aitype == "hero") 		exitWith { _gunner setVariable["Hero",true,true]; };
+		if(_aitype == "bandit") 	exitWith { _gunner setVariable["Bandit",true,true]; };
+		if(_aitype == "special") 	exitWith { _gunner setVariable["Special",true,true]; };
 	};
 	
 	{
@@ -101,13 +101,13 @@ if (isServer) then {
 		_x addEventHandler ["Killed",{[_this select 0,_this select 1,"vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	if (!isNil "_mission") then {
-		_vehicle setVariable ["missionclean","vehicle"];
-		_vehicle setVariable ["mission",_mission];
+	if(!isNil "_mission") then {
+		_vehicle setVariable["missionclean","vehicle"];
+		_vehicle setVariable["mission",_mission];
 		{
 			_ainum = (wai_mission_data select _mission) select 0;
 			wai_mission_data select _mission set [0,(_ainum + 1)];
-			_x setVariable ["mission",_mission]; 
+			_x setVariable["mission",_mission]; 
 		} count (crew _vehicle);
 	};
 
@@ -116,13 +116,13 @@ if (isServer) then {
 	_unitGroup 				allowFleeing 0;
 
 	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;

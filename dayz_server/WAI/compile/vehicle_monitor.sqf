@@ -1,10 +1,10 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_veh","_mission","_player_present"];
 	
 	_veh = _this select 0;
 
-	if (count _this == 2) then {
+	if(count _this == 2) then {
 		_mission = _this select 1;
 	} else {
 		_mission = nil;
@@ -15,15 +15,15 @@ if (isServer) then {
 	while {(alive _veh) && ({alive _x} count crew _veh > 0)} do {
 		_veh setVehicleAmmo 1;
 		_veh setFuel 1;
-		if ({alive _x} count crew _veh == 0) then {
+		if({alive _x} count crew _veh == 0) then {
 			_veh setDamage 1;
-			_veh setVariable ["killedat",time];
+			_veh setVariable["killedat",time];
 		};
 		sleep 1;
 	};
 	
 	_veh setDamage 1;
-	_veh setVariable ["killedat",time];
+	_veh setVariable["killedat",time];
 
 	waitUntil
 	{

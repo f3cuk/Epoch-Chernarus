@@ -1,6 +1,6 @@
 private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_finished","_removed","_msg","_config","_configName","_wepType","_isToolBelt","_isBinocs","_abort","_secondaryWeapon","_isPistol","_isRifle","_qtychange","_newM","_myMoney"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -38,7 +38,7 @@ if(_buy_o_sell == "sell") then {
 
 } else {
 
-	_qty 		= player getVariable ["cashMoney",0]; 
+	_qty 		= player getVariable["cashMoney",0]; 
 	_msg 		= "Drop or sell your current weapon before you can buy a new one.";
 	_config 	= (configFile >> "CfgWeapons" >> _part_out);
 	_configName = configName(_config);
@@ -49,13 +49,13 @@ if(_buy_o_sell == "sell") then {
 	_isToolBelt = (_wepType == 131072);
 	_isBinocs = (_wepType == 4096);
 
-	if (_isRifle) then {
+	if(_isRifle) then {
 		_abort = ((primaryWeapon player) != "");
 	};
-	if (_isPistol) then {
+	if(_isPistol) then {
 		_secondaryWeapon = "";
 		{
-			if ((getNumber (configFile >> "CfgWeapons" >> _x >> "Type")) == 2) exitWith {
+			if((getNumber (configFile >> "CfgWeapons" >> _x >> "Type")) == 2) exitWith {
 					_secondaryWeapon = _x;
 			};
 		} count (weapons player);
@@ -67,14 +67,14 @@ if(_buy_o_sell == "sell") then {
 	};
 };
 
-if (_abort) exitWith {
-	cutText [_msg,"PLAIN DOWN"];
+if(_abort) exitWith {
+	cutText[_msg,"PLAIN DOWN"];
 	DZE_ActionInProgress = false;
 };
 
-if (_qty >= _qty_in) then {
+if(_qty >= _qty_in) then {
 
-	cutText [(localize "str_epoch_player_105"),"PLAIN DOWN"];
+	cutText[(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 	
@@ -88,30 +88,30 @@ if (_qty >= _qty_in) then {
 
 		sleep .5;
 		
-		if ((position player) distance _oldPosition <= 0.1) then {
+		if((position player) distance _oldPosition <= 0.1) then {
 			_finished = true;
 		};
 
-		if (!_finished) exitWith {
+		if(!_finished) exitWith {
 			DZE_ActionInProgress = false;
-			cutText ["Cancelled trade","PLAIN DOWN"];
+			cutText["Cancelled trade","PLAIN DOWN"];
 		};
 
 	// # F3 FAST TRADING
 
-	if (_finished) then {
+	if(_finished) then {
 
 		if(_buy_o_sell == "buy") then {
-			_qty = player getVariable ["cashMoney",0];	
+			_qty = player getVariable["cashMoney",0];	
 		} else {
 			_qty = {_x == _part_in} count weapons player;
 		};
 
-		if (_qty >= _qty_in) then {
+		if(_qty >= _qty_in) then {
 
-			if (isNil "_part_out") then { _part_out = "Unknown Weapon/Magazine" };
-			if (isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
-			if (_bos == 1) then {
+			if(isNil "_part_out") then { _part_out = "Unknown Weapon/Magazine" };
+			if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
+			if(_bos == 1) then {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_in,inTraderCity,_qty_out,CurrencyName]];
 			} else {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
@@ -126,15 +126,15 @@ if (_qty >= _qty_in) then {
 				if(_buy_o_sell == "buy") then {
 
 					_qtychange = _qty - _qty_in;
-					player setVariable ["cashMoney",_qtychange ,true];	
-					_newM = player getVariable ["cashMoney",0];
+					player setVariable["cashMoney",_qtychange ,true];	
+					_newM = player getVariable["cashMoney",0];
 					_removed = _qty - _newM; // 
 								
 					if(_removed == _qty_in) then {
 						for "_x" from 1 to _qty_out do {
 							player addWeapon _part_out;
 						};
-						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
+						cutText[format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					};
 
 				} else {
@@ -143,11 +143,11 @@ if (_qty >= _qty_in) then {
 												
 					if(_removed == _qty_in) then {
 
-						_myMoney = player getVariable ["cashMoney",0];
+						_myMoney = player getVariable["cashMoney",0];
 						_myMoney = _myMoney + _qty_out;
-						player setVariable ["cashMoney",_myMoney ,true];	
+						player setVariable["cashMoney",_myMoney ,true];	
 									
-						cutText [format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
+						cutText[format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					};
 				};
 		
@@ -159,7 +159,7 @@ if (_qty >= _qty_in) then {
 				s_player_parts_crtl = -1;
 
 			} else {
-				cutText [format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
+				cutText[format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 
 			dayzTradeResult = nil;
@@ -167,8 +167,8 @@ if (_qty >= _qty_in) then {
 	};
 
 } else {
-	_needed =  _qty_in - _qty;
-	cutText [format[(localize "str_epoch_player_184"),_needed,_textPartIn] ,"PLAIN DOWN"];
+	_needed = _qty_in - _qty;
+	cutText[format[(localize "str_epoch_player_184"),_needed,_textPartIn] ,"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

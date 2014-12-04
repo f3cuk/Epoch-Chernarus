@@ -21,49 +21,49 @@ while {_isOk} do {
 	_zheightdirection = "";
 	_rotate = false;
 
-	if (DZE_Q) then {
+	if(DZE_Q) then {
 		DZE_Q = false;
 		_zheightdirection = "up";
 		_zheightchanged = true;
 	};
-	if (DZE_Z) then {
+	if(DZE_Z) then {
 		DZE_Z = false;
 		_zheightdirection = "down";
 		_zheightchanged = true;
 	};
-	if (DZE_Q_alt) then {
+	if(DZE_Q_alt) then {
 		DZE_Q_alt = false;
 		_zheightdirection = "up_alt";
 		_zheightchanged = true;
 	};
-	if (DZE_Z_alt) then {
+	if(DZE_Z_alt) then {
 		DZE_Z_alt = false;
 		_zheightdirection = "down_alt";
 		_zheightchanged = true;
 	};
-	if (DZE_Q_ctrl) then {
+	if(DZE_Q_ctrl) then {
 		DZE_Q_ctrl = false;
 		_zheightdirection = "up_ctrl";
 		_zheightchanged = true;
 	};
-	if (DZE_Z_ctrl) then {
+	if(DZE_Z_ctrl) then {
 		DZE_Z_ctrl = false;
 		_zheightdirection = "down_ctrl";
 		_zheightchanged = true;
 	};
-	if (DZE_4) then {
+	if(DZE_4) then {
 		_rotate = true;
 		DZE_4 = false;
 		_dir = -45;
 	};
-	if (DZE_6) then {
+	if(DZE_6) then {
 		_rotate = true;
 		DZE_6 = false;
 		_dir = 45;
 	};
 	
-	if (DZE_F and _canDo) then {	
-		if (helperDetach) then { 
+	if(DZE_F and _canDo) then {	
+		if(helperDetach) then { 
 			_objectHelperDir = getDir _objectHelper;
 			_objectHelper attachTo [player];
 			_objectHelper setDir _objectHelperDir-(getDir player);
@@ -71,7 +71,7 @@ while {_isOk} do {
 		} else {
 			_objectHelperDir = getDir _objectHelper;
 			detach _objectHelper;
-			[_objectHelper]	call FNC_GetSetPos;
+			[_objectHelper]	call FNC_GetsetPos;
 			_objectHelper setVelocity [0,0,0];
 			helperDetach = true;
 		};
@@ -79,15 +79,15 @@ while {_isOk} do {
 	};
 
 	if(_rotate) then {
-		if (helperDetach) then {
+		if(helperDetach) then {
 			_objectHelperDir = getDir _objectHelper;
 			_objectHelper setDir _objectHelperDir+_dir;
-			[_objectHelper]	call FNC_GetSetPos;
+			[_objectHelper]	call FNC_GetsetPos;
 		} else {
 			detach _objectHelper;
 			_objectHelperDir = getDir _objectHelper;
 			_objectHelper setDir _objectHelperDir+_dir;
-			[_objectHelper]	call FNC_GetSetPos;
+			[_objectHelper]	call FNC_GetsetPos;
 			_objectHelperDir = getDir _objectHelper;
 			_objectHelper attachTo [player];
 			_objectHelper setDir _objectHelperDir-(getDir player);
@@ -95,7 +95,7 @@ while {_isOk} do {
 	};
 
 	if(_zheightchanged) then {
-		if (!helperDetach) then {
+		if(!helperDetach) then {
 		detach _objectHelper;
 		_objectHelperDir = getDir _objectHelper;
 		};
@@ -133,13 +133,13 @@ while {_isOk} do {
 			_position set [2,0];
 		};
 
-		if (surfaceIsWater _position) then {
+		if(surfaceIsWater _position) then {
 			_objectHelper setPosASL _position;
 		} else {
-			_objectHelper SetPos _position;
+			_objectHelper setPos _position;
 		};
 
-		if (!helperDetach) then {
+		if(!helperDetach) then {
 		_objectHelper attachTo [player];
 		_objectHelper setDir _objectHelperDir-(getDir player);
 		};
@@ -192,7 +192,7 @@ while {_isOk} do {
 
 	/* Dont want this
 
-	if (player getVariable["combattimeout",0] >= time) exitWith {
+	if(player getVariable["combattimeout",0] >= time) exitWith {
 		_isOk = false;
 		_cancel = true;
 		_reason = (localize "str_epoch_player_43");
@@ -204,7 +204,7 @@ while {_isOk} do {
 
 	*/
 
-	if (DZE_cancelBuilding) exitWith {
+	if(DZE_cancelBuilding) exitWith {
 		_isOk = false;
 		_cancel = true;
 		_reason = "Cancelled building.";

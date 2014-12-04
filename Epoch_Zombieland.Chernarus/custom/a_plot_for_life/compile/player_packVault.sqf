@@ -3,7 +3,7 @@
 */
 private ["_money","_player_money","_activatingPlayer","_obj","_ownerID","_objectID","_objectUID","_alreadyPacking","_location1","_location2","_dir","_pos","_bag","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_packedClass","_text","_playerNear","_playerUID","_combination","_itemOut","_countOut"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_15") ,"PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_15") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
 
 _activatingPlayer = player;
@@ -17,7 +17,7 @@ if(isNull _obj || !(alive _obj)) exitWith { DZE_ActionInProgress = false; };
 
 _playerNear = _obj call dze_isnearest_player;
 
-if(_playerNear) exitWith { DZE_ActionInProgress = false; cutText [(localize "str_epoch_player_16") ,"PLAIN DOWN"];  };
+if(_playerNear) exitWith { DZE_ActionInProgress = false; cutText[(localize "str_epoch_player_16") ,"PLAIN DOWN"];  };
 
 _combination 	= _obj getVariable["characterID","0"];
 _ownerID 		= _obj getVariable["ownerPUID","0"];
@@ -25,32 +25,32 @@ _objectID 		= _obj getVariable["ObjectID","0"];
 _objectUID		= _obj getVariable["ObjectUID","0"];
 _money			= _obj getVariable["Money",0];
 
-if (DZE_APlotforLife) then {
+if(DZE_APlotforLife) then {
 	_playerUID = [player] call FNC_GetPlayerUID;
-}else{
+} else {
 	_PlayerUID = dayz_characterID;
 };
 
 player removeAction s_player_packvault;
 s_player_packvault = 1;
 
-if(_objectID == "0" && _objectUID == "0") exitWith {DZE_ActionInProgress = false; s_player_packvault = -1; cutText [format[(localize "str_epoch_player_118"),_text],"PLAIN DOWN"];};
+if(_objectID == "0" && _objectUID == "0") exitWith {DZE_ActionInProgress = false; s_player_packvault = -1; cutText[format[(localize "str_epoch_player_118"),_text],"PLAIN DOWN"];};
 
-if((_combination != dayz_combination) && (_ownerID != _playerUID)) exitWith { DZE_ActionInProgress = false; s_player_packvault = -1; cutText [format[(localize "str_epoch_player_119"),_text],"PLAIN DOWN"];};
+if((_combination != dayz_combination) && (_ownerID != _playerUID)) exitWith { DZE_ActionInProgress = false; s_player_packvault = -1; cutText[format[(localize "str_epoch_player_119"),_text],"PLAIN DOWN"];};
 
 _alreadyPacking = _obj getVariable["packing",0];
 
-if (_alreadyPacking == 1) exitWith {DZE_ActionInProgress = false; s_player_packvault = -1; cutText [format[(localize "str_epoch_player_120"),_text] ,"PLAIN DOWN"]};
+if(_alreadyPacking == 1) exitWith {DZE_ActionInProgress = false; s_player_packvault = -1; cutText[format[(localize "str_epoch_player_120"),_text] ,"PLAIN DOWN"]};
 _obj setVariable["packing",1];
 
-cutText [format[(localize "str_epoch_player_121"),_text],"PLAIN DOWN"];
+cutText[format[(localize "str_epoch_player_121"),_text],"PLAIN DOWN"];
 sleep 1; 
 _location1 = [player] call FNC_GetPos;
 sleep 5;
 _location2 = [player] call FNC_GetPos;
 	
 if(_location1 distance _location2 > 0.1) exitWith {
-	cutText [format[(localize "str_epoch_player_122"),_text] ,"PLAIN DOWN"];
+	cutText[format[(localize "str_epoch_player_122"),_text] ,"PLAIN DOWN"];
 	_obj setVariable["packing",0];
 	s_player_packvault = -1;
 	DZE_ActionInProgress = false;
@@ -81,7 +81,7 @@ if(!isNull _obj && alive _obj) then {
 	deleteVehicle _obj;
 
 	_bag setdir _dir;
-	_bag SetPos _pos;
+	_bag setPos _pos;
 	player reveal _bag;
 
 	// give the player the money that was inside the safe
@@ -123,9 +123,9 @@ if(!isNull _obj && alive _obj) then {
 		_countr = _countr + 1;
 	} count _objWpnTypes;
 	
-	cutText [format[(localize "str_epoch_player_123"),_text],"PLAIN DOWN"];
+	cutText[format[(localize "str_epoch_player_123"),_text],"PLAIN DOWN"];
 
-	player action ["Gear",_holder];
+	player action["Gear",_holder];
 };
 s_player_packvault = -1;
 DZE_ActionInProgress = false;

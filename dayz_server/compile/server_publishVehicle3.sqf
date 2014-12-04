@@ -33,8 +33,8 @@ while {!_continue} do {
 	};
 };
 
-_objectID	= _object getVariable ["ObjectID","0"];
-_objectUID	= _object getVariable ["ObjectUID","0"];
+_objectID	= _object getVariable["ObjectID","0"];
+_objectUID	= _object getVariable["ObjectUID","0"];
 _weapons	= getWeaponCargo _object;
 _magazines	= getMagazineCargo _object;
 _backpacks	= getBackpackCargo _object;
@@ -48,7 +48,7 @@ deleteVehicle _object;
 
 _newObject = createVehicle [_class,[0,0,0],[],0,"CAN_COLLIDE"];
 _newObject setDir _dir;
-_newObject SetPos _location;
+_newObject setPos _location;
 
 _objWpnTypes	= _weapons select 0;
 _objWpnQty		= _weapons select 1;
@@ -77,9 +77,9 @@ _countr			= 0;
 	_countr = _countr + 1;
 } count _objWpnTypes;
 
-_newObject setVariable ["ObjectID",(_result select 1),true];
-_newObject setVariable ["lastUpdate",time];
-_newObject setVariable ["CharacterID",_characterID,true];
+_newObject setVariable["ObjectID",(_result select 1),true];
+_newObject setVariable["lastUpdate",time];
+_newObject setVariable["CharacterID",_characterID,true];
 
 PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_newObject];
 

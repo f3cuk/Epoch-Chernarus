@@ -3,7 +3,7 @@ private ["_updates","_charID","_humanity","_worldspace","_model","_friendlies","
 _charID 	= _this select 1;
 _model 		= _this select 2;
 
-if (typeOF player == _model) exitWith {cutText ['You already wear this Skin!','PLAIN'];};
+if(typeOF player == _model) exitWith {cutText['You already wear this Skin!','PLAIN'];};
 
 player allowDamage false;
 
@@ -21,19 +21,19 @@ dayz_unsaved = true;
 _humanity		= player getVariable["humanity",0];
 _medical 		= player call player_sumMedical;
 _worldspace 	= [round(direction player),[player] call FNC_GetPos];
-_zombieKills 	= player getVariable ["zombieKills",0];
-_headShots 		= player getVariable ["headShots",0];
-_humanKills 	= player getVariable ["humanKills",0];
-_banditKills 	= player getVariable ["banditKills",0];
-_friendlies		= player getVariable ["friendlies",[]];
-_tagList		= player getVariable ["tagList",[]];
-_cashMoney		= player getVariable ["cashMoney",0];
+_zombieKills 	= player getVariable["zombieKills",0];
+_headShots 		= player getVariable["headShots",0];
+_humanKills 	= player getVariable["humanKills",0];
+_banditKills 	= player getVariable["banditKills",0];
+_friendlies		= player getVariable["friendlies",[]];
+_tagList		= player getVariable["tagList",[]];
+_cashMoney		= player getVariable["cashMoney",0];
 
 //Switch
 	[_model,_charID] call player_switchModel;	
 
 //set medical values
-if (count _medical > 0) then {
+if(count _medical > 0) then {
 	player setVariable["USEC_isDead",(_medical select 0),true];
 	player setVariable["NORRN_unconscious",(_medical select 1),true];
 	player setVariable["USEC_infected",(_medical select 2),true];
@@ -58,10 +58,10 @@ if (count _medical > 0) then {
 	[player,"hands",(_fractures select 1)] call object_setHit;
 } else {
 	//Reset Fractures
-	player setVariable ["hit_legs",0,true];
-	player setVariable ["hit_hands",0,true];
-	player setVariable ["USEC_injured",false,true];
-	player setVariable ["USEC_inPain",false,true];	
+	player setVariable["hit_legs",0,true];
+	player setVariable["hit_hands",0,true];
+	player setVariable["USEC_injured",false,true];
+	player setVariable["USEC_inPain",false,true];	
 };
 
 

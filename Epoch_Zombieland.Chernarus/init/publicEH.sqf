@@ -32,7 +32,7 @@
 	_agent enableSimulation _control;
 };
 
-if (isServer) then {
+if(isServer) then {
 	"PVDZE_send" 			addPublicVariableEventHandler {(_this select 1) call server_sendToClient};
 	"PVDZE_maintainArea" 	addPublicVariableEventHandler {(_this select 1) spawn server_maintainArea};
 	"PVDZE_plr_Died"		addPublicVariableEventHandler {_id = (_this select 1) spawn server_playerDied};
@@ -53,10 +53,10 @@ if (isServer) then {
 	"PVDZE_veh_Upgrade"		addPublicVariableEventHandler {(_this select 1) spawn server_publishVeh3};
 	"PVDZE_plr_TradeMenu"	addPublicVariableEventHandler {(_this select 1) spawn server_traders};
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
-	"PVDZE_atp" 			addPublicVariableEventHandler {if (typeName (_this select 1) == "STRING") then { diag_log (_this select 1); };};
+	"PVDZE_atp" 			addPublicVariableEventHandler {if(typeName (_this select 1) == "STRING") then { diag_log (_this select 1); };};
 };
 
-if (!isDedicated) then {
+if(!isDedicated) then {
 	"PVDZE_plr_SetDate"		addPublicVariableEventHandler {setDate (_this select 1)};
 	"PVDZE_plr_SetSaveTime"	addPublicVariableEventHandler {DZE_SaveTime = (_this select 1)};
 	"PVDZE_obj_RoadFlare"	addPublicVariableEventHandler {(_this select 1) spawn object_roadFlare};

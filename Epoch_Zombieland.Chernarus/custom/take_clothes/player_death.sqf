@@ -1,16 +1,16 @@
 private ["_display","_body","_playerID","_array","_source","_method","_canHitFree","_isBandit","_punishment","_humanityHit","_myKills","_kills","_killsV","_infected","_id"];
 disableSerialization;
-if (deathHandled) exitWith {};
+if(deathHandled) exitWith {};
 deathHandled = true;
 
-if ((alive player) && {isNil {dayz_playerName}}) then {
+if((alive player) && {isNil {dayz_playerName}}) then {
 	dayz_playerName = name player;
 };
 
 _display = findDisplay 49;
 if(!isNull _display) then {_display closeDisplay 0;};
-if (dialog) then {closeDialog 0;};
-if (visibleMap) then {openMap false;};
+if(dialog) then {closeDialog 0;};
+if(visibleMap) then {openMap false;};
 
 _body = player;
 _playerID = getPlayerUID player;
@@ -18,7 +18,7 @@ _playerID = getPlayerUID player;
 disableUserInput true;
 
 _infected = 0;
-if (r_player_infected && DZE_PlayerZed) then {
+if(r_player_infected && DZE_PlayerZed) then {
 	_infected = 1;
 };
 PVDZE_plr_Died = [dayz_characterID,0,_body,_playerID,_infected,dayz_playerName];
@@ -31,38 +31,38 @@ sleep 0.5;
 player setDamage 1;
 0.1 fadeSound 0;
 
-player setVariable ["NORRN_unconscious",false,true];
-player setVariable ["unconsciousTime",0,true];
-player setVariable ["USEC_isCardiac",false,true];
-player setVariable ["medForceUpdate",true,true];
-player setVariable ["startcombattimer",0];
+player setVariable["NORRN_unconscious",false,true];
+player setVariable["unconsciousTime",0,true];
+player setVariable["USEC_isCardiac",false,true];
+player setVariable["medForceUpdate",true,true];
+player setVariable["startcombattimer",0];
 r_player_unconscious = false;
 r_player_cardiac = false;
 
 _array = _this;
-if (count _array > 0) then {
+if(count _array > 0) then {
 	_source = _array select 0;
 	_method = _array select 1;
-	if ((!isNull _source) && (_source != player)) then {
-		_canHitFree = player getVariable ["freeTarget",false];
+	if((!isNull _source) && (_source != player)) then {
+		_canHitFree = player getVariable["freeTarget",false];
 		_isBandit = (player getVariable["humanity",0]) <= -2000;
 		_punishment = _canHitFree || _isBandit; //if u are bandit || start first - player will not receive humanity drop
 		_humanityHit = 0;
-		if (!_punishment) then {
+		if(!_punishment) then {
 			//i'm "not guilty" - kill me && be punished
-			_myKills = ((player getVariable ["humanKills",0]) / 30) * 1000;
+			_myKills = ((player getVariable["humanKills",0]) / 30) * 1000;
 			_humanityHit = -(2000 - _myKills);
-			_kills = _source getVariable ["humanKills",0];
-			_source setVariable ["humanKills",(_kills + 1),true];
+			_kills = _source getVariable["humanKills",0];
+			_source setVariable["humanKills",(_kills + 1),true];
 			PVDZE_send = [_source,"Humanity",[_source,_humanityHit,300]];
 			publicVariableServer "PVDZE_send";
 		} else {
 			//i'm "guilty" - kill me as bandit
-			_killsV = _source getVariable ["banditKills",0];
-			_source setVariable ["banditKills",(_killsV + 1),true];
+			_killsV = _source getVariable["banditKills",0];
+			_source setVariable["banditKills",(_killsV + 1),true];
 		};
 	};
-	_body setVariable ["deathType",_method,true];
+	_body setVariable["deathType",_method,true];
 };
 
 terminate dayz_musicH;

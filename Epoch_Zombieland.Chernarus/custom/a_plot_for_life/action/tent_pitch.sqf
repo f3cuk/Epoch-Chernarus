@@ -11,9 +11,9 @@ _isOk = [(vehicle player),_building] call fnc_isInsideBuilding;
 
 _playerUID = [player] call FNC_GetPlayerUID;
 
-if (DZE_APlotforLife) then {
+if(DZE_APlotforLife) then {
 	_OwnerUID = _playerUID;
-}else{
+} else {
 	_OwnerUID = dayz_characterID;
 };
 
@@ -24,17 +24,17 @@ if (DZE_APlotforLife) then {
 _config = configFile >> "CfgMagazines" >> _item;
 _text = getText (_config >> "displayName");
 
-if (!_hastentitem) exitWith {cutText [format[(localize "str_player_31"),_text,"pitch"] ,"PLAIN DOWN"]};
+if(!_hastentitem) exitWith {cutText[format[(localize "str_player_31"),_text,"pitch"] ,"PLAIN DOWN"]};
 
 //blocked
-if (["concrete",dayz_surfaceType] call fnc_inString) then { _isOk = true; diag_log ("surface concrete"); };
+if(["concrete",dayz_surfaceType] call fnc_inString) then { _isOk = true; diag_log ("surface concrete"); };
 //Block Tents in pounds
-_objectsPond = 		nearestObjects [_playerPos,[],10];
+_objectsPond = 		nearestObjects[_playerPos,[],10];
 	{
 		_isPond = ["pond",str(_x),false] call fnc_inString;
-		if (_isPond) then {
+		if(_isPond) then {
 			_pondPos = (_x worldToModel _playerPos) select 2;
-			if (_pondPos < 0) then {
+			if(_pondPos < 0) then {
 				_isOk = true;
 			};
 		};
@@ -42,7 +42,7 @@ _objectsPond = 		nearestObjects [_playerPos,[],10];
 
 //diag_log ("Pitch Tent: " + str(_isok) );
 
-if (!_isOk) then {
+if(!_isOk) then {
 	//remove tentbag
 	player removeMagazine _item;
 	_dir = round(direction player);	
@@ -63,19 +63,19 @@ if (!_isOk) then {
 	//place tent (local)
 	_object = createVehicle [_classname,_location,[],0,"CAN_COLLIDE"];
 	_object setdir _dir;
-	_object setpos _location;
+	_object setPos _location;
 	player reveal _object;
 	_location = [_object] call FNC_GetPos;
 
-	_object setVariable ["CharacterID",dayz_characterID,true];
-	_object setVariable ["ownerPUID",_OwnerUID,true];
+	_object setVariable["CharacterID",dayz_characterID,true];
+	_object setVariable["ownerPUID",_OwnerUID,true];
 
 	//["PVDZE_obj_Publish",[dayz_characterID,_tent,[_dir,_location],_classname]] call callRpcProcedure;
 	PVDZE_obj_Publish = [dayz_characterID,_object,[_dir,_location,_playerUID],_classname];
 	publicVariableServer "PVDZE_obj_Publish";
 	
-	cutText [localize "str_success_tent_pitch","PLAIN DOWN"];
+	cutText[localize "str_success_tent_pitch","PLAIN DOWN"];
 } else {
-	cutText [localize "str_fail_tent_pitch","PLAIN DOWN"];
+	cutText[localize "str_fail_tent_pitch","PLAIN DOWN"];
 };
 

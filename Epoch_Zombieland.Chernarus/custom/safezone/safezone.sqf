@@ -1,6 +1,6 @@
 waitUntil { !isNil 'dayz_animalCheck' };
 
-if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZone != 'BOOL') then { inSafeZone = false; }; };
+if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZone != 'BOOL') then { inSafeZone = false; }; };
 
 [] spawn {
 
@@ -43,7 +43,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 		private ["_msg","_szs","_swep","_item","_iPos","_radius","_removed","_veh","_notInSafeZone","_cwep"];
 		
-		if (isNil 'outNow') then {
+		if(isNil 'outNow') then {
 
 			_msg = 'You entered a Safe Zone!';
 			hint _msg;
@@ -56,18 +56,18 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		player_fired = {
 			_this call player_fired2;
 			deleteVehicle (nearestObject [_this select 0,_this select 4]);
-			cutText ['You can not fire in a SafeZone!','WHITE IN'];
+			cutText['You can not fire in a SafeZone!','WHITE IN'];
 		};
 		fnc_usec_damageHandler = {};
 		player removeAllEventHandlers 'handleDamage';
 		player addEventHandler ['handleDamage',{false}];
 		player allowDamage false;
 		_veh = vehicle player;
-		if (player != _veh) then
+		if(player != _veh) then
 		{
-			_szs = _veh getVariable ['inSafeZone',0];
+			_szs = _veh getVariable['inSafeZone',0];
 
-			if (_szs == 0) then
+			if(_szs == 0) then
 			{
 				_veh removeAllEventHandlers 'Fired';
 				_veh addEventHandler ['Fired',{_this call player_fired;}];
@@ -76,7 +76,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 					_x addEventHandler ['Fired',{_this call player_fired;}];
 				} count (crew _veh);
 
-				_veh setVariable ['inSafeZone',1,true];
+				_veh setVariable['inSafeZone',1,true];
 				_veh removeAllEventHandlers 'HandleDamage';
 				_veh addEventHandler ['HandleDamage',{false}];
 				_veh allowDamage false;
@@ -85,23 +85,23 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		_notInSafeZone = ['MAAWS','RPG7V','M136','RPG18','STINGER','MeleeHatchet_DZE','MeleeHatchet','MeleeCrowbar','MeleeMachete','MeleeFishingPole','MeleeSledge','MeleeBaseBallBatNails','MeleeBaseBallBatBarbed','MeleeBaseBallBat'];
 		_cwep = currentWeapon player;
 		
-		if (_cwep in _notInSafeZone) then
+		if(_cwep in _notInSafeZone) then
 		{
 			_swep = '';
 			{
-				if ((getNumber (configFile >> 'CfgWeapons' >> _x >> 'Type')) == 2) exitWith
+				if((getNumber (configFile >> 'CfgWeapons' >> _x >> 'Type')) == 2) exitWith
 				{
 					_swep = _x;
 				};
 			} count (weapons player);
 
-			if (_swep == '') then
+			if(_swep == '') then
 			{
 				player playActionNow 'PutDown';
 				_iPos = [player] call FNC_GetPos;
 				_radius = 1;
 				_removed = ([player,_cwep,1] call BIS_fnc_invRemove);
-				if (_removed == 1) then
+				if(_removed == 1) then
 				{
 					_item = createVehicle ['WeaponHolder',_iPos,[],_radius,'CAN_COLLIDE'];
 					_item addWeaponCargoGlobal [_cwep,1];
@@ -117,9 +117,9 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		
 		private ["_msg","_szs","_end","_veh"];
 		
-		if (isNil 'inNow') then {
+		if(isNil 'inNow') then {
 
-			if (str fnc_usec_damageHandler == '{}') then {
+			if(str fnc_usec_damageHandler == '{}') then {
 				_msg = 'You left the Safe Zone!';
 				hint _msg;
 				taskHint [_msg,[1,0,0.1,1],'taskFailed'];
@@ -135,12 +135,12 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		object_monitorGear = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\object_monitorGear.sqf';
 		
 		_veh = vehicle player;
-		if (player != _veh) then
+		if(player != _veh) then
 		{
-			_szs = _veh getVariable ['inSafeZone',0];
-			if (_szs == 1) then
+			_szs = _veh getVariable['inSafeZone',0];
+			if(_szs == 1) then
 			{
-				_veh setVariable ['inSafeZone',0,true];
+				_veh setVariable['inSafeZone',0,true];
 				_veh removeAllEventHandlers 'HandleDamage';
 				_veh addeventhandler ['HandleDamage',{ _this call vehicle_handleDamage } ];
 				_veh allowDamage true;
@@ -148,18 +148,18 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 		};
 		
 		_end = false;
-		if (isNil 'gmadmin') then
+		if(isNil 'gmadmin') then
 		{
 			_end = true;
 		}
 		else
 		{
-			if (gmadmin == 0) then
+			if(gmadmin == 0) then
 			{
 				_end = true;
 			};
 		};
-		if (_end) then
+		if(_end) then
 		{
 			player allowDamage true;
 			fnc_usec_damageHandler = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_damageHandler.sqf';
@@ -169,16 +169,16 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 	};
 
 	while {true} do {
-		if (isNil 'inSafeZone') then { inSafeZone = false; } else { if (typename inSafeZone != 'BOOL') then { inSafeZone = false; }; };
+		if(isNil 'inSafeZone') then { inSafeZone = false; } else { if(typename inSafeZone != 'BOOL') then { inSafeZone = false; }; };
 		_state = false;
 
 		{
 			_z = _x select 0;
 			_r = _x select 1;
-			if ((vehicle player) distance _z < _r) then {_state = true;};
+			if((vehicle player) distance _z < _r) then {_state = true;};
 		} count _safezones;
 
-		if (_state) then
+		if(_state) then
 		{
 
 			inSafeZone = true;
@@ -186,7 +186,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 			call _startSafeZone;
 
 			{
-				if (!isNull _x) then
+				if(!isNull _x) then
 				{
 					if !(isPlayer _x) then
 					{
@@ -203,7 +203,7 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 
 		uiSleep 2;
 
-		if (!inSafeZone) then
+		if(!inSafeZone) then
 		{
 			call _endSafeZone;
 		};
@@ -216,15 +216,15 @@ if (isNil "inSafeZone") then { inSafeZone = false; } else { if (typename inSafeZ
 	
 	while {true} do
 	{
-		if (inSafezone) then
+		if(inSafezone) then
 		{
 			_cnt = {isPlayer _x && _x != player} count (player nearEntities [['CAManBase'],3]);
-			if ((_cnt > 0) && (!isNull (findDisplay 106))) then
+			if((_cnt > 0) && (!isNull (findDisplay 106))) then
 			{
 				(findDisplay 106) closedisplay 0;
 				closeDialog 0;
 				_log = format['%1 You are not allowed to open gear while near another player',name player];
-				cutText [_log,'PLAIN'];
+				cutText[_log,'PLAIN'];
 				hint _log;
 			};
 		}

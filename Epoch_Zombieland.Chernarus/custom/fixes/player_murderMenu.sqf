@@ -5,7 +5,7 @@ EpochDeathBoardDeaths = [];
 EpochDeathBoardLoad = {
 	createdialog "EpochDeathBoardDialog";
 	{
-		lbAdd [EpochDeathBoardDialogList,(_x select 0)];
+		lbAdd[EpochDeathBoardDialogList,(_x select 0)];
 	} forEach PVDZE_plr_DeathBResult;
 };
 
@@ -23,7 +23,7 @@ EpochDeathBoardClick = {
 		"Guns don't kill people; death kills people. It's a proven medical fact."
 	];
 	_i = _this select 0;
-	if (_i < 0) exitWith {};
+	if(_i < 0) exitWith {};
 	_output = _this select 1;
 	_record = PVDZE_plr_DeathBResult select _i;
 	_record_stxt = call compile format["epoch_death_board_record_%1;",_i];
@@ -34,7 +34,7 @@ EpochDeathBoardClick = {
 			private ["_codeCount","_str"];
 			_str = format["%1",_this];
 			_codeCount = (count (toArray _str));
-			if (_codeCount == 1) then {
+			if(_codeCount == 1) then {
 				_str = format["0%1",_str];
 			};
 			_str;
@@ -44,17 +44,17 @@ EpochDeathBoardClick = {
 		
 		_record_stxt = format["%1<t size='1' align='left'>Died at %2:%3</t><br /><br />",_record_stxt,(_h call _format),(_m call _format)];
 		
-		if ((_record select 1) != 'unknown') then {
+		if((_record select 1) != 'unknown') then {
 			_record_stxt = format["%1<t size='1' align='left'>Was killed by %2</t><br /><br />",_record_stxt,(_record select 1)];
 		};
 		
-		if ((_record select 2) != 'unknown') then {
+		if((_record select 2) != 'unknown') then {
 			_name = getText(configFile >> "cfgWeapons" >> (_record select 2) >> "displayName");
 			_image = getText(configFile >> "cfgWeapons" >> (_record select 2) >> "picture");
 			_record_stxt = format["%1<t size='1' align='left'>With a %2<br /><img size='3' image='%3' /></t><br /><br />",_record_stxt,_name,_image];
 		};
 		
-		if (format["%1",(_record select 3)] != 'unknown') then {
+		if(format["%1",(_record select 3)] != 'unknown') then {
 			_record_stxt = format["%1<t size='1' align='left'>At a distance of %2m</t><br /><br />",_record_stxt,(_record select 3)];
 		};
 		_record_stxt = format["%1<t font='Bitstream'>%2</t>",_record_stxt,(_quotes call BIS_fnc_selectRandom)];

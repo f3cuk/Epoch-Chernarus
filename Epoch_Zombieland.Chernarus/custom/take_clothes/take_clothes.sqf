@@ -4,10 +4,10 @@ _skin = (typeOf _body);
 _skin = "Skin_" + _skin;
 _okSkin = isClass (configFile >> "CfgMagazines" >> _skin);
 
-if (_okSkin) then {
+if(_okSkin) then {
 
  _result = [player,_skin] call BIS_fnc_invAdd;
-	if (_result) then {
+	if(_result) then {
 	} else {
 		
 		_bp = unitBackpack player;

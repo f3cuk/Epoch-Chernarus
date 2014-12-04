@@ -8,15 +8,15 @@ _playerID = _this select 0;
 _playerObj = _this select 1;
 _playerName = name _playerObj;
 
-if (_playerName == '__SERVER__' || _playerID == '' || local player) exitWith {};
+if(_playerName == '__SERVER__' || _playerID == '' || local player) exitWith {};
 
-if (isNil "sm_done") exitWith { 
+if(isNil "sm_done") exitWith { 
 #ifdef DZE_SERVER_DEBUG
 	diag_log ("Login cancelled,server is not ready. " + str(_playerObj)); 
 #endif
 };
 
-if (count _this > 2) then {
+if(count _this > 2) then {
 	dayz_players = dayz_players - [_this select 2];
 };
 
@@ -24,14 +24,14 @@ if (count _this > 2) then {
 _inventory =	[];
 _backpack = 	[];
 _survival =		[0,0,0];
-_isInfected =   0;
+_isInfected =  0;
 _model =		"";
 
-if (_playerID == "") then {
+if(_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;
 };
 
-if ((_playerID == "") || (isNil "_playerID")) exitWith {
+if((_playerID == "") || (isNil "_playerID")) exitWith {
 #ifdef DZE_SERVER_DEBUG
 	diag_log ("LOGIN FAILED: Player [" + _playerName + "] has no login ID");
 #endif
@@ -46,21 +46,21 @@ _doLoop = 0;
 while {_doLoop < 5} do {
 	_key = format["CHILD:101:%1:%2:%3:%4:",_playerID,dayZ_instance,_playerName,_this select 2];
 	_primary = _key call server_hiveReadWrite;
-	if (count _primary > 0) then {
-		if ((_primary select 0) != "ERROR") then {
+	if(count _primary > 0) then {
+		if((_primary select 0) != "ERROR") then {
 			_doLoop = 9;
 		};
 	};
 	_doLoop = _doLoop + 1;
 };
 
-if (isNull _playerObj || !isPlayer _playerObj) exitWith {
+if(isNull _playerObj || !isPlayer _playerObj) exitWith {
 #ifdef DZE_SERVER_DEBUG
 	diag_log ("LOGIN RESULT: Exiting,player object null: " + str(_playerObj));
 #endif
 };
 
-if ((_primary select 0) == "ERROR") exitWith {
+if((_primary select 0) == "ERROR") exitWith {
 #ifdef DZE_SERVER_DEBUG
     diag_log format ["LOGIN RESULT: Exiting,failed to load _primary: %1 for player: %2 ",_primary,_playerID];
 #endif
@@ -78,7 +78,7 @@ diag_log ("LOGIN RESULT: " + str(_primary));
 /* PROCESS */
 _hiveVer = 0;
 
-if (!_isNew) then {
+if(!_isNew) then {
 	//RETURNING CHARACTER		
 	_inventory = 	_primary select 4;
 	_backpack = 	_primary select 5;
@@ -86,12 +86,12 @@ if (!_isNew) then {
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
 	
-	if (!(_model in AllPlayers)) then {
+	if(!(_model in AllPlayers)) then {
 		_model = "Survivor2_DZ";
 	};
 	
 } else {
-	if (DZE_PlayerZed) then {
+	if(DZE_PlayerZed) then {
 		_isInfected = _primary select 3;
 	} else {
 		_isInfected = 0;
@@ -99,10 +99,10 @@ if (!_isNew) then {
 	_model =		_primary select 4;
 	_hiveVer =		_primary select 5;
 	
-	if (isNil "_model") then {
+	if(isNil "_model") then {
 		_model = "Survivor2_DZ";
 	} else {
-		if (_model == "") then {
+		if(_model == "") then {
 			_model = "Survivor2_DZ";
 		};
 	};
@@ -137,11 +137,11 @@ diag_log ("LOGIN LOADED: " + str(_playerObj) + " Type: " + (typeOf _playerObj) +
 #endif
 
 _isHiveOk = false;
-if (_hiveVer >= dayz_hiveVersionNo) then {
+if(_hiveVer >= dayz_hiveVersionNo) then {
 	_isHiveOk = true;
 };
 
-if (worldName == "chernarus") then {
+if(worldName == "chernarus") then {
 	([4654,9595,0] nearestObject 145259) setDamage 1;
 	([4654,9595,0] nearestObject 145260) setDamage 1;
 };

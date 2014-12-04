@@ -22,10 +22,10 @@ closeDialog 0;
 
 _inVehicle = (vehicle player) != player;
 if(_inVehicle) exitWith {
-	cutText [format["You cannot open %1 in a vehicle.",MBT_NAME],"PLAIN DOWN"];
+	cutText[format["You cannot open %1 in a vehicle.",MBT_NAME],"PLAIN DOWN"];
 };
 
-cutText [format["Opening EpochPack %1 (%2 items)..",_type,_slots],"PLAIN DOWN"];
+cutText[format["Opening EpochPack %1 (%2 items)..",_type,_slots],"PLAIN DOWN"];
 player playActionNow "Medic";
 
 r_interrupt = false;
@@ -40,46 +40,46 @@ while {r_doLoop} do {
 	_animState = animationState player;
 	_isMedic = ["medic",_animState] call fnc_inString;
 	_briefSoundCount = _briefSoundCount + 1;
-	if (_briefSoundCount > 10 && !_briefSoundPlay) then { //Just to delay the sound a bit
+	if(_briefSoundCount > 10 && !_briefSoundPlay) then { //Just to delay the sound a bit
 		[objNull,player,rSAY,"Brief_Open_Sound",30] call RE;
 		_briefSoundPlay = true;
 	};
-	if (_isMedic) then {
+	if(_isMedic) then {
 		_started = true;
 	};
-	if (_started and !_isMedic) then {
+	if(_started and !_isMedic) then {
 		r_doLoop = false;
 		_finished = true;
 	};
-	if (r_interrupt) then {
+	if(r_interrupt) then {
 		r_doLoop = false;
 	};
 	sleep 0.1;
 };
 r_doLoop = false;
 
-if (!_finished) exitWith { 
+if(!_finished) exitWith { 
 	r_interrupt = false;
-	if (vehicle player == player) then {
+	if(vehicle player == player) then {
 		[objNull,player,rSwitchMove,""] call RE;
 		player playActionNow "stop";
 	};
-	cutText [format["Cancelled opening.."],"PLAIN DOWN"];
+	cutText[format["Cancelled opening.."],"PLAIN DOWN"];
 };
 
-if (_finished) then {
+if(_finished) then {
 
 	private ["_dialog","_cashToAdd","_canContinue"];
 	mbc_rewardlist_temp = [];
 	_canContinue = false;
 
-	if (_item in magazines player) then {
+	if(_item in magazines player) then {
 		player removeMagazine _item;
 		_canContinue = true;
 	};
 	
-	if (!_canContinue) exitWith { //Anti-duping
-		cutText [format["Opening EpochPack %1 failed.",_type] ,"PLAIN DOWN"];
+	if(!_canContinue) exitWith { //Anti-duping
+		cutText[format["Opening EpochPack %1 failed.",_type] ,"PLAIN DOWN"];
 	};
 
 	_crateClass = "USOrdnanceBox";
@@ -91,7 +91,7 @@ if (_finished) then {
 	_spawnCrate = _crateClass createVehicleLocal _pos;
 
 	_spawnCrate setDir _dir;
-	_spawnCrate SetPos _pos;
+	_spawnCrate setPos _pos;
 	
 	clearWeaponCargoGlobal _spawnCrate;
 	clearMagazineCargoGlobal _spawnCrate;
@@ -144,9 +144,9 @@ if (_finished) then {
 		{
 			private ["_pic","_text","_itemName","_qty","_addInfo","_className","_type","_rarity"];
 			
-			ctrlSetText [81401,MBT_DIALOG_TITLE];
-			ctrlSetText [81402,MBT_DIALOG_CLAIM];
-			ctrlSetText [81403,MBT_DIALOG_NOTE];
+			ctrlSetText[81401,MBT_DIALOG_TITLE];
+			ctrlSetText[81402,MBT_DIALOG_CLAIM];
+			ctrlSetText[81403,MBT_DIALOG_NOTE];
 			
 			_addInfo	= "";
 			_type		= _x select 0;
@@ -167,7 +167,7 @@ if (_finished) then {
 					_pic = getText (configFile >> 'CfgMagazines' >> _x select 1 >> 'picture');
 					_itemName = getText (configFile >> 'CfgMagazines' >> _x select 1 >> 'displayName');
 					_qty = _x select 2;
-					if (_qty > 1) then {
+					if(_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
 					_text = format["%1%2",_itemName,_addInfo];
@@ -181,7 +181,7 @@ if (_finished) then {
 					_pic = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'picture');
 					_itemName = getText (configFile >> 'CfgWeapons' >> _x select 1 >> 'displayName');
 					_qty = _x select 2;
-					if (_qty > 1) then {
+					if(_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
 					_text = format["%1%2",_itemName,_addInfo];
@@ -197,7 +197,7 @@ if (_finished) then {
 						if(_className == "ItemSilvercase_Base") exitWith { _itemName = "EpochPack Silver"; };
 					};
 					
-					if (_qty > 1) then {
+					if(_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
 					_text = format["%1%2",_itemName,_addInfo];
@@ -208,8 +208,8 @@ if (_finished) then {
 				};
 			};
 			
-			ctrlSetText [81201 + _forEachIndex,_pic];
-			ctrlSetText [81301 + _forEachIndex,_text];
+			ctrlSetText[81201 + _forEachIndex,_pic];
+			ctrlSetText[81301 + _forEachIndex,_text];
 			
 			_display	= findDisplay 81000;
 			_frame_ctrl = _display displayCtrl 81101 + _forEachIndex;
@@ -242,7 +242,7 @@ if (_finished) then {
 	call UpdateMBCDialog;
 	waitUntil { !dialog };
 	
-	cutText ["Claiming reward..","PLAIN DOWN"];
+	cutText["Claiming reward..","PLAIN DOWN"];
 
 	Sleep 0.2;
 
@@ -254,25 +254,25 @@ if (_finished) then {
 		_type = _x select 0;
 		
 		call {
-			if (_type == "group_wep") exitWith {
+			if(_type == "group_wep") exitWith {
 				_spawnCrate addWeaponCargoGlobal [_x select 1,1];
 				_magazines = getArray (configFile >> "CfgWeapons" >> _x select 1 >> "magazines");
-				if (count _magazines > 0) then
+				if(count _magazines > 0) then
 				{
 					_magazineClass = _magazines select 0;
 					_spawnCrate addMagazineCargoGlobal [_magazineClass,_x select 2];
 				}
 			};
-			if (_type == "group_tool") 	exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,1]; };
-			if (_type == "group_mag") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2];};
-			if (_type == "coins") 		exitWith { _cashToAdd = _cashToAdd + (_x select 2); };
-			if (_type == "weapon") 		exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,_x select 2]; };
-			if (_type == "magazine") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2]; };
-			if (_type == "script") exitWith { [_x select 2] execVM _x select 1; };
+			if(_type == "group_tool") 	exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,1]; };
+			if(_type == "group_mag") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2];};
+			if(_type == "coins") 		exitWith { _cashToAdd = _cashToAdd + (_x select 2); };
+			if(_type == "weapon") 		exitWith { _spawnCrate addWeaponCargoGlobal [_x select 1,_x select 2]; };
+			if(_type == "magazine") 	exitWith { _spawnCrate addMagazineCargoGlobal [_x select 1,_x select 2]; };
+			if(_type == "script") exitWith { [_x select 2] execVM _x select 1; };
 		};
 	} count mbc_rewardlist_temp;
 
-	if (_cashToAdd > 0) then {
+	if(_cashToAdd > 0) then {
 		_currentMoney = player getVariable["cashMoney",0];
 		player setVariable["cashMoney",_currentMoney + _cashToAdd,true];
 	};
@@ -283,7 +283,7 @@ if (_finished) then {
 	PVDZE_log = [format["EPOCHPACK: Player %1 (%2) - Reward: %3",name player,getPlayerUID player,mbc_rewardlist_temp]];
 	publicVariableServer "PVDZE_log";
 
-	cutText [format["Reward claimed - the contents have been put inside the box which will auto-remove in %1 minutes",(MBT_CRATEDELAY/60)],"PLAIN DOWN"];
+	cutText[format["Reward claimed - the contents have been put inside the box which will auto-remove in %1 minutes",(MBT_CRATEDELAY/60)],"PLAIN DOWN"];
 	
 	sleep MBT_CRATEDELAY;
 	deletevehicle _spawnCrate;

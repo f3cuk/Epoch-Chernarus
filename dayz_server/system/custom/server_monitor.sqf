@@ -12,15 +12,15 @@ waituntil{isNil "sm_done"};
 if(isnil "MaxVehicleLimit") 	then { MaxVehicleLimit = 50; };
 if(isnil "MaxAmmoBoxes") 		then { MaxAmmoBoxes = 10; };
 
-if (isServer && isNil "sm_done") then {
+if(isServer && isNil "sm_done") then {
 	serverVehicleCounter = [];
 	_hiveResponse = [];
 	for "_i" from 1 to 5 do {
 		diag_log "HIVE: trying to get objects";
 		_key = format["CHILD:302:%1:",dayZ_instance];
 		_hiveResponse = _key call server_hiveReadWrite;  
-		if ((((isnil "_hiveResponse") || {(typeName _hiveResponse != "ARRAY")}) || {((typeName (_hiveResponse select 1)) != "SCALAR")})) then {
-			if ((_hiveResponse select 1) == "Instance already initialized") then {
+		if((((isnil "_hiveResponse") || {(typeName _hiveResponse != "ARRAY")}) || {((typeName (_hiveResponse select 1)) != "SCALAR")})) then {
+			if((_hiveResponse select 1) == "Instance already initialized") then {
 				_superkey = profileNamespace getVariable "SUPERKEY";
 				_shutdown = format["CHILD:400:%1:",_superkey];
 				_res = _shutdown call server_hiveReadWrite;
@@ -42,9 +42,9 @@ if (isServer && isNil "sm_done") then {
 	localIds		= [];
 	serverObjects	= [];
 
-	if ((_hiveResponse select 0) == "ObjectStreamStart") then {
+	if((_hiveResponse select 0) == "ObjectStreamStart") then {
 		
-		profileNamespace setVariable ["SUPERKEY",(_hiveResponse select 2)];
+		profileNamespace setVariable["SUPERKEY",(_hiveResponse select 2)];
 		
 		_hiveLoaded = true;
 		diag_log ("HIVE: Commence Object Streaming...");
@@ -56,7 +56,7 @@ if (isServer && isNil "sm_done") then {
 		for "_i" from 1 to _objectCount do {
 			_hiveResponse = _key call server_hiveReadWriteLarge;
 
-			if ((_hiveResponse select 2) isKindOf "ModularItems") then {
+			if((_hiveResponse select 2) isKindOf "ModularItems") then {
 				_BuildingQueue set [_bQty,_hiveResponse];
 				_bQty = _bQty + 1;
 			} else {
@@ -89,16 +89,16 @@ if (isServer && isNil "sm_done") then {
 			_skip = true;
 		};
 
-		if (count _worldspace >= 2) then
+		if(count _worldspace >= 2) then
 		{
-			if ((typeName (_worldspace select 0)) == "STRING") then {
+			if((typeName (_worldspace select 0)) == "STRING") then {
 				_worldspace set [0,call compile (_worldspace select 0)];
 				_worldspace set [1,call compile (_worldspace select 1)];
 			};
 
 			_dir = _worldspace select 0;
 			
-			if (count (_worldspace select 1) == 3) then {
+			if(count (_worldspace select 1) == 3) then {
 				_pos = _worldspace select 1;
 				_wsDone = true;
 			};
@@ -106,26 +106,26 @@ if (isServer && isNil "sm_done") then {
 
 		if(_skip) then {
 
-			if (count _worldspace < 3) then {
+			if(count _worldspace < 3) then {
 				_worldspace set [count _worldspace,"0"];
 			};
 
 			_ownerPUID = _worldspace select 2;
 
-			if (_damage < 1) then {
+			if(_damage < 1) then {
 				_object = _type createVehicleLocal [0,0,0];
-				_object setVariable ["lastUpdate",time];
-				_object setVariable ["ObjectID",_idKey];
-				_object setVariable ["OwnerPUID",_ownerPUID];
-				_object setVariable ["CharacterID",_ownerID];
+				_object setVariable["lastUpdate",time];
+				_object setVariable["ObjectID",_idKey];
+				_object setVariable["OwnerPUID",_ownerPUID];
+				_object setVariable["CharacterID",_ownerID];
 				_object setdir _dir;
-				_object SetPos _pos;
+				_object setPos _pos;
 				_object setDamage _damage;
 				_object addEventHandler ["HandleDamage",{false}];
 				_object enableSimulation false;
 
-				if ((typeOf _object) in dayz_allowedObjects) then {
-					_object setVariable ["OEMPos",_pos];
+				if((typeOf _object) in dayz_allowedObjects) then {
+					_object setVariable["OEMPos",_pos];
 				};
 
 				serverObjects set[parseNumber(_idKey),_object];
@@ -136,65 +136,65 @@ if (isServer && isNil "sm_done") then {
 
 		} else {
 
-			if (!_wsDone) then {
-				if (count _worldspace >= 1) then { _dir = _worldspace select 0; };
+			if(!_wsDone) then {
+				if(count _worldspace >= 1) then { _dir = _worldspace select 0; };
 				_pos = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
 
-				if (count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
+				if(count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
 				diag_log ("MOVED OBJ: " + str(_idKey) + " of class " + _type + " to pos: " + str(_pos));
 			};
 
-			if (count _worldspace < 3) then {
+			if(count _worldspace < 3) then {
 				_worldspace set [count _worldspace,"0"];
 			};
 
 			_ownerPUID = _worldspace select 2;
 
-			if (_damage < 1) then {
+			if(_damage < 1) then {
 				_object = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
-				_object setVariable ["lastUpdate",time];
-				_object setVariable ["ObjectID",_idKey,true];
-				_object setVariable ["OwnerPUID",_ownerPUID,true];
+				_object setVariable["lastUpdate",time];
+				_object setVariable["ObjectID",_idKey,true];
+				_object setVariable["OwnerPUID",_ownerPUID,true];
 				_lockable = 0;
 
 				if(isNumber (configFile >> "CfgVehicles" >> _type >> "lockable")) then {
 					_lockable = getNumber(configFile >> "CfgVehicles" >> _type >> "lockable");
 				};
 
-				if (_lockable == 4) then {
+				if(_lockable == 4) then {
 					_codeCount = (count (toArray _ownerID));
 					if(_codeCount == 3) then { _ownerID = format["0%1",_ownerID]; };
 					if(_codeCount == 2) then { _ownerID = format["00%1",_ownerID]; };
 					if(_codeCount == 1) then { _ownerID = format["000%1",_ownerID]; };
 				};
 
-				if (_lockable == 3) then {
+				if(_lockable == 3) then {
 					_codeCount = (count (toArray _ownerID));
 					if(_codeCount == 2) then { _ownerID = format["0%1",_ownerID]; };
 					if(_codeCount == 1) then { _ownerID = format["00%1",_ownerID]; };
 				};
-				_object setVariable ["CharacterID",_ownerID,true];
+				_object setVariable["CharacterID",_ownerID,true];
 				clearWeaponCargoGlobal _object;
 				clearMagazineCargoGlobal _object;
 				_object setdir _dir;
-				_object SetPos _pos;
+				_object setPos _pos;
 				_object setDamage _damage;
 
-				if ((typeOf _object) in dayz_allowedObjects) then {
-					if (DZE_GodModeBase) then {
+				if((typeOf _object) in dayz_allowedObjects) then {
+					if(DZE_GodModeBase) then {
 						_object addEventHandler ["HandleDamage",{false}];
 					} else {
 						_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
 					};
 					_object enableSimulation false;
-					_object setVariable ["OEMPos",_pos,true];
+					_object setVariable["OEMPos",_pos,true];
 				};
 
-				if (count _inventory > 0) then {
-					if (_type in DZE_LockedStorage) then {
-						_object setVariable ["WeaponCargo",(_inventory select 0),true];
-						_object setVariable ["MagazineCargo",(_inventory select 1),true];
-						_object setVariable ["BackpackCargo",(_inventory select 2),true];
+				if(count _inventory > 0) then {
+					if(_type in DZE_LockedStorage) then {
+						_object setVariable["WeaponCargo",(_inventory select 0),true];
+						_object setVariable["MagazineCargo",(_inventory select 1),true];
+						_object setVariable["BackpackCargo",(_inventory select 2),true];
 					} else {
 						_objWpnTypes = (_inventory select 0) select 0;
 						_objWpnQty = (_inventory select 0) select 1;
@@ -205,7 +205,7 @@ if (isServer && isNil "sm_done") then {
 							};
 							_isOK = isClass(configFile >> "CfgWeapons" >> _x);
 
-							if (_isOK) then {
+							if(_isOK) then {
 								_object addWeaponCargoGlobal [_x,(_objWpnQty select _countr)];
 							};
 							_countr = _countr + 1;
@@ -216,11 +216,11 @@ if (isServer && isNil "sm_done") then {
 						_countr			= 0;
 
 						{
-							if (_x == "BoltSteel") then { _x = "WoodenArrow" };
-							if (_x == "ItemTent") then { _x = "ItemTentOld" };
+							if(_x == "BoltSteel") then { _x = "WoodenArrow" };
+							if(_x == "ItemTent") then { _x = "ItemTentOld" };
 
 							_isOK = isClass(configFile >> "CfgMagazines" >> _x);
-							if (_isOK) then {
+							if(_isOK) then {
 								_object addMagazineCargoGlobal [_x,(_objWpnQty select _countr)];
 							};
 							_countr = _countr + 1;
@@ -233,7 +233,7 @@ if (isServer && isNil "sm_done") then {
 						{
 							_isOK = isClass(configFile >> "CfgVehicles" >> _x);
 
-							if (_isOK) then {
+							if(_isOK) then {
 								_object addBackpackCargoGlobal [_x,(_objWpnQty select _countr)];
 							};
 							_countr = _countr + 1;
@@ -241,17 +241,17 @@ if (isServer && isNil "sm_done") then {
 					};
 				};
 
-				if (_object isKindOf "AllVehicles") then {
+				if(_object isKindOf "AllVehicles") then {
 					{
 						_selection = _x select 0;
 						_dam = _x select 1;
 
-						if (_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};
+						if(_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};
 						[_object,_selection,_dam] call object_setFixServer;
 					} count _hitpoints;
 					_object setFuel _fuel;
 
-					if (!((typeOf _object) in dayz_allowedObjects)) then {
+					if(!((typeOf _object) in dayz_allowedObjects)) then {
 						_object call fnc_veh_ResetEH;		
 						if(_ownerID != "0" && !(_object isKindOf "Bicycle")) then {
 							_object setvehiclelock "locked";
@@ -282,7 +282,7 @@ if (isServer && isNil "sm_done") then {
 					_result		= call compile format ["%1",_data];
 					_status		= _result select 0;
 			
-					if (_status == "ObjectStreamStart") then {
+					if(_status == "ObjectStreamStart") then {
 						_val = _result select 1;
 						call compile format["ServerTcache_%1 = [];",_traderid];
 						for "_i" from 1 to _val do {
@@ -298,7 +298,7 @@ if (isServer && isNil "sm_done") then {
 		} forEach serverTraders;
 	};
 
-	if (_hiveLoaded) then {
+	if(_hiveLoaded) then {
 		_vehLimit = MaxVehicleLimit - _totalvehicles;
 		if(_vehLimit > 0) then {
 			diag_log ("HIVE: Spawning # of Vehicles: " + str(_vehLimit));
@@ -318,7 +318,7 @@ if (isServer && isNil "sm_done") then {
 	if(isnil "dayz_MapArea") 	then { dayz_MapArea = 10000; };
 	if(isnil "HeliCrashArea")	then { HeliCrashArea = dayz_MapArea / 2; };
 
-	if (isDedicated) then {
+	if(isDedicated) then {
 		_id = [] spawn server_spawnEvents;
 		[] spawn {
 			private ["_id"];
@@ -330,14 +330,14 @@ if (isServer && isNil "sm_done") then {
 		_debugMarkerPosition = [(_debugMarkerPosition select 0),(_debugMarkerPosition select 1),1];
 		_vehicle_0 = createVehicle ["DebugBox_DZ",_debugMarkerPosition,[],0,"CAN_COLLIDE"];
 		_vehicle_0 setPos _debugMarkerPosition;
-		_vehicle_0 setVariable ["ObjectID","1",true];
+		_vehicle_0 setVariable["ObjectID","1",true];
 
 		if(isnil "spawnMarkerCount") then {
 			spawnMarkerCount = 10;
 		};
 		actualSpawnMarkerCount = 0;
 		for "_i" from 0 to spawnMarkerCount do {
-			if (!([(getMarkerPos format["spawn%1",_i]),[0,0,0]] call BIS_fnc_areEqual)) then {
+			if(!([(getMarkerPos format["spawn%1",_i]),[0,0,0]] call BIS_fnc_areEqual)) then {
 				actualSpawnMarkerCount = actualSpawnMarkerCount + 1;
 			} else {
 				_i = spawnMarkerCount + 99;

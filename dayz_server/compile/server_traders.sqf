@@ -13,7 +13,7 @@ if(isNil "_retrader") then {
 	_result 	= call compile format ["%1",_data];
 	_status 	= _result select 0;
 		
-	if (_status == "ObjectStreamStart") then {
+	if(_status == "ObjectStreamStart") then {
 		_val = _result select 1;
 		call compile format["ServerTcache_%1 = [];",_traderid];
 		for "_i" from 1 to _val do {

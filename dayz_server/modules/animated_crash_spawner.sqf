@@ -99,7 +99,7 @@ if(_heliModel == "UH60M_MEV_EP1") then {
 
 diag_log(format["CRASHSPAWNER: %1%2 chance to start a crashing %3 with loot table '%4'",_spawnChance,'%',_crashName,_lootTable]);
 
-if (_spawnRoll <= _spawnChance) then
+if(_spawnRoll <= _spawnChance) then
 {
 
 	if(_plane) then {
@@ -118,7 +118,7 @@ if (_spawnRoll <= _spawnChance) then
 	_crashwreck 		engineOn true;
 	_crashwreck 		flyInHeight 150;
 
-	if (_plane) then
+	if(_plane) then
 	{
 		_crashDamage = .5;
 		_crashwreck setDamage .4;
@@ -161,7 +161,7 @@ if (_spawnRoll <= _spawnChance) then
 	
 	waituntil {(_crashwreck distance _position) <= 1000 || !alive _crashwreck || ([_crashwreck] call FNC_GetPos select 2) < 5 || (damage _crashwreck) >= _crashDamage};
 	
-	if (_plane) then
+	if(_plane) then
 	{
 		_crashwreck flyInHeight 100;
 		_crashwreck forceSpeed 150;
@@ -179,7 +179,7 @@ if (_spawnRoll <= _spawnChance) then
 	
 	deletevehicle 		_helipilot;
 	
-	if (_plane) then
+	if(_plane) then
 	{
 		_crashwreck 	setdamage 1;
 		_vel 			= velocity _crashwreck;
@@ -229,7 +229,7 @@ if (_spawnRoll <= _spawnChance) then
 		
 		PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crash];
 		
-		if (_spawnFire) then
+		if(_spawnFire) then
 		{
 			PVDZE_obj_Fire = [_crash,4,time,false,_fadeFire];
 			publicVariable "PVDZE_obj_Fire";
@@ -237,7 +237,7 @@ if (_spawnRoll <= _spawnChance) then
 		
 		_num 				= round(random _randomizedLoot) + _guaranteedLoot;
 
-		if (DZE_MissionLootTable) then {
+		if(DZE_MissionLootTable) then {
 			_itemTypes = [] + getArray(missionConfigFile >> "CfgBuildingLoot" >> _lootTable >> "lootType");
 		} else {
 			_itemTypes = [] + getArray(configFile >> "CfgBuildingLoot" >> _lootTable >> "lootType");
@@ -260,7 +260,7 @@ if (_spawnRoll <= _spawnChance) then
 			
 			_nearby = _pos nearObjects ["ReammoBox",sizeOf(_crashModel)];
 			{
-				_x setVariable ["permaLoot",true];
+				_x setVariable["permaLoot",true];
 			} forEach _nearBy;
 		};
 		

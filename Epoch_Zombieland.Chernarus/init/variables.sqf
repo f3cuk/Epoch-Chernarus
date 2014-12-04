@@ -186,7 +186,7 @@ r_action2				= false;
 r_player_lastVehicle	= objNull;
 r_player_lastSeat		= [];
 r_player_removeActions2	= {
-	if (!isNull r_player_lastVehicle) then { 
+	if(!isNull r_player_lastVehicle) then { 
 		{
 			r_player_lastVehicle removeAction _x;
 		} count r_player_actions2;
@@ -295,7 +295,7 @@ DZE_fueltruckarray		= ["KamazRefuel_DZ","UralRefuel_TK_EP1_DZ","MtvrRefuel_DES_E
 dayz_fuelsources		= ["Land_Ind_TankSmall","Land_fuel_tank_big","Land_fuel_tank_stairs","Land_fuel_tank_stairs_ep1","Land_wagon_tanker","Land_fuelstation","Land_fuelstation_army","land_fuelstation_w","Land_benzina_schnell"];
 DZE_Lock_Door			= "";
 
-if (isNil "DZE_plotOwnershipExclusions") then { DZE_plotTakeOwnershipItems = dayz_allowedObjects - (DZE_LockableStorage + ["Plastic_Pole_EP1_DZ","TentStorage","TentStorageDomed","TentStorageDomed2"]); };
+if(isNil "DZE_plotOwnershipExclusions") then { DZE_plotTakeOwnershipItems = dayz_allowedObjects - (DZE_LockableStorage + ["Plastic_Pole_EP1_DZ","TentStorage","TentStorageDomed","TentStorageDomed2"]); };
 
 call compile preprocessFileLineNumbers "\z\addons\dayz_code\init\loot_init.sqf";
 
@@ -330,7 +330,7 @@ if(!isDedicated) then {
 	zeroPreviousWeather			= [0,0,[0,0],0];
 	zeroCurrentWeather			= [0,0,[0,0],0];
 
-	if (DZE_MissionLootTable) then { 
+	if(DZE_MissionLootTable) then { 
 		dayz_baseTypes 			= getArray (missionConfigFile >> "CfgBuildingLoot" >> "Default" >> "zombieClass");
 	} else {
 		dayz_baseTypes			= getArray (configFile >> "CfgBuildingLoot" >> "Default" >> "zombieClass");

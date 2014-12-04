@@ -71,8 +71,8 @@ if(isServer) then {
 		_cnt 		= {alive _x} count playableUnits;
 		_currTime 	= floor(time);
 
-		if (isNil "_h_missionTime") then { _h_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
-		if (isNil "_b_missionTime") then { _b_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+		if(isNil "_h_missionTime") then { _h_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
+		if(isNil "_b_missionTime") then { _b_missionTime = ((wai_mission_timer select 0) + random((wai_mission_timer select 1) - (wai_mission_timer select 0))); };
 
 		if((_currTime - _h_startTime >= _h_missionTime) && (h_missionsrunning < wai_hero_limit)) then { _hresult = 1; };
 		if((_currTime - _b_startTime >= _b_missionTime) && (b_missionsrunning < wai_bandit_limit)) then { _bresult = 1; };
@@ -82,7 +82,7 @@ if(isServer) then {
 
 		if((_cnt >= wai_players_online) && (diag_fps >= wai_server_fps)) then {
 
-			if (_hresult == 1) then {
+			if(_hresult == 1) then {
 				waitUntil {_currTime = floor(time);(_currTime - _delayTime > 10 && markerready)};
 				markerready 		= false;
 				h_missionsrunning 	= h_missionsrunning + 1;
@@ -97,7 +97,7 @@ if(isServer) then {
 				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 			};
 
-			if (_bresult == 1) then {
+			if(_bresult == 1) then {
 				waitUntil {_currTime = floor(time);(_currTime - _delayTime > 10 && markerready)};
 				markerready 		= false;
 				b_missionsrunning 	= b_missionsrunning + 1;

@@ -18,28 +18,28 @@ if(typeName _vault == "OBJECT" && !isNull _vault) then {
 
 		waitUntil {!isNil "vaultResult"};
 
-		_money = _vault getVariable ["Money",0] call BIS_fnc_numberText;
+		_money = _vault getVariable["Money",0] call BIS_fnc_numberText;
 
 		createDialog 'RscDisplayPassword';
 
 		targetvault = _vault;
 
 		if(_vault_action == 1) then {
-			ctrlSetText [1001,format["Get Money - (%1)",_money]];
-			ctrlSetText [1002,format['Max (%1)',_money]];
-			ctrlSetText [101,''];
-			buttonSetAction [1,'[(ctrlText 101)] spawn VaultWithdrawAmount'];
+			ctrlSetText[1001,format["Get Money - (%1)",_money]];
+			ctrlSetText[1002,format['Max (%1)',_money]];
+			ctrlSetText[101,''];
+			buttonSetaction[1,'[(ctrlText 101)] spawn VaultWithdrawAmount'];
 		} else {
-			ctrlSetText [1001,format["Deposit Money - (%1)",_money]];
-			ctrlSetText [1002,format['Max (%1)',player getVariable["cashMoney",0]]];
-			ctrlSetText [101,''];
-			buttonSetAction [1,'[(ctrlText 101)] spawn VaultDepositAmount'];
+			ctrlSetText[1001,format["Deposit Money - (%1)",_money]];
+			ctrlSetText[1002,format['Max (%1)',player getVariable["cashMoney",0]]];
+			ctrlSetText[101,''];
+			buttonSetaction[1,'[(ctrlText 101)] spawn VaultDepositAmount'];
 		};
 
 	} else {
-		cutText [format["Cannot find ID (%1) of safe/lockbox (%2),please try again in a few seconds",typeName _vaultID,_vault],"PLAIN DOWN"];
+		cutText[format["Cannot find ID (%1) of safe/lockbox (%2),please try again in a few seconds",typeName _vaultID,_vault],"PLAIN DOWN"];
 	};
 
 } else {
-	cutText ["Something went wrong trying,please try again in a few seconds.","PLAIN DOWN"];
+	cutText["Something went wrong trying,please try again in a few seconds.","PLAIN DOWN"];
 };

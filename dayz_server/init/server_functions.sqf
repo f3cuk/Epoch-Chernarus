@@ -3,7 +3,7 @@
 waituntil {!isnil "bis_fnc_init"};
 
 BIS_MPF_remoteExecutionServer = {
-	if ((_this select 1) select 2 == "JIPrequest") then {
+	if((_this select 1) select 2 == "JIPrequest") then {
 		[nil,(_this select 1) select 0,"loc",rJIPEXEC,[any,any,"per","execVM","ca\Modules\Functions\init.sqf"]] call RE;
 	};
 };
@@ -38,7 +38,7 @@ server_updateNearbyObjects = {
 	_pos = _this select 0;
 	{
 		[_x,"gear"] call server_updateObject;
-	} count nearestObjects [_pos,dayz_updateObjects,10];
+	} count nearestObjects[_pos,dayz_updateObjects,10];
 };
 
 server_handleZedSpawn = {
@@ -69,7 +69,7 @@ array_reduceSizeReverse = {
 	_count	= _this select 1;
 	_num	= count _array;
 	_newarray	= [];
-	if (_num > _count) then {
+	if(_num > _count) then {
 		_startnum = _num - 1;
 		_index = _count - 1;
 		for "_i" from 0 to _index do {
@@ -86,7 +86,7 @@ array_reduceSize = {
 	_count	= _this select 1;
 	_array	= _array1 - ["Hatchet_Swing","Machete_Swing","Fishing_Swing","sledge_swing","crowbar_swing","CSGAS"];
 	_num	= count _array;
-	if (_num > _count) then {
+	if(_num > _count) then {
 		_array resize _count;
 	};
 	_array
@@ -96,8 +96,8 @@ object_handleServerKilled = {
 	private["_unit","_killer","_objectID","_objectUID"];	
 	_unit		= _this select 0;
 	_killer		= _this select 1;
-	_objectID	= _unit getVariable ["ObjectID","0"];
-	_objectUID	= _unit getVariable ["ObjectUID","0"];
+	_objectID	= _unit getVariable["ObjectID","0"];
+	_objectUID	= _unit getVariable["ObjectUID","0"];
 		
 	[_objectID,_objectUID,_killer] call server_deleteObj;
 	
@@ -114,7 +114,7 @@ check_publishobject = {
 	_object		= _this select 0;
 	_allowed	= false;
 
-	if ((typeOf _object) in dayz_allowedObjects) then {
+	if((typeOf _object) in dayz_allowedObjects) then {
 			_allowed = true;
 	};
 	_allowed
@@ -141,7 +141,7 @@ eh_localCleanup = {
 			_unit removeAllEventHandlers "Local";
 			clearVehicleInit _unit;
 			deleteVehicle _unit;
-			if ((count (units _myGroupUnit) == 0) && (!isNull _myGroupUnit)) then {
+			if((count (units _myGroupUnit) == 0) && (!isNull _myGroupUnit)) then {
 				deleteGroup _myGroupUnit;
 			};
 		};
@@ -170,13 +170,13 @@ server_hiveReadWriteLarge = {
 };
 
 server_checkIfTowed = {
-	if (DZE_HeliLift) then {
+	if(DZE_HeliLift) then {
 		private ["_vehicle","_player","_attached"];
 		_vehicle	= _this select 0;
 		_player		= _this select 2;
 		_attached	= _vehicle getVariable["attached",false];
-		if (typeName _attached == "OBJECT") then {
-			_player action ["eject",_vehicle];
+		if(typeName _attached == "OBJECT") then {
+			_player action["eject",_vehicle];
 			detach _vehicle;
 			_vehicle setVariable["attached",false,true];
 			_attached setVariable["hasAttached",false,true];
@@ -210,13 +210,13 @@ RoadList	= MarkerPosition nearRoads DynamicVehicleArea;
 
 BuildingList = [];
 {
-	if (DZE_MissionLootTable) then {
-		if (isClass (missionConfigFile >> "CfgBuildingLoot" >> (typeOf _x))) then
+	if(DZE_MissionLootTable) then {
+		if(isClass (missionConfigFile >> "CfgBuildingLoot" >> (typeOf _x))) then
 		{
 			BuildingList set [count BuildingList,_x];
 		};
 	} else {
-		if (isClass (configFile >> "CfgBuildingLoot" >> (typeOf _x))) then
+		if(isClass (configFile >> "CfgBuildingLoot" >> (typeOf _x))) then
 		{
 			BuildingList set [count BuildingList,_x];
 		};
@@ -227,7 +227,7 @@ BuildingList = [];
 spawn_vehicles = {
 	private ["_random","_lastIndex","_weights","_index","_vehicle","_velimit","_qty","_isAir","_isShip","_position","_dir","_istoomany","_veh","_objPosition","_marker","_iClass","_itemTypes","_cntWeights","_itemType","_num","_allCfgLoots"];
 	
-	if (!isDedicated) exitWith { };
+	if(!isDedicated) exitWith { };
 
 	while {count AllowedVehiclesList > 0} do {
 		_index		= floor random count AllowedVehiclesList;
@@ -237,18 +237,18 @@ spawn_vehicles = {
 
 		_qty = {_x == _vehicle} count serverVehicleCounter;
 
-		if (_qty <= _velimit) exitWith {};
+		if(_qty <= _velimit) exitWith {};
 
 		_lastIndex = (count AllowedVehiclesList) - 1;
 
-		if (_lastIndex != _index) then {
+		if(_lastIndex != _index) then {
 			AllowedVehiclesList set [_index,AllowedVehiclesList select _lastIndex];
 		};
 
 		AllowedVehiclesList resize _lastIndex;
 	};
 
-	if (count AllowedVehiclesList == 0) then {
+	if(count AllowedVehiclesList == 0) then {
 		diag_log("DEBUG: unable to find suitable vehicle to spawn");
 	} else {
 
@@ -279,7 +279,7 @@ spawn_vehicles = {
 			};
 		};
 	
-		if ((count _position) == 2) then { 
+		if((count _position) == 2) then { 
 	
 			_dir = round(random 180);
 		
@@ -289,7 +289,7 @@ spawn_vehicles = {
 		
 			_veh = createVehicle [_vehicle,_position,[],0,"CAN_COLLIDE"];
 			_veh setdir _dir;
-			_veh setpos _position;		
+			_veh setPos _position;		
 			
 			if(DZEdebug) then {
 				_marker = createMarker [str(_position) ,_position];
@@ -309,7 +309,7 @@ spawn_vehicles = {
 				_iClass = _allCfgLoots call BIS_fnc_selectRandom;
 
 				_itemTypes = [];
-				if (DZE_MissionLootTable) then{
+				if(DZE_MissionLootTable) then{
 					{
 						_itemTypes set[count _itemTypes,_x select 0]
 					} count getArray(missionConfigFile >> "cfgLoot" >> _iClass);
@@ -338,14 +338,14 @@ spawn_vehicles = {
 
 spawn_ammosupply = {
 	private ["_position","_veh","_istoomany","_marker","_spawnveh","_WreckList"];
-	if (isDedicated) then {
+	if(isDedicated) then {
 		_WreckList = ["Supply_Crate_DZE"];
 		waitUntil{!isNil "BIS_fnc_selectRandom"};
 		_position = RoadList call BIS_fnc_selectRandom;
 		_position = _position modelToWorld [0,0,0];
 		waitUntil{!isNil "BIS_fnc_findSafePos"};
 		_position = [_position,5,20,5,0,2000,0] call BIS_fnc_findSafePos;
-		if ((count _position) == 2) then {
+		if((count _position) == 2) then {
 			_istoomany = _position nearObjects ["All",5];
 			if((count _istoomany) > 0) exitWith { diag_log("DEBUG AMMO: Too many at " + str(_position)); };
 			_spawnveh = _WreckList call BIS_fnc_selectRandom;
@@ -358,8 +358,8 @@ spawn_ammosupply = {
 			_veh = createVehicle [_spawnveh,_position,[],0,"CAN_COLLIDE"];
 			_veh enableSimulation false;
 			_veh setDir round(random 360);
-			_veh setpos _position;
-			_veh setVariable ["ObjectID","1",true];
+			_veh setPos _position;
+			_veh setVariable["ObjectID","1",true];
 		};
 	};
 };
@@ -400,13 +400,13 @@ server_getDiff =	{
 	_object	= _this select 1;
 	_vNew	= _object getVariable[_variable,0];
 
-	if (isNil "_vNew") then {_vNew = 0;};
+	if(isNil "_vNew") then {_vNew = 0;};
 	_vOld = _object getVariable[(_variable + "_CHK"),_vNew];
 
-	if (isNil "_vOld") then {_vOld = _vNew;};
+	if(isNil "_vOld") then {_vOld = _vNew;};
 	_result = 0;
 
-	if (_vNew < _vOld) then {
+	if(_vNew < _vOld) then {
 		_vNew = _vNew + _vOld;
 		_object getVariable[(_variable + "_CHK"),_vNew];
 	} else {
@@ -450,7 +450,7 @@ dayz_objectUID2 = {
 
 	{
 		_x = _x * 10;
-		if ( _x < 0 ) then { _x = _x * -10 };
+		if( _x < 0 ) then { _x = _x * -10 };
 		_key = _key + str(round(_x));
 	} count _position;
 
@@ -466,7 +466,7 @@ dayz_objectUID3 = {
 
 	{
 		_x = _x * 10;
-		if ( _x < 0 ) then { _x = _x * -10 };
+		if( _x < 0 ) then { _x = _x * -10 };
 		_key = _key + str(round(_x));
 	} count _position;
 
@@ -496,7 +496,7 @@ dayz_perform_purge = {
 		_this removeAllEventHandlers "Local";
 		clearVehicleInit _this;
 		deleteVehicle _this;
-		if ((count (units _group) == 0) && (!isNull _group)) then {
+		if((count (units _group) == 0) && (!isNull _group)) then {
 			deleteGroup _group;
 		};
 	};
@@ -510,7 +510,7 @@ dayz_perform_purge_player = {
 		_dir		= getDir _this;
 		_holder	= createVehicle ["GraveDZE",_location,[],0,"CAN_COLLIDE"];
 		_holder setDir _dir;
-		_holder SetPos _location;
+		_holder setPos _location;
 		_holder enableSimulation false;
 		_weapons	= weapons _this;
 		_magazines	= magazines _this;
@@ -562,7 +562,7 @@ dayz_perform_purge_player = {
 	_this removeAllEventHandlers "Local";
 	clearVehicleInit _this;
 	deleteVehicle _this;
-	if ((count (units _group) == 0) && (!isNull _group)) then {
+	if((count (units _group) == 0) && (!isNull _group)) then {
 		deleteGroup _group;
 	};
 };
@@ -606,16 +606,16 @@ server_spawncleanDead = {
 	_delQtyP = 0;
 
 	{
-		if (local _x) then {
-			if (_x isKindOf "zZombie_Base") then
+		if(local _x) then {
+			if(_x isKindOf "zZombie_Base") then
 			{
 				_x call dayz_perform_purge;
 				sleep 0.05;
 				_delQtyZ = _delQtyZ + 1;
 			} else {
-				if (_x isKindOf "CAManBase") then {
-					_deathTime = _x getVariable ["processedDeath",diag_tickTime];
-					if (diag_tickTime - _deathTime > 1800) then {
+				if(_x isKindOf "CAManBase") then {
+					_deathTime = _x getVariable["processedDeath",diag_tickTime];
+					if(diag_tickTime - _deathTime > 1800) then {
 						_x call dayz_perform_purge_player;
 						sleep 0.025;
 						_delQtyP = _delQtyP + 1;
@@ -626,18 +626,18 @@ server_spawncleanDead = {
 		sleep 0.025;
 	} count _allDead;
 
-	if (_delQtyZ > 0 || _delQtyP > 0) then {
+	if(_delQtyZ > 0 || _delQtyP > 0) then {
 		_qty = count _allDead;
 		diag_log (format["CLEANUP: Deleted %1 players and %2 zombies out of %3 dead",_delQtyP,_delQtyZ,_qty]);
 	};
 };
 
 server_cleanupGroups = {
-	if (DZE_DYN_AntiStuck3rd > 3) then { DZE_DYN_GroupCleanup = nil; DZE_DYN_AntiStuck3rd = 0; };
+	if(DZE_DYN_AntiStuck3rd > 3) then { DZE_DYN_GroupCleanup = nil; DZE_DYN_AntiStuck3rd = 0; };
 	if(!isNil "DZE_DYN_GroupCleanup") exitWith {  DZE_DYN_AntiStuck3rd = DZE_DYN_AntiStuck3rd + 1;};
 	DZE_DYN_GroupCleanup = true;
 	{
-		if ((count (units _x) == 0) && (!isNull _x)) then {
+		if((count (units _x) == 0) && (!isNull _x)) then {
 			deleteGroup _x;
 		};
 		sleep 0.001;
@@ -646,12 +646,12 @@ server_cleanupGroups = {
 };
 
 server_checkHackers = {
-	if (DZE_DYN_AntiStuck2nd > 3) then { DZE_DYN_HackerCheck = nil; DZE_DYN_AntiStuck2nd = 0; };
+	if(DZE_DYN_AntiStuck2nd > 3) then { DZE_DYN_HackerCheck = nil; DZE_DYN_AntiStuck2nd = 0; };
 	if(!isNil "DZE_DYN_HackerCheck") exitWith {  DZE_DYN_AntiStuck2nd = DZE_DYN_AntiStuck2nd + 1;};
 	DZE_DYN_HackerCheck = true;
 	{
-		if (!((isNil "_x") || {(isNull _x)})) then {
-			if(vehicle _x != _x && !(vehicle _x in PVDZE_serverObjectMonitor) && (isPlayer _x)  && !((typeOf vehicle _x) in DZE_safeVehicle) && (vehicle _x getVariable ["MalSar",0] !=1)) then {
+		if(!((isNil "_x") || {(isNull _x)})) then {
+			if(vehicle _x != _x && !(vehicle _x in PVDZE_serverObjectMonitor) && (isPlayer _x)  && !((typeOf vehicle _x) in DZE_safeVehicle) && (vehicle _x getVariable["MalSar",0] !=1)) then {
 				diag_log ("CLEANUP: KILLING A HACKER " + (name _x) + " " + str(_x) + " IN " + (typeOf vehicle _x));
 				(vehicle _x) setDamage 1;
 				_x setDamage 1;
@@ -669,7 +669,7 @@ server_spawnCleanFire = {
 	_delQtyFP	= 0;
 
 	{
-		if (local _x) then {
+		if(local _x) then {
 			deleteVehicle _x;
 			sleep 0.025;
 			_delQtyFP = _delQtyFP + 1;
@@ -677,7 +677,7 @@ server_spawnCleanFire = {
 		sleep 0.001;
 	} count _missionFires;
 
-	if (_delQtyFP > 0) then {
+	if(_delQtyFP > 0) then {
 		_qty = count _missionFires;
 		diag_log (format["CLEANUP: Deleted %1 fireplaces out of %2",_delQtyFP,_qty]);
 	};
@@ -686,8 +686,8 @@ server_spawnCleanFire = {
 server_spawnCleanLoot = {
 	private ["_created","_delQty","_nearby","_age","_keep","_qty","_missionObjs","_dateNow"];
 
-	if (DZE_DYN_AntiStuck > 3) then { DZE_DYN_cleanLoot = nil; DZE_DYN_AntiStuck = 0; };
-	if (!isNil "DZE_DYN_cleanLoot") exitWith { DZE_DYN_AntiStuck = DZE_DYN_AntiStuck + 1; };
+	if(DZE_DYN_AntiStuck > 3) then { DZE_DYN_cleanLoot = nil; DZE_DYN_AntiStuck = 0; };
+	if(!isNil "DZE_DYN_cleanLoot") exitWith { DZE_DYN_AntiStuck = DZE_DYN_AntiStuck + 1; };
 	
 	DZE_DYN_cleanLoot = true;
 
@@ -696,19 +696,19 @@ server_spawnCleanLoot = {
 	_dateNow		= (DateToNumber date);
 
 	{
-		if (!isNull _x) then {
+		if(!isNull _x) then {
 			_keep = _x getVariable["permaLoot",false];
-			if (!_keep) then {
+			if(!_keep) then {
 				_created = _x getVariable["created",-0.1];
-				if (_created == -0.1) then {
+				if(_created == -0.1) then {
 					_x setVariable["created",_dateNow,false];
 					_created = _dateNow;
 				} else {
 					_age = (_dateNow - _created) * 525948;
 
-					if (_age > 20) then {
+					if(_age > 20) then {
 						_nearby = { (isPlayer _x) && (alive _x) } count(_x nearEntities[["CAManBase","AllVehicles"],130]);
-						if (_nearby == 0) then {
+						if(_nearby == 0) then {
 							deleteVehicle _x;
 							sleep 0.025;
 							_delQty = _delQty + 1;
@@ -719,7 +719,7 @@ server_spawnCleanLoot = {
 		};
 	} count  _missionObjs;
 
-	if (_delQty > 0) then {
+	if(_delQty > 0) then {
 		_qty = count _missionObjs;
 		diag_log (format["CLEANUP: Deleted %1 Loot Piles out of %2",_delQty,_qty]);
 	};
@@ -734,16 +734,16 @@ server_spawnCleanAnimals = {
 	_delQtyAnimal	= 0;
 
 	{
-		if (local _x) then {
+		if(local _x) then {
 			_x call dayz_perform_purge;
 			sleep 0.05;
 			_delQtyAnimal = _delQtyAnimal + 1;
 		} else {
-			if (!alive _x) then {
+			if(!alive _x) then {
 				_pos = [_x] call FNC_GetPos;
-				if (count _pos > 0) then {
+				if(count _pos > 0) then {
 					_nearby = {(isPlayer _x) && (alive _x)} count (_pos nearEntities [["CAManBase","AllVehicles"],130]);
-					if (_nearby==0) then {
+					if(_nearby==0) then {
 						_x call dayz_perform_purge;
 						sleep 0.05;
 						_delQtyAnimal = _delQtyAnimal + 1;
@@ -754,7 +754,7 @@ server_spawnCleanAnimals = {
 		sleep 0.001;
 	} count _missonAnimals;
 	
-	if (_delQtyAnimal > 0) then {
+	if(_delQtyAnimal > 0) then {
 		_qty = count _missonAnimals;
 		diag_log (format["CLEANUP: Deleted %1 Animals out of %2",_delQtyAnimal,_qty]);
 	};
@@ -763,7 +763,7 @@ server_spawnCleanAnimals = {
 KK_fnc_floatToString = { 
 	private "_arr";
 
-	if (abs (_this - _this % 1) == 0) exitWith { str _this };
+	if(abs (_this - _this % 1) == 0) exitWith { str _this };
 
 	_arr = toArray str abs (_this % 1); 
 	_arr set [0,32];

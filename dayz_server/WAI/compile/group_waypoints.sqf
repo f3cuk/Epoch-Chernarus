@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_wp","_skill","_mission","_wp_rad","_wp","_pos_x","_pos_y","_pos_z","_unitGroup","_position"];
 

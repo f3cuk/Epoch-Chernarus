@@ -1,6 +1,6 @@
 private ["_oldPosition","_veh","_location","_isOk","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_obj","_objectID","_objectUID","_bos","_finished","_dir","_helipad","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_config","_okToSell","_needed","_activatingPlayer","_textPartIn","_textPartOut","_traderID","_price","_object_name","_curr_new","_newM","_myMoney"];
 
-if(DZE_ActionInProgress) exitWith { cutText [(localize "str_epoch_player_103"),"PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103"),"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
@@ -17,17 +17,17 @@ _traderID 		= (_this select 3) select 7;
 _bos = 0;
 
 if(_buy_o_sell == "buy") then {
-	_qty = player getVariable ["cashMoney",0];
+	_qty = player getVariable["cashMoney",0];
 } else {
-	_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
+	_obj = nearestObjects[([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
 	_qty = count _obj;
 	_bos = 1;
 };
 
 
-if (_qty >= _qty_in) then {
+if(_qty >= _qty_in) then {
 
-	cutText [(localize "str_epoch_player_105"),"PLAIN DOWN"];
+	cutText[(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 
@@ -41,31 +41,31 @@ if (_qty >= _qty_in) then {
 
 		sleep .5;
 
-		if ((position player) distance _oldPosition <= 0.3) then {
+		if((position player) distance _oldPosition <= 0.3) then {
 			_finished = true;
 		};
 
-		if (!_finished) exitWith { 
+		if(!_finished) exitWith { 
 			r_interrupt = false;
-			cutText ["Cancelled trade" ,"PLAIN DOWN"];
+			cutText["Cancelled trade" ,"PLAIN DOWN"];
 		};
 	
 	// # F3 FAST TRADING
 
-	if (_finished) then {
+	if(_finished) then {
 
 		if(_buy_o_sell == "buy") then {
-			_qty = player getVariable ["cashMoney",0]; // get your money variable	
+			_qty = player getVariable["cashMoney",0]; // get your money variable	
 		} else {
-			_obj = nearestObjects [([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
+			_obj = nearestObjects[([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
 			_qty = count _obj;
 		};
 
-		if (_qty >= _qty_in) then {
+		if(_qty >= _qty_in) then {
 
-			if (isNil "_obj") then { _obj = "Unknown Vehicle" };
-			if (isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
-			if (_bos == 1) then {
+			if(isNil "_obj") then { _obj = "Unknown Vehicle" };
+			if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
+			if(_bos == 1) then {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_in,inTraderCity,_qty_out,CurrencyName]];
 			} else {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
@@ -89,13 +89,13 @@ if (_qty >= _qty_in) then {
 
 					waitUntil {!isNil "_isOk"};
 					
-					if (_isOk and _isKeyOK) then {
+					if(_isOk and _isKeyOK) then {
 					
 						_curr_new = _qty - _qty_in;
 					
-						player setVariable ["cashMoney",_curr_new,true];
+						player setVariable["cashMoney",_curr_new,true];
 						
-						_newM 		= player getVariable ["cashMoney",0];
+						_newM 		= player getVariable["cashMoney",0];
 						_removed 	= _qty - _newM;
 															
 						if(_removed == _qty_in) then {
@@ -107,7 +107,7 @@ if (_qty >= _qty_in) then {
 							
 							_dir = round(random 360);
 
-							_helipad = nearestObjects [player,["HeliHCivil","HeliHempty"],100];
+							_helipad = nearestObjects[player,["HeliHCivil","HeliHempty"],100];
 							if(count _helipad > 0) then {
 								_location = (getPosATL (_helipad select 0));
 							} else {
@@ -124,12 +124,12 @@ if (_qty >= _qty_in) then {
 
 							player reveal _veh;
 
-							cutText [format[("Bought %3 for %1 %2,key added to toolbelt."),_qty_in,_textPartIn,_textPartOut],"PLAIN DOWN"];
+							cutText[format[("Bought %3 for %1 %2,key added to toolbelt."),_qty_in,_textPartIn,_textPartOut],"PLAIN DOWN"];
 						} else {
 							player removeMagazine _keySelected;
 						};
 					} else {
-						cutText [(localize "str_epoch_player_107"),"PLAIN DOWN"];
+						cutText[(localize "str_epoch_player_107"),"PLAIN DOWN"];
 					};
 				} else {
 					
@@ -142,21 +142,21 @@ if (_qty >= _qty_in) then {
 
 					if(_okToSell and !isNull _obj and alive _obj) then {
 
-						_myMoney = player getVariable ["cashMoney",0];
+						_myMoney = player getVariable["cashMoney",0];
 						_myMoney = _myMoney + _qty_out;
-						player setVariable ["cashMoney",_myMoney ,true];
+						player setVariable["cashMoney",_myMoney ,true];
 
-						_objectID 	= _obj getVariable ["ObjectID","0"];
-						_objectUID	= _obj getVariable ["ObjectUID","0"];
+						_objectID 	= _obj getVariable["ObjectID","0"];
+						_objectUID	= _obj getVariable["ObjectUID","0"];
 
 						PVDZE_obj_Delete = [_objectID,_objectUID,_activatingPlayer];
 						publicVariableServer "PVDZE_obj_Delete";
 
 						deleteVehicle _obj;
 
-						cutText [format[(localize "str_epoch_player_181"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
+						cutText[format[(localize "str_epoch_player_181"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					} else {
-						cutText [(localize "str_epoch_player_245"),"PLAIN DOWN"];
+						cutText[(localize "str_epoch_player_245"),"PLAIN DOWN"];
 					};
 				};
 	
@@ -164,18 +164,18 @@ if (_qty >= _qty_in) then {
 				s_player_parts_crtl = -1;
 
 			} else {
-				cutText [format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
+				cutText[format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 			dayzTradeResult = nil;
 		};
 	};
 
 } else {
-	_needed =  _qty_in - _qty;
+	_needed = _qty_in - _qty;
 	if(_buy_o_sell == "buy") then {
-		cutText [format["You need %1 %2",_needed,_textPartIn] ,"PLAIN DOWN"]; // edited so it says,You need 5000 coins or you need 1 engine.
+		cutText[format["You need %1 %2",_needed,_textPartIn] ,"PLAIN DOWN"]; // edited so it says,You need 5000 coins or you need 1 engine.
 	} else {
-		cutText [format[(localize "str_epoch_player_185"),_textPartIn] ,"PLAIN DOWN"];
+		cutText[format[(localize "str_epoch_player_185"),_textPartIn] ,"PLAIN DOWN"];
 	};
 };
 

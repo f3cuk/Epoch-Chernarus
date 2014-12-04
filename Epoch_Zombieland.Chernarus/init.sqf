@@ -1,8 +1,8 @@
-if (!isDedicated) then {
+if(!isDedicated) then {
 	startLoadingScreen ["","RscDisplayLoadCustom"];
-	cutText ["","BLACK OUT"];
+	cutText["","BLACK OUT"];
 	enableSaving [false,false];
-	player setVariable ["BIS_noCoreConversations",true];
+	player setVariable["BIS_noCoreConversations",true];
 	enableRadio true;
 	enableSentences false;
 	preload_done = false;
@@ -26,13 +26,13 @@ progressLoadingScreen 1.0;
 "filmic" setToneMappingParams [0.153,0.357,0.231,0.1573,0.011,3.750,6,4];
 setToneMapping "filmic";
 
-if (isServer) then {
+if(isServer) then {
 	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\traders.sqf";
 	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\init.sqf";
 	execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 };
 
-if (!isDedicated) then {
+if(!isDedicated) then {
 	0 fadeSound 0;
 
 	waitUntil {!isNil "sm_done"};

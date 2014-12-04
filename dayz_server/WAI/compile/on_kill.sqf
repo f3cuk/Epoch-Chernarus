@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_rockets","_launcher","_type","_skin","_gain","_mission","_ainum","_unit","_player","_humanity","_banditkills","_humankills","_humanitygain"];
 	
@@ -16,27 +16,27 @@ if (isServer) then {
 	
 	_unit setVariable["missionclean",nil];
 	
-	_mission = _unit getVariable ["mission",nil];
+	_mission = _unit getVariable["mission",nil];
 		
-	if (!isNil "_mission") then {
-		if (typeName(wai_mission_data select _mission) == "ARRAY") then {
+	if(!isNil "_mission") then {
+		if(typeName(wai_mission_data select _mission) == "ARRAY") then {
 			wai_mission_data select _mission set [0,((wai_mission_data select _mission) select 0) - 1];
 		};
 	};
-	_unit setVariable ["killedat",time];
+	_unit setVariable["killedat",time];
 
 	if(ai_add_skin) then {
 
 		_skin = (typeOf _unit);
 		_skin = "Skin_" + _skin;
 
-		if (isClass (configFile >> "CfgMagazines" >> _skin)) then {
+		if(isClass (configFile >> "CfgMagazines" >> _skin)) then {
 			[_unit,_skin] call BIS_fnc_invAdd;
 		};
 
 	};
 
-	if (isPlayer _player) then {
+	if(isPlayer _player) then {
 
 		private ["_banditkills","_humanity","_humankills"];
 
@@ -44,31 +44,31 @@ if (isServer) then {
 		_banditkills 	= _player getVariable["banditKills",0];
 		_humankills 	= _player getVariable["humanKills",0];
 
-		if (ai_humanity_gain) then {
-			_gain = _unit getVariable ["humanity",0];
+		if(ai_humanity_gain) then {
+			_gain = _unit getVariable["humanity",0];
 			call {
-				if (_unit getVariable ["Hero",false]) exitWith { _player setVariable ["humanity",(_humanity - _gain),true]; };
-				if (_unit getVariable ["Bandit",false]) exitWith { _player setVariable ["humanity",(_humanity + _gain),true]; };					
-				if (_unit getVariable ["Special",false]) exitWith { if (_humanity < 0) then { _player setVariable ["humanity",(_humanity - _gain),true]; } else { _player setVariable ["humanity",(_humanity + _gain),true]; }; };
+				if(_unit getVariable["Hero",false]) exitWith { _player setVariable["humanity",(_humanity - _gain),true]; };
+				if(_unit getVariable["Bandit",false]) exitWith { _player setVariable["humanity",(_humanity + _gain),true]; };					
+				if(_unit getVariable["Special",false]) exitWith { if(_humanity < 0) then { _player setVariable["humanity",(_humanity - _gain),true]; } else { _player setVariable["humanity",(_humanity + _gain),true]; }; };
 			};
 		};
 
-		if (ai_kills_gain) then {
-			if (_unit getVariable ["Hero",false]) then {
-				_player setVariable ["humanKills",(_humankills + 1),true];
+		if(ai_kills_gain) then {
+			if(_unit getVariable["Hero",false]) then {
+				_player setVariable["humanKills",(_humankills + 1),true];
 			} else {
-				_player setVariable ["banditKills",(_banditkills + 1),true];
+				_player setVariable["banditKills",(_banditkills + 1),true];
 			};
 		};
 
-		if (ai_clear_body) then {
+		if(ai_clear_body) then {
 			{_unit removeMagazine _x;} count (magazines _unit);
 			{_unit removeWeapon _x;} count (weapons _unit);
 		};
 
-		if (ai_share_info) then {
+		if(ai_share_info) then {
 			{
-				if (((position _x) distance (position _unit)) <= ai_share_distance) then {
+				if(((position _x) distance (position _unit)) <= ai_share_distance) then {
 					_x reveal [_player,4.0];
 				};
 			} count allUnits;
@@ -76,7 +76,7 @@ if (isServer) then {
 
 	} else {
 
-		if (ai_clean_roadkill) then {
+		if(ai_clean_roadkill) then {
 
 			removeBackpack _unit;
 			removeAllWeapons _unit;
@@ -87,7 +87,7 @@ if (isServer) then {
 
 		} else {
 
-			if ((random 100) <= ai_roadkill_damageweapon) then {
+			if((random 100) <= ai_roadkill_damageweapon) then {
 
 				removeAllWeapons _unit;
 				

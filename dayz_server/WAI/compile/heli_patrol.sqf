@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_mission","_aitype","_aiskin","_skin","_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
 
@@ -23,10 +23,10 @@ if (isServer) then {
 	};
 
 	call {
-		if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-		if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if(_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
 	};
 
@@ -45,9 +45,9 @@ if (isServer) then {
 	[_pilot] joinSilent _unitGroup;
 	
 	call {
-		if (_aitype == "Hero") 		exitWith { _pilot setVariable ["Hero",true,true]; };
-		if (_aitype == "Bandit") 	exitWith { _pilot setVariable ["Bandit",true,true]; };
-		if (_aitype == "Special") 	exitWith { _pilot setVariable ["Special",true,true]; };
+		if(_aitype == "Hero") 		exitWith { _pilot setVariable["Hero",true,true]; };
+		if(_aitype == "Bandit") 	exitWith { _pilot setVariable["Bandit",true,true]; };
+		if(_aitype == "Special") 	exitWith { _pilot setVariable["Special",true,true]; };
 	};
 	
 	ai_air_units 		= (ai_air_units +1);
@@ -70,9 +70,9 @@ if (isServer) then {
 	[_gunner] 			joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { _gunner setVariable ["Hero",true,true]; };
-		if (_aitype == "Bandit") 	exitWith { _gunner setVariable ["Bandit",true,true]; };
-		if (_aitype == "Special") 	exitWith { _gunner setVariable ["Special",true,true]; };
+		if(_aitype == "Hero") 		exitWith { _gunner setVariable["Hero",true,true]; };
+		if(_aitype == "Bandit") 	exitWith { _gunner setVariable["Bandit",true,true]; };
+		if(_aitype == "Special") 	exitWith { _gunner setVariable["Special",true,true]; };
 	};
 	
 	ai_air_units 		= (ai_air_units + 1);
@@ -83,9 +83,9 @@ if (isServer) then {
 	[_gunner2] 			joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { _gunner2 setVariable ["Hero",true,true]; };
-		if (_aitype == "Bandit") 	exitWith { _gunner2 setVariable ["Bandit",true,true]; };
-		if (_aitype == "Special") 	exitWith { _gunner2 setVariable ["Special",true,true]; };
+		if(_aitype == "Hero") 		exitWith { _gunner2 setVariable["Hero",true,true]; };
+		if(_aitype == "Bandit") 	exitWith { _gunner2 setVariable["Bandit",true,true]; };
+		if(_aitype == "Special") 	exitWith { _gunner2 setVariable["Special",true,true]; };
 	};
 
 	ai_air_units 		= (ai_air_units + 1);
@@ -117,13 +117,13 @@ if (isServer) then {
 	_unitGroup setSpeedMode "FULL";
 
 	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;

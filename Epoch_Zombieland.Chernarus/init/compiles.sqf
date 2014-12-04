@@ -1,4 +1,4 @@
-if (!isDedicated) then {
+if(!isDedicated) then {
 	"filmic" setToneMappingParams [0.07,0.31,0.23,0.37,0.011,3.750,6,4]; setToneMapping "Filmic";
 	BIS_fnc_numberDigits		= compile preprocessFileLineNumbers "custom\gold_coins\functions\numberDigits.sqf";
 	BIS_fnc_numberText			= compile preprocessFileLineNumbers "custom\gold_coins\functions\numberText.sqf";
@@ -84,7 +84,7 @@ if (!isDedicated) then {
 	player_harvestPlant			= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_harvestPlant.sqf";
 	player_goFishing			= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\player_goFishing.sqf";
 
-	if (DZE_modularBuild) then {
+	if(DZE_modularBuild) then {
 		player_build				= compile preprocessFileLineNumbers "custom\a_plot_for_life\action\modular_build.sqf";
 		player_build_countNearby	= compile preprocessFileLineNumbers "custom\a_plot_for_life\action\player_build_countNearby.sqf";
 		player_build_states			= compile preprocessFileLineNumbers "custom\a_plot_for_life\action\player_build_states.sqf";
@@ -130,7 +130,7 @@ if (!isDedicated) then {
 		private ["_items","_b"];
 		_items = _this;
 		_b = _items call player_checkItems;
-		if (_b) then {
+		if(_b) then {
 			_b = _items call player_removeItems;
 		};
 		_b
@@ -145,8 +145,8 @@ if (!isDedicated) then {
 		private ["_total_currency","_part","_worth"];
 		_total_currency = 0;
 		{
-			_part =  (configFile >> "CfgMagazines" >> _x);
-			_worth =  (_part >> "worth");
+			_part = (configFile >> "CfgMagazines" >> _x);
+			_worth = (_part >> "worth");
 			if isNumber (_worth) then {
 				_total_currency = _total_currency + getNumber(_worth);
 			};
@@ -158,8 +158,8 @@ if (!isDedicated) then {
 		private ["_trade_total","_part_inWorth","_part_in_configClass"];
 		_trade_total = 0;
 		{
-			_part_in_configClass =  configFile >> "CfgMagazines" >> (_x select 0);
-			if (isClass (_part_in_configClass)) then {
+			_part_in_configClass = configFile >> "CfgMagazines" >> (_x select 0);
+			if(isClass (_part_in_configClass)) then {
 				_part_inWorth = (_part_in_configClass >> "worth");
 				if isNumber (_part_inWorth) then {
 					_trade_total = _trade_total + (getNumber(_part_inWorth) * (_x select 1));
@@ -190,11 +190,11 @@ if (!isDedicated) then {
 		_display = uiNamespace getVariable 'DAYZ_GUI_display';
 		_control = 	_display displayCtrl 1204;
 		_control ctrlShow false;
-		if (!r_player_injured) then {
+		if(!r_player_injured) then {
 			_ctrlBleed = 	_display displayCtrl 1303;
 			_ctrlBleed ctrlShow false;
 		};
-		if (!r_fracture_legs && !r_fracture_arms) then {
+		if(!r_fracture_legs && !r_fracture_arms) then {
 			_ctrlFracture = 	_display displayCtrl 1203;
 			_ctrlFracture ctrlShow false;
 		};
@@ -213,14 +213,14 @@ if (!isDedicated) then {
 		_target = _this select 0; 
 		_agent = _this select 1;
 		_cantSee = true;
-		if (!isNull _target) then {
+		if(!isNull _target) then {
 			_tPos = visiblePositionASL _target;
 			_zPos = visiblePositionASL _agent;
 			_tPos set [2,(_tPos select 2)+1];
 			_zPos set [2,(_zPos select 2)+1];
-			if ((count _tPos > 0) && (count _zPos > 0)) then {
+			if((count _tPos > 0) && (count _zPos > 0)) then {
 				_cantSee = terrainIntersectASL [_tPos,_zPos];
-				if (!_cantSee) then {
+				if(!_cantSee) then {
 					_cantSee = lineIntersects [_tPos,_zPos,_agent,vehicle _target];
 				};
 			};
@@ -236,7 +236,7 @@ if (!isDedicated) then {
 		_diff = [_empty,_needed] call BIS_fnc_vectorDiff;
 		_success = true;
 		{
-			if (_x > 0) then {_success = false};
+			if(_x > 0) then {_success = false};
 		} count _diff;
 		hint format["Config: %5\nEmpty: %1\nNeeded: %2\nDiff: %3\nSuccess: %4",_empty,_needed,_diff,_success,_config];
 		_success
@@ -261,7 +261,7 @@ if (!isDedicated) then {
 		private["_object","_model"];
 		_object = _this select 0;
 		_model = _this select 1;
-		if (_object == player) then {
+		if(_object == player) then {
 			[_model] call player_switchModel;
 		};
 	};
@@ -269,7 +269,7 @@ if (!isDedicated) then {
 	player_guiControlFlash = {
 		private["_control"];
 		_control = _this;
-		if (ctrlShown (_control select 0)) then {
+		if(ctrlShown (_control select 0)) then {
 			{_x ctrlShow false} foreach _control;
 		} else {
 			{_x ctrlShow true} foreach _control;
@@ -278,31 +278,31 @@ if (!isDedicated) then {
 
 	gearDialog_create = {
 		private ["_i","_dialog"];
-		if (!isNull (findDisplay 106)) then {
+		if(!isNull (findDisplay 106)) then {
 			(findDisplay 106) closeDisplay 0;
 		};
 		openMap false;
 		closeDialog 0;
-		if (gear_done) then {sleep 0.001;};
-		player action ["Gear",player];
-		if (gear_done) then {sleep 0.001;};
+		if(gear_done) then {sleep 0.001;};
+		player action["Gear",player];
+		if(gear_done) then {sleep 0.001;};
 		_dialog = findDisplay 106;
 		_i = 0;
 		while {isNull _dialog} do {
 			_i = _i + 1;
 			_dialog = findDisplay 106;
-			if (gear_done) then {sleep 0.001;};
-			if (_i in [100,200,299]) then {
+			if(gear_done) then {sleep 0.001;};
+			if(_i in [100,200,299]) then {
 				closeDialog 0;
-				player action ["Gear",player];
+				player action["Gear",player];
 			};
-			if (_i > 300) exitWith {};
+			if(_i > 300) exitWith {};
 		};
-		if (gear_done) then {sleep 0.001;};
+		if(gear_done) then {sleep 0.001;};
 		_dialog = findDisplay 106;
-		if ((parseNumber(_this select 0)) != 0) then {
+		if((parseNumber(_this select 0)) != 0) then {
 			ctrlActivate (_dialog displayCtrl 157);
-			if (gear_done) then {
+			if(gear_done) then {
 				waitUntil {ctrlShown (_dialog displayCtrl 159)};
 				sleep 0.001;
 			};
@@ -315,21 +315,21 @@ if (!isDedicated) then {
 		disableSerialization;
 		_control = 	_this select 0;
 		_parent = 	findDisplay 106;
-		if (!(_this select 3)) then {
+		if(!(_this select 3)) then {
 			for "_i" from 0 to 9 do {
 				_menu = _parent displayCtrl (1600 + _i);
 				_menu ctrlShow false;
 			};
 			_grpPos = ctrlPosition _control;
 			_grpPos set [3,0];
-			_control ctrlSetPosition _grpPos;
+			_control ctrlsetPosition _grpPos;
 			_control ctrlShow false;
 			_control ctrlCommit 0;
 		};
 	};
 
 	dze_surrender_off = {
-		player setVariable ["DZE_Surrendered",false,true];
+		player setVariable["DZE_Surrendered",false,true];
 		DZE_Surrender = false;
 	};
 
@@ -344,7 +344,7 @@ if (!isDedicated) then {
 		};
 		_grpPos = ctrlPosition _control;
 		_grpPos set [3,0];
-		_control ctrlSetPosition _grpPos;
+		_control ctrlsetPosition _grpPos;
 		_control ctrlShow false;
 		_control ctrlCommit 0;
 	};
@@ -353,7 +353,7 @@ if (!isDedicated) then {
 		private["_vval","_vdir"];
 		_vval = (eyeDirection _this);
 		_vdir = (_vval select 0) atan2 (_vval select 1);
-		if (_vdir < 0) then {_vdir = 360 + _vdir};
+		if(_vdir < 0) then {_vdir = 360 + _vdir};
 		_vdir
 	};
 
@@ -365,7 +365,7 @@ if (!isDedicated) then {
 		_i = 0;
 		
 		{
-			if (58 == _objInfo select _i) exitWith {};
+			if(58 == _objInfo select _i) exitWith {};
 			_i = _i + 1;
 		} count _objInfo;
 		_i = _i + 2; 
@@ -382,11 +382,11 @@ if (!isDedicated) then {
 			_nearPlayers = _this nearEntities ["CAManBase",12];
 			_playerNear = ({isPlayer _x} count _nearPlayers) > 1;
 			_notClosest = false;
-			if (_playerNear) then {
+			if(_playerNear) then {
 				
 				_playerDistance = player distance _this;
 				{
-					if (_playerDistance > (_x distance _this)) exitWith { _notClosest = true; };
+					if(_playerDistance > (_x distance _this)) exitWith { _notClosest = true; };
 				} count _nearPlayers;
 			};
 		} else {
@@ -395,7 +395,7 @@ if (!isDedicated) then {
 		_notClosest
 	};
 	
-	if (DZE_ConfigTrader) then {
+	if(DZE_ConfigTrader) then {
 		call compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_traderMenuConfig.sqf";
 	} else {
 		call compile preprocessFileLineNumbers "custom\gold_coins\player_traderMenuHive.sqf";
@@ -412,11 +412,11 @@ if (!isDedicated) then {
 		_display 			= uiNameSpace getVariable "BIS_loadingScreen";
 		dayz_loadScreenMsg 	= "";
 		
-		if (!isNil "_display") then {
+		if(!isNil "_display") then {
 			_control1 = _display displayctrl 8400;
 			_control2 = _display displayctrl 102;
 		};
-		if (!isNil "dayz_DisplayGenderSelect") then {
+		if(!isNil "dayz_DisplayGenderSelect") then {
 			waitUntil {!dayz_DisplayGenderSelect};
 		};
 		if(isNil "sm_done") then {
@@ -426,9 +426,9 @@ if (!isDedicated) then {
 			_maxtimeOut = 60;
 		};
 		while { _timeOut < _maxtimeOut } do {
-			if (dayz_clientPreload && dayz_authed) exitWith { diag_log "PLOGIN: Login loop completed!"; };
-			if (!isNil "_display") then {
-				if ( isNull _display ) then {
+			if(dayz_clientPreload && dayz_authed) exitWith { diag_log "PLOGIN: Login loop completed!"; };
+			if(!isNil "_display") then {
+				if( isNull _display ) then {
 					waitUntil { !dialog; };
 					startLoadingScreen ["","RscDisplayLoadCustom"];
 					_display = uiNameSpace getVariable "BIS_loadingScreen";
@@ -442,15 +442,15 @@ if (!isDedicated) then {
 						if(_loadstatus == 3) exitWith { _loadstatus = 1; dayz_loadScreenMsg = "Server starting ..."; };
 					};
 				};
-				if (dayz_loadScreenMsg != "") then {
+				if(dayz_loadScreenMsg != "") then {
 					_control1 ctrlSetText dayz_loadScreenMsg;
 					dayz_loadScreenMsg = "";
 				};
 				_control2 ctrlSetText format["%1",_timeOut];
 			};
 			_timeOut = _timeOut + 1;
-			if (_timeOut >= _maxtimeOut) then {
-				1 cutText [localize "str_player_login_timeout","PLAIN DOWN"];
+			if(_timeOut >= _maxtimeOut) then {
+				1 cutText[localize "str_player_login_timeout","PLAIN DOWN"];
 				sleep 5;
 				endLoadingScreen;
 				endMission "END1";
@@ -463,7 +463,7 @@ if (!isDedicated) then {
 		private ["_meleeNum","_magType"];
 		_magType = ([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
 		_meleeNum = ({_x == _magType} count magazines player);
-		if (_meleeNum < 1) then {
+		if(_meleeNum < 1) then {
 				player addMagazine _magType;
 		};
 	};
@@ -507,7 +507,7 @@ player_medTransfuse			= compile preprocessFileLineNumbers "\z\addons\dayz_code\m
 player_medMorphine			= compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\publicEH\medMorphine.sqf";
 player_breaklegs			= compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\publicEH\medBreakLegs.sqf";
 player_medPainkiller		= compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\publicEH\medPainkiller.sqf";
-world_isDay 				= {if ((daytime < (24 - dayz_sunRise)) && (daytime > dayz_sunRise)) then {true} else {false}};
+world_isDay 				= {if((daytime < (24 - dayz_sunRise)) && (daytime > dayz_sunRise)) then {true} else {false}};
 player_humanityChange		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_humanityChange.sqf";
 spawn_loot					= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot.sqf";
 spawn_loot_small			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot_small.sqf";
@@ -516,10 +516,10 @@ FNC_GetPlayerUID = {
 	private ["_object","_version","_PID"];
 	_object = _this select 0;
 	_version = productVersion select 3;
-	if (DayZ_UseSteamID) then {
+	if(DayZ_UseSteamID) then {
 		_PID = GetPlayerUID _object;
 	} else {
-		if (_version >= 125548) then {
+		if(_version >= 125548) then {
 			_PID = call (compile "GetPlayerUIDOld _object");
 		} else {
 			_PID = GetPlayerUID _object;
@@ -529,24 +529,24 @@ FNC_GetPlayerUID = {
 	_PID
 };
 
-FNC_GetSetPos = { 
+FNC_GetsetPos = { 
 	private ["_pos","_thingy"];
 	_thingy = _this select 0;
 	_pos = getPosASL _thingy;
-	if (surfaceIsWater _pos) then {
+	if(surfaceIsWater _pos) then {
 		_thingy setPosASL _pos;
 	} else {
-		_thingy SetPos (ASLToATL _pos);
+		_thingy setPos (ASLToATL _pos);
 	};
 };
 
 FNC_GetPos = {
 	private ["_pos","_thingy"];
-	if (isNil {_this select 0}) exitWith {[0,0,0]};
+	if(isNil {_this select 0}) exitWith {[0,0,0]};
 	_thingy = _this select 0;
 	_pos = getPosASL _thingy;
 	if !(surfaceIsWater _pos) then {
-		_pos =  ASLToATL _pos;
+		_pos = ASLToATL _pos;
 	};
 	_pos
 };
@@ -561,7 +561,7 @@ local_setFuel =	{
 zombie_initialize = {
 	private ["_unit","_id"];
 	_unit = _this select 0;
-	if (isServer) then {
+	if(isServer) then {
 		_unit addEventHandler ["local",{_this call zombie_findOwner}];
 	};
 	_id = _unit addeventhandler ["HandleDamage",{ _this call local_zombieDamage }];
@@ -574,8 +574,8 @@ dayz_EjectPlayer = {
 	_inVehicle = (_vehicle != player);
 	if(_inVehicle) then {
 		_noDriver = ((_vehicle emptyPositions "driver") > 0);
-		if (_noDriver && (speed _vehicle) != 0) then {
-			player action ["eject",_vehicle];
+		if(_noDriver && (speed _vehicle) != 0) then {
+			player action["eject",_vehicle];
 		};
 	};
 };
@@ -584,15 +584,15 @@ player_sumMedical = {
 	private["_character","_wounds","_legs","_arms","_medical"];
 	_character = 	_this;
 	_wounds =		[];
-	if (_character getVariable["USEC_injured",false]) then {
+	if(_character getVariable["USEC_injured",false]) then {
 		{
-			if (_character getVariable[_x,false]) then {
+			if(_character getVariable[_x,false]) then {
 				_wounds set [count _wounds,_x];
 			};
 		} count USEC_typeOfWounds;
 	};
-	_legs = _character getVariable ["hit_legs",0];
-	_arms = _character getVariable ["hit_arms",0];
+	_legs = _character getVariable["hit_legs",0];
+	_arms = _character getVariable["hit_arms",0];
 	_medical = [
 		_character getVariable["USEC_isDead",false],
 		_character getVariable["NORRN_unconscious",false],
@@ -610,7 +610,7 @@ player_sumMedical = {
 	_medical
 };
 
-if (isServer) then {
+if(isServer) then {
 	call compile preprocessFileLineNumbers "\z\addons\dayz_server\init\server_functions.sqf";
 } else {
 	eh_localCleanup = {};

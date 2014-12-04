@@ -60,9 +60,9 @@ if(!_donotusekey) then {
 clearWeaponCargoGlobal _object;
 clearMagazineCargoGlobal _object;
 
-_object setVariable ["ObjectID",(_result select 1),true];	
-_object setVariable ["lastUpdate",time];
-_object setVariable ["CharacterID",_characterID,true];
+_object setVariable["ObjectID",(_result select 1),true];	
+_object setVariable["lastUpdate",time];
+_object setVariable["CharacterID",_characterID,true];
 
 if(DZE_TRADER_SPAWNMODE) then {
 	_object attachTo [_object_para,[0,0,-1.6]];

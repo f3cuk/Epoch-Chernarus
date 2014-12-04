@@ -11,8 +11,8 @@ if(typename _id != "SCALAR") then {
 if(isNil "_activatingPlayer") then { _activatingPlayer = 0; };
 if(isNil "_id") then { _id = 0; };
 
-if (isServer) then {
-	if (_id > 0) then {
+if(isServer) then {
+	if(_id > 0) then {
 		_key = format["CHILD:304:%1:",_id];
 		_key call server_hiveWrite;
 		diag_log format["DELETE: Object with ID: %2 deleted by %1",_activatingPlayer,_id];

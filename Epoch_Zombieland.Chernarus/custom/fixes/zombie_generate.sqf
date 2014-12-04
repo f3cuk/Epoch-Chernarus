@@ -11,7 +11,7 @@ _cantSee = {
 	_isok = true;
 	_zPos = +(_this select 0);
 
-	if (count _zPos < 3) exitWith {
+	if(count _zPos < 3) exitWith {
 		diag_log format["%1::_cantSee illegal pos %2",__FILE__,_zPos];
 		false
 	};
@@ -24,8 +24,8 @@ _cantSee = {
 
 	{
 		_xasl = getPosASL _x;
-		if (_xasl distance _zPos < _farDistance) then {
-			if (_xasl distance _zPos < _safeDistance) then {
+		if(_xasl distance _zPos < _farDistance) then {
+			if(_xasl distance _zPos < _safeDistance) then {
 				_isok = false;
 			}
 			else {
@@ -34,8 +34,8 @@ _cantSee = {
 				_ed = (_ed select 0) atan2 (_ed select 1);
 				_deg = [_xasl,_zPos] call BIS_fnc_dirTo;
 				_deg = (_deg - _ed + 720) % 360;
-				if (_deg > 180) then { _deg = _deg - 360; };
-				if ((abs(_deg) < _fov) && {(
+				if(_deg > 180) then { _deg = _deg - 360; };
+				if((abs(_deg) < _fov) && {(
 						(!(terrainIntersectASL [_zPos,_eye])
 						&& {(!(lineIntersects [_zPos,_eye]))})
 					)}) then {
@@ -43,7 +43,7 @@ _cantSee = {
 				};
 			};
 		};
-		if (!_isok) exitWith {false};
+		if(!_isok) exitWith {false};
 	} count playableUnits;
 
 	_isok
@@ -51,15 +51,15 @@ _cantSee = {
 
 waitUntil {sleep .5; !isNil "inSafezone"};
 
-if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < dayz_maxNearByZombies) && (dayz_currentGlobalZombies < dayz_maxGlobalZeds) && !(inSafezone)) then {
-	if ([_position,dayz_cantseefov,10,dayz_cantseeDist] call _cantSee) then {
+if((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < dayz_maxNearByZombies) && (dayz_currentGlobalZombies < dayz_maxGlobalZeds) && !(inSafezone)) then {
+	if([_position,dayz_cantseefov,10,dayz_cantseeDist] call _cantSee) then {
 
 		_tooClose = {isPlayer _x} count (_position nearEntities ["CAManBase",30]) > 0;
-		if (_tooClose) exitwith {};
+		if(_tooClose) exitwith {};
 
 		//Add zeds if unitTypes equals 0
-		if (count _unitTypes == 0) then {
-			if (DZE_MissionLootTable) then {
+		if(count _unitTypes == 0) then {
+			if(DZE_MissionLootTable) then {
 				_unitTypes = []+ getArray (missionConfigFile >> "CfgBuildingLoot" >> "Default" >> "zombieClass");
 			} else {
 				_unitTypes = []+ getArray (configFile >> "CfgBuildingLoot" >> "Default" >> "zombieClass");
@@ -70,13 +70,13 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 		_type 	= _unitTypes call BIS_fnc_selectRandom;
 		_radius = 5;
 		_method = "NONE";
-		if (_doLoiter) then {
+		if(_doLoiter) then {
 			_radius = 40;
 			_method = "CAN_COLLIDE";
 		};
 
 		//Check if point is in water
-		if (surfaceIsWater _position) exitwith {  };
+		if(surfaceIsWater _position) exitwith {  };
 
 		_agent = createAgent [_type,_position,[],_radius,_method];
 		sleep 0.001;
@@ -89,14 +89,14 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 		_array 	= [];
 		_rnd 	= random 1;
 
-		if (_rnd < 0.2) then {
+		if(_rnd < 0.2) then {
 			_lootType = configFile >> "CfgVehicles" >> _type >> "zombieLoot";
-			if (isText _lootType) then {
+			if(isText _lootType) then {
 				_array = [];
 				{
 					_array set [count _array,_x select 0]
 				} forEach getArray (configFile >> "cfgLoot" >> getText(_lootType));
-				if (count _array > 0) then {
+				if(count _array > 0) then {
 					_index = dayz_CLBase find getText(_lootType);
 					_weights = dayz_CLChances select _index;
 					_loot = _array select (_weights select (floor(random (count _weights))));
@@ -122,7 +122,7 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 		};
 		_agent setVariable["agentObject",_agent];
 
-		if (!isNull _agent) then {
+		if(!isNull _agent) then {
 			_agent setDir random 360;
 			sleep 0.001;
 
@@ -136,11 +136,11 @@ if ((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < 
 			);
 			_agent setUnitPos _favStance;
 
-			_agent setVariable ["stance",_favStance];
-			_agent setVariable ["BaseLocation",_position];
-			_agent setVariable ["doLoiter",true];
-			_agent setVariable ["myDest",_position];
-			_agent setVariable ["newDest",_position];
+			_agent setVariable["stance",_favStance];
+			_agent setVariable["BaseLocation",_position];
+			_agent setVariable["doLoiter",true];
+			_agent setVariable["myDest",_position];
+			_agent setVariable["newDest",_position];
 			[_agent,_position] call zombie_loiter;
 		};
 

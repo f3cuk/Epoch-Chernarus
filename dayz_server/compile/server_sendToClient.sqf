@@ -12,7 +12,7 @@ call {
 	
 	if(_variable == "VehHandleDam") exitWith {
 		_vehicle = _arraytosend select 0;
-		if (local _vehicle) then {
+		if(local _vehicle) then {
 			_arraytosend call fnc_veh_handleDam;
 		} else {
 			PVCDZE_vehSH = _arraytosend;
@@ -23,7 +23,7 @@ call {
 	if(_variable == "SFuel") exitWith {
 		_vehicle = _arraytosend select 0;
 		_qty = _arraytosend select 1;
-		if (local _vehicle) then {
+		if(local _vehicle) then {
 			_vehicle setFuel _qty;
 		} else {
 			PVDZE_veh_SFuel = _arraytosend;
@@ -64,7 +64,7 @@ call {
 	if(_variable == "Transfuse") exitWith {
 		usecTransfuse = _arraytosend;
 		_owner publicVariableClient "usecTransfuse";
-		_unit setVariable ["medForceUpdate",true];
+		_unit setVariable["medForceUpdate",true];
 	};
 
 	if(_variable == "Painkiller") exitWith {
@@ -76,21 +76,21 @@ call {
 	if(_variable == "Morphine") exitWith {
 		usecMorphine = _arraytosend;
 		_owner publicVariableClient "usecMorphine";
-		_unit setVariable ["hit_legs",0,false];
-		_unit setVariable ["hit_hands",0,false];
-		_unit setVariable ["medForceUpdate",true];
+		_unit setVariable["hit_legs",0,false];
+		_unit setVariable["hit_hands",0,false];
+		_unit setVariable["medForceUpdate",true];
 	};
 
 	if(_variable == "Epinephrine") exitWith {
 		usecEpi = _arraytosend;
 		_owner publicVariableClient "usecEpi";
-		_unit setVariable ["medForceUpdate",true];
+		_unit setVariable["medForceUpdate",true];
 	};
 
 	if(_variable == "Bandage") exitWith {
 		usecBandage = _arraytosend;
 		_owner publicVariableClient "usecBandage";
-		_unit setVariable ["medForceUpdate",true];
+		_unit setVariable["medForceUpdate",true];
 	};
 
 	if(_variable == "tagFriendly") exitWith {

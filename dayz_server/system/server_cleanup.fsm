@@ -264,7 +264,7 @@ class FSM
     class sync_time
     {
       name = "sync_time";
-      init = /*%FSM<STATEINIT""">*/"if (DZE_DiagFpsSlow) then {" \n
+      init = /*%FSM<STATEINIT""">*/"if(DZE_DiagFpsSlow) then {" \n
        "	call dze_diag_fps;" \n
        "};" \n
        "call server_timeSync;"/*%FSM</STATEINIT""">*/;
@@ -288,7 +288,7 @@ class FSM
     class cleanup_loot
     {
       name = "cleanup_loot";
-      init = /*%FSM<STATEINIT""">*/"if (DZE_DiagFpsFast) then {" \n
+      init = /*%FSM<STATEINIT""">*/"if(DZE_DiagFpsFast) then {" \n
        "	call dze_diag_fps;" \n
        "};" \n
        "" \n

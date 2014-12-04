@@ -37,14 +37,14 @@ VaultWithdrawAmount = {
 
 	_amount 	= round(parseNumber(_this select 0));	
 	_vault		= targetvault;
-	_money		= _vault getVariable ["Money",0];
-	_vault_id	= parseNumber(_vault getVariable ["ObjectID",0]);
-	_wealth 	= player getVariable ["cashMoney",0];
+	_money		= _vault getVariable["Money",0];
+	_vault_id	= parseNumber(_vault getVariable["ObjectID",0]);
+	_wealth 	= player getVariable["cashMoney",0];
 	
 	if(_vault_id != 0) then {
 	
 		if(_amount < 1 || _amount > _money) then { 
-			cutText ["Not enough money in vault","PLAIN DOWN"]; 
+			cutText["Not enough money in vault","PLAIN DOWN"]; 
 		} else {
 			_new_money 		= (_money - _amount);
 			_new_wealth	 	= (_wealth + _amount);
@@ -57,7 +57,7 @@ VaultWithdrawAmount = {
 			PVDZE_vault_Save = [_new_money,_vault_id];
 			publicVariableServer "PVDZE_vault_Save";
 
-			cutText [format["You have withdrawn %1 %2.",[_amount] call BIS_fnc_numberText,CurrencyName],"PLAIN DOWN"];
+			cutText[format["You have withdrawn %1 %2.",[_amount] call BIS_fnc_numberText,CurrencyName],"PLAIN DOWN"];
 
 		};
 		
@@ -75,14 +75,14 @@ VaultDepositAmount = {
 	_amount 	= round(parseNumber(_this select 0));
 	_vault 		= targetvault;
 	
-	_money		= _vault getVariable ["Money",0];
-	_vault_id	= parseNumber(_vault getVariable ["ObjectID",0]);
-	_wealth 	= player getVariable ["cashMoney",0];
+	_money		= _vault getVariable["Money",0];
+	_vault_id	= parseNumber(_vault getVariable["ObjectID",0]);
+	_wealth 	= player getVariable["cashMoney",0];
 	
 	if(_vault_id != 0) then {
 	
 		if(_amount < 1 || _amount > _wealth) then { 
-			cutText ["You cannot deposit more than you have","PLAIN DOWN"]; 
+			cutText["You cannot deposit more than you have","PLAIN DOWN"]; 
 		} else {
 			_new_money 		= _money + _amount;
 			_new_wealth	 	= _wealth - _amount;
@@ -95,7 +95,7 @@ VaultDepositAmount = {
 			PVDZE_vault_Save = [_new_money,_vault_id];
 			publicVariableServer "PVDZE_vault_Save";
 					
-			cutText [format["You have deposited %1 %2.",[_amount] call BIS_fnc_numberText,CurrencyName],"PLAIN DOWN"];
+			cutText[format["You have deposited %1 %2.",[_amount] call BIS_fnc_numberText,CurrencyName],"PLAIN DOWN"];
 		};
 	} else {
 		diag_log format["Missing vault %1",target_vault];
@@ -113,8 +113,8 @@ GivePlayerAmount = {
 	_wealth 	= player getVariable["cashMoney",0];
 	_twealth	= _target getVariable["cashMoney",0];
 
-	if (_amount < 1 or _amount > _wealth) exitWith {
-		cutText ["You can not give more than you currently have","PLAIN DOWN"];
+	if(_amount < 1 or _amount > _wealth) exitWith {
+		cutText["You can not give more than you currently have","PLAIN DOWN"];
 	};
 	
 	player setVariable["cashMoney",_wealth - _amount,true];
@@ -129,5 +129,5 @@ GivePlayerAmount = {
 	PVDZE_log = [format["MONEY TRANSACTION: %1 (%4) gave %2 (%5) %3 coins",name player,name _target,_amount,getPlayerUID player,getPlayerUID _target]];
 	publicVariableServer "PVDZE_log";
 	
-	cutText [format["You gave %1 %2",_amount,CurrencyName],"PLAIN DOWN"];
+	cutText[format["You gave %1 %2",_amount,CurrencyName],"PLAIN DOWN"];
 };

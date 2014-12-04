@@ -40,7 +40,7 @@ if(isServer) then {
 		_player_near = false;
 		waitUntil {
 			{
-				if (isPlayer _x && (_x distance (position _mayor) < 20)) then { _player_near = true; };
+				if(isPlayer _x && (_x distance (position _mayor) < 20)) then { _player_near = true; };
 			} count playableUnits;
 			sleep .1;
 			(_player_near)

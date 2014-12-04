@@ -1,4 +1,4 @@
-if (isServer) then {
+if(isServer) then {
 
 	private ["_mission_data","_pos_x","_pos_y","_ainum","_missionrunning","_aitype","_helipos1","_geartools","_gearmagazines","_cleanheli","_drop","_helipos","_gunner2","_gunner","_player_present","_skillarray","_aicskill","_aiskin","_aigear","_wp","_helipatrol","_gear","_skin","_backpack","_mags","_gun","_triggerdis","_startingpos","_aiweapon","_mission","_heli_class","_aipack","_helicopter","_unitGroup","_pilot","_skill","_paranumber","_position","_wp1"];
 
@@ -19,7 +19,7 @@ if (isServer) then {
 	_helipatrol 	= _this select 12;
 	_aipack 		= "";
 
-	if (count _this > 13) then {
+	if(count _this > 13) then {
 		_mission = _this select 13;
 	} else {
 		_mission = nil;
@@ -49,10 +49,10 @@ if (isServer) then {
 	};
 
 	call {
-		if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-		if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-		if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-		if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+		if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+		if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+		if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+		if(_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 		_aiskin = _skin;
 	};
 
@@ -108,9 +108,9 @@ if (isServer) then {
 	[_gunner2] joinSilent _unitGroup;
 
 	call {
-		if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true]; _x setVariable ["humanity",ai_add_humanity]; } count [_pilot,_gunner,_gunner2]; };
-		if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true]; _x setVariable ["humanity",ai_remove_humanity]; } count [_pilot,_gunner,_gunner2]; };
-		if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true]; _x setVariable ["humanity",ai_special_humanity]; } count [_pilot,_gunner,_gunner2]; };
+		if(_aitype == "Hero") 		exitWith { { _x setVariable["Hero",true]; _x setVariable["humanity",ai_add_humanity]; } count [_pilot,_gunner,_gunner2]; };
+		if(_aitype == "Bandit") 	exitWith { { _x setVariable["Bandit",true]; _x setVariable["humanity",ai_remove_humanity]; } count [_pilot,_gunner,_gunner2]; };
+		if(_aitype == "Special") 	exitWith { { _x setVariable["Special",true]; _x setVariable["humanity",ai_special_humanity]; } count [_pilot,_gunner,_gunner2]; };
 	};
 	
 	ai_air_units = (ai_air_units +1);
@@ -138,13 +138,13 @@ if (isServer) then {
 	_unitGroup setSpeedMode "FULL";
 
 	if(_aitype == "Hero") then {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn hero_behaviour;
 		} else {
 			[_unitGroup] spawn hero_behaviour;
 		};
 	} else {
-		if (!isNil "_mission") then {
+		if(!isNil "_mission") then {
 			[_unitGroup,_mission] spawn bandit_behaviour;
 		} else {
 			[_unitGroup] spawn bandit_behaviour;
@@ -165,7 +165,7 @@ if (isServer) then {
 		sleep 1;
 		_helipos = [_helicopter] call FNC_GetPos;
 
-		if (_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
+		if(_helipos distance [(_position select 0),(_position select 1),100] <= 200) then {
 
 			if(_aitype == "Hero") then {
 				_pgroup	= createGroup RESISTANCE;
@@ -178,7 +178,7 @@ if (isServer) then {
 				_helipos = [_helicopter] call FNC_GetPos;
 
 				call {
-					if (typeName(_gun) == "SCALAR") then {
+					if(typeName(_gun) == "SCALAR") then {
 						if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
 						if(_gun == 1) 			exitWith { _aiweapon = ai_wep_machine; };
 						if(_gun == 2) 			exitWith { _aiweapon = ai_wep_sniper; };
@@ -191,7 +191,7 @@ if (isServer) then {
 				_magazine 	= _weapon call find_suitable_ammunition;
 
 				call {
-					if (typeName(_gear) == "SCALAR") then {
+					if(typeName(_gear) == "SCALAR") then {
 						if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
 						if(_gear == 1) 			exitWith { _aigear = ai_gear1; };
 					} else {
@@ -209,10 +209,10 @@ if (isServer) then {
 				};
 					
 				call {
-					if (_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
-					if (_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
-					if (_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
-					if (_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
+					if(_skin == "random") 	exitWith { _aiskin = ai_all_skin call BIS_fnc_selectRandom; };
+					if(_skin == "hero") 	exitWith { _aiskin = ai_hero_skin call BIS_fnc_selectRandom; };
+					if(_skin == "bandit") 	exitWith { _aiskin = ai_bandit_skin call BIS_fnc_selectRandom; };
+					if(_skin == "special") exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 					_aiskin = _skin;
 				};
 
@@ -249,7 +249,7 @@ if (isServer) then {
 					_para addweapon _x
 				} count _geartools;
 				
-				if (sunOrMoon != 1) then {
+				if(sunOrMoon != 1) then {
 					_para addweapon "NVGoggles";
 				};
 				
@@ -278,20 +278,20 @@ if (isServer) then {
 
 					_mission_data = (wai_mission_data select _mission);
 
-					if (typeName _mission_data == "ARRAY") then {
+					if(typeName _mission_data == "ARRAY") then {
 						_ainum = _mission_data select 0;
 						wai_mission_data select _mission set [0,(_ainum + 1)];
-						_para setVariable ["missionclean","ground"];
-						_para setVariable ["mission",_mission,true];
+						_para setVariable["missionclean","ground"];
+						_para setVariable["mission",_mission,true];
 					};
 
 				};
 			};
 
 			call {
-				if (_aitype == "Hero") 		exitWith { { _x setVariable ["Hero",true,true]; } count (units _pgroup); };
-				if (_aitype == "Bandit") 	exitWith { { _x setVariable ["Bandit",true,true]; } count (units _pgroup); };
-				if (_aitype == "Special") 	exitWith { { _x setVariable ["Special",true,true]; } count (units _pgroup); };
+				if(_aitype == "Hero") 		exitWith { { _x setVariable["Hero",true,true]; } count (units _pgroup); };
+				if(_aitype == "Bandit") 	exitWith { { _x setVariable["Bandit",true,true]; } count (units _pgroup); };
+				if(_aitype == "Special") 	exitWith { { _x setVariable["Special",true,true]; } count (units _pgroup); };
 			};
 			
 			_drop = false;
@@ -302,13 +302,13 @@ if (isServer) then {
 			[_pgroup,_position,_skill] call group_waypoints;
 			
 			if(_aitype == "Hero") then {
-				if (!isNil "_mission") then {
+				if(!isNil "_mission") then {
 					[_pgroup,_mission] spawn hero_behaviour;
 				} else {
 					[_pgroup] spawn hero_behaviour;
 				};
 			} else {
-				if (!isNil "_mission") then {
+				if(!isNil "_mission") then {
 					[_pgroup,_mission] spawn bandit_behaviour;
 				} else {
 					[_pgroup] spawn bandit_behaviour;
@@ -317,7 +317,7 @@ if (isServer) then {
 		};
 	};
 
-	if (_helipatrol) then { 
+	if(_helipatrol) then { 
 		
 		_wp1 = _unitGroup addWaypoint [[(_position select 0),(_position select 1)],100];
 		_wp1 setWaypointType "SAD";
@@ -326,13 +326,13 @@ if (isServer) then {
 		_unitGroup setSpeedMode "FULL";
 
 		if(_aitype == "Hero") then {
-			if (!isNil "_mission") then {
+			if(!isNil "_mission") then {
 				[_unitGroup,_mission] spawn hero_behaviour;
 			} else {
 				[_unitGroup] spawn hero_behaviour;
 			};
 		} else {
-			if (!isNil "_mission") then {
+			if(!isNil "_mission") then {
 				[_unitGroup,_mission] spawn bandit_behaviour;
 			} else {
 				[_unitGroup] spawn bandit_behaviour;
@@ -353,13 +353,13 @@ if (isServer) then {
 		_unitGroup setSpeedMode "FULL";
 
 		if(_aitype == "Hero") then {
-			if (!isNil "_mission") then {
+			if(!isNil "_mission") then {
 				[_unitGroup,_mission] spawn hero_behaviour;
 			} else {
 				[_unitGroup] spawn hero_behaviour;
 			};
 		} else {
-			if (!isNil "_mission") then {
+			if(!isNil "_mission") then {
 				[_unitGroup,_mission] spawn bandit_behaviour;
 			} else {
 				[_unitGroup] spawn bandit_behaviour;
@@ -373,7 +373,7 @@ if (isServer) then {
 			sleep 5;
 			_helipos1 = [_helicopter] call FNC_GetPos;
 
-			if ((_helipos1 distance [(_startingpos select 0),(_startingpos select 1),100] <= 200) || (!alive _helicopter)) then {
+			if((_helipos1 distance [(_startingpos select 0),(_startingpos select 1),100] <= 200) || (!alive _helicopter)) then {
 				
 				deleteVehicle _helicopter;
 				{

@@ -9,15 +9,15 @@ _data = [];
 _doLoop = 0;
 while {_doLoop < 5} do {
 	_data = _key call server_hiveReadWrite;
-	if (count _data > 0) then {
-		if ((_data select 0) != "ERROR") then {
+	if(count _data > 0) then {
+		if((_data select 0) != "ERROR") then {
 			_doLoop = 9;
 		};
 	};
 	_doLoop = _doLoop + 1;
 };
 
-if ((_data select 0) != "PASS") exitWith {
+if((_data select 0) != "PASS") exitWith {
 	diag_log format["HIVE ERROR: %1 -> %2",_key,_data];
 };
 

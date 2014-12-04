@@ -37,7 +37,7 @@ while {true} do {
 
 	_spawnRoll = random 1;
 
-	if (_spawnRoll <= _spawnChance) then {
+	if(_spawnRoll <= _spawnChance) then {
 
 		_position = [getMarkerPos _spawnMarker,0,_spawnRadius,10,0,2000,0] call BIS_fnc_findSafePos;
 
@@ -47,16 +47,16 @@ while {true} do {
 		_crash setDir round(random 360);
 
 		_config = configFile >> "CfgVehicles" >> _crashModel >> "heightAdjustment";
-		_hasAdjustment =  isNumber(_config);
+		_hasAdjustment = isNumber(_config);
 		_newHeight = 0;
 
-		if (_hasAdjustment) then {
+		if(_hasAdjustment) then {
 			_newHeight = getNumber(_config);
 		};
 
 		_adjustedPos = [(_position select 0),(_position select 1),_newHeight];
 		_crash setPos _adjustedPos;
-		_crash setVariable ["ObjectID","1",true];
+		_crash setVariable["ObjectID","1",true];
 		_crash enableSimulation false;
 
 		_num = (round(random _randomizedLoot)) + _guaranteedLoot;
@@ -66,19 +66,19 @@ while {true} do {
 			_num = _num * 2;
 		};
 
-		if (_spawnFire) then {
+		if(_spawnFire) then {
 			PVDZE_obj_Fire = [_crash,2,time,false,_fadeFire];
 			publicVariable "PVDZE_obj_Fire";
-			_crash setvariable ["fadeFire",_fadeFire,true];
+			_crash setVariable["fadeFire",_fadeFire,true];
 		};
 
 		_config = 		configFile >> "CfgBuildingLoot" >> _lootTable;
-		if (DZE_MissionLootTable) then {
+		if(DZE_MissionLootTable) then {
 			_config = missionConfigFile >> "CfgBuildingLoot" >> _lootTable;
 		};
 
 		_itemTypes =	[] + getArray (_config >> "itemType");
-		_index =        dayz_CBLBase find toLower(_lootTable);
+		_index =       dayz_CBLBase find toLower(_lootTable);
 		_weights =		dayz_CBLChances select _index;
 		_cntWeights = count _weights;
 
@@ -92,7 +92,7 @@ while {true} do {
 
 			_nearby = _position nearObjects ["ReammoBox",sizeOf(_crashModel)];
 			{
-				_x setVariable ["permaLoot",true];
+				_x setVariable["permaLoot",true];
 			} count _nearBy;
 		};
 

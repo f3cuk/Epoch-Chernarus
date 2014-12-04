@@ -28,7 +28,7 @@ class RscTitles
 		movingEnable = 0;
 		duration = 100000;
 		name = "statusBorder";
-		onLoad = "uiNamespace setVariable ['DAYZ_GUI_display',_this select 0];";
+		onLoad = "uiNamespace setVariable['DAYZ_GUI_display',_this select 0];";
 		
 		class ControlsBackground {
 			class RscStructuredText_1199 : RscStructuredText {

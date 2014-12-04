@@ -12,7 +12,7 @@ _reason 				= _this select 8;
 
 _playerUID = [player] call FNC_GetPlayerUID;
 
-if (DZE_APlotforLife) then {
+if(DZE_APlotforLife) then {
 	_OwnerUID = _playerUID;
 } else {
 	_OwnerUID = dayz_characterID;
@@ -23,8 +23,8 @@ _proceed 	= false;
 _counter 	= 0;
 _location	= [0,0,0];
 
-if (!DZE_BuildOnRoads) then {
-	if (isOnRoad _position) then {
+if(!DZE_BuildOnRoads) then {
+	if(isOnRoad _position) then {
 		_cancel = true;
 		_reason = "Cannot build on a road.";
 	};
@@ -46,7 +46,7 @@ isNearWater = {
 	
 	for "_i" from 0 to 359 step 45 do {
 		_position = [(_position select 0) + (sin(_i)*_radius),(_position select 1) + (cos(_i)*_radius)];
-		if (surfaceIsWater _position) exitWith {
+		if(surfaceIsWater _position) exitWith {
 			_result = true; 
 		};
 	};
@@ -64,8 +64,8 @@ _restricted_area = _position call {
 	_y_top 		= 4100;
 	_y_bottom 	= 900;
 
-	if (_position select 1 < _y_top && _position select 1 > _y_bottom) then {
-		if (([_position,1000] call isNearWater) && !(surfaceIsWater _position)) then { _result = true; };
+	if(_position select 1 < _y_top && _position select 1 > _y_bottom) then {
+		if(([_position,1000] call isNearWater) && !(surfaceIsWater _position)) then { _result = true; };
 	};
 
 	_result
@@ -84,21 +84,21 @@ if(!_cancel) then {
 		_location set [2,0];
 	};
 
-	if (surfaceIsWater _location) then {
+	if(surfaceIsWater _location) then {
 		_tmpbuilt setPosASL _location;
 		_location = ASLtoATL _location;
 	} else {
-		_tmpbuilt SetPos _location;
+		_tmpbuilt setPos _location;
 	};
 
-	cutText [format[(localize "str_epoch_player_138"),_text],"PLAIN DOWN"];
+	cutText[format[(localize "str_epoch_player_138"),_text],"PLAIN DOWN"];
 
 	_limit = 3;
 
-	if (DZE_StaticConstructionCount > 0) then {
+	if(DZE_StaticConstructionCount > 0) then {
 		_limit = DZE_StaticConstructionCount;
 	} else {
-		if (isNumber (configFile >> "CfgVehicles" >> _classname >> "constructioncount")) then {
+		if(isNumber (configFile >> "CfgVehicles" >> _classname >> "constructioncount")) then {
 			_limit = getNumber(configFile >> "CfgVehicles" >> _classname >> "constructioncount");
 		};
 	};
@@ -125,17 +125,17 @@ if(!_cancel) then {
 			_animState = animationState player;
 			_isMedic = ["medic",_animState] call fnc_inString;
 
-			if (_isMedic) then {
+			if(_isMedic) then {
 				_started = true;
 			};
-			if (_started && !_isMedic) then {
+			if(_started && !_isMedic) then {
 				r_doLoop = false;
 				_finished = true;
 			};
-			if (r_interrupt || (player getVariable["combattimeout",0] >= time)) then {
+			if(r_interrupt || (player getVariable["combattimeout",0] >= time)) then {
 				r_doLoop = false;
 			};
-			if (DZE_cancelBuilding) exitWith {
+			if(DZE_cancelBuilding) exitWith {
 				r_doLoop = false;
 			};
 			sleep 0.1;
@@ -153,7 +153,7 @@ if(!_cancel) then {
 			_counter = _counter + 1;
 		};
 
-		cutText [format[(localize "str_epoch_player_139"),_text,_counter,_limit],"PLAIN DOWN"];
+		cutText[format[(localize "str_epoch_player_139"),_text,_counter,_limit],"PLAIN DOWN"];
 
 		if(_counter == _limit) exitWith {
 			_isOk = false;
@@ -162,19 +162,19 @@ if(!_cancel) then {
 
 	};
 
-	if (_proceed) then {
+	if(_proceed) then {
 
 		_num_removed = ([player,DZE_buildItem] call BIS_fnc_invRemove);
 
 		if(_num_removed == 1) then {
 
-			cutText [format[localize "str_build_01",_text],"PLAIN DOWN"];
+			cutText[format[localize "str_build_01",_text],"PLAIN DOWN"];
 
-			if (_isPole) then {
+			if(_isPole) then {
 				[] spawn player_plotPreview;
 			};
 
-			_tmpbuilt setVariable ["OEMPos",_location,true];
+			_tmpbuilt setVariable["OEMPos",_location,true];
 
 			if(_lockable > 1) then {
 
@@ -189,13 +189,13 @@ if(!_cancel) then {
 						_combination 		= format["%1%2%3",_combination_1,_combination_2,_combination_3];
 						dayz_combination 	= _combination;
 
-						if (_combination_1 == 100) then {
+						if(_combination_1 == 100) then {
 							_combination_1_Display = "Red";
 						};
-						if (_combination_1 == 101) then {
+						if(_combination_1 == 101) then {
 							_combination_1_Display = "Green";
 						};
-						if (_combination_1 == 102) then {
+						if(_combination_1 == 102) then {
 							_combination_1_Display = "Blue";
 						};
 						_combinationDisplay = format["%1%2%3",_combination_1_Display,_combination_2,_combination_3];
@@ -221,18 +221,18 @@ if(!_cancel) then {
 					};
 				};
 
-				_tmpbuilt setVariable ["CharacterID",_combination,true];
-				_tmpbuilt setVariable ["ownerPUID",_OwnerUID,true];
+				_tmpbuilt setVariable["CharacterID",_combination,true];
+				_tmpbuilt setVariable["ownerPUID",_OwnerUID,true];
 				
 				PVDZE_obj_Publish = [_combination,_tmpbuilt,[_dir,_location,_playerUID],_classname];
 				publicVariableServer "PVDZE_obj_Publish";
 
-				cutText [format[(localize "str_epoch_player_140"),_combinationDisplay,_text],"PLAIN DOWN",5];
+				cutText[format[(localize "str_epoch_player_140"),_combinationDisplay,_text],"PLAIN DOWN",5];
 
 			} else {
 
-				_tmpbuilt setVariable ["CharacterID",dayz_characterID,true];
-				_tmpbuilt setVariable ["ownerPUID",_OwnerUID,true];
+				_tmpbuilt setVariable["CharacterID",dayz_characterID,true];
+				_tmpbuilt setVariable["ownerPUID",_OwnerUID,true];
 			
 				if(_tmpbuilt isKindOf "Land_Fire_DZ") then {
 					_tmpbuilt spawn player_fireMonitor;
@@ -245,25 +245,25 @@ if(!_cancel) then {
 
 		} else {
 			deleteVehicle _tmpbuilt;
-			cutText [(localize "str_epoch_player_46") ,"PLAIN DOWN"];
+			cutText[(localize "str_epoch_player_46") ,"PLAIN DOWN"];
 		};
 
 	} else {
 
 		r_interrupt = false;
 
-		if (vehicle player == player) then {
+		if(vehicle player == player) then {
 			[objNull,player,rSwitchMove,""] call RE;
 			player playActionNow "stop";
 		};
 
 		deleteVehicle _tmpbuilt;
 
-		cutText [(localize "str_epoch_player_46") ,"PLAIN DOWN"];
+		cutText[(localize "str_epoch_player_46") ,"PLAIN DOWN"];
 	};
 
 } else {
-	cutText [format[(localize "str_epoch_player_47"),_text,_reason],"PLAIN DOWN"];
+	cutText[format[(localize "str_epoch_player_47"),_text,_reason],"PLAIN DOWN"];
 };
 
 DZE_ActionInProgress = false;

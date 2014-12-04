@@ -22,19 +22,19 @@ _passArray 			= [];
 _hasbuilditem 	= DZE_buildItem in magazines player;
 _passArray 		= [_hasrequireditem,_reason];
 
-if (_checkMag) then {
-	if (!_hasbuilditem) exitWith {
+if(_checkMag) then {
+	if(!_hasbuilditem) exitWith {
 		DZE_ActionInProgress = false;
-		cutText [format[(localize "str_player_31"),_text,"build"] ,"PLAIN DOWN"];
+		cutText[format[(localize "str_player_31"),_text,"build"] ,"PLAIN DOWN"];
 		_reason = "missing item";
 		_passArray
 	};
 };
 
-if (_checkTools) then {
-	if (!_hasrequireditem) exitWith {
+if(_checkTools) then {
+	if(!_hasrequireditem) exitWith {
 		DZE_ActionInProgress = false;
-		cutText [format[(localize "str_epoch_player_137"),_missing] ,"PLAIN DOWN"];
+		cutText[format[(localize "str_epoch_player_137"),_missing] ,"PLAIN DOWN"];
 		_reason = "missing tools";
 		_passArray
 	};

@@ -9,15 +9,15 @@ _currency 		= _this select 5;
 _qty 			= _this select 6;
 _clientID 		= owner _player;
 _price 			= format ["%2x %1",_currency,_qty];
-_name 			= if (alive _player) then { name _player; } else { "Dead Player"; };
+_name 			= if(alive _player) then { name _player; } else { "Dead Player"; };
 
-if (_buyorsell == 0) then {
+if(_buyorsell == 0) then {
 	diag_log format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5",_name,(getPlayerUID _player),_classname,_traderCity,_price];
 } else {
 	diag_log format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5",_name,(getPlayerUID _player),_classname,_traderCity,_price];
 };
 
-if (DZE_ConfigTrader) then {
+if(DZE_ConfigTrader) then {
 	_outcome = "PASS";
 } else {
 	_key 		= format["CHILD:398:%1:%2:",_traderID,_buyorsell];

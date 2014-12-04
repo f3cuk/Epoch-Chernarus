@@ -8,21 +8,21 @@ _friendly = false;
 
 _playerUID = [player] call FNC_GetPlayerUID;
 
-if (DZE_APlotforLife) then {
+if(DZE_APlotforLife) then {
 	_ownerUID = _playerUID;
-}else{
+} else {
 	_ownerUID = dayz_characterID;
 };
 
-_ObjectOwner = _object getVariable ["ownerPUID","0"];
+_ObjectOwner = _object getVariable["ownerPUID","0"];
 
-if (_ownerUID == _ObjectOwner) then {
+if(_ownerUID == _ObjectOwner) then {
 	_owner = true;
 };
 
-_friendlies	= player getVariable ["friendlyTo",[]];
+_friendlies	= player getVariable["friendlyTo",[]];
 
-if (_ownerUID in _friendlies) then {
+if(_ownerUID in _friendlies) then {
 	_friendly = true;
 };
 

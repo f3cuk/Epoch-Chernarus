@@ -127,9 +127,9 @@ class RscCharacterSelectButton
 	};
 	colorBackground[] = 
 	{
-		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_R',0.69])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_G',0.75])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_B',0.5])",
 		0.7
 	};
 	colorBackgroundDisabled[] = 
@@ -141,16 +141,16 @@ class RscCharacterSelectButton
 	};
 	colorBackgroundActive[] = 
 	{
-		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_R',0.69])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_G',0.75])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_B',0.5])",
 		1
 	};
 	colorFocused[] = 
 	{
-		"(profilenamespace getvariable ['GUI_BCG_RGB_R',0.69])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_G',0.75])",
-		"(profilenamespace getvariable ['GUI_BCG_RGB_B',0.5])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_R',0.69])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_G',0.75])",
+		"(profilenamespace getVariable['GUI_BCG_RGB_B',0.5])",
 		1
 	};
 	colorShadow[] = 
@@ -223,7 +223,7 @@ class RscDisplayCharacterSelect
 	idd = -1;
 	enableDisplay = 1;
 	
-	onLoad = "uiNamespace setVariable ['CharacterSelectDisplay',_this select 0]; diag_log 'CharacterSelectDisplay.onLoad';";
+	onLoad = "uiNamespace setVariable['CharacterSelectDisplay',_this select 0]; diag_log 'CharacterSelectDisplay.onLoad';";
 
 	class Controls {
 		class CharacterSelectTitle: RscText

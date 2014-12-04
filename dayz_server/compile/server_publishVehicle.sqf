@@ -12,15 +12,15 @@ _dam_array		= [];
 
 _uid			= _worldspace call dayz_objectUID2;
 
-if (_spawn_damage) then { 
+if(_spawn_damage) then { 
 	_fuel = 0;
-	if (getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
+	if(getNumber(configFile >> "CfgVehicles" >> _class >> "isBicycle") != 1) then {
 		_hitpoints = _object call vehicle_getHitpoints;
 		{
 			_dam = call generate_new_damage;
 			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
 			
-			if (_dam > 0) then {
+			if(_dam > 0) then {
 				_dam_array set [count _dam_array,[_selection,_dam]];
 			};
 		} count _hitpoints;	
@@ -47,15 +47,15 @@ while {!_continue} do {
 	};
 };
 
-_object setVariable ["ObjectID",(_result select 1),true];	
-_object setVariable ["lastUpdate",time];
-_object setVariable ["CharacterID",_characterID,true];
+_object setVariable["ObjectID",(_result select 1),true];	
+_object setVariable["lastUpdate",time];
+_object setVariable["CharacterID",_characterID,true];
 _object setDamage _damage;
 
 {
 	_selection	= _x select 0;
 	_dam		= _x select 1;
-	if (_selection in dayZ_explosiveParts && _dam > 0.8) then { _dam = 0.8 };
+	if(_selection in dayZ_explosiveParts && _dam > 0.8) then { _dam = 0.8 };
 	[_object,_selection,_dam] call object_setFixServer;
 } count _dam_array;
 

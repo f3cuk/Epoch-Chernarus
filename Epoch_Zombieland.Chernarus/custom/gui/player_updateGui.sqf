@@ -7,7 +7,7 @@ _thirstVal	= 1 - (dayz_thirst / SleepWater);
 _combatVal	= 1 - dayz_combat;
 _bloodVal 	= r_player_blood;
 
-if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
+if(uiNamespace getVariable["DZ_displayUI",0] == 1) then {
 	_array = [_foodVal,_thirstVal];
 	_array
 } else {
@@ -130,7 +130,7 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 	if("blood" in _update_array) then {
 		_blood_number = (_bloodVal/1000);
 		_blood_color = (_bloodVal/1000) call _calculate_color;
-		if (round(_blood_number) > 0) then { 
+		if(round(_blood_number) > 0) then { 
 			_blood = "custom\gui\icons\border_" + str(round(_blood_number)) + ".paa";
 		} else {
 			_blood = "";
@@ -143,7 +143,7 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 	if("food" in _update_array) then {
 		_food_number = ((_foodVal*1.2)*10);
 		_food_color = _food_number call _calculate_color;
-		if (round(_food_number) > 0) then {
+		if(round(_food_number) > 0) then {
 			_food = "custom\gui\icons\border_s_" + str(round(_food_number)) + ".paa";
 		} else {
 			_food = "";
@@ -156,7 +156,7 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 	if("thirst" in _update_array) then {	
 		_thirst_number = ((_thirstVal*1.2)*10);
 		_thirst_color = _thirst_number call _calculate_color;
-		if (round(_thirst_number) > 0) then {
+		if(round(_thirst_number) > 0) then {
 			_thirst	= "custom\gui\icons\border_s_" + str(round(_thirst_number)) + ".paa";
 		} else {
 			_thirst = "";
@@ -168,14 +168,14 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 
 	_update_array = nil;
 
-	if (_combatVal == 0) then {
+	if(_combatVal == 0) then {
 		_ctrl_array set[count _ctrl_array,_ctrl_humanity];
 		_combattimeout = player getVariable["combattimeout",(time + 30)];
 
-		if (_combattimeout > 0) then {
+		if(_combattimeout > 0) then {
 			_timeleft = _combattimeout - time;
 			_invert = 12 - ceil((_timeleft / 30) * 12);
-			if (_invert > 0) then {
+			if(_invert > 0) then {
 				_humanity_b	= "custom\gui\icons\border_s_" + str(_invert) + ".paa";
 			} else {
 				_humanity_b = "";
@@ -190,25 +190,25 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 		_ctrl_humanity ctrlShow true;
 	};
 
-	if (_thirstVal < 0.2) then {
+	if(_thirstVal < 0.2) then {
 		_ctrl_array set [count _ctrl_array,_ctrl_drink];
 	} else {
 		_ctrl_drink ctrlShow true;
 	};
 
-	if (_foodVal < 0.2) then {
+	if(_foodVal < 0.2) then {
 		_ctrl_array set [count _ctrl_array,_ctrl_food];
 	} else {
 		_ctrl_food ctrlShow true;
 	};
 
-	if (_bloodVal < 3000) then {
+	if(_bloodVal < 3000) then {
 		_ctrl_array set [count _ctrl_array,_ctrl_blood];
 	} else {
 		_ctrl_blood ctrlShow true;
 	};
 
-	if (r_player_injured) then {
+	if(r_player_injured) then {
 		_ctrl_array set [count _ctrl_array,_ctrl_bleed];
 	} else {
 		_ctrl_bleed ctrlShow false;
@@ -230,24 +230,24 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 	_string			= "";
 	_humanityTarget	= cursorTarget;
 
-	if (!isNull _humanityTarget && isPlayer _humanityTarget && alive _humanityTarget) then {
+	if(!isNull _humanityTarget && isPlayer _humanityTarget && alive _humanityTarget) then {
 
 		_distance = player distance _humanityTarget;
 
-		if (_distance < DZE_HumanityTargetDistance) then {
+		if(_distance < DZE_HumanityTargetDistance) then {
 
 			_size			= (1-(floor(_distance/5)*0.1)) max 0.1;
-			_friendlies		= player getVariable ["friendlies",[]];
+			_friendlies		= player getVariable["friendlies",[]];
 			_playerUID		= getPlayerUID player;
 			_rplayerUID		= getPlayerUID _humanityTarget;
-			_rfriendlies	= _humanityTarget getVariable ["friendlies",[]];
-			_rfriendlyTo	= _humanityTarget getVariable ["friendlyTo",[]];
+			_rfriendlies	= _humanityTarget getVariable["friendlies",[]];
+			_rfriendlyTo	= _humanityTarget getVariable["friendlyTo",[]];
 
-			if ((_rplayerUID in _friendlies) && (_playerUID in _rfriendlies)) then {
+			if((_rplayerUID in _friendlies) && (_playerUID in _rfriendlies)) then {
 			
 				if !(_playerUID in _rfriendlyTo) then {
 					_rfriendlyTo set [count _rfriendlyTo,_playerUID];
-					_humanityTarget setVariable ["friendlyTo",_rfriendlyTo,true];
+					_humanityTarget setVariable["friendlyTo",_rfriendlyTo,true];
 				};
 		
 				_color	= "color='#339933'";
@@ -255,7 +255,7 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 			
 			} else {
 
-				_humanity_t	= _humanityTarget getVariable ["humanity",0];
+				_humanity_t	= _humanityTarget getVariable["humanity",0];
 				_color		= "color='#ffffff'";
 				
 				if(_humanity_t < -5000) then {
@@ -266,14 +266,14 @@ if (uiNamespace getVariable ["DZ_displayUI",0] == 1) then {
 					};
 				};
 				
-				if((_humanityTarget getVariable ["DZE_display_name",false]) || (DZE_ForceNameTagsInTrader && isInTraderCity)) then {
+				if((_humanityTarget getVariable["DZE_display_name",false]) || (DZE_ForceNameTagsInTrader && isInTraderCity)) then {
 					_string = format["<t %2 align='center' size='%3'>%1</t>",(name _humanityTarget),_color,_size];
 				};
 			};
 		};
 	};
 
-	if (dayz_humanitytarget != _string) then {
+	if(dayz_humanitytarget != _string) then {
 		_targetControl = _display displayCtrl 1199;
 		_targetControl ctrlSetStructuredText (parseText _string);
 		dayz_humanitytarget = _string;

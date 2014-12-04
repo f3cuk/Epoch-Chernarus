@@ -7,24 +7,24 @@ _isNew			= _this select 2;
 
 diag_log format["Player %1 (%2) logging in,isnew: %3",name _playerObj,_playerID,_isNew];
 
-if (isNull _playerObj) exitWith {
+if(isNull _playerObj) exitWith {
 	diag_log ("SETUP INIT FAILED: Exiting,player object null: " + str(_playerObj));
 };
 
 _playerObj removeAllMPEventHandlers "MPHit";
 _playerObj addMPEventHandler ["MPHit",{_this spawn fnc_plyrHit;}];
 
-if (_playerID == "") then {
+if(_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;
 };
 
-if (_playerID == "") exitWith {
+if(_playerID == "") exitWith {
 	diag_log ("SETUP INIT FAILED: Exiting,no player ID: " + str(_playerObj));
 };
 
 private["_dummy"];
 _dummy = getPlayerUID _playerObj;
-if ( _playerID != _dummy ) then { 
+if( _playerID != _dummy ) then { 
 	diag_log format["DEBUG: _playerID miscompare with UID! _playerID:%1",_playerID]; 
 	_playerID = _dummy;
 };
@@ -37,14 +37,14 @@ _finished	= false;
 while {!_finished} do {
 	_key = format["CHILD:102:%1:",_characterID];
 	_primary = _key call server_hiveReadWrite;
-	if (count _primary > 0) then {
-		if ((_primary select 0) != "ERROR") then {
+	if(count _primary > 0) then {
+		if((_primary select 0) != "ERROR") then {
 			_finished = true;
 		};
 	};
 };
 
-if (isNull _playerObj || !isPlayer _playerObj) exitWith {
+if(isNull _playerObj || !isPlayer _playerObj) exitWith {
 	diag_log ("SETUP RESULT: Exiting,player object null: " + str(_playerObj));
 };
 
@@ -58,26 +58,26 @@ _cashMoney 		= _primary select 7;
 
 _randomSpot 	= false;
 
-if (count _worldspace > 0) then {
+if(count _worldspace > 0) then {
 
 	_position = _worldspace select 1;
-	if (count _position < 3) then {
+	if(count _position < 3) then {
 		_randomSpot = true;
 	};
 
 	_debug 		= getMarkerpos "respawn_west";
 	_distance 	= _debug distance _position;
 
-	if (_distance < 2000) then {
+	if(_distance < 2000) then {
 		_randomSpot = true;
 	};
 	
 	_distance = [0,0,0] distance _position;
-	if (_distance < 500) then {
+	if(_distance < 500) then {
 		_randomSpot = true;
 	};
 	
-	if (_lastinstance != dayZ_instance) then {
+	if(_lastinstance != dayZ_instance) then {
 		_randomSpot = true;
 	};
 
@@ -86,7 +86,7 @@ if (count _worldspace > 0) then {
 };
 
 //set medical values
-if (count _medical > 0) then {
+if(count _medical > 0) then {
 	_playerObj setVariable["USEC_isDead",(_medical select 0),true];
 	_playerObj setVariable["NORRN_unconscious",(_medical select 1),true];
 	_playerObj setVariable["USEC_infected",(_medical select 2),true];
@@ -106,23 +106,23 @@ if (count _medical > 0) then {
 	
 	//Add fractures
 	_fractures = (_medical select 9);
-	_playerObj setVariable ["hit_legs",(_fractures select 0),true];
-	_playerObj setVariable ["hit_hands",(_fractures select 1),true];
+	_playerObj setVariable["hit_legs",(_fractures select 0),true];
+	_playerObj setVariable["hit_hands",(_fractures select 1),true];
 	
-	if (count _medical > 11) then {
-		_playerObj setVariable ["messing",(_medical select 11),true];
+	if(count _medical > 11) then {
+		_playerObj setVariable["messing",(_medical select 11),true];
 	};
 	
 } else {
 	//Reset Fractures
-	_playerObj setVariable ["hit_legs",0,true];
-	_playerObj setVariable ["hit_hands",0,true];
-	_playerObj setVariable ["USEC_injured",false,true];
-	_playerObj setVariable ["USEC_inPain",false,true];
-	_playerObj setVariable ["messing",[0,0],true];
+	_playerObj setVariable["hit_legs",0,true];
+	_playerObj setVariable["hit_hands",0,true];
+	_playerObj setVariable["USEC_injured",false,true];
+	_playerObj setVariable["USEC_inPain",false,true];
+	_playerObj setVariable["messing",[0,0],true];
 };
 	
-if (count _stats > 0) then {
+if(count _stats > 0) then {
 	//register stats
 	_playerObj setVariable["zombieKills",(_stats select 0),true];
 	_playerObj setVariable["headShots",(_stats select 1),true];
@@ -139,8 +139,8 @@ if (count _stats > 0) then {
 	_playerObj setVariable["headShots_CHK",(_stats select 1)];
 	_playerObj setVariable["humanKills_CHK",(_stats select 2)];
 	_playerObj setVariable["banditKills_CHK",(_stats select 3)];
-	if (count _stats > 4) then {
-		if (!(_stats select 3)) then {
+	if(count _stats > 4) then {
+		if(!(_stats select 3)) then {
 			_playerObj setVariable["selectSex",true,true];
 		};
 	} else {
@@ -161,10 +161,10 @@ if (count _stats > 0) then {
 	_playerObj setVariable["headShots_CHK",0];
 };
 
-if (_randomSpot) then {
+if(_randomSpot) then {
 	private["_counter","_position","_isNear","_isZero","_mkr"];
 
-	if (!isDedicated) then {
+	if(!isDedicated) then {
 		endLoadingScreen;
 	};
 	
@@ -189,13 +189,13 @@ if (_randomSpot) then {
 
 		_pos    	= _position;
 
-		if ((_isNear && !_isZero)) then { _searching = false };
+		if((_isNear && !_isZero)) then { _searching = false };
 	};
 
 	_isZero 	= ((_position select 0) == 0) && ((_position select 1) == 0);
 	_position 	= [_position select 0,_position select 1,0];
 
-	if (!_isZero) then {
+	if(!_isZero) then {
 		_worldspace = [0,_position];
 	};
 };
@@ -216,16 +216,16 @@ dayzPlayerLogin2 = [_worldspace,_state];
 
 // PVDZE_obj_Debris = DZE_LocalRoadBlocks;
 _clientID = owner _playerObj;
-if (!isNull _playerObj) then {
+if(!isNull _playerObj) then {
 	_clientID publicVariableClient "dayzPlayerLogin2";
 	
-	if (isNil "PVDZE_plr_SetDate") then {
+	if(isNil "PVDZE_plr_SetDate") then {
 		call server_timeSync;
 	};
 	_clientID publicVariableClient "PVDZE_plr_SetDate";
 };
 //record time started
-_playerObj setVariable ["lastTime",time];
+_playerObj setVariable["lastTime",time];
 
 PVDZE_plr_Login 	= nil;
 PVDZE_plr_Login2 	= nil;

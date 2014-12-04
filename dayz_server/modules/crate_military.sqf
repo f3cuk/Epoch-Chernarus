@@ -44,7 +44,7 @@ _spawnRadius 	= 6500;
 _spawnChance	= 75;
 _spawnRoll 		= random 100;
 
-if (_spawnRoll > _spawnChance) exitWith {
+if(_spawnRoll > _spawnChance) exitWith {
 	diag_log(format["CRATE: NOT SPAWNING MILITARY CRATE CAUSE OF BAD LUCK"]);
 };
 
