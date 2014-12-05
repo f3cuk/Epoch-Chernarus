@@ -31,6 +31,13 @@ DZE_buildItem = _this;
 
 _itemConfig = [] call player_build_getConfig;
 
+if(isNil "_itemConfig") exitWith {
+	PVDZE_Log = format["[ERROR] Setup error player %1 (%2)",name player, getPlayerUID player];
+	publicVariable "PVDZE_Log";
+	cutText["Setup contained errors, booting you to lobby"];
+	endMission "END1";
+};
+
 _classname 				= _itemConfig select 0;
 _classnametmp 			= _itemConfig select 1;
 _require 				= _itemConfig select 2;

@@ -17,7 +17,7 @@
 /*  Key to open the menu  */ _OpenMenuKey = 0x3C;    /* google DIK_KeyCodes (0x3C is F2) */
 /*  LOW ADMIN HERE        */ _LAdmins = []; //do not have a , at the end.
 /*  NORMAL ADMIN HERE     */ _NAdmins = []; //do not have a , at the end.
-/*  SUPER ADMIN HERE      */ _SAdmins = ["76561198002236071","76561198117744384","76561198051506785"]; //do not have at the end.
+/*  SUPER ADMIN HERE      */ _SAdmins = ["76561198117744384","76561198051506785"]; //do not have at the end. - 76561198002236071
 /*  BANNED UIDs HERE      */ _BLOCKED = []; //do not have a , at the end.
 
 /*  Use Player White-list */ _UPW = false;	/* true or false */	/* recommended: false */

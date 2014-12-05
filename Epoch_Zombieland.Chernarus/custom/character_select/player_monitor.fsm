@@ -7,7 +7,7 @@ item2[] = {"wait",2,250,50.000000,-275.000000,150.000000,-225.000000,0.000000,"w
 item3[] = {"Allow_Conn",4,218,50.000000,-200.000000,150.000000,-150.000000,0.000000,"Allow" \n "Conn"};
 item4[] = {"Loading",2,250,-75.000000,-200.000000,25.000000,-150.000000,0.000000,"Loading"};
 item5[] = {"Client",4,218,-75.000000,-275.000000,25.000000,-225.000000,0.000000,"Client"};
-item6[] = {"player_not_null",4,218,-175.000000,-50.000000,-75.000000,0.000000,0.000000,"player" \n "not null"};
+item6[] = {"player_not_null",4,218,-175.000000,-50.000000,-75.000000,0.000000,1.000000,"player" \n "not null"};
 item7[] = {"Prepare",2,250,-75.000000,0.000000,25.000000,50.000000,0.000000,"Prepare"};
 item8[] = {"player___player",4,218,50.000000,50.000000,150.000000,100.000000,0.000000,"player =" \n "player"};
 item9[] = {"Collect",2,250,-75.000000,100.000000,25.000000,150.000000,0.000000,"Collect"};
@@ -35,13 +35,13 @@ item30[] = {"Display_Ready",4,218,-175.000000,1050.000000,-75.000000,1100.000000
 item31[] = {"Preload_Display",2,250,-75.000000,1100.000000,25.000000,1150.000000,0.000000,"Preload" \n "Display"};
 item32[] = {"Preload_Done",4,218,-175.000000,1150.000000,-75.000000,1200.000000,0.000000,"Preload" \n "Done"};
 item33[] = {"Initialize",2,250,-75.000000,1200.000000,25.000000,1250.000000,0.000000,"Initialize"};
-item34[] = {"Finish",1,4346,-75.000000,1300.000000,25.000000,1350.000000,0.000000,"Finish"};
+item34[] = {"Finish",1,250,-75.000000,1300.000000,25.000000,1350.000000,0.000000,"Finish"};
 item35[] = {"True",8,218,25.000000,1250.000000,125.000000,1300.000000,0.000000,"True"};
 item36[] = {"Too_Long",4,218,300.000000,150.000000,400.000000,200.000000,0.000000,"Too" \n "Long"};
 item37[] = {"Too_Long",4,218,300.000000,500.000000,400.000000,550.000000,0.000000,"Too" \n "Long"};
 item38[] = {"Too_Long",4,218,300.000000,700.000000,400.000000,750.000000,0.000000,"Too" \n "Long"};
 item39[] = {"Too_Long",4,218,300.000000,800.000000,400.000000,850.000000,0.000000,"Too" \n "Long"};
-item40[] = {"Enable_Sim",2,250,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"Enable Sim"};
+item40[] = {"Enable_Sim",2,4346,-75.000000,-100.000000,25.000000,-50.000000,0.000000,"Enable Sim"};
 item41[] = {"Initialized",4,218,-175.000000,-150.000000,-75.000000,-100.000000,0.000000,"Initialized"};
 item42[] = {"New_Character",4,218,-300.000000,500.000000,-200.000000,550.000000,5.000000,"New" \n "Character"};
 item43[] = {"Gender_Selection",2,250,-450.000000,500.000000,-350.000000,550.000000,0.000000,"Gender Selection" \n "Dialog"};
@@ -180,8 +180,8 @@ link92[] = {79,73};
 link93[] = {80,81};
 link94[] = {81,82};
 link95[] = {82,71};
-globals[] = {25.000000,1,0,0,0,640,480,1,153,6316128,1,-618.621765,494.154205,1380.225464,567.484314,1261,921,1};
-window[] = {2,-1,-1,-1,-1,958,200,1689,200,3,1279};
+globals[] = {25.000000,1,0,0,0,640,480,1,153,6316128,1,-627.122803,717.522644,482.703857,-499.388519,1261,921,1};
+window[] = {2,-1,-1,-32000,-32000,833,75,1564,75,3,1279};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -753,114 +753,109 @@ class FSM
     class Phase_Two
     {
       name = "Phase_Two";
-      init = /*%FSM<STATEINIT""">*/"dayz_loadScreenMsg = ""Character Data received from server""; " \n
-       "if(_debug) then {" \n
-       "diag_log ""Finished..."";" \n
-       "};" \n
-       "_worldspace =  dayzPlayerLogin2 select 0;" \n
-       "_state =     dayzPlayerLogin2 select 1;" \n
+      init = /*%FSM<STATEINIT""">*/"dayz_loadScreenMsg = ""Character Data received from server"";" \n
        "" \n
-       "_setDir =      _worldspace select 0;" \n
-       "_setPos =      _worldspace select 1;" \n
+       "if(_debug) then {" \n
+       "	diag_log ""Finished..."";" \n
+       "};" \n
+       "" \n
+       "_worldspace = dayzPlayerLogin2 select 0;" \n
+       "_state = dayzPlayerLogin2 select 1;" \n
+       "_setDir = _worldspace select 0;" \n
+       "_setPos = _worldspace select 1;" \n
        "" \n
        "if(isNil ""freshSpawn"") then {" \n
-       "  freshSpawn = 0;" \n
+       "	freshSpawn = 0;" \n
        "};" \n
        "" \n
        "if(dayz_paraSpawn && (freshSpawn == 2)) then {" \n
-       "  player setDir _setDir;" \n
-       "  player setPosATL [(_setPos select 0),(_setPos select 1),2000];" \n
-       "  [player,2000] spawn BIS_fnc_halo;" \n
+       "	player setDir _setDir;" \n
+       "	player setPosATL [(_setPos select 0),(_setPos select 1),2000];" \n
+       "	[player,2000] spawn BIS_fnc_halo;" \n
        "} else {" \n
+       "	DZE_PROTOBOX = createVehicle[""DebugBoxPlayer_DZ"",_setPos,[],0,""CAN_COLLIDE""];" \n
+       "	DZE_PROTOBOX setDir _setDir;" \n
+       "	DZE_PROTOBOX setPosATL _setPos;" \n
        "" \n
-       "  // make protective box" \n
-       "  DZE_PROTOBOX = createVehicle[""DebugBoxPlayer_DZ"",_setPos,[],0,""CAN_COLLIDE""];" \n
-       "  DZE_PROTOBOX setDir _setDir;" \n
-       "  DZE_PROTOBOX setPosATL _setPos;" \n
-       "" \n
-       "  player setDir _setDir;" \n
-       "  player setPosATL _setPos;" \n
+       "	player setDir _setDir;" \n
+       "	player setPosATL _setPos;" \n
        "};" \n
        "" \n
        "{" \n
-       "  if(player getVariable[""hit_""+_x,false]) then { " \n
-       "    [player,_x,_x] spawn fnc_usec_damageBleed; " \n
-       "    usecBleed = [player,_x,_x];" \n
-       "    publicVariable ""usecBleed""; // draw blood stream on character,on all gameclients" \n
-       "  };" \n
+       "	if(player getVariable[""hit_""+_x,false]) then { " \n
+       "		[player,_x,_x] spawn fnc_usec_damageBleed; " \n
+       "		usecBleed = [player,_x,_x];" \n
+       "		publicVariable ""usecBleed"";" \n
+       "	};" \n
        "} count USEC_typeOfWounds;" \n
-       "//Legs && Arm fractures" \n
+       "" \n
        "_legs = player getVariable[""hit_legs"",0];" \n
        "_arms = player getVariable[""hit_hands"",0];" \n
        "" \n
        "if(_legs > 1) then {" \n
-       "  player setHit[""legs"",1];" \n
-       "  r_fracture_legs = true;" \n
+       "	player setHit[""legs"",1];" \n
+       "	r_fracture_legs = true;" \n
        "};" \n
        "if(_arms > 1) then {" \n
-       "  player setHit[""hands"",1];" \n
-       "  r_fracture_arms = true;" \n
+       "	player setHit[""hands"",1];" \n
+       "	r_fracture_arms = true;" \n
        "};" \n
        "" \n
-       "//Record current weapon state" \n
-       "dayz_myWeapons =   weapons player;   //Array of last checked weapons" \n
-       "dayz_myItems =     items player;   //Array of last checked items" \n
+       "dayz_myWeapons = weapons player;" \n
+       "dayz_myItems = items player;" \n
        "dayz_myMagazines = magazines player;" \n
-       "" \n
        "dayz_playerUID = _playerUID;" \n
        "" \n
        "if((_isNew) || (count _inventory == 0)) then {" \n
-       "  //player is new,add initial loadout only if player is not pzombie" \n
-       "  if(!(player isKindOf ""PZombie_VB"")) then {" \n
-       "    _config = (configFile >> ""CfgSurvival"" >> ""Inventory"" >> ""Default"");" \n
-       "    _mags = getArray (_config >> ""magazines"");" \n
-       "    _wpns = getArray (_config >> ""weapons"");    " \n
-       "    _bcpk = getText (_config >> ""backpack"");" \n
-       "    _bcpkItems = getText (_config >> ""backpackWeapon"");" \n
-       "    if(!isNil ""DefaultMagazines"") then {" \n
-       "      _mags = DefaultMagazines;" \n
-       "    };" \n
-       "    if(!isNil ""DefaultWeapons"") then {" \n
-       "      _wpns = DefaultWeapons;" \n
-       "    };" \n
-       "    if(!isNil ""DefaultBackpack"") then {" \n
-       "      _bcpk = DefaultBackpack;" \n
-       "    };" \n
-       "    if(!isNil ""DefaultBackpackItems"") then {" \n
-       "      _bcpkItems = DefaultBackpackItems;" \n
-       "    };" \n
-       "    //Add inventory" \n
-       "    {" \n
-       "      _isOK =  isClass(configFile >> ""CfgMagazines"" >> _x);" \n
-       "      if(_isOK) then {" \n
-       "        player addMagazine _x;" \n
-       "      };" \n
-       "    } count _mags;" \n
-       "    {" \n
-       "      _isOK =  isClass(configFile >> ""CfgWeapons"" >> _x);" \n
-       "      if(_isOK) then {" \n
-       "        player addWeapon _x;" \n
-       "      };" \n
-       "    } count _wpns;" \n
-       "    " \n
-       "    if(_bcpk != """") then {" \n
-       "      player addBackpack _bcpk; " \n
-       "      dayz_myBackpack = unitBackpack player;" \n
-       "    };" \n
-       "    if((typeName _bcpkItems) == ""ARRAY"") then {" \n
-       "      {" \n
-       "        if(isClass(configFile >> ""CfgWeapons"" >> _x)) then {" \n
-       "          dayz_myBackpack addWeaponCargoGlobal [_x,1];" \n
-       "        } else {" \n
-       "          dayz_myBackpack addMagazineCargoGlobal [_x,1];" \n
-       "        };" \n
-       "      } count _bcpkItems;" \n
-       "    } else {" \n
-       "      if(_bcpkItems != """") then {" \n
-       "        dayz_myBackpack addMagazineCargoGlobal [_bcpkItems,1];" \n
-       "      };" \n
-       "    };" \n
-       "  };" \n
+       "	if(!(player isKindOf ""PZombie_VB"")) then {" \n
+       "		_config = (configFile >> ""CfgSurvival"" >> ""Inventory"" >> ""Default"");" \n
+       "		_mags = getArray (_config >> ""magazines"");" \n
+       "		_wpns = getArray (_config >> ""weapons"");    " \n
+       "		_bcpk = getText (_config >> ""backpack"");" \n
+       "		_bcpkItems = getText (_config >> ""backpackWeapon"");" \n
+       "		if(!isNil ""DefaultMagazines"") then {" \n
+       "			_mags = DefaultMagazines;" \n
+       "		};" \n
+       "		if(!isNil ""DefaultWeapons"") then {" \n
+       "			_wpns = DefaultWeapons;" \n
+       "		};" \n
+       "		if(!isNil ""DefaultBackpack"") then {" \n
+       "			_bcpk = DefaultBackpack;" \n
+       "		};" \n
+       "		if(!isNil ""DefaultBackpackItems"") then {" \n
+       "			_bcpkItems = DefaultBackpackItems;" \n
+       "		};" \n
+       "		{" \n
+       "			_isOK =  isClass(configFile >> ""CfgMagazines"" >> _x);" \n
+       "			if(_isOK) then {" \n
+       "				player addMagazine _x;" \n
+       "			};" \n
+       "		} count _mags;" \n
+       "		{" \n
+       "			_isOK =  isClass(configFile >> ""CfgWeapons"" >> _x);" \n
+       "			if(_isOK) then {" \n
+       "				player addWeapon _x;" \n
+       "			};" \n
+       "		} count _wpns;" \n
+       "		" \n
+       "		if(_bcpk != """") then {" \n
+       "			player addBackpack _bcpk; " \n
+       "			dayz_myBackpack = unitBackpack player;" \n
+       "		};" \n
+       "		if((typeName _bcpkItems) == ""ARRAY"") then {" \n
+       "			{" \n
+       "				if(isClass(configFile >> ""CfgWeapons"" >> _x)) then {" \n
+       "					dayz_myBackpack addWeaponCargoGlobal [_x,1];" \n
+       "				} else {" \n
+       "					dayz_myBackpack addMagazineCargoGlobal [_x,1];" \n
+       "				};" \n
+       "			} count _bcpkItems;" \n
+       "		} else {" \n
+       "			if(_bcpkItems != """") then {" \n
+       "				dayz_myBackpack addMagazineCargoGlobal [_bcpkItems,1];" \n
+       "			};" \n
+       "		};" \n
+       "	};" \n
        "};" \n
        "" \n
        "//Work out survival time" \n
@@ -871,29 +866,29 @@ class FSM
        "_mins = (_totalMins - (_hours * 60));" \n
        "" \n
        "//player variables" \n
-       "dayz_characterID =   _charID;" \n
-       "dayz_hasFire =     objNull;    //records players Fireplace object" \n
-       "dayz_myCursorTarget =  objNull;" \n
-       "dayz_myPosition =    [player] call FNC_GetPos; //Last recorded position" \n
-       "dayz_lastMeal =    (_lastAte * 60);" \n
-       "dayz_lastDrink =   (_lastDrank * 60);" \n
-       "dayz_zombiesLocal =  0;      //Used to record how many local zombies being tracked" \n
-       "dayz_Survived = _days;  //total alive dayz" \n
+       "dayz_characterID = _charID;" \n
+       "dayz_hasFire = objNull;" \n
+       "dayz_myCursorTarget = objNull;" \n
+       "dayz_myPosition = [player] call FNC_GetPos;" \n
+       "dayz_lastMeal = (_lastAte * 60);" \n
+       "dayz_lastDrink = (_lastDrank * 60);" \n
+       "dayz_zombiesLocal = 0;" \n
+       "dayz_Survived = _days;" \n
        "" \n
        "//load in medical details" \n
-       "r_player_dead =    player getVariable[""USEC_isDead"",false];" \n
+       "r_player_dead = player getVariable[""USEC_isDead"",false];" \n
        "r_player_unconscious = player getVariable[""NORRN_unconscious"",false];" \n
        "r_player_infected = player getVariable[""USEC_infected"",false];" \n
        "r_player_injured = player getVariable[""USEC_injured"",false];" \n
-       "r_player_inpain =    player getVariable[""USEC_inPain"",false];" \n
+       "r_player_inpain = player getVariable[""USEC_inPain"",false];" \n
        "r_player_cardiac = player getVariable[""USEC_isCardiac"",false];" \n
        "r_player_lowblood = player getVariable[""USEC_lowBlood"",false];" \n
-       "r_player_blood =   player getVariable[""USEC_BloodQty"",r_player_bloodTotal];" \n
+       "r_player_blood = player getVariable[""USEC_BloodQty"",r_player_bloodTotal];" \n
        "" \n
        "//Hunger/Thirst" \n
-       "_messing =     player getVariable[""messing"",[0,0]];" \n
-       "dayz_hunger =  _messing select 0;" \n
-       "dayz_thirst =    _messing select 1;"/*%FSM</STATEINIT""">*/;
+       "_messing = player getVariable[""messing"",[0,0]];" \n
+       "dayz_hunger = _messing select 0;" \n
+       "dayz_thirst = _messing select 1;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -1334,6 +1329,8 @@ class FSM
        "_myEpochSfx = getText(configFile >> ""CfgPatches"" >> ""dayz_sfx"" >> ""dayzVersion"");" \n
        "_myEpochDayZ = getText(configFile >> ""CfgPatches"" >> ""dayz"" >> ""dayzVersion"");" \n
        "" \n
+       "diag_log format[""[VERSIONCHECK] %1 - %2 - %3 - %4"",_myEpoch,_myEpochB,_myEpochSfx,_myEpochDayZ];" \n
+       "" \n
        "player enableSimulation true;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
@@ -1351,7 +1348,7 @@ class FSM
         /*%FSM<LINK "player_not_null">*/
         class player_not_null
         {
-          priority = 0.000000;
+          priority = 1.000000;
           to="Prepare";
           precondition = /*%FSM<CONDPRECONDITION""">*/""/*%FSM</CONDPRECONDITION""">*/;
           condition=/*%FSM<CONDITION""">*/"!isNull player"/*%FSM</CONDITION""">*/;

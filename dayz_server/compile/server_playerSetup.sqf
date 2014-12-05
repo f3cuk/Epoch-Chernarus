@@ -1,8 +1,8 @@
 private["_cashMoney","_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_key","_primary","_medical","_stats","_humanity","_lastinstance","_randomSpot","_position","_debug","_distance","_hit","_fractures","_score","_pos","_clientID","_spawnMC","_finished","_searching","_isNew"];
 
 _characterID 	= _this select 0;
-_playerObj 		= _this select 1;
-_playerID 		= getPlayerUID _playerObj;
+_playerObj		= _this select 1;
+_playerID		= getPlayerUID _playerObj;
 _isNew			= _this select 2;
 
 diag_log format["Player %1 (%2) logging in,isnew: %3",name _playerObj,_playerID,_isNew];
@@ -48,13 +48,13 @@ if(isNull _playerObj || !isPlayer _playerObj) exitWith {
 	diag_log ("SETUP RESULT: Exiting,player object null: " + str(_playerObj));
 };
 
-_medical 		= _primary select 1;
-_stats 			= _primary select 2;
-_state 			= _primary select 3;
-_worldspace 	= _primary select 4;
-_humanity 		= _primary select 5;
-_lastinstance 	= _primary select 6;
-_cashMoney 		= _primary select 7;
+_medical		= _primary select 1;
+_stats			= _primary select 2;
+_state			= _primary select 3;
+_worldspace		= _primary select 4;
+_humanity		= _primary select 5;
+_lastinstance	= _primary select 6;
+_cashMoney		= _primary select 7;
 
 _randomSpot 	= false;
 
@@ -65,14 +65,15 @@ if(count _worldspace > 0) then {
 		_randomSpot = true;
 	};
 
-	_debug 		= getMarkerpos "respawn_west";
-	_distance 	= _debug distance _position;
+	_debug		= getMarkerpos "respawn_west";
+	_distance	= _debug distance _position;
 
 	if(_distance < 2000) then {
 		_randomSpot = true;
 	};
 
 	_distance = [0,0,0] distance _position;
+	
 	if(_distance < 500) then {
 		_randomSpot = true;
 	};

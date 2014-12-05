@@ -1,3 +1,5 @@
+private["_object"];
+
 allMarkers = [
 	["Trader City Stary",[6326.48,7809.48],"ellipse",100,"ColorBlack"],
 	["Trader City Bash",[4064.22,11665.93],"ellipse",100,"ColorBlack"],
@@ -1623,6 +1625,8 @@ allObjects = [
 	["Land_tires_EP1",[6562.0654,14179.669,0],-267.33221]
 ];
 
+
+
 AllowedVehiclesList = [
 	["AH6X_DZ",2],
 	["ATV_CZ_EP1",5],
@@ -1719,13 +1723,25 @@ AllowedVehiclesList = [
 publicVariable "allMarkers";
 publicVariable "allObjects";
 
+_objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
+
+{
+	_object = (_x select 0) createVehicleLocal[0,0,0];
+	_object setDir (_x select 2);
+	_object setPos (_x select 1);
+	_object allowDammage false;
+	_object enableSimulation false;
+	if(count _x > 3 && (_x select 3)) then {
+		_object setVehicleLock "LOCKED";
+	};
+} count allObjects;
+
 init_done = true;
 publicVariable "init_done";
 
-_objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
-
-allMarkers = nil;
-allObjects = nil;
-init_done  = nil;
+_object		= nil;
+allMarkers	= nil;
+allObjects	= nil;
+init_done	= nil;
 
 processInitCommands;

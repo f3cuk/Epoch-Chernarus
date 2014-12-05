@@ -35,35 +35,30 @@ if(isServer) then {
 if(!isDedicated) then {
 	0 fadeSound 0;
 
-	waitUntil {!isNil "sm_done"};
-	waitUntil {!isNil "init_done"};
-	waitUntil {!isNil "dayz_loadScreenMsg"};
+	waitUntil {(!isNil "sm_done" && !isNil "init_done" && !isNil "dayz_loadScreenMsg")};
+		diag_log format["%1: Server done loading",servertime];
+	
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
 
-	diag_log format["%1: Server done loading",servertime];
+	waitUntil {(!isNil "allObjects" && !isNil "localObjects")};
+		diag_log format["%1: Epoch buildables and map add-ons received",servertime];
+
+	execVM "init\objects.sqf";
+
+	waitUntil {(objectsLoaded && spawnedLoaded)};
+		diag_log format["%1: Epoch buildables and map add-ons loaded",servertime];
 
 	player addEventhandler["Respawn",{_id = [] spawn player_death;}];
 	execVM "custom\character_select\player_monitor.sqf";
 
-	diag_log format["%1: Player monitor initialized",servertime];
-
 	waitUntil {!isNil "dayz_clientPreload"};
-	diag_log format["%1: dayz_clientPreload has started",servertime];
+		diag_log format["%1: dayz_clientPreload has started",servertime];
 	waitUntil {dayz_clientPreload};
-	diag_log format["%1: dayz_clientPreload is done",servertime];
+		diag_log format["%1: dayz_clientPreload is done",servertime];
 	waitUntil {!isNil "allMarkers"};
-	diag_log format["%1: Markers received from server",servertime];
-	waitUntil {!isNil "allObjects"};
-	diag_log format["%1: Add-on ojects received from server",servertime];
-	waitUntil {!isNil "localObjects"};
-	diag_log format["%1: Buildables received from server",servertime];
+		diag_log format["%1: Markers received from server",servertime];
+
 	execVM "init\client.sqf";
-
-	waitUntil {((!isNil "objectsLoaded") && (objectsLoaded))};
-	diag_log format["%1: Add-ons have loaded",servertime];
-
-	waitUntil {((!isNil "spawnedLoaded") && (spawnedLoaded))};
-	diag_log format["%1: Epoch buildables have loaded",servertime];
 
 	if(DIFF in ["VETERAN","REGULAR"]) then {
 		execVM "custom\safezone\safezone.sqf";
