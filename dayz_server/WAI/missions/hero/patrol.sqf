@@ -1,10 +1,10 @@
 if(isServer) then {
 
-	private ["_pos_location","_location","_units","_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
+	private["_pos_location","_location","_units","_complete","_crate","_mission","_static_gun","_crate_type","_rndnum","_playerPresent","_vehname","_vehicle","_position","_vehclass"];
 
 	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
-	
+
 	//Armed Land Vehicle
 	_vehclass 		= armed_vehicle call BIS_fnc_selectRandom;
 	_vehname 		= getText (configFile >> "CfgVehicles" >> _vehclass >> "displayName");
@@ -49,7 +49,7 @@ if(isServer) then {
 	_position		= (_location select 1);
 
 	[_mission,_position,"Medium",format["Patrol %1",_vehname],"MainHero",false,false] call mission_init;
-	
+
 	diag_log format["WAI: [Mission:[Hero] Patrol]: Starting... %1",_position];
 
 	//Spawn units
@@ -57,17 +57,17 @@ if(isServer) then {
 
 	//Spawn vehicles
 	_vehicle = [_vehclass,_position,_mission] call custom_publish;
-	
+
 	// load the guns
 	[_vehicle,_vehclass] spawn load_ammo;
 
 	//Setup patrol
 	[_vehicle,_position,_units,_pos_location,3] call patrol;
-	
+
 	if(debug_mode) then {
 		diag_log format["WAI: [Hero] patrol spawned a %1",_vehname];
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_vehicle],// mission number and crate
@@ -83,6 +83,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Armed Vehicle]: Ended at %1",_position];
-	
-	b_missionsrunning = b_missionsrunning - 1;
+
+	h_missionsrunning = h_missionsrunning - 1;
 };

@@ -11,13 +11,13 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Hard",format["Sniper Extraction %1",_vehname],"MainBandit",true] call mission_init;	
-	
+
 	diag_log 		format["WAI: [Mission:[Bandit] Sniper Extraction]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0),(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
+
 	//Troops
 	_rndnum = 2 + round (random 4);
 	[[_position select 0,_position select 1,0],_rndnum,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
@@ -32,14 +32,14 @@ if(isServer) then {
 		[(_position select 0) - 30,(_position select 1) - 30,0],
 		[(_position select 0) - 30,(_position select 1) + 30,0]
 	],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
-	
+
 	//Spawn vehicle
 	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
-	
+
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] sniper_extraction spawned a %1",_vehname];
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
@@ -55,6 +55,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Sniper Extraction]: Ended at %1",_position];
-	
+
 	b_missionsrunning = b_missionsrunning - 1;
 };

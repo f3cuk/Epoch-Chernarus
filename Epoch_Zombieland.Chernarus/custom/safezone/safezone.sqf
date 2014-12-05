@@ -4,7 +4,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 
 [] spawn {
 
-	private ["_safezones","_state","_z","_r","_startSafeZone","_endSafeZone"];
+	private["_safezones","_state","_z","_r","_startSafeZone","_endSafeZone"];
 
 	_safezones = [
 		[[6325.6772,7807.7412],100],
@@ -18,7 +18,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 	];
 
 	{
-		private ["_angle","_count","_radius","_center"];
+		private["_angle","_count","_radius","_center"];
 
 		_center	= _x select 0;
 		_radius	= _x select 1;
@@ -33,16 +33,16 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 			_a = (_center select 0) + (sin(_angle)*_radius);
 			_b = (_center select 1) + (cos(_angle)*_radius);
 
-			_obj = "Sign_sphere100cm_EP1" createVehicleLocal [0,0,0];
-			_obj setPos [_a,_b,0];
+			_obj = "Sign_sphere100cm_EP1" createVehicleLocal[0,0,0];
+			_obj setPosATL [_a,_b,0];
 			_angle = _angle + (360/_count);
 		};
 	} forEach _safezones;
 
 	_startSafeZone = {
 
-		private ["_msg","_szs","_swep","_item","_iPos","_radius","_removed","_veh","_notInSafeZone","_cwep"];
-		
+		private["_msg","_szs","_swep","_item","_iPos","_radius","_removed","_veh","_notInSafeZone","_cwep"];
+
 		if(isNil 'outNow') then {
 
 			_msg = 'You entered a Safe Zone!';
@@ -60,7 +60,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 		};
 		fnc_usec_damageHandler = {};
 		player removeAllEventHandlers 'handleDamage';
-		player addEventHandler ['handleDamage',{false}];
+		player addEventhandler['handleDamage',{false}];
 		player allowDamage false;
 		_veh = vehicle player;
 		if(player != _veh) then
@@ -70,21 +70,21 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 			if(_szs == 0) then
 			{
 				_veh removeAllEventHandlers 'Fired';
-				_veh addEventHandler ['Fired',{_this call player_fired;}];
+				_veh addEventhandler['Fired',{_this call player_fired;}];
 				{
 					_x removeAllEventHandlers 'Fired';
-					_x addEventHandler ['Fired',{_this call player_fired;}];
+					_x addEventhandler['Fired',{_this call player_fired;}];
 				} count (crew _veh);
 
 				_veh setVariable['inSafeZone',1,true];
 				_veh removeAllEventHandlers 'HandleDamage';
-				_veh addEventHandler ['HandleDamage',{false}];
+				_veh addEventhandler['HandleDamage',{false}];
 				_veh allowDamage false;
 			};
 		};
 		_notInSafeZone = ['MAAWS','RPG7V','M136','RPG18','STINGER','MeleeHatchet_DZE','MeleeHatchet','MeleeCrowbar','MeleeMachete','MeleeFishingPole','MeleeSledge','MeleeBaseBallBatNails','MeleeBaseBallBatBarbed','MeleeBaseBallBat'];
 		_cwep = currentWeapon player;
-		
+
 		if(_cwep in _notInSafeZone) then
 		{
 			_swep = '';
@@ -103,7 +103,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 				_removed = ([player,_cwep,1] call BIS_fnc_invRemove);
 				if(_removed == 1) then
 				{
-					_item = createVehicle ['WeaponHolder',_iPos,[],_radius,'CAN_COLLIDE'];
+					_item = createVehicle['WeaponHolder',_iPos,[],_radius,'CAN_COLLIDE'];
 					_item addWeaponCargoGlobal [_cwep,1];
 				};
 			}
@@ -114,9 +114,9 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 		};
 	};
 	_endSafeZone = {
-		
-		private ["_msg","_szs","_end","_veh"];
-		
+
+		private["_msg","_szs","_end","_veh"];
+
 		if(isNil 'inNow') then {
 
 			if(str fnc_usec_damageHandler == '{}') then {
@@ -128,12 +128,12 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 			inNow = true;
 			outNow = nil;
 		};
-		
+
 		player_fired = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_fired.sqf';
 		player_zombieCheck = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_zombieCheck.sqf';
 		fnc_usec_unconscious = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_unconscious.sqf';
 		object_monitorGear = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\object_monitorGear.sqf';
-		
+
 		_veh = vehicle player;
 		if(player != _veh) then
 		{
@@ -142,11 +142,11 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 			{
 				_veh setVariable['inSafeZone',0,true];
 				_veh removeAllEventHandlers 'HandleDamage';
-				_veh addeventhandler ['HandleDamage',{ _this call vehicle_handleDamage } ];
+				_veh addeventhandler['HandleDamage',{ _this call vehicle_handleDamage } ];
 				_veh allowDamage true;
 			};
 		};
-		
+
 		_end = false;
 		if(isNil 'gmadmin') then
 		{
@@ -164,7 +164,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 			player allowDamage true;
 			fnc_usec_damageHandler = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_damageHandler.sqf';
 			player removeAllEventHandlers 'HandleDamage';
-			player addeventhandler ['HandleDamage',{_this call fnc_usec_damageHandler;} ];
+			player addeventhandler['HandleDamage',{_this call fnc_usec_damageHandler;} ];
 		};
 	};
 
@@ -194,7 +194,7 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 					};
 				};
 			} count ((vehicle player) nearEntities ['zZombie_Base',15]);
-			
+
 		}
 		else
 		{
@@ -212,8 +212,8 @@ if(isNil "inSafeZone") then { inSafeZone = false; } else { if(typename inSafeZon
 
 [] spawn {
 
-	private ["_log","_cnt"];
-	
+	private["_log","_cnt"];
+
 	while {true} do
 	{
 		if(inSafezone) then

@@ -1,17 +1,15 @@
-private ["_objcomp"];
-
-allMarkers = [
-	["Trader City Stary",[6326.48,7809.48],"ellipse",100,"ColorBlack"],
-	["Trader City Bash",[4064.22,11665.93],"ellipse",100,"ColorBlack"],
-	["Trader City Klen",[11447.91,11364.53],"ellipse",100,"ColorBlack"],
-	["Staroye Base Builders",[9908.5,5446.78],"ellipse",75,"ColorBlack"],
-	["Prigorodki Pack Dealer",[8071.98,3381.31],"ellipse",50,"ColorOrange"],
-	["Hero Trader",[12944.22,12766.89],"ellipse",75,"ColorBlue"],
-	["Bandit Camp",[1606.64,7803.52],"ellipse",75,"ColorRed"],
-	["Aircraft Dealer",[12060.47,12638.53],"ellipse",75,"ColorBlack"],
-	["Skalisty Vehicle Yard",[13692.72,2933.2],"icon","Depot"],
-	["Boat Dealer Solnichy",[13441.16,5429.30],"icon","mil_dot"],
-	["Boat Dealer Cherno",[7989.36,2901],"icon","mil_dot"]
+allMarkers = [
+	["Trader City Stary",[6326.48,7809.48],"ellipse",100,"ColorBlack"],
+	["Trader City Bash",[4064.22,11665.93],"ellipse",100,"ColorBlack"],
+	["Trader City Klen",[11447.91,11364.53],"ellipse",100,"ColorBlack"],
+	["Staroye Base Builders",[9908.5,5446.78],"ellipse",75,"ColorBlack"],
+	["Prigorodki Pack Dealer",[8071.98,3381.31],"ellipse",50,"ColorOrange"],
+	["Hero Trader",[12944.22,12766.89],"ellipse",75,"ColorBlue"],
+	["Bandit Camp",[1606.64,7803.52],"ellipse",75,"ColorRed"],
+	["Aircraft Dealer",[12060.47,12638.53],"ellipse",75,"ColorBlack"],
+	["Skalisty Vehicle Yard",[13692.72,2933.2],"icon","Depot"],
+	["Boat Dealer Solnichy",[13441.16,5429.30],"icon","mil_dot"],
+	["Boat Dealer Cherno",[7989.36,2901],"icon","mil_dot"]
 ];
 
 allObjects = [
@@ -1726,8 +1724,8 @@ publicVariable "init_done";
 
 _objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
 
-allMarkers	= nil;
-allObjects 	= nil;
-init_done	= nil;
+allMarkers = nil;
+allObjects = nil;
+init_done  = nil;
 
 processInitCommands;

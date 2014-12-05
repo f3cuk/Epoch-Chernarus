@@ -1,4 +1,4 @@
-private ["_cashMoney","_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_key","_primary","_medical","_stats","_humanity","_lastinstance","_randomSpot","_position","_debug","_distance","_hit","_fractures","_score","_pos","_clientID","_spawnMC","_finished","_searching","_isNew"];
+private["_cashMoney","_characterID","_playerObj","_playerID","_dummy","_worldspace","_state","_key","_primary","_medical","_stats","_humanity","_lastinstance","_randomSpot","_position","_debug","_distance","_hit","_fractures","_score","_pos","_clientID","_spawnMC","_finished","_searching","_isNew"];
 
 _characterID 	= _this select 0;
 _playerObj 		= _this select 1;
@@ -12,7 +12,7 @@ if(isNull _playerObj) exitWith {
 };
 
 _playerObj removeAllMPEventHandlers "MPHit";
-_playerObj addMPEventHandler ["MPHit",{_this spawn fnc_plyrHit;}];
+_playerObj addMPEventhandler["MPHit",{_this spawn fnc_plyrHit;}];
 
 if(_playerID == "") then {
 	_playerID = getPlayerUID _playerObj;
@@ -71,12 +71,12 @@ if(count _worldspace > 0) then {
 	if(_distance < 2000) then {
 		_randomSpot = true;
 	};
-	
+
 	_distance = [0,0,0] distance _position;
 	if(_distance < 500) then {
 		_randomSpot = true;
 	};
-	
+
 	if(_lastinstance != dayZ_instance) then {
 		_randomSpot = true;
 	};
@@ -96,23 +96,23 @@ if(count _medical > 0) then {
 	_playerObj setVariable["USEC_lowBlood",(_medical select 6),true];
 	_playerObj setVariable["USEC_BloodQty",(_medical select 7),true];
 	_playerObj setVariable["unconsciousTime",(_medical select 10),true];
-		
+
 	//Add Wounds
 	{
 		_playerObj setVariable[_x,true,true];
 		usecBleed = [_playerObj,_x,_hit];
 		publicVariable "usecBleed";
 	} count (_medical select 8);
-	
+
 	//Add fractures
 	_fractures = (_medical select 9);
 	_playerObj setVariable["hit_legs",(_fractures select 0),true];
 	_playerObj setVariable["hit_hands",(_fractures select 1),true];
-	
+
 	if(count _medical > 11) then {
 		_playerObj setVariable["messing",(_medical select 11),true];
 	};
-	
+
 } else {
 	//Reset Fractures
 	_playerObj setVariable["hit_legs",0,true];
@@ -121,7 +121,7 @@ if(count _medical > 0) then {
 	_playerObj setVariable["USEC_inPain",false,true];
 	_playerObj setVariable["messing",[0,0],true];
 };
-	
+
 if(count _stats > 0) then {
 	//register stats
 	_playerObj setVariable["zombieKills",(_stats select 0),true];
@@ -129,11 +129,11 @@ if(count _stats > 0) then {
 	_playerObj setVariable["humanKills",(_stats select 2),true];
 	_playerObj setVariable["banditKills",(_stats select 3),true];
 	_playerObj addScore (_stats select 1);
-	
+
 	//Save Score
 	_score = score _playerObj;
 	_playerObj addScore ((_stats select 0) - _score);
-	
+
 	//record for Server JIP checks
 	_playerObj setVariable["zombieKills_CHK",(_stats select 0)];
 	_playerObj setVariable["headShots_CHK",(_stats select 1)];
@@ -147,13 +147,13 @@ if(count _stats > 0) then {
 		_playerObj setVariable["selectSex",true,true];
 	};
 } else {
-	
+
 	//register stats
 	_playerObj setVariable["zombieKills",0,true];
 	_playerObj setVariable["humanKills",0,true];
 	_playerObj setVariable["banditKills",0,true];
 	_playerObj setVariable["headShots",0,true];
-	
+
 	//record for Server JIP checks
 	_playerObj setVariable["zombieKills_CHK",0];
 	_playerObj setVariable["humanKills_CHK",0,true];
@@ -167,7 +167,7 @@ if(_randomSpot) then {
 	if(!isDedicated) then {
 		endLoadingScreen;
 	};
-	
+
 	if(isnil "spawnArea") then {
 		spawnArea = 1500;
 	};
@@ -175,7 +175,7 @@ if(_randomSpot) then {
 	if(isnil "spawnShoremode") then {
 		spawnShoremode = 1;
 	};
-	
+
 	_spawnMC	= actualSpawnMarkerCount;
 	_searching 	= true;
 	_mkr 		= "";
@@ -201,7 +201,7 @@ if(_randomSpot) then {
 };
 
 //Record player for management
-dayz_players set [count dayz_players,_playerObj];
+dayz_players set[count dayz_players,_playerObj];
 
 //record player pos locally for server checking
 _playerObj setVariable["CharacterID",_characterID,true];
@@ -218,7 +218,7 @@ dayzPlayerLogin2 = [_worldspace,_state];
 _clientID = owner _playerObj;
 if(!isNull _playerObj) then {
 	_clientID publicVariableClient "dayzPlayerLogin2";
-	
+
 	if(isNil "PVDZE_plr_SetDate") then {
 		call server_timeSync;
 	};

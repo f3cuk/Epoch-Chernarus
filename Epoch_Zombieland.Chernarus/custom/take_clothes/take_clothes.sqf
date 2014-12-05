@@ -1,4 +1,4 @@
-private ["_skin","_okSkin","_result","_bp","_body"];
+private["_skin","_okSkin","_result","_bp","_body"];
 _body =		player;
 _skin = (typeOf _body);
 _skin = "Skin_" + _skin;
@@ -9,9 +9,9 @@ if(_okSkin) then {
  _result = [player,_skin] call BIS_fnc_invAdd;
 	if(_result) then {
 	} else {
-		
+
 		_bp = unitBackpack player;
 		_bp addMagazineCargoGlobal [_skin,1];
-		
+
 	};
 };

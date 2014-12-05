@@ -7,13 +7,13 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Medium","Weapon Cache","MainBandit",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Bandit] Weapons Cache]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
 	//Troops
 	_rndnum 	= (1 + round(random 7));
 	_rndgro 	= (1 + round(random 2));
@@ -43,6 +43,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Bandit] weapon_cache ended at %1",_position];
-	
+
 	b_missionsrunning = b_missionsrunning - 1;
 };

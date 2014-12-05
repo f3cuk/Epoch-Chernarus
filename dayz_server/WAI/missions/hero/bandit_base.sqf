@@ -7,29 +7,29 @@ if(isServer) then {
 
 	_position		= [80] call find_position;
 	[_mission,_position,"Hard","Bandit Base","MainHero",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Bandit Base]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+
 	//Buildings
-	_baserunover0 	= createVehicle ["land_fortified_nest_big",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover1 	= createVehicle ["land_fortified_nest_big",[(_position select 0) + 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover2 	= createVehicle ["land_fortified_nest_big",[(_position select 0),(_position select 1) - 40,-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover3 	= createVehicle ["land_fortified_nest_big",[(_position select 0),(_position select 1) + 40,-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover4 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) - 10,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover5 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) + 10,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover6 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0),(_position select 1) - 10,-0.2],[],0,"CAN_COLLIDE"];
-	_baserunover7 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0),(_position select 1) + 10,-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover0 	= createVehicle["land_fortified_nest_big",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover1 	= createVehicle["land_fortified_nest_big",[(_position select 0) + 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover2 	= createVehicle["land_fortified_nest_big",[(_position select 0),(_position select 1) - 40,-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover3 	= createVehicle["land_fortified_nest_big",[(_position select 0),(_position select 1) + 40,-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover4 	= createVehicle["Land_Fort_Watchtower",[(_position select 0) - 10,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover5 	= createVehicle["Land_Fort_Watchtower",[(_position select 0) + 10,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover6 	= createVehicle["Land_Fort_Watchtower",[(_position select 0),(_position select 1) - 10,-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover7 	= createVehicle["Land_Fort_Watchtower",[(_position select 0),(_position select 1) + 10,-0.2],[],0,"CAN_COLLIDE"];
 	_baserunover = [_baserunover0,_baserunover1,_baserunover2,_baserunover3,_baserunover4,_baserunover5,_baserunover6,_baserunover7];
-	
+
 	_directions = [90,270,0,180,0,180,270,90];
 	{ _x setDir (_directions select _forEachIndex) } forEach _baserunover;
-	
+
 	{ _x setVectorUp surfaceNormal position _x; } count _baserunover;
-	
+
 	//Troops
 	_num = 4 + round (random 3);
 	[[_position select 0,_position select 1,0],_num,"Hard",["Random","AT"],4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;

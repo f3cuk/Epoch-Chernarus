@@ -1,4 +1,4 @@
-private ["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
+private["_ammo","_tool","_crate","_weapon","_item","_backpack","_num_tools","_num_items","_num_backpacks","_num_weapons","_weapons_array","_tool_array","_item_array","_backpack_array"];
 
 _crate = _this select 0;
 _crate setVariable["ObjectID","1",true];
@@ -40,7 +40,7 @@ if(debug_mode) then {
 	diag_log format["WAI: Spawning in a dynamic crate with %1 guns,%2 tools,%3 items and %4 backpacks",_num_weapons,_num_tools,_num_items,_num_backpacks];
 };
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_crate];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_crate];
 
 clearWeaponCargoGlobal _crate;
 clearMagazineCargoGlobal _crate;

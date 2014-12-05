@@ -1,7 +1,7 @@
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_40") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
 
-private ["_itemConfig","_classname","_classnametmp","_require","_text","_ghost","_lockable","_requireplot","_isAllowedUnderGround","_offset","_isPole","_isLandFireDZ","_hasRequired","_hasrequireditem","_reason","_buildObject","_location1","_object","_objectHelper","_position","_controls","_cancel","_dir"];
+private["_itemConfig","_classname","_classnametmp","_require","_text","_ghost","_lockable","_requireplot","_isAllowedUnderGround","_offset","_isPole","_isLandFireDZ","_hasRequired","_hasrequireditem","_reason","_buildObject","_location1","_object","_objectHelper","_position","_controls","_cancel","_dir"];
 
 DZE_Q = false;
 DZE_Z = false;
@@ -51,19 +51,19 @@ if(DZE_ActionInProgress) then {
 	_hasrequireditem 	= _hasRequired select 0;
 
 	if(_hasrequireditem) then {
-		
+
 		_buildObject 	= [_classname,_ghost,_offset,true] call player_build_create;
 		_location1 		= _buildObject select 0;
 		_object 		= _buildObject select 1;
 		_objectHelper 	= _buildObject select 2;
-		
+
 		_controls 		= [_object,_isAllowedUnderGround,_location1,_objectHelper] call player_build_controls;
 
 		_cancel 		= _controls select 0;
 		_reason 		= _controls select 1;
 		_position 		= _controls select 2;
 		_dir 			= _controls select 3;
-		
+
 		[_cancel,_position,_classnametmp,_isAllowedUnderGround,_text,_isPole,_lockable,_dir,_reason] call player_build_publish;
 	};
 };

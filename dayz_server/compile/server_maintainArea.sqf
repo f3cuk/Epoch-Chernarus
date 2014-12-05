@@ -1,4 +1,4 @@
-private ["_player","_name","_objects","_key","_i","_data","_objectUID","_objectID","_option","_targetObj"];
+private["_player","_name","_objects","_key","_i","_data","_objectUID","_objectID","_option","_targetObj"];
 
 _player 	= _this select 0;
 _option 	= _this select 1;
@@ -25,7 +25,7 @@ if(_option == 1) then {
 		};
 	} count _objects;
 	_name = if(alive _player) then { name _player; } else { "Dead Player"; };
-	diag_log format ["MAINTAIN AREA BY %1 - %2 Objects at %3",_name,_i,([_player] call FNC_GetPos)];
+	diag_log format["MAINTAIN AREA BY %1 - %2 Objects at %3",_name,_i,([_player] call FNC_GetPos)];
 };
 
 if(_option == 2) then {
@@ -40,7 +40,7 @@ if(_option == 2) then {
 		} else {
 			_key = format["CHILD:396:%1:",_objectID];
 			_data = "HiveExt" callExtension _key;
-			
+
 		};
 	};
 };

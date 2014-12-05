@@ -1,6 +1,6 @@
 disableSerialization;
 
-private ["_slots","_type","_item","_spawnCrate","_crateName","_pos","_crateClass","_dir","_selectDelay","_inVehicle"];
+private["_slots","_type","_item","_spawnCrate","_crateName","_pos","_crateClass","_dir","_selectDelay","_inVehicle"];
 
 _type = _this select 0;
 
@@ -69,7 +69,7 @@ if(!_finished) exitWith {
 
 if(_finished) then {
 
-	private ["_dialog","_cashToAdd","_canContinue"];
+	private["_dialog","_cashToAdd","_canContinue"];
 	mbc_rewardlist_temp = [];
 	_canContinue = false;
 
@@ -77,7 +77,7 @@ if(_finished) then {
 		player removeMagazine _item;
 		_canContinue = true;
 	};
-	
+
 	if(!_canContinue) exitWith { //Anti-duping
 		cutText[format["Opening EpochPack %1 failed.",_type] ,"PLAIN DOWN"];
 	};
@@ -91,63 +91,63 @@ if(_finished) then {
 	_spawnCrate = _crateClass createVehicleLocal _pos;
 
 	_spawnCrate setDir _dir;
-	_spawnCrate setPos _pos;
-	
+	_spawnCrate setPosATL _pos;
+
 	clearWeaponCargoGlobal _spawnCrate;
 	clearMagazineCargoGlobal _spawnCrate;
 	clearBackpackCargoGlobal _spawnCrate;
-	
+
 	_lootRandomizer = [];
-	
+
 	//Let's crate an array to randomize loot depending on rarity
 	{
-		private ["_forEachTempIndexNo"];
+		private["_forEachTempIndexNo"];
 		_forEachTempIndexNo = _forEachIndex;
 		for "_i" from 1 to (_x select 4) do {
-			_lootRandomizer set [count _lootRandomizer,_forEachTempIndexNo];
+			_lootRandomizer set[count _lootRandomizer,_forEachTempIndexNo];
 		};
 	} forEach MBC_REWARDLIST;
-	
+
 	Sleep 0.2;
 
 	for "_i" from 1 to _slots do {
-		private ["_loot","_lootIndex","_lootType"];
+		private["_loot","_lootIndex","_lootType"];
 		_loot 		= [];
 		_lootIndex	= _lootRandomizer call BIS_fnc_selectRandom;
 		_loot		= + MBC_REWARDLIST;
 		_loot		= _loot select _lootIndex;
 		_lootType	= _loot select 0;
-		
+
 		//Let's pick the random items out of groups right away,so we can properly display it on the UI
 		call {
 			if(_lootType == "group_wep") exitWith {
 				_groupingArray = _loot select 1;
 				_weapon = _groupingArray call BIS_fnc_selectRandom;
-				_loot set [1,_weapon]; // Random weapon
-				_loot set [2,(1 + floor(random 4))]; // Random amount of mags
+				_loot set[1,_weapon]; // Random weapon
+				_loot set[2,(1 + floor(random 4))]; // Random amount of mags
 			};
 			if(_lootType == "group_tool") exitWith  {
 				_groupingArray = _loot select 1;
 				_tool = _groupingArray call BIS_fnc_selectRandom;
-				_loot set [1,_tool]; // Random tool
+				_loot set[1,_tool]; // Random tool
 			};
 			if(_lootType == "group_mag") exitWith {
 				_mag = (_loot select 1) call BIS_fnc_selectRandom;
-				_loot set [1,_mag]; // Random item
+				_loot set[1,_mag]; // Random item
 			};
 		};
-		mbc_rewardlist_temp set [count mbc_rewardlist_temp,_loot];
+		mbc_rewardlist_temp set[count mbc_rewardlist_temp,_loot];
 		_loot = [];
 	};
-	
+
 	UpdateMBCDialog = {
 		{
-			private ["_pic","_text","_itemName","_qty","_addInfo","_className","_type","_rarity"];
-			
+			private["_pic","_text","_itemName","_qty","_addInfo","_className","_type","_rarity"];
+
 			ctrlSetText[81401,MBT_DIALOG_TITLE];
 			ctrlSetText[81402,MBT_DIALOG_CLAIM];
 			ctrlSetText[81403,MBT_DIALOG_NOTE];
-			
+
 			_addInfo	= "";
 			_type		= _x select 0;
 
@@ -196,7 +196,7 @@ if(_finished) then {
 						if(_className == "ItemBriefcase_Base") exitWith { _itemName = "EpochPack Premium"; };
 						if(_className == "ItemSilvercase_Base") exitWith { _itemName = "EpochPack Silver"; };
 					};
-					
+
 					if(_qty > 1) then {
 						_addInfo = format["\nx %1",_qty];
 					};
@@ -207,15 +207,15 @@ if(_finished) then {
 					_text = _x select 1;
 				};
 			};
-			
+
 			ctrlSetText[81201 + _forEachIndex,_pic];
 			ctrlSetText[81301 + _forEachIndex,_text];
-			
+
 			_display	= findDisplay 81000;
 			_frame_ctrl = _display displayCtrl 81101 + _forEachIndex;
 			_text_ctrl	= _display displayCtrl 81301 + _forEachIndex;
 			_rarity		= _x select 3;
-			
+
 			call {
 				if(_rarity == 1) exitWith {
 					_frame_ctrl ctrlSetTextColor [0.6,0.6,0.6,0.5];
@@ -241,7 +241,7 @@ if(_finished) then {
 	_dialog = createdialog "MBC_DIALOG";
 	call UpdateMBCDialog;
 	waitUntil { !dialog };
-	
+
 	cutText["Claiming reward..","PLAIN DOWN"];
 
 	Sleep 0.2;
@@ -250,9 +250,9 @@ if(_finished) then {
 
 	{
 		private["_type","_magazines","_magazineClass","_currentMoney"];
-		
+
 		_type = _x select 0;
-		
+
 		call {
 			if(_type == "group_wep") exitWith {
 				_spawnCrate addWeaponCargoGlobal [_x select 1,1];
@@ -284,7 +284,7 @@ if(_finished) then {
 	publicVariableServer "PVDZE_log";
 
 	cutText[format["Reward claimed - the contents have been put inside the box which will auto-remove in %1 minutes",(MBT_CRATEDELAY/60)],"PLAIN DOWN"];
-	
+
 	sleep MBT_CRATEDELAY;
 	deletevehicle _spawnCrate;
 

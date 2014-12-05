@@ -1,4 +1,4 @@
-private ["_isInfected","_doLoop","_hiveVer","_isHiveOk","_playerID","_playerObj","_primary","_key","_charID","_playerName","_backpack","_isNew","_inventory","_survival","_model","_mags","_wpns","_bcpk","_config","_newPlayer"];
+private["_isInfected","_doLoop","_hiveVer","_isHiveOk","_playerID","_playerObj","_primary","_key","_charID","_playerName","_backpack","_isNew","_inventory","_survival","_model","_mags","_wpns","_bcpk","_config","_newPlayer"];
 
 #ifdef DZE_SERVER_DEBUG
 diag_log ("STARTING LOGIN: " + str(_this));
@@ -62,7 +62,7 @@ if(isNull _playerObj || !isPlayer _playerObj) exitWith {
 
 if((_primary select 0) == "ERROR") exitWith {
 #ifdef DZE_SERVER_DEBUG
-    diag_log format ["LOGIN RESULT: Exiting,failed to load _primary: %1 for player: %2 ",_primary,_playerID];
+    diag_log format["LOGIN RESULT: Exiting,failed to load _primary: %1 for player: %2 ",_primary,_playerID];
 #endif
 };
 
@@ -85,11 +85,11 @@ if(!_isNew) then {
 	_survival =		_primary select 6;
 	_model =		_primary select 7;
 	_hiveVer =		_primary select 8;
-	
+
 	if(!(_model in AllPlayers)) then {
 		_model = "Survivor2_DZ";
 	};
-	
+
 } else {
 	if(DZE_PlayerZed) then {
 		_isInfected = _primary select 3;
@@ -98,7 +98,7 @@ if(!_isNew) then {
 	};
 	_model =		_primary select 4;
 	_hiveVer =		_primary select 5;
-	
+
 	if(isNil "_model") then {
 		_model = "Survivor2_DZ";
 	} else {
@@ -107,7 +107,7 @@ if(!_isNew) then {
 		};
 	};
 
-	
+
 	//Record initial inventory only if not player zombie 
 	if(_isInfected != 1) then {
 		_config = (configFile >> "CfgSurvival" >> "Inventory" >> "Default");
@@ -125,7 +125,7 @@ if(!_isNew) then {
 			_bcpk = DefaultBackpack;
 		};
 		//_randomSpot = true;
-	
+
 		//Wait for HIVE to be free
 		_key = format["CHILD:203:%1:%2:%3:",_charID,[_wpns,_mags],[_bcpk,[],[]]];
 		_key call server_hiveWrite;

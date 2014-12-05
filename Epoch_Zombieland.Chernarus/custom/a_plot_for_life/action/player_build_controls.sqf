@@ -1,4 +1,4 @@
-private ["_canDo","_passArray","_objHDiff","_isOk","_zheightchanged","_zheightdirection","_rotate","_dir","_object","_position","_isAllowedUnderGround","_location1","_location2","_cancel","_reason","_objectHelper","_objectHelperDir","_objectHelperPos"];
+private["_canDo","_passArray","_objHDiff","_isOk","_zheightchanged","_zheightdirection","_rotate","_dir","_object","_position","_isAllowedUnderGround","_location1","_location2","_cancel","_reason","_objectHelper","_objectHelperDir","_objectHelperPos"];
 
 _object 				= _this select 0;
 _isAllowedUnderGround 	= _this select 1;
@@ -61,7 +61,7 @@ while {_isOk} do {
 		DZE_6 = false;
 		_dir = 45;
 	};
-	
+
 	if(DZE_F and _canDo) then {	
 		if(helperDetach) then { 
 			_objectHelperDir = getDir _objectHelper;
@@ -103,40 +103,40 @@ while {_isOk} do {
 		_position = [_objectHelper] call FNC_GetPos;
 
 		if(_zheightdirection == "up") then {
-			_position set [2,((_position select 2)+0.1)];
+			_position set[2,((_position select 2)+0.1)];
 			_objHDiff = _objHDiff + 0.1;
 		};
 		if(_zheightdirection == "down") then {
-			_position set [2,((_position select 2)-0.1)];
+			_position set[2,((_position select 2)-0.1)];
 			_objHDiff = _objHDiff - 0.1;
 		};
 
 		if(_zheightdirection == "up_alt") then {
-			_position set [2,((_position select 2)+1)];
+			_position set[2,((_position select 2)+1)];
 			_objHDiff = _objHDiff + 1;
 		};
 		if(_zheightdirection == "down_alt") then {
-			_position set [2,((_position select 2)-1)];
+			_position set[2,((_position select 2)-1)];
 			_objHDiff = _objHDiff - 1;
 		};
 
 		if(_zheightdirection == "up_ctrl") then {
-			_position set [2,((_position select 2)+0.01)];
+			_position set[2,((_position select 2)+0.01)];
 			_objHDiff = _objHDiff + 0.01;
 		};
 		if(_zheightdirection == "down_ctrl") then {
-			_position set [2,((_position select 2)-0.01)];
+			_position set[2,((_position select 2)-0.01)];
 			_objHDiff = _objHDiff - 0.01;
 		};
 
 		if((_isAllowedUnderGround == 0) && ((_position select 2) < 0)) then {
-			_position set [2,0];
+			_position set[2,0];
 		};
 
 		if(surfaceIsWater _position) then {
 			_objectHelper setPosASL _position;
 		} else {
-			_objectHelper setPos _position;
+			_objectHelper setPosATL _position;
 		};
 
 		if(!helperDetach) then {
@@ -149,7 +149,7 @@ while {_isOk} do {
 
 	_location2 = [player] call FNC_GetPos;
 	_objectHelperPos = [_objectHelper] call FNC_GetPos;
-	
+
 	if(DZE_5) exitWith {
 		_isOk = false;
 		_position = [_object] call FNC_GetPos;
@@ -169,7 +169,7 @@ while {_isOk} do {
 		detach _objectHelper;
 		deleteVehicle _objectHelper;
 	};
-	
+
 	if(_location1 distance _objectHelperPos > 10) exitWith {
 		_isOk = false;
 		_cancel = true;

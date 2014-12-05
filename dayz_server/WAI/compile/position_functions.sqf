@@ -5,7 +5,7 @@ isNearWater = {
 	_result 	= false;
 	_position 	= _this select 0;
 	_radius		= _this select 1;
-	
+
 	for "_i" from 0 to 359 step 45 do {
 		_position = [(_position select 0) + (sin(_i)*_radius),(_position select 1) + (cos(_i)*_radius)];
 		if(surfaceIsWater _position) exitWith {
@@ -24,7 +24,7 @@ isNearTown = {
 	_result 	= false;
 	_position 	= _this select 0;
 	_radius 	= _this select 1;
-	
+
 	_locations = [["NameCityCapital","NameCity","NameVillage"],[_position,_radius]] call BIS_fnc_locations;
 
 	if(count _locations > 0) then { 
@@ -42,7 +42,7 @@ isNearRoad = {
 	_result 	= false;
 	_position 	= _this select 0;
 	_radius 	= _this select 1;
-	
+
 	_roads = _position nearRoads _radius;
 
 	if(count _roads > 0) then {

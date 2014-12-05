@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_wp","_skill","_mission","_wp_rad","_wp","_pos_x","_pos_y","_pos_z","_unitGroup","_position"];
+	private["_wp","_skill","_mission","_wp_rad","_wp","_pos_x","_pos_y","_pos_z","_unitGroup","_position"];
 
 	_unitGroup 		= _this select 0;
 	_position 		= _this select 1;
@@ -12,13 +12,13 @@ if(isServer) then {
 	if(count _this > 2) then {
 
 		_skill = _this select 2;
-	
+
 		call {
-			if(_skill == "easy") 	exitWith { _wp_rad = 20; };
-			if(_skill == "medium") 	exitWith { _wp_rad = 40; };
-			if(_skill == "hard") 	exitWith { _wp_rad = 80; };
-			if(_skill == "extreme") exitWith { _wp_rad = 120; };
-			if(_skill == "random") 	exitWith { _wp_rad = random(100); };
+			if(_skill == "easy") 	exitWith { _wp_rad = 40; };
+			if(_skill == "medium") 	exitWith { _wp_rad = 80; };
+			if(_skill == "hard") 	exitWith { _wp_rad = 160; };
+			if(_skill == "extreme") exitWith { _wp_rad = 320; };
+			if(_skill == "random") 	exitWith { _wp_rad = random(200); };
 		};
 
 	};

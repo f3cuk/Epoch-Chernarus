@@ -21,7 +21,7 @@ find_suitable_ammunition = {
 
 hero_warning = {
 
-	private ["_msg","_warning_one","_warning_two","_warning_bandit","_running","_position","_mission"];
+	private["_msg","_warning_one","_warning_two","_warning_bandit","_running","_position","_mission"];
 	_position = _this select 0;
 	_mission = _this select 1;
 	_running = (typeName (wai_mission_data select _mission) == "ARRAY");
@@ -37,7 +37,7 @@ hero_warning = {
 
 					if(!_warning_one && (_x distance _position <= 150)) then {
 
-						_msg = format ["Warning! This is a restricted area! Come closer and we will engage!"];
+						_msg = format["Warning! This is a restricted area! Come closer and we will engage!"];
 						[nil,_x,rTitleText,_msg,"PLAIN",10] call RE;
 						_x setVariable["warning_one",true];
 					};
@@ -45,7 +45,7 @@ hero_warning = {
 				} else {
 
 					if(!_warning_two) then {
-						_msg = format ["You were warned %1.",name _x];
+						_msg = format["You were warned %1.",name _x];
 						[nil,_x,rTitleText,_msg,"PLAIN",10] call RE;
 						_x setVariable["warning_two",true];
 					};
@@ -59,13 +59,13 @@ hero_warning = {
 
 KK_fnc_inString = {
 
-	private ["_needle","_haystack","_needleLen","_hay","_found"]; 
+	private["_needle","_haystack","_needleLen","_hay","_found"]; 
 
 	_needle 	= [_this,0,"",[""]] call BIS_fnc_param; 
-	
+
 	_haystack 	= toArray ([_this,1,"",[""]] call BIS_fnc_param); 
 	_needleLen 	= count toArray _needle;
-	
+
 	_hay 		= +_haystack; 
 	_hay 		resize _needleLen;
 	_found 		= false; 
@@ -73,8 +73,8 @@ KK_fnc_inString = {
 	for "_i" from _needleLen to count _haystack do { 
 
 		if(toString _hay == _needle) exitWith {_found = true};
-		_hay set [_needleLen,_haystack select _i]; 
-		_hay set [0,"x"]; _hay = _hay - ["x"]
+		_hay set[_needleLen,_haystack select _i]; 
+		_hay set[0,"x"]; _hay = _hay - ["x"]
 	 }; 
 
 	_found

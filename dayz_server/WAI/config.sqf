@@ -15,7 +15,7 @@ if(isServer) then {
 
 		ai_clear_body 				= false;		// instantly clear bodies
 		ai_clean_dead 				= true;			// clear bodies after certain amount of time
-		ai_cleanup_time 			= 7200;			// time to clear bodies in seconds
+		ai_cleanup_time 			= 3600;			// time to clear bodies in seconds
 		ai_clean_roadkill			= false; 		// clean bodies that are roadkills
 		ai_roadkill_damageweapon	= 0;			// percentage of chance a roadkill will destroy weapon AI is carrying
 
@@ -38,7 +38,7 @@ if(isServer) then {
 		ai_add_humanity				= 50;			// amount of humanity gained for killing a bandit AI
 		ai_remove_humanity			= 50;			// amount of humanity lost for killing a hero AI
 		ai_special_humanity			= 150;			// amount of humanity gain or loss for killing a special AI dependant on player alignment
-		
+
 		ai_skill_extreme			= [["aimingAccuracy",1.00],["aimingShake",1.00],["aimingSpeed",1.00],["endurance",1.00],["spotDistance",1.00],["spotTime",1.00],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Extreme
 		ai_skill_hard				= [["aimingAccuracy",0.80],["aimingShake",0.80],["aimingSpeed",0.80],["endurance",1.00],["spotDistance",0.80],["spotTime",0.80],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]]; 	// Hard
 		ai_skill_medium				= [["aimingAccuracy",0.60],["aimingShake",0.60],["aimingSpeed",0.60],["endurance",1.00],["spotDistance",0.60],["spotTime",0.60],["courage",1.00],["reloadSpeed",1.00],["commanding",1.00],["general",1.00]];	// Medium
@@ -64,7 +64,7 @@ if(isServer) then {
 		ai_wep_random				= [ai_wep_assault,ai_wep_assault,ai_wep_assault,ai_wep_sniper,ai_wep_machine];	// random weapon 60% chance assault rifle,20% light machine gun,20% sniper rifle
 		ai_wep_launchers_AT			= ["M136","RPG18","JAVELIN"];
 		ai_wep_launchers_AA			= ["Strela","Igla","STINGER"];
-		
+
 		ai_packs					= ["DZ_Czech_Vest_Puch","DZ_ALICE_Pack_EP1","DZ_TK_Assault_Pack_EP1","DZ_British_ACU","DZ_GunBag_EP1","DZ_CivilBackpack_EP1","DZ_Backpack_EP1","DZ_LargeGunBag_EP1"];
 		ai_hero_skin				= ["FR_AC","FR_AR","FR_Corpsman","FR_GL","FR_Marksman","FR_R","FR_Sapper","FR_TL"];
 		ai_bandit_skin				= ["Ins_Soldier_GL_DZ","TK_INS_Soldier_EP1_DZ","TK_INS_Warlord_EP1_DZ","GUE_Commander_DZ","GUE_Soldier_Sniper_DZ","GUE_Soldier_MG_DZ","GUE_Soldier_Crew_DZ","GUE_Soldier_2_DZ","GUE_Soldier_CO_DZ","BanditW1_DZ","BanditW2_DZ","Bandit1_DZ","Bandit2_DZ"];
@@ -72,7 +72,7 @@ if(isServer) then {
 		ai_all_skin					= [ai_hero_skin,ai_bandit_skin,ai_special_skin];
 
 		ai_add_skin					= true;			// adds unit skin to inventory on death
-		
+
 	/* END AI CONFIG */
 
 	/* WAI MISSIONS CONFIG */
@@ -85,11 +85,11 @@ if(isServer) then {
 		wai_avoid_road				= 0;			// avoid spawning missions this close to roads
 		wai_avoid_water				= 50;			// avoid spawning missions this close to water
 
-		
+
 		wai_mission_timer			= [30,900];		// time between missions 5-15 minutes
 		wai_mission_timeout			= [900,1800];	// time each missions takes to despawn if inactive 15-30 minutes
 		wai_timeout_distance		= 1000;			// if a player is this close to a mission then it won't time-out
-		
+
 		wai_clean_mission			= true;			// clean all mission buildings after a certain period
 		wai_clean_mission_time		= 1800;			// time after a mission is complete to clean mission buildings
 
@@ -97,13 +97,13 @@ if(isServer) then {
 		wai_vehicle_damage			= [20,70];		// damages to spawn vehicles with [min%,max%]
 		wai_keep_vehicles			= true;			// save vehicles to database and keep them after restart
 		wai_lock_vehicles			= true;			// lock mission vehicles and add keys to random AI bodies (be careful with ai_clean_dead if this is true)
-		
+
 		wai_crates_smoke			= true;			// pop smoke on crate when mission is finished during daytime
 		wai_crates_flares			= true;			// pop flare on crate when mission is finished during nighttime
-		
+
 		wai_players_online			= 1;			// number of players online before mission starts
 		wai_server_fps				= 5;			// missions only starts if server FPS is over wai_server_fps
-		
+
 		wai_kill_percent			= 30;			// percentage of AI players that must be killed at "crate" missions to be able to trigger completion
 
 		wai_high_value				= true;			// enable the possibility of finding a high value item (defined inside crate_items_high_value) inside a crate
@@ -143,7 +143,7 @@ if(isServer) then {
 										["sniper_extraction",8],
 										["weapon_cache",10]
 									];
-		
+
 		// Vehicle arrays
 		armed_vehicle 				= ["ArmoredSUV_PMC_DZE","GAZ_Vodnik_DZE","HMMWV_M1151_M2_CZ_DES_EP1_DZE","HMMWV_M998A2_SOV_DES_EP1_DZE","LandRover_MG_TK_EP1_DZE","LandRover_Special_CZ_EP1_DZE","Pickup_PK_GUE_DZE","Pickup_PK_INS_DZE","Pickup_PK_TK_GUE_EP1_DZE","UAZ_MG_TK_EP1_DZE"];
 		armed_chopper 				= ["CH_47F_EP1_DZE","UH1H_DZE","Mi17_DZE","UH60M_EP1_DZE","UH1Y_DZE","MH60S_DZE"];
@@ -159,7 +159,7 @@ if(isServer) then {
 		crates_small				= ["GuerillaCacheBox","RULaunchersBox","RUBasicAmmunitionBox","RUOrdnanceBox","USBasicAmmunitionBox","USLaunchersBox","USOrdnanceBox","USOrdnanceBox_EP1","USLaunchers_EP1","USBasicWeapons_EP1","USBasicAmmunitionBox_EP1","UNBasicAmmunitionBox_EP1","TKOrdnanceBox_EP1","TKLaunchers_EP1","TKBasicAmmunitionBox_EP1","GuerillaCacheBox_EP1","GERBasicWeapons_EP1"];
 
 		crate_weapons_buildables	= ["ChainSaw","ChainSawB","ChainSawG","ChainSawP","ChainSawR"];
-		
+
 		crate_tools					= ["ItemKeyKit","Binocular","Binocular_Vector","ItemCompass","ItemCrowbar","ItemEtool","ItemFishingPole","ItemFlashlightRed","ItemGPS","ItemHatchet_DZE","ItemKnife","ItemMachete","ItemMatchbox_DZE","ItemToolbox","NVGoggles"];
 		crate_tools_buildable		= ["ItemToolbox","ItemEtool","ItemCrowbar","ItemKnife"];
 		crate_tools_sniper			= ["ItemCompass","Binocular","Binocular_Vector","NVGoggles","ItemGPS"];

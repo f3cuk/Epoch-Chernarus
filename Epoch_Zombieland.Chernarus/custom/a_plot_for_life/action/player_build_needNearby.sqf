@@ -1,6 +1,6 @@
 if(!DZE_ActionInProgress) exitWith {};
 
-private ["_abort","_reason","_distance","_needNear","_isNear","_pos"];
+private["_abort","_reason","_distance","_needNear","_isNear","_pos"];
 
 _abort 		= false;
 _reason 	= "";

@@ -1,4 +1,4 @@
-private ["_position","_num","_config","_itemType","_weights","_index","_crashModel","_lootTable","_guaranteedLoot","_randomizedLoot","_frequency","_variance","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_crashName","_nearby","_itemTypes","_cntWeights","_fadeFire"];
+private["_position","_num","_config","_itemType","_weights","_index","_crashModel","_lootTable","_guaranteedLoot","_randomizedLoot","_frequency","_variance","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_crashName","_nearby","_itemTypes","_cntWeights","_fadeFire"];
 
 _guaranteedLoot		= _this select 0;
 _randomizedLoot		= _this select 1;
@@ -32,7 +32,7 @@ while {true} do {
 	diag_log(format["CRASHSPAWNER: %1%2 chance to spawn '%3' with loot table '%4' in %5 seconds",round(_spawnChance * 100),'%',_crashName,_lootTable,_timeToSpawn]);
 
 	while {time < _timeToSpawn} do {
-		sleep 5;
+		sleep 30;
 	};
 
 	_spawnRoll = random 1;
@@ -43,7 +43,7 @@ while {true} do {
 
 		diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4",_crashName,_lootTable,time,str(_position)]);
 
-		_crash = createVehicle [_crashModel,_position,[],0,"CAN_COLLIDE"];
+		_crash = createVehicle[_crashModel,_position,[],0,"CAN_COLLIDE"];
 		_crash setDir round(random 360);
 
 		_config = configFile >> "CfgVehicles" >> _crashModel >> "heightAdjustment";
@@ -55,7 +55,7 @@ while {true} do {
 		};
 
 		_adjustedPos = [(_position select 0),(_position select 1),_newHeight];
-		_crash setPos _adjustedPos;
+		_crash setPosATL _adjustedPos;
 		_crash setVariable["ObjectID","1",true];
 		_crash enableSimulation false;
 
@@ -72,14 +72,14 @@ while {true} do {
 			_crash setVariable["fadeFire",_fadeFire,true];
 		};
 
-		_config = 		configFile >> "CfgBuildingLoot" >> _lootTable;
+		_config = configFile >> "CfgBuildingLoot" >> _lootTable;
 		if(DZE_MissionLootTable) then {
 			_config = missionConfigFile >> "CfgBuildingLoot" >> _lootTable;
 		};
 
-		_itemTypes =	[] + getArray (_config >> "itemType");
-		_index =       dayz_CBLBase find toLower(_lootTable);
-		_weights =		dayz_CBLChances select _index;
+		_itemTypes = [] + getArray (_config >> "itemType");
+		_index = dayz_CBLBase find toLower(_lootTable);
+		_weights = dayz_CBLChances select _index;
 		_cntWeights = count _weights;
 
 		for "_x" from 1 to _num do {

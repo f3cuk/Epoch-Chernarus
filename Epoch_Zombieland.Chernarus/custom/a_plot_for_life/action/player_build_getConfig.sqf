@@ -1,6 +1,6 @@
 if(!DZE_ActionInProgress) exitWith {};
 
-private ["_passArray","_classname","_classnametmp","_require","_text","_ghost","_lockable","_requireplot","_isAllowedUnderGround","_offset","_isPole","_isLandFireDZ"];
+private["_passArray","_classname","_classnametmp","_require","_text","_ghost","_lockable","_requireplot","_isAllowedUnderGround","_offset","_isPole","_isLandFireDZ"];
 
 _passArray 		= [];
 _require 		= getArray (configFile >> "cfgMagazines" >> DZE_buildItem >> "ItemActions" >> "Build" >> "require");

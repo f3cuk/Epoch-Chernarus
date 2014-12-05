@@ -2,7 +2,7 @@
 	DayZ Safe
 	Made for DayZ Epoch please ask permission to use/edit/distrubute email vbawol@veteranbastards.com.
 */
-private ["_tent","_location","_isOk","_cancel","_location3","_location4","_location1","_location2","_counter","_pondPos","_isPond","_ppos","_hastentitem","_dir","_building","_isBuilding","_playerPos","_item","_offset_x","_offset_y","_offset_z","_offset_z_attach","_config","_text","_tmpvault","_vault_location","_objectsPond","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_removed","_playerUID","_OwnerUID"];
+private["_tent","_location","_isOk","_cancel","_location3","_location4","_location1","_location2","_counter","_pondPos","_isPond","_ppos","_hastentitem","_dir","_building","_isBuilding","_playerPos","_item","_offset_x","_offset_y","_offset_z","_offset_z_attach","_config","_text","_tmpvault","_vault_location","_objectsPond","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_removed","_playerUID","_OwnerUID"];
 //check if can pitch here
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_108") ,"PLAIN DOWN"]; };
@@ -10,7 +10,7 @@ DZE_ActionInProgress = true;
 
 //disableSerialization;
 
-_playerPos = 	[player] call FNC_GetPos;
+_playerPos = [player] call FNC_GetPos;
 _item = _this;
 _hastentitem = _this in magazines player;
 _offset_x = 0; 
@@ -28,7 +28,6 @@ if(DZE_APlotforLife) then {
 	_OwnerUID = dayz_characterID;
 };
 
-
 _isOk = true;
 _config = configFile >> "CfgMagazines" >> _item;
 _text = getText (_config >> "displayName");
@@ -38,7 +37,7 @@ if(!_hastentitem) exitWith {cutText[format[(localize "str_player_31"),_text,"pit
 _dir = getDir player;
 
 // Start Preview loop 
-_tmpvault = createVehicle ["VaultStorageLocked",_location,[],0,"CAN_COLLIDE"];
+_tmpvault = createVehicle["VaultStorageLocked",_location,[],0,"CAN_COLLIDE"];
 _tmpvault setdir _dir;
 _tmpvault attachTo [player,[_offset_x,_offset_y,_offset_z_attach]];
 
@@ -47,16 +46,16 @@ _counter = 0;
 
 
 while {_isOk} do {
-	
+
 	if(_counter == 0) then {
 		cutText[(localize "str_epoch_player_109"),"PLAIN DOWN"];
 		sleep 5; 
 		_location1 = [player] call FNC_GetPos;
 		sleep 5;
 		_location2 = [player] call FNC_GetPos;
-	
+
 		if(_location1 distance _location2 < 0.1) exitWith {
-			
+
 			cutText[(localize "str_epoch_player_109"),"PLAIN DOWN"];
 			_location3 = [player] call FNC_GetPos;
 			sleep 5;
@@ -102,7 +101,7 @@ deleteVehicle _tmpvault;
 
 if(!_cancel) then {
 	if(!_isOk) then {
-		
+
 		//remove safe
 
 		_hastentitem = _this in magazines player;
@@ -120,14 +119,14 @@ if(!_cancel) then {
 			player playActionNow "Medic";
 			sleep 1;
 			[player,"tentunpack",0,false] call dayz_zombieSpeak;
-	
+
 			[player,50,true,([player] call FNC_GetPos)] spawn player_alertZombies;
-	
+
 			_building = nearestObject [(vehicle player),"HouseBase"];
 			_isBuilding = [(vehicle player),_building] call fnc_isInsideBuilding;
 
 			if(_isBuilding) then {
-			
+
 				_ppos = _building worldToModel _vault_location;
 				_location = _building modelToWorld _ppos;
 
@@ -137,11 +136,11 @@ if(!_cancel) then {
 
 			sleep 5;
 			//place tent (local)
-			_tent = createVehicle ["VaultStorageLocked",_location,[],0,"CAN_COLLIDE"];
+			_tent = createVehicle["VaultStorageLocked",_location,[],0,"CAN_COLLIDE"];
 			_tent setdir _dir;
-			_tent setPos _location;
+			_tent setPosATL _location;
 			player reveal _tent;
-	
+
 			// Generate Combination
 			_combination_1 = floor(random 10);
 			_combination_2 = floor(random 10);
@@ -158,10 +157,10 @@ if(!_cancel) then {
 			//["PVDZE_obj_Publish",[_combination,_tent,[_dir,_location],"VaultStorageLocked"]] call callRpcProcedure;
 			PVDZE_obj_Publish = [_combination,_tent,[_dir,_location,_playerUID],"VaultStorageLocked"];
 			publicVariableServer  "PVDZE_obj_Publish";
-	
+
 			cutText[format[(localize "str_epoch_player_179"),_combination],"PLAIN DOWN",5];
 		};
-	
+
 	} else {
 		cutText[(localize "str_epoch_player_110"),"PLAIN DOWN"];
 	};

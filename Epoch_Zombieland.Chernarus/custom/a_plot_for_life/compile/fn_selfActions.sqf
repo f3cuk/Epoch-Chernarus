@@ -1,6 +1,6 @@
 scriptName "Functions\misc\fn_selfActions.sqf";
 
-private ["_isWreckBuilding","_temp_keys","_magazinesPlayer","_isPZombie","_vehicle","_inVehicle","_hasFuelE","_hasRawMeat","_hasKnife","_hasToolbox","_onLadder","_nearLight","_canPickLight","_canDo","_text","_isHarvested","_isVehicle","_isVehicletype","_isMan","_traderType","_ownerID","_isAnimal","_isDog","_isZombie","_isDestructable","_isTent","_isFuel","_isAlive","_Unlock","_lock","_buy","_dogHandle","_lieDown","_warn","_hastinitem","_allowedDistance","_menu","_menu1","_humanity_logic","_low_high","_cancel","_traderMenu","_isWreck","_isRemovable","_isDisallowRepair","_rawmeat","_humanity","_speed","_dog","_hasbottleitem","_isAir","_isShip","_playersNear","_findNearestGens","_findNearestGen","_IsNearRunningGen","_cursorTarget","_isnewstorage","_itemsPlayer","_ownerKeyId","_typeOfCursorTarget","_hasKey","_oldOwner","_combi","_key_colors","_player_deleteBuild","_player_flipveh","_player_lockUnlock_crtl","_player_butcher","_player_studybody","_player_cook","_player_boil","_hasFuelBarrelE","_hasHotwireKit","_player_SurrenderedGear","_isSurrendered","_isModular","_isModularDoor","_ownerKeyName","_temp_keys_names","_hasAttached","_allowTow","_liftHeli","_found","_posL","_posC","_height","_liftHelis","_attached","_playerUID","_characterID","_isowner","_plotDistance","_PlotsmarkersNear","_targetmoney"];
+private["_isWreckBuilding","_temp_keys","_magazinesPlayer","_isPZombie","_vehicle","_inVehicle","_hasFuelE","_hasRawMeat","_hasKnife","_hasToolbox","_onLadder","_nearLight","_canPickLight","_canDo","_text","_isHarvested","_isVehicle","_isVehicletype","_isMan","_traderType","_ownerID","_isAnimal","_isDog","_isZombie","_isDestructable","_isTent","_isFuel","_isAlive","_Unlock","_lock","_buy","_dogHandle","_lieDown","_warn","_hastinitem","_allowedDistance","_menu","_menu1","_humanity_logic","_low_high","_cancel","_traderMenu","_isWreck","_isRemovable","_isDisallowRepair","_rawmeat","_humanity","_speed","_dog","_hasbottleitem","_isAir","_isShip","_playersNear","_findNearestGens","_findNearestGen","_IsNearRunningGen","_cursorTarget","_isnewstorage","_itemsPlayer","_ownerKeyId","_typeOfCursorTarget","_hasKey","_oldOwner","_combi","_key_colors","_player_deleteBuild","_player_flipveh","_player_lockUnlock_crtl","_player_butcher","_player_studybody","_player_cook","_player_boil","_hasFuelBarrelE","_hasHotwireKit","_player_SurrenderedGear","_isSurrendered","_isModular","_isModularDoor","_ownerKeyName","_temp_keys_names","_hasAttached","_allowTow","_liftHeli","_found","_posL","_posC","_height","_liftHelis","_attached","_playerUID","_characterID","_isowner","_plotDistance","_PlotsmarkersNear","_targetmoney"];
 
 if(DZE_ActionInProgress) exitWith {};
 
@@ -121,7 +121,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	_isVehicle = _cursorTarget isKindOf "AllVehicles";
 	_isVehicletype = _typeOfCursorTarget in ["ATV_US_EP1","ATV_CZ_EP1"];
 	_isnewstorage = _typeOfCursorTarget in DZE_isNewStorage;
-	
+
 	// get items && magazines only once
 	_magazinesPlayer = magazines player;
 
@@ -138,7 +138,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	_hasHotwireKit = "ItemHotwireKit" in _magazinesPlayer;
 
 	_itemsPlayer = items player;
-	
+
 	_temp_keys = [];
 	_temp_keys_names = [];
 	// find available keys
@@ -147,8 +147,8 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		if(configName(inheritsFrom(configFile >> "CfgWeapons" >> _x)) in _key_colors) then {
 			_ownerKeyId = getNumber(configFile >> "CfgWeapons" >> _x >> "keyid");
 			_ownerKeyName = getText(configFile >> "CfgWeapons" >> _x >> "displayName");
-			_temp_keys_names set [_ownerKeyId,_ownerKeyName];
-			_temp_keys set [count _temp_keys,str(_ownerKeyId)];
+			_temp_keys_names set[_ownerKeyId,_ownerKeyName];
+			_temp_keys set[count _temp_keys,str(_ownerKeyId)];
 		};
 	} count _itemsPlayer;
 
@@ -179,7 +179,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	_isTent 	= _cursorTarget isKindOf "TentStorage";
 	_isAlive 	= alive _cursorTarget;
 	_text 		= getText (configFile >> "CfgVehicles" >> _typeOfCursorTarget >> "displayName");
-	
+
 	_rawmeat = meatraw;
 	_hasRawMeat = false;
 	{
@@ -187,14 +187,14 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			_hasRawMeat = true;
 		};
 	} count _rawmeat; 
-	
+
 	_isFuel = false;
 	if(_hasFuelE || _hasFuelBarrelE) then {
 		{
 			if(_cursorTarget isKindOf _x) exitWith {_isFuel = true;};
 		} count dayz_fuelsources;
 	};
-	
+
 	// logic vars
 	_player_flipveh = false;
 	_player_deleteBuild = false;
@@ -242,14 +242,14 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 
 	// CURSOR TARGET ALIVE
 	if(_isAlive) then {
-		
+
 		//Allow player to delete objects
 		if(_isWreck || _isRemovable || _isWreckBuilding) then {
 			if(_hasToolbox && "ItemCrowbar" in _itemsPlayer) then {
 				_player_deleteBuild = true;
 			};
 		};
-		
+
 		//Allow owners to delete modulars
 		if((_isModular || _isDestructable || (_cursorTarget isKindOf "Plastic_Pole_EP1_DZ") || _isModularDoor) && (_playerUID == _ownerID)) then {
 			if(_hasToolbox && "ItemCrowbar" in _itemsPlayer) then {
@@ -260,7 +260,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 
 		// CURSOR TARGET VEHICLE
 		if(_isVehicle) then {
-			
+
 			//flip vehicle small vehicles by your self && all other vehicles with help nearby
 			if(!(canmove _cursorTarget) && (player distance _cursorTarget >= 2) && (count (crew _cursorTarget))== 0 && ((vectorUp _cursorTarget) select 2) < 0.5) then {
 				_playersNear = {isPlayer _x} count (player nearEntities ["CAManBase",6]);
@@ -274,7 +274,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			};
 
 		};
-	
+
 	};
 
 	if(_player_deleteBuild) then {
@@ -285,7 +285,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_deleteBuild;
 		s_player_deleteBuild = -1;
 	};
-	
+
 	if(DZE_HeliLift) then {
 		_liftHeli = objNull;
 		_found = false;
@@ -327,7 +327,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			s_player_heli_lift = -1;
 		};
 	};
-	
+
 	// Allow Owner to lock && unlock vehicle  
 	if(_player_lockUnlock_crtl) then {
 		if(s_player_lockUnlock_crtl < 0) then {
@@ -336,7 +336,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			if(locked _cursorTarget) then {
 				if(_hasKey || _oldOwner) then {
 					_Unlock = player addaction[format[localize "STR_EPOCH_ACTIONS_UNLOCK",_text],"\z\addons\dayz_code\actions\unlock_veh.sqf",[_cursorTarget,(_temp_keys_names select (parseNumber _characterID))],2,true,true,"",""];
-					s_player_lockunlock set [count s_player_lockunlock,_Unlock];
+					s_player_lockunlock set[count s_player_lockunlock,_Unlock];
 					s_player_lockUnlock_crtl = 1;
 				} else {
 					if(_hasHotwireKit) then {
@@ -344,13 +344,13 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 					} else {
 						_Unlock = player addaction[format["<t color='#ff0000'>%1</t>",localize "STR_EPOCH_ACTIONS_VEHLOCKED"],"",_cursorTarget,2,true,true,"",""];
 					};
-					s_player_lockunlock set [count s_player_lockunlock,_Unlock];
+					s_player_lockunlock set[count s_player_lockunlock,_Unlock];
 					s_player_lockUnlock_crtl = 1;
 				};
 			} else {
 				if(_hasKey || _oldOwner) then {
 					_lock = player addaction[format[localize "STR_EPOCH_ACTIONS_LOCK",_text],"\z\addons\dayz_code\actions\lock_veh.sqf",_cursorTarget,1,true,true,"",""];
-					s_player_lockunlock set [count s_player_lockunlock,_lock];
+					s_player_lockunlock set[count s_player_lockunlock,_lock];
 					s_player_lockUnlock_crtl = 1;
 				};
 			};
@@ -383,7 +383,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			s_player_checkGear = -1;
 		};
 	};
-	
+
 	if(_player_flipveh) then {
 		if(s_player_flipveh  < 0) then {
 			s_player_flipveh = player addaction[format[localize "str_actions_flipveh",_text],"\z\addons\dayz_code\actions\player_flipvehicle.sqf",_cursorTarget,1,true,true,"",""];		
@@ -392,7 +392,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_flipveh;
 		s_player_flipveh = -1;
 	}; 
-	
+
 	if((_hasFuelE || _hasFuelBarrelE) && _isFuel) then {
 		if(s_player_fillfuel < 0) then {
 			s_player_fillfuel = player addaction[localize "str_actions_self_10","\z\addons\dayz_code\actions\jerry_fill.sqf",[],1,false,true,"",""];
@@ -401,7 +401,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_fillfuel;
 		s_player_fillfuel = -1;
 	};
-	
+
 	// logic vars for addactions
 	_player_butcher = false;
 	_player_studybody = false;
@@ -452,9 +452,9 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	// Study Body
 	if(_player_studybody) then {
 		if(s_player_studybody < 0) then {
-			
+
 			_targetmoney = _cursorTarget getVariable["cashMoney",0];
-			
+
 			if(_targetmoney != 0) then {
 				s_player_studybody = player addaction["Search for coins","custom\gold_coins\check_wallet.sqf",_cursorTarget,0,false,true,"",""];
 			} else {
@@ -473,12 +473,12 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 
 	// CURSOR TARGET IS FIRE
 	if(inflamed _cursorTarget) then {
-		
+
 		//Fireplace Actions check
 		if(_hasRawMeat) then {
 			_player_cook = true;	
 		};
-		
+
 		// Boil water
 		if(_hasbottleitem && _hastinitem) then {
 			_player_boil = true;
@@ -503,7 +503,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_cook;
 		s_player_cook = -1;
 	};
-	
+
 	// Boil water
 	if(_player_boil) then {
 		if(s_player_boil < 0) then {
@@ -513,7 +513,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_boil;
 		s_player_boil = -1;
 	};
-	
+
 	if(_cursorTarget == dayz_hasFire) then {
 		if((s_player_fireout < 0) && !(inflamed _cursorTarget) && (player distance _cursorTarget < 3)) then {
 			s_player_fireout = player addaction[localize "str_actions_self_06","\z\addons\dayz_code\actions\fire_pack.sqf",_cursorTarget,0,false,true,"",""];
@@ -522,7 +522,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_fireout;
 		s_player_fireout = -1;
 	};
-	
+
 	//Packing my tent
 	if(_isTent && (player distance _cursorTarget < 3)) then {
 		if(_ownerID == _playerUID) then {
@@ -547,16 +547,16 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			if(_typeOfCursorTarget in DZE_LockedStorage) then {
 				if(_characterID == dayz_combination || _ownerID == _playerUID) then {
 					_combi 			= player addaction[format[localize "STR_EPOCH_ACTIONS_OPEN",_text],"\z\addons\dayz_code\actions\vault_unlock.sqf",_cursorTarget,0,false,true,"",""];
-					s_player_combi set [count s_player_combi,_combi];
+					s_player_combi set[count s_player_combi,_combi];
 				} else {
 					_combi = player addaction[format[localize "STR_EPOCH_ACTIONS_UNLOCK",_text],"\z\addons\dayz_code\actions\vault_combination_1.sqf",_cursorTarget,0,false,true,"",""];
-					s_player_combi set [count s_player_combi,_combi];
+					s_player_combi set[count s_player_combi,_combi];
 				};
 				s_player_unlockvault = 1;
 			} else {
 				if(_characterID != dayz_combination && _ownerID != _playerUID) then {
 					_combi = player addaction[localize "STR_EPOCH_ACTIONS_RECOMBO","\z\addons\dayz_code\actions\vault_combination_1.sqf",_cursorTarget,0,false,true,"",""];
-					s_player_combi set [count s_player_combi,_combi];
+					s_player_combi set[count s_player_combi,_combi];
 					s_player_unlockvault = 1;
 				};
 			};
@@ -568,7 +568,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		s_player_combi = [];
 		s_player_unlockvault = -1;
 	};
-	
+
 	//Single currency
 	if((_typeOfCursorTarget in DZE_LockableStorage) && _ownerID != "0" && (player distance _cursorTarget < 3)) then {
 		if(_typeOfCursorTarget in DZE_LockedStorage) then {
@@ -597,7 +597,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 				s_player_lockvault = player addaction[format[localize "STR_EPOCH_ACTIONS_LOCK",_text],"\z\addons\dayz_code\actions\vault_lock.sqf",_cursorTarget,0,false,true,"",""];
 			};
 		};
-		
+
 		if(s_player_packvault < 0 && (_characterID == dayz_combination || _ownerID == dayz_playerUID)) then {
 			s_player_packvault = player addaction[format["<t color='#ff0000'>%1</t>",(format[localize "STR_EPOCH_ACTIONS_PACK",_text])],"\z\addons\dayz_code\actions\vault_pack.sqf",_cursorTarget,0,false,true,"",""];
 		};
@@ -638,21 +638,21 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_crate_money;
 		s_crate_money = -1;
 	};
-	
+
 	//Fuel Pump
 	if(_typeOfCursorTarget in dayz_fuelpumparray) then {	
 		if(s_player_fuelauto < 0) then {
-			
+
 			// check if Generator_DZ is running within 30 meters
 			_findNearestGens = nearestObjects[player,["Generator_DZ"],30];
 			_findNearestGen = [];
 			{
 				if(alive _x && (_x getVariable["GeneratorRunning",false])) then {
-					_findNearestGen set [(count _findNearestGen),_x];
+					_findNearestGen set[(count _findNearestGen),_x];
 				};
 			} count _findNearestGens;
 			_IsNearRunningGen = count (_findNearestGen);
-			
+
 			// show that pump needs power if no generator nearby.
 			if(_IsNearRunningGen > 0) then {
 				s_player_fuelauto = player addaction[localize "STR_EPOCH_ACTIONS_FILLVEH","\z\addons\dayz_code\actions\fill_nearestVehicle.sqf",objNull,0,false,true,"",""];
@@ -690,14 +690,14 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		};
 		if(s_player_upgrade_build < 0) then {
 			// s_player_lastTarget = _cursorTarget;
-			s_player_lastTarget set [0,_cursorTarget];
+			s_player_lastTarget set[0,_cursorTarget];
 			s_player_upgrade_build = player addaction[format[localize "STR_EPOCH_ACTIONS_UPGRADE",_text],"custom\a_plot_for_life\action\player_upgrade.sqf",_cursorTarget,-1,false,true,"",""];
 		};
 	} else {
 		player removeAction s_player_upgrade_build;
 		s_player_upgrade_build = -1;
 	};
-	
+
 	// downgrade system
 	if((_isDestructable || _cursorTarget isKindOf "Land_DZE_WoodDoorLocked_Base" || _cursorTarget isKindOf "CinderWallDoorLocked_DZ_Base") && (DZE_Lock_Door == _characterID)) then {
 		if((s_player_lastTarget select 1) != _cursorTarget) then {
@@ -708,7 +708,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		};
 
 		if(s_player_downgrade_build < 0) then {
-			s_player_lastTarget set [1,_cursorTarget];
+			s_player_lastTarget set[1,_cursorTarget];
 			s_player_downgrade_build = player addaction[format[localize "STR_EPOCH_ACTIONS_REMLOCK",_text],"custom\a_plot_for_life\action\player_buildingDowngrade.sqf",_cursorTarget,-2,false,true,"",""];
 		};
 	} else {
@@ -726,7 +726,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		};
 
 		if(s_player_maint_build < 0) then {
-			s_player_lastTarget set [2,_cursorTarget];
+			s_player_lastTarget set[2,_cursorTarget];
 			s_player_maint_build = player addaction[format[localize "STR_EPOCH_ACTIONS_MAINTAIN",_text],"\z\addons\dayz_code\actions\player_buildingMaint.sqf",_cursorTarget,-2,false,true,"",""];
 		};
 	} else {
@@ -738,7 +738,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	//Start Generator
 	if(_cursorTarget isKindOf "Generator_DZ") then {
 		if(s_player_fillgen < 0) then {
-			
+
 			// check if not running 
 			if((_cursorTarget getVariable["GeneratorRunning",false])) then {
 				s_player_fillgen = player addaction[localize "STR_EPOCH_ACTIONS_GENERATOR1","\z\addons\dayz_code\actions\stopGenerator.sqf",_cursorTarget,0,false,true,"",""];				
@@ -767,15 +767,15 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 		player removeAction s_player_sleep;
 		s_player_sleep = -1;
 	};
-	
+
 	//Repairing Vehicles
 	if((dayz_myCursorTarget != _cursorTarget) && _isVehicle && !_isMan && _hasToolbox && (damage _cursorTarget < 1) && !_isDisallowRepair) then {
 		if(s_player_repair_crtl < 0) then {
 			dayz_myCursorTarget = _cursorTarget;
 			_menu = dayz_myCursorTarget addaction[localize "STR_EPOCH_PLAYER_REPAIRV","\z\addons\dayz_code\actions\repair_vehicle.sqf",_cursorTarget,0,true,false,"",""];
 			_menu1 = dayz_myCursorTarget addaction[localize "STR_EPOCH_PLAYER_SALVAGEV","\z\addons\dayz_code\actions\salvage_vehicle.sqf",_cursorTarget,0,true,false,"",""];
-			s_player_repairActions set [count s_player_repairActions,_menu];
-			s_player_repairActions set [count s_player_repairActions,_menu1];
+			s_player_repairActions set[count s_player_repairActions,_menu];
+			s_player_repairActions set[count s_player_repairActions,_menu1];
 			s_player_repair_crtl = 1;
 		} else {
 			{dayz_myCursorTarget removeAction _x} count s_player_repairActions;s_player_repairActions = [];
@@ -785,7 +785,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 
 	// All Traders
 	if(_isMan && !_isPZombie && _traderType in serverTraders) then {
-		
+
 		if(s_player_parts_crtl < 0) then {
 
 			// get humanity
@@ -793,7 +793,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			_traderMenu = call compile format["menu_%1;",_traderType];
 
 			// diag_log ("TRADER = " + str(_traderMenu));
-			
+
 			_low_high = "low";
 			_humanity_logic = false;
 			if((_traderMenu select 2) == "friendly") then {
@@ -808,32 +808,32 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			};
 			if(_humanity_logic) then {
 				_cancel = player addaction[format[localize "STR_EPOCH_ACTIONS_HUMANITY",_low_high],"\z\addons\dayz_code\actions\trade_cancel.sqf",["na"],0,true,false,"",""];
-				s_player_parts set [count s_player_parts,_cancel];
+				s_player_parts set[count s_player_parts,_cancel];
 			} else {
-				
+
 				// Static Menu
 				{
 					//diag_log format["DEBUG TRADER: %1",_x];
 					_buy = player addaction[format["Trade %1 %2 for %3 %4",(_x select 3),(_x select 5),(_x select 2),(_x select 6)],"\z\addons\dayz_code\actions\trade_items_wo_db.sqf",[(_x select 0),(_x select 1),(_x select 2),(_x select 3),(_x select 4),(_x select 5),(_x select 6)],(_x select 7),true,true,"",""];
-					s_player_parts set [count s_player_parts,_buy];
-				
+					s_player_parts set[count s_player_parts,_buy];
+
 				} count (_traderMenu select 1);
 				// Database menu
 				_buy = player addaction[localize "STR_EPOCH_PLAYER_289","\z\addons\dayz_code\actions\show_dialog.sqf",(_traderMenu select 0),999,true,false,"",""];
-				s_player_parts set [count s_player_parts,_buy];
+				s_player_parts set[count s_player_parts,_buy];
 
 			};
 			s_player_parts_crtl = 1;
-			
+
 		};
 	} else {
 		{player removeAction _x} count s_player_parts;s_player_parts = [];
 		s_player_parts_crtl = -1;
 	};
 
-	
+
 	if(dayz_tameDogs) then {
-		
+
 		//Dog
 		if(_isDog && _isAlive && (_hasRawMeat) && _characterID == "0" && player getVariable["dogID",0] == 0) then {
 			if(s_player_tamedog < 0) then {
@@ -894,7 +894,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	s_player_repair_crtl = -1;
 
 	{player removeAction _x} count s_player_combi;s_player_combi = [];
-		
+
 	dayz_myCursorTarget = objNull;
 	s_player_lastTarget = [objNull,objNull,objNull,objNull,objNull];
 
@@ -960,7 +960,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	s_player_warndog = -1;
 	player removeAction s_player_followdog;
 	s_player_followdog = -1;
-	
+
 	// vault
 	player removeAction s_player_unlockvault;
 	s_player_unlockvault = -1;
@@ -986,7 +986,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 	s_player_fuelauto = -1;
 	player removeAction s_player_fuelauto2;
 	s_player_fuelauto2 = -1;
-	
+
 	// single currency
 	player removeAction s_givemoney_dialog;
 	s_givemoney_dialog = -1;

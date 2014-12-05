@@ -1,7 +1,7 @@
 if(isServer) then {
 
-	private ["_veh","_mission","_player_present"];
-	
+	private["_veh","_mission","_player_present"];
+
 	_veh = _this select 0;
 
 	if(count _this == 2) then {
@@ -9,9 +9,9 @@ if(isServer) then {
 	} else {
 		_mission = nil;
 	};
-	
+
 	waitUntil { count crew _veh > 0};
-	
+
 	while {(alive _veh) && ({alive _x} count crew _veh > 0)} do {
 		_veh setVehicleAmmo 1;
 		_veh setFuel 1;
@@ -21,7 +21,7 @@ if(isServer) then {
 		};
 		sleep 1;
 	};
-	
+
 	_veh setDamage 1;
 	_veh setVariable["killedat",time];
 

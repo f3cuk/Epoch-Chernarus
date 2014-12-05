@@ -94,7 +94,7 @@ class MBC_DIALOG
 	idd = 81000;
 	movingenable = 0;
 	enableSimulation = true;
-	
+
 	class Controls
 	{
 		class MBC_FRAME: MBC_Frame

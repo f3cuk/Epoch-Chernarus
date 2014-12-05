@@ -1,4 +1,4 @@
-private ["_invert","_combattimeout","_timeleft","_humanity_b","_ctrl_humanity_b","_ctrl_restart_b","_restart_c","_restart_b","_foodVal","_thirstVal","_combatVal","_bloodVal","_calculate_color","_array","_humanity","_money","_restart","_display","_blood","_thirst","_food","_update_array","_ctrl_array","_ctrl_restart","_ctrl_restart_c","_ctrl_humanity","_ctrl_humanity_c","_ctrl_money","_ctrl_blood","_ctrl_blood_b","_ctrl_bleed","_ctrl_food","_ctrl_food_b","_ctrl_drink","_ctrl_drink_b","_blood_number","_blood_color","_food_number","_food_color","_thirst_number","_thirst_color","_string","_distance","_size","_friendlies","_playerUID","_rplayerUID","_rfriendlies","_rfriendlyTo","_color","_humanity_t","_targetControl","_h","_m","_ctrl_money_c","_humanityTarget"];
+private["_invert","_combattimeout","_timeleft","_humanity_b","_ctrl_humanity_b","_ctrl_restart_b","_restart_c","_restart_b","_foodVal","_thirstVal","_combatVal","_bloodVal","_calculate_color","_array","_humanity","_money","_restart","_display","_blood","_thirst","_food","_update_array","_ctrl_array","_ctrl_restart","_ctrl_restart_c","_ctrl_humanity","_ctrl_humanity_c","_ctrl_money","_ctrl_blood","_ctrl_blood_b","_ctrl_bleed","_ctrl_food","_ctrl_food_b","_ctrl_drink","_ctrl_drink_b","_blood_number","_blood_color","_food_number","_food_color","_thirst_number","_thirst_color","_string","_distance","_size","_friendlies","_playerUID","_rplayerUID","_rfriendlies","_rfriendlyTo","_color","_humanity_t","_targetControl","_h","_m","_ctrl_money_c","_humanityTarget"];
 
 disableSerialization;
 
@@ -191,31 +191,31 @@ if(uiNamespace getVariable["DZ_displayUI",0] == 1) then {
 	};
 
 	if(_thirstVal < 0.2) then {
-		_ctrl_array set [count _ctrl_array,_ctrl_drink];
+		_ctrl_array set[count _ctrl_array,_ctrl_drink];
 	} else {
 		_ctrl_drink ctrlShow true;
 	};
 
 	if(_foodVal < 0.2) then {
-		_ctrl_array set [count _ctrl_array,_ctrl_food];
+		_ctrl_array set[count _ctrl_array,_ctrl_food];
 	} else {
 		_ctrl_food ctrlShow true;
 	};
 
 	if(_bloodVal < 3000) then {
-		_ctrl_array set [count _ctrl_array,_ctrl_blood];
+		_ctrl_array set[count _ctrl_array,_ctrl_blood];
 	} else {
 		_ctrl_blood ctrlShow true;
 	};
 
 	if(r_player_injured) then {
-		_ctrl_array set [count _ctrl_array,_ctrl_bleed];
+		_ctrl_array set[count _ctrl_array,_ctrl_bleed];
 	} else {
 		_ctrl_bleed ctrlShow false;
 	};
 
 	if(_restart < 6) then {
-		_ctrl_array set [count _ctrl_array,_ctrl_restart];
+		_ctrl_array set[count _ctrl_array,_ctrl_restart];
 		if(_restart < 1) then {
 			_ctrl_restart ctrlSetTextColor [1,0,0,1];
 		};
@@ -244,20 +244,20 @@ if(uiNamespace getVariable["DZ_displayUI",0] == 1) then {
 			_rfriendlyTo	= _humanityTarget getVariable["friendlyTo",[]];
 
 			if((_rplayerUID in _friendlies) && (_playerUID in _rfriendlies)) then {
-			
+
 				if !(_playerUID in _rfriendlyTo) then {
-					_rfriendlyTo set [count _rfriendlyTo,_playerUID];
+					_rfriendlyTo set[count _rfriendlyTo,_playerUID];
 					_humanityTarget setVariable["friendlyTo",_rfriendlyTo,true];
 				};
-		
+
 				_color	= "color='#339933'";
 				_string	= format["<t %2 align='center' size='%3'>%1</t>",(name _humanityTarget),_color,_size];
-			
+
 			} else {
 
 				_humanity_t	= _humanityTarget getVariable["humanity",0];
 				_color		= "color='#ffffff'";
-				
+
 				if(_humanity_t < -5000) then {
 					_color = "color='#ff0000'";
 				} else {
@@ -265,7 +265,7 @@ if(uiNamespace getVariable["DZ_displayUI",0] == 1) then {
 						_color = "color='#3333ff'";
 					};
 				};
-				
+
 				if((_humanityTarget getVariable["DZE_display_name",false]) || (DZE_ForceNameTagsInTrader && isInTraderCity)) then {
 					_string = format["<t %2 align='center' size='%3'>%1</t>",(name _humanityTarget),_color,_size];
 				};
@@ -278,7 +278,7 @@ if(uiNamespace getVariable["DZ_displayUI",0] == 1) then {
 		_targetControl ctrlSetStructuredText (parseText _string);
 		dayz_humanitytarget = _string;
 	};
-	
+
 	_array = [_foodVal,_thirstVal];
 	_array
 

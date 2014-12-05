@@ -1,4 +1,4 @@
-private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle"];
+private["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle"];
 
 _ownerID 	= _this select 0;
 _player_pos = [player] call FNC_GetPos;
@@ -15,18 +15,18 @@ _i = 0;
 			if(!locked _vehicle) then {
 				if(player distance _vehicle < 50) then {
 					DZE_ActionInProgress = true;
-					
+
 					if(isEngineOn _vehicle) then {
 						_vehicle engineOn false;
 					} else {
 						_vehicle engineOn true;
 					};
-					
+
 					DZE_ActionInProgress = false;
 				};
 			};
 		};
-		
+
 		_i = _i + 1;
 	};
 } count _objects;

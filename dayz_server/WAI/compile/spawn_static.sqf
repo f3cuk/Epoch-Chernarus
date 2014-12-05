@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
+	private["_ainum","_unarmed","_aicskill","_aitype","_mission","_aipack","_class","_position2","_static","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_class 				= _this select 1;
@@ -14,7 +14,7 @@ if(isServer) then {
 		_backpack 		= _this select 7;
 		_gear 			= _this select 8;
 	};
-	
+
 	if((count _this == 10) OR (count _this == 6)) then {
 		if(count _this == 10) 	then { _mission = _this select 9; };
 		if(count _this == 6) 	then { _mission = _this select 5; };
@@ -34,7 +34,7 @@ if(isServer) then {
 	} else {
 		_unitGroup	= createGroup EAST;
 	};
-	
+
 	if(!isServer) exitWith {};
 
 	{
@@ -47,7 +47,7 @@ if(isServer) then {
 			if(_skin == "special") 	exitWith { _aiskin = ai_special_skin call BIS_fnc_selectRandom; };
 			_aiskin = _skin;
 		};
-		
+
 		if(typeName _aiskin == "ARRAY") then {
 			_aiskin = _aiskin call BIS_fnc_selectRandom;
 		};
@@ -57,11 +57,11 @@ if(isServer) then {
 		};
 
 		_unit = _unitGroup createUnit [_aiskin,[0,0,0],[],10,"PRIVATE"];
-		
-		_static = createVehicle [_class,[(_position2 select 0),(_position2 select 1),(_position2 select 2)],[],0,"CAN_COLLIDE"];
+
+		_static = createVehicle[_class,[(_position2 select 0),(_position2 select 1),(_position2 select 2)],[],0,"CAN_COLLIDE"];
 		_static setDir round(random 360);
-		_static setPos [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
-		
+		_static setPosATL [(_position2 select 0),(_position2 select 1),(_position2 select 2)];
+
 		[_unit] joinSilent _unitGroup;
 
 		call {
@@ -69,18 +69,18 @@ if(isServer) then {
 			if(_aitype == "bandit") 	exitWith { _unit setVariable["Bandit",true,true]; };
 			if(_aitype == "special") 	exitWith { _unit setVariable["Special",true,true]; };
 		};
-		
+
 		_unit enableAI "TARGET";
 		_unit enableAI "AUTOTARGET";
 		_unit enableAI "MOVE";
 		_unit enableAI "ANIM";
 		_unit enableAI "FSM";
-		
+
 		removeAllWeapons _unit;
 		removeAllItems _unit;
-		
+
 		if(ai_static_useweapon) then {
-		
+
 			call {
 				if(typeName(_gun) == "SCALAR") then {
 					if(_gun == 0) 			exitWith { _aiweapon = ai_wep_assault; };
@@ -94,7 +94,7 @@ if(isServer) then {
 
 			_weapon 	= _aiweapon call BIS_fnc_selectRandom;
 			_magazine 	= _weapon call find_suitable_ammunition;
-			
+
 			call {
 				if(typeName(_gear) == "SCALAR") then {
 					if(_gear == 0) 			exitWith { _aigear = ai_gear0; };
@@ -130,7 +130,7 @@ if(isServer) then {
 				_unit addweapon _x
 			} count _geartools;
 		};
-		
+
 		if(ai_static_skills) then {
 
 			{
@@ -152,21 +152,21 @@ if(isServer) then {
 				_unit setSkill [(_x select 0),(_x select 1)]
 			} count _aicskill;
 		};
-		
+
 		ai_emplacement_units = (ai_emplacement_units + 1);
-		_unit addEventHandler ["Killed",{[_this select 0,_this select 1,"static"] call on_kill;}];
-		_static addEventHandler ["GetOut",{(_this select 0) setDamage 1;}];
-		PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_static];
-			
+		_unit addEventhandler["Killed",{[_this select 0,_this select 1,"static"] call on_kill;}];
+		_static addEventhandler["GetOut",{(_this select 0) setDamage 1;}];
+		PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_static];
+
 		if(sunOrMoon != 1) then {
 			_unit addweapon "NVGoggles";
 		};
-		
+
 		_unit moveingunner _static;
 
 		if(!isNil "_mission") then {
 			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0,(_ainum + 1)];
+			wai_mission_data select _mission set[0,(_ainum + 1)];
 			_static setVariable["missionclean","static"];
 			_static setVariable["mission",_mission];
 			_unit setVariable["mission",_mission];
@@ -192,7 +192,7 @@ if(isServer) then {
 		};
 	};
 
-	diag_log format ["WAI: Spawned in %1 %2",_unitnumber,_class];
+	diag_log format["WAI: Spawned in %1 %2",_unitnumber,_class];
 
 	_unitGroup
 };

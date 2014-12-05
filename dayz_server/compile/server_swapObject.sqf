@@ -1,4 +1,4 @@
-private ["_activatingplayerUID","_class","_uid","_charID","_object","_worldspace","_key","_allowed","_obj","_objectID","_objectUID","_proceed","_activatingplayer"];
+private["_activatingplayerUID","_class","_uid","_charID","_object","_worldspace","_key","_allowed","_obj","_objectID","_objectUID","_proceed","_activatingplayer"];
 
 _charID					= _this select 0;
 _object					= _this select 1;
@@ -47,8 +47,8 @@ if(!_allowed || !_proceed) exitWith {
 
 _uid = _worldspace call dayz_objectUID2;
 
-_worldspace set [0,(_worldspace select 0) call KK_fnc_floatToString];
-_worldspace set [1,(_worldspace select 1) call KK_fnc_positionToString];
+_worldspace set[0,(_worldspace select 0) call KK_fnc_floatToString];
+_worldspace set[1,(_worldspace select 1) call KK_fnc_positionToString];
 
 _object setVariable["CharacterID",_charID,true];
 _object setVariable["OEMPos",call compile (_worldspace select 1),true];
@@ -80,19 +80,19 @@ _key call server_hiveWrite;
 	_object setVariable["ObjectID",(_result select 1),true];
 
 	diag_log format["PUBLISH: Assigned %1 to Object with UID %2",(_result select 1),_uid];
-	
+
 };
 
 _object setVariable["lastUpdate",time];
 _object setVariable["ObjectUID",_uid,true];
 
 if(DZE_GodModeBase) then {
-	_object addEventHandler ["HandleDamage",{false}];
+	_object addEventhandler["HandleDamage",{false}];
 } else {
-	_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
+	_object addMPEventhandler["MPKilled",{_this call object_handleServerKilled;}];
 };
 _object enableSimulation false;
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 
 diag_log ("PUBLISH: " + str(_activatingPlayer) + " upgraded " + (_class) + " with ID " + str(_uid));

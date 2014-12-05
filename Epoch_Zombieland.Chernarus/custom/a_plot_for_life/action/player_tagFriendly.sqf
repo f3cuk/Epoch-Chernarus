@@ -15,7 +15,7 @@ if(DZE_APlotforLife) then {
 
 if((_callerID != "0") && (_targetID != "0")) then {
 	_friendlies = _caller getVariable["friendlies",[]];
-	_friendlies set [count _friendlies,_targetID];
+	_friendlies set[count _friendlies,_targetID];
 	_caller setVariable["friendlies",_friendlies,true];
 
 	_rfriendlies = _target getVariable["friendlies",[]];

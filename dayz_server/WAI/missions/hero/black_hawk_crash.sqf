@@ -7,15 +7,15 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Medium","Black Hawk Crash","MainHero",true] call mission_init;	
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Black Hawk Crash]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_crate 			= createVehicle[_crate_type,[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 
 	//Base
-	_baserunover 	= createVehicle ["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5),((_position select 1) + 5),0],[],10,"FORM"];
+	_baserunover 	= createVehicle["UH60_ARMY_Wreck_burned_DZ",[((_position select 0) + 5),((_position select 1) + 5),0],[],10,"FORM"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops

@@ -1,4 +1,4 @@
-private ["_passArray","_missing","_hasrequireditem","_require","_hastoolweapon","_hasbuilditem","_checkMag","_checkTools","_reason","_text"];
+private["_passArray","_missing","_hasrequireditem","_require","_hastoolweapon","_hasbuilditem","_checkMag","_checkTools","_reason","_text"];
 
 if(!DZE_ActionInProgress) exitWith {};
 

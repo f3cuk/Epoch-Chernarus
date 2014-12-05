@@ -1,4 +1,4 @@
-private ["_traders","_unit"];
+private["_traders","_unit"];
 
 _traders = [
 	["RU_Functionary1",[12946.349,12766.593,2.09],194],

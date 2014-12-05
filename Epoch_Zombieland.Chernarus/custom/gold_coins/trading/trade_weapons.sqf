@@ -1,4 +1,4 @@
-private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_finished","_removed","_msg","_config","_configName","_wepType","_isToolBelt","_isBinocs","_abort","_secondaryWeapon","_isPistol","_isRifle","_qtychange","_newM","_myMoney"];
+private["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_traderID","_bos","_needed","_activatingPlayer","_textPartIn","_textPartOut","_finished","_removed","_msg","_config","_configName","_wepType","_isToolBelt","_isBinocs","_abort","_secondaryWeapon","_isPistol","_isRifle","_qtychange","_newM","_myMoney"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
@@ -77,7 +77,7 @@ if(_qty >= _qty_in) then {
 	cutText[(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
-	
+
 	// # F3 FAST TRADING
 
 		if(isNil "_oldPosition") then {
@@ -87,7 +87,7 @@ if(_qty >= _qty_in) then {
 		_finished = false;
 
 		sleep .5;
-		
+
 		if((position player) distance _oldPosition <= 0.1) then {
 			_finished = true;
 		};
@@ -117,7 +117,7 @@ if(_qty >= _qty_in) then {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
 			};
 			publicVariableServer "PVDZE_log";
-	
+
 			// waitUntil {!isNil "dayzTradeResult"};
 			dayzTradeResult = "PASS";
 
@@ -129,7 +129,7 @@ if(_qty >= _qty_in) then {
 					player setVariable["cashMoney",_qtychange ,true];	
 					_newM = player getVariable["cashMoney",0];
 					_removed = _qty - _newM; // 
-								
+
 					if(_removed == _qty_in) then {
 						for "_x" from 1 to _qty_out do {
 							player addWeapon _part_out;
@@ -138,19 +138,19 @@ if(_qty >= _qty_in) then {
 					};
 
 				} else {
-								
+
 					_removed = ([player,_part_in,_qty_in] call BIS_fnc_invRemove);
-												
+
 					if(_removed == _qty_in) then {
 
 						_myMoney = player getVariable["cashMoney",0];
 						_myMoney = _myMoney + _qty_out;
 						player setVariable["cashMoney",_myMoney ,true];	
-									
+
 						cutText[format[(localize "str_epoch_player_186"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
 					};
 				};
-		
+
 				{
 					player removeAction _x
 				} forEach s_player_parts;

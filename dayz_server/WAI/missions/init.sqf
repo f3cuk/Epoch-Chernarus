@@ -11,7 +11,7 @@ if(isServer) then {
 	mission_winorfail				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\mission_winorfail.sqf";
 	minefield						= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\minefield.sqf";
 	custom_publish  				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\custom_publish_vehicle.sqf";
-	
+
 	trader_markers 					= call get_trader_markers;
 	markerready 					= true;
 	wai_mission_data				= [];
@@ -32,13 +32,13 @@ if(isServer) then {
 	// Set mission frequencies from config
 	{
 		for "_i" from 1 to (_x select 1) do {
-			wai_hero_mission set [count wai_hero_mission,_x select 0];
+			wai_hero_mission set[count wai_hero_mission,_x select 0];
 		};
 	} count wai_hero_missions;
 
 	{
 		for "_i" from 1 to (_x select 1) do {
-			wai_bandit_mission set [count wai_bandit_mission,_x select 0];
+			wai_bandit_mission set[count wai_bandit_mission,_x select 0];
 		};
 	} count wai_bandit_missions;
 
@@ -46,7 +46,7 @@ if(isServer) then {
 	[] spawn {
 
 		while {true} do {
-	
+
 			{
 
 				if(str(side _x) != "WEST") then {
@@ -90,11 +90,11 @@ if(isServer) then {
 				_delayTime			= floor(time);
 				_h_missionTime		= nil;
 				_hresult 			= 0;
-				wai_mission_markers set [(count wai_mission_markers),("MainHero" + str(count wai_mission_data))];
+				wai_mission_markers set[(count wai_mission_markers),("MainHero" + str(count wai_mission_data))];
 				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
 
 				_mission 			= wai_hero_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
+				execVM format["\z\addons\dayz_server\WAI\missions\hero\%1.sqf",_mission];
 			};
 
 			if(_bresult == 1) then {
@@ -105,11 +105,11 @@ if(isServer) then {
 				_delayTime			= floor(time);
 				_b_missionTime		= nil;
 				_bresult 			= 0;
-				wai_mission_markers set [(count wai_mission_markers),("MainBandit" + str(count wai_mission_data))];
+				wai_mission_markers set[(count wai_mission_markers),("MainBandit" + str(count wai_mission_data))];
 				wai_mission_data = wai_mission_data + [[0,"",[],[0,0,0]]];
-				
+
 				_mission 			= wai_bandit_mission call BIS_fnc_selectRandom;
-				execVM format ["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
+				execVM format["\z\addons\dayz_server\WAI\missions\bandit\%1.sqf",_mission];
 			};
 
 		};

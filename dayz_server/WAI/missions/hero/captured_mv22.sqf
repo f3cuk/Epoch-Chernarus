@@ -7,15 +7,15 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Hard","Captured MV22","MainHero",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Captured MV22]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
+
 	//Medical Tent
-	_baserunover 	= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover 	= createVehicle["USMC_WarfareBFieldhHospital",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -34,11 +34,11 @@ if(isServer) then {
 	//MV22
 	_vehclass 		= "MV22_DZ";
 	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
-	
+
 	if(debug_mode) then {
 		diag_log format["WAI: [Hero] captured_mv22 spawned a MV22 at %1",_position];
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate

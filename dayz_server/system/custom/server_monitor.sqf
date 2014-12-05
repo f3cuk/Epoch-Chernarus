@@ -1,4 +1,4 @@
-private ["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded","_skip","_ownerPUID","_cpcimmune"];
+private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded","_skip","_ownerPUID","_cpcimmune"];
 
 dayz_versionNo		= getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo	= getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
@@ -43,12 +43,12 @@ if(isServer && isNil "sm_done") then {
 	serverObjects	= [];
 
 	if((_hiveResponse select 0) == "ObjectStreamStart") then {
-		
+
 		profileNamespace setVariable["SUPERKEY",(_hiveResponse select 2)];
-		
+
 		_hiveLoaded = true;
 		diag_log ("HIVE: Commence Object Streaming...");
-		
+
 		_key = format["CHILD:302:%1:",dayZ_instance];
 		_objectCount = _hiveResponse select 1;
 		_bQty = 0;
@@ -57,10 +57,10 @@ if(isServer && isNil "sm_done") then {
 			_hiveResponse = _key call server_hiveReadWriteLarge;
 
 			if((_hiveResponse select 2) isKindOf "ModularItems") then {
-				_BuildingQueue set [_bQty,_hiveResponse];
+				_BuildingQueue set[_bQty,_hiveResponse];
 				_bQty = _bQty + 1;
 			} else {
-				_objectQueue set [_vQty,_hiveResponse];
+				_objectQueue set[_vQty,_hiveResponse];
 				_vQty = _vQty + 1;
 			};
 		};
@@ -92,12 +92,12 @@ if(isServer && isNil "sm_done") then {
 		if(count _worldspace >= 2) then
 		{
 			if((typeName (_worldspace select 0)) == "STRING") then {
-				_worldspace set [0,call compile (_worldspace select 0)];
-				_worldspace set [1,call compile (_worldspace select 1)];
+				_worldspace set[0,call compile (_worldspace select 0)];
+				_worldspace set[1,call compile (_worldspace select 1)];
 			};
 
 			_dir = _worldspace select 0;
-			
+
 			if(count (_worldspace select 1) == 3) then {
 				_pos = _worldspace select 1;
 				_wsDone = true;
@@ -107,21 +107,21 @@ if(isServer && isNil "sm_done") then {
 		if(_skip) then {
 
 			if(count _worldspace < 3) then {
-				_worldspace set [count _worldspace,"0"];
+				_worldspace set[count _worldspace,"0"];
 			};
 
 			_ownerPUID = _worldspace select 2;
 
 			if(_damage < 1) then {
-				_object = _type createVehicleLocal [0,0,0];
+				_object = _type createVehicleLocal[0,0,0];
 				_object setVariable["lastUpdate",time];
 				_object setVariable["ObjectID",_idKey];
 				_object setVariable["OwnerPUID",_ownerPUID];
 				_object setVariable["CharacterID",_ownerID];
 				_object setdir _dir;
-				_object setPos _pos;
+				_object setPosATL _pos;
 				_object setDamage _damage;
-				_object addEventHandler ["HandleDamage",{false}];
+				_object addEventhandler["HandleDamage",{false}];
 				_object enableSimulation false;
 
 				if((typeOf _object) in dayz_allowedObjects) then {
@@ -145,13 +145,13 @@ if(isServer && isNil "sm_done") then {
 			};
 
 			if(count _worldspace < 3) then {
-				_worldspace set [count _worldspace,"0"];
+				_worldspace set[count _worldspace,"0"];
 			};
 
 			_ownerPUID = _worldspace select 2;
 
 			if(_damage < 1) then {
-				_object = createVehicle [_type,_pos,[],0,"CAN_COLLIDE"];
+				_object = createVehicle[_type,_pos,[],0,"CAN_COLLIDE"];
 				_object setVariable["lastUpdate",time];
 				_object setVariable["ObjectID",_idKey,true];
 				_object setVariable["OwnerPUID",_ownerPUID,true];
@@ -177,14 +177,14 @@ if(isServer && isNil "sm_done") then {
 				clearWeaponCargoGlobal _object;
 				clearMagazineCargoGlobal _object;
 				_object setdir _dir;
-				_object setPos _pos;
+				_object setPosATL _pos;
 				_object setDamage _damage;
 
 				if((typeOf _object) in dayz_allowedObjects) then {
 					if(DZE_GodModeBase) then {
-						_object addEventHandler ["HandleDamage",{false}];
+						_object addEventhandler["HandleDamage",{false}];
 					} else {
-						_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
+						_object addMPEventhandler["MPKilled",{_this call object_handleServerKilled;}];
 					};
 					_object enableSimulation false;
 					_object setVariable["OEMPos",_pos,true];
@@ -229,7 +229,7 @@ if(isServer && isNil "sm_done") then {
 						_objWpnTypes	= (_inventory select 2) select 0;
 						_objWpnQty		= (_inventory select 2) select 1;
 						_countr			= 0;
-						
+
 						{
 							_isOK = isClass(configFile >> "CfgVehicles" >> _x);
 
@@ -257,10 +257,10 @@ if(isServer && isNil "sm_done") then {
 							_object setvehiclelock "locked";
 						};
 						_totalvehicles = _totalvehicles + 1;
-						serverVehicleCounter set [count serverVehicleCounter,_type];
+						serverVehicleCounter set[count serverVehicleCounter,_type];
 					};
 				};
-				PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+				PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 			};
 		};
 	} forEach (_BuildingQueue + _objectQueue);
@@ -279,19 +279,19 @@ if(isServer && isNil "sm_done") then {
 					_retrader	= [];
 					_key		= format["CHILD:399:%1:",_traderid];
 					_data		= "HiveEXT" callExtension _key;
-					_result		= call compile format ["%1",_data];
+					_result		= call compile format["%1",_data];
 					_status		= _result select 0;
-			
+
 					if(_status == "ObjectStreamStart") then {
 						_val = _result select 1;
 						call compile format["ServerTcache_%1 = [];",_traderid];
 						for "_i" from 1 to _val do {
 							_data = "HiveEXT" callExtension _key;
-							_result = call compile format ["%1",_data];
-							call compile format["ServerTcache_%1 set [count ServerTcache_%1,%2]",_traderid,_result];
-							_retrader set [count _retrader,_result];
+							_result = call compile format["%1",_data];
+							call compile format["ServerTcache_%1 set[count ServerTcache_%1,%2]",_traderid,_result];
+							_retrader set[count _retrader,_result];
 						};
-						
+
 					};
 				} forEach (_traderData select 0);
 			};
@@ -321,14 +321,14 @@ if(isServer && isNil "sm_done") then {
 	if(isDedicated) then {
 		_id = [] spawn server_spawnEvents;
 		[] spawn {
-			private ["_id"];
+			private["_id"];
 			sleep 200; 
 			waitUntil {!isNil "server_spawnCleanAnimals"};
 			_id = [] execFSM "\z\addons\dayz_server\system\server_cleanup.fsm";
 		};
 		_debugMarkerPosition = getMarkerPos "respawn_west";
 		_debugMarkerPosition = [(_debugMarkerPosition select 0),(_debugMarkerPosition select 1),1];
-		_vehicle_0 = createVehicle ["DebugBox_DZ",_debugMarkerPosition,[],0,"CAN_COLLIDE"];
+		_vehicle_0 = createVehicle["DebugBox_DZ",_debugMarkerPosition,[],0,"CAN_COLLIDE"];
 		_vehicle_0 setPos _debugMarkerPosition;
 		_vehicle_0 setVariable["ObjectID","1",true];
 

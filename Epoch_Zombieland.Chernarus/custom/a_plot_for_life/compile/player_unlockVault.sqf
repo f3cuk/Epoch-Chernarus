@@ -1,4 +1,4 @@
-private ["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_alreadyPacking","_playerNear","_playerID","_claimedBy","_unlockedClass","_text","_objType","_characterID","_playerUID"];
+private["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_alreadyPacking","_playerNear","_playerID","_claimedBy","_unlockedClass","_text","_objType","_characterID","_playerUID"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_21") ,"PLAIN DOWN"]; };
 
@@ -50,19 +50,19 @@ if((_characterID == dayz_combination) || (_ownerID == _playerUID)) then {
 	// Check if any players are nearby if not allow player to claim item.
 	_playerNear = {isPlayer _x} count (player nearEntities ["CAManBase",6]) > 1;
 	_playerID 	= [player] call FNC_GetPlayerUID;
-	
+
 	// Only allow if not already claimed.
 	if(_claimedBy == "0" || !_playerNear) then {
 		// Since item was not claimed proceed with claiming it.
 		_obj setVariable["claimed",_playerID,true];
 	};
-	
+
 	_dir 		= direction _obj;
 	_pos		= _obj getVariable["OEMPos",([_obj] call FNC_GetPos)];
 	_objectID 	= _obj getVariable["ObjectID","0"];
 	_objectUID	= _obj getVariable["ObjectUID","0"];
 	_claimedBy 	= _obj getVariable["claimed","0"];
-	
+
 	if(_claimedBy == _playerID) then {
 
 		if(!isNull _obj && alive _obj) then {
@@ -77,13 +77,13 @@ if((_characterID == dayz_combination) || (_ownerID == _playerUID)) then {
 			[player,"tentpack",0,false] call dayz_zombieSpeak;
 			sleep 5;
 
-			_holder = createVehicle [_unlockedClass,_pos,[],0,"CAN_COLLIDE"];
+			_holder = createVehicle[_unlockedClass,_pos,[],0,"CAN_COLLIDE"];
 			// Remove locked vault
 			deleteVehicle _obj;
 			_holder setdir _dir;
-			_holder setPos _pos;
+			_holder setPosATL _pos;
 			player reveal _holder;
-	
+
 			_holder setVariable["CharacterID",_characterID,true];
 			_holder setVariable["ObjectID",_objectID,true];
 			_holder setVariable["ObjectUID",_objectUID,true];
@@ -100,7 +100,7 @@ if((_characterID == dayz_combination) || (_ownerID == _playerUID)) then {
 					_countr = _countr + 1;
 				} count _objWpnTypes;
 			};
-	
+
 			if(count _magazines > 0) then {
 				//Add Magazines
 				_objWpnTypes 	= _magazines select 0;
@@ -128,7 +128,7 @@ if((_characterID == dayz_combination) || (_ownerID == _playerUID)) then {
 
 			PVDZE_log = [format["SAFE UNLOCKED: ID:%1 by %2(%3)",_objectID,(name player),(getPlayerUID player)]];
 			publicVariableServer "PVDZE_log";
-	
+
 			cutText[format[(localize "str_epoch_player_125"),_text],"PLAIN DOWN"];
 		};
 	} else {

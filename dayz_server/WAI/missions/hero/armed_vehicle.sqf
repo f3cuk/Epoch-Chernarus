@@ -11,13 +11,13 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Medium",format["Disabled %1",_vehname],"MainHero",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Armed Vehicle]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0),(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0),(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
+
 	//Troops
 	_rndnum = (2 + round (random 4));
 	[[_position select 0,_position select 1,0],_rndnum,"Medium",["Random","AT"],3,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
@@ -29,14 +29,14 @@ if(isServer) then {
 	[[
 		[(_position select 0),(_position select 1) + 10,0]
 	],_static_gun,"Medium","Bandit","Bandit",0,2,"Random","Random",_mission] call spawn_static;
-	
+
 	//Spawn Vehicle
 	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
-	
+
 	if(debug_mode) then {
 		diag_log format["WAI: [Hero] armed_vehicle spawned a %1",_vehname];
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
@@ -52,6 +52,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Bandit] armed_vehicle ended at %1",_position];
-	
+
 	h_missionsrunning = h_missionsrunning - 1;
 };

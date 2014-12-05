@@ -1,5 +1,5 @@
 if(!DZE_ActionInProgress) exitWith {};
-private ["_isFine","_onLadder","_vehicle","_inVehicle"];
+private["_isFine","_onLadder","_vehicle","_inVehicle"];
 
 _isFine = "ok";
 _onLadder =	(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;

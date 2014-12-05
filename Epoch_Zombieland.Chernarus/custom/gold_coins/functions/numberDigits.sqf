@@ -1,4 +1,4 @@
-private ["_number","_step","_stepLocal","_result","_numberLocal"];
+private["_number","_step","_stepLocal","_result","_numberLocal"];
 
 _number = [_this,0,0,[0]] call bis_fnc_param;
 

@@ -34,7 +34,7 @@ if(!isDedicated) then {
 	};
 
 	player_login = {
-		private ["_unit","_detail"];
+		private["_unit","_detail"];
 		_unit = _this select 0;
 		_detail = _this select 1;
 		if(_unit == getPlayerUID player) then {
@@ -100,7 +100,7 @@ if(!isDedicated) then {
 	} else {
 		player_build				= compile preprocessFileLineNumbers "custom\a_plot_for_life\action\player_build.sqf";
 	};
-	
+
 	FNC_check_owner			= compile preprocessFileLineNumbers "custom\a_plot_for_life\compile\fn_check_owner.sqf";
 	player_wearClothes		= compile preprocessFileLineNumbers "custom\fixes\player_wearClothes.sqf";
 	object_pickup			= compile preprocessFileLineNumbers "\z\addons\dayz_code\actions\object_pickup.sqf";
@@ -120,14 +120,14 @@ if(!isDedicated) then {
 	player_spawn_2			= compile preprocessFileLineNumbers "\z\addons\dayz_code\system\player_spawn_2.sqf";
 	onPreloadStarted {dayz_preloadFinished = false;};
 	onPreloadFinished {dayz_preloadFinished = true;};
-	
+
 	player_hasTools			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_hasTools.sqf";
 	player_checkItems		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_checkItems.sqf";
 	player_removeItems		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\fn_removeItems.sqf";
 	player_traderCity		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_traderCity.sqf";
-	
+
 	player_checkAndRemoveItems = {
-		private ["_items","_b"];
+		private["_items","_b"];
 		_items = _this;
 		_b = _items call player_checkItems;
 		if(_b) then {
@@ -142,7 +142,7 @@ if(!isDedicated) then {
 	};
 
 	epoch_totalCurrency = {
-		private ["_total_currency","_part","_worth"];
+		private["_total_currency","_part","_worth"];
 		_total_currency = 0;
 		{
 			_part = (configFile >> "CfgMagazines" >> _x);
@@ -155,7 +155,7 @@ if(!isDedicated) then {
 	};
 
 	epoch_itemCost = {
-		private ["_trade_total","_part_inWorth","_part_in_configClass"];
+		private["_trade_total","_part_inWorth","_part_in_configClass"];
 		_trade_total = 0;
 		{
 			_part_in_configClass = configFile >> "CfgMagazines" >> (_x select 0);
@@ -166,17 +166,17 @@ if(!isDedicated) then {
 				};
 			};
 		} count _this;
-		
+
 		_trade_total
 	};
 
 	epoch_returnChange = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\epoch_returnChange.sqf";
-	
+
 	dayz_losChance = {
 		private["_maxDis","_dis","_val","_maxExp","_myExp"];
 		_dis =		_this select 1;
 		_maxDis = 	_this select 2;
-		
+
 		_val = 		(_maxDis - _dis) max 0;
 		_maxExp = 	((exp 2) * _maxDis);
 		_myExp = 	((exp 2) * (_val)) / _maxExp;
@@ -188,7 +188,7 @@ if(!isDedicated) then {
 		private["_control","_ctrlBleed","_display","_ctrlFracture","_ctrlDogFood","_ctrlDogWater","_ctrlDogWaterBorder","_ctrlDogFoodBorder"];
 		disableSerialization;
 		_display = uiNamespace getVariable 'DAYZ_GUI_display';
-		_control = 	_display displayCtrl 1204;
+		_control = _display displayCtrl 1204;
 		_control ctrlShow false;
 		if(!r_player_injured) then {
 			_ctrlBleed = 	_display displayCtrl 1303;
@@ -209,15 +209,15 @@ if(!isDedicated) then {
 	};
 
 	dayz_losCheck = {
-		private ["_target","_agent","_cantSee","_tPos","_zPos"];
+		private["_target","_agent","_cantSee","_tPos","_zPos"];
 		_target = _this select 0; 
 		_agent = _this select 1;
 		_cantSee = true;
 		if(!isNull _target) then {
 			_tPos = visiblePositionASL _target;
 			_zPos = visiblePositionASL _agent;
-			_tPos set [2,(_tPos select 2)+1];
-			_zPos set [2,(_zPos select 2)+1];
+			_tPos set[2,(_tPos select 2)+1];
+			_zPos set[2,(_zPos select 2)+1];
 			if((count _tPos > 0) && (count _zPos > 0)) then {
 				_cantSee = terrainIntersectASL [_tPos,_zPos];
 				if(!_cantSee) then {
@@ -229,7 +229,7 @@ if(!isDedicated) then {
 	};
 
 	dayz_equipCheck = {
-		private ["_empty","_needed","_diff","_success","_config"];
+		private["_empty","_needed","_diff","_success","_config"];
 		_config = _this;
 		_empty = [player] call BIS_fnc_invSlotsEmpty;
 		_needed = [_config] call BIS_fnc_invSlotType;
@@ -265,7 +265,7 @@ if(!isDedicated) then {
 			[_model] call player_switchModel;
 		};
 	};
-	
+
 	player_guiControlFlash = {
 		private["_control"];
 		_control = _this;
@@ -277,7 +277,7 @@ if(!isDedicated) then {
 	};
 
 	gearDialog_create = {
-		private ["_i","_dialog"];
+		private["_i","_dialog"];
 		if(!isNull (findDisplay 106)) then {
 			(findDisplay 106) closeDisplay 0;
 		};
@@ -311,7 +311,7 @@ if(!isDedicated) then {
 	};
 
 	gear_ui_offMenu = {
-		private ["_control","_parent","_menu","_grpPos"];
+		private["_control","_parent","_menu","_grpPos"];
 		disableSerialization;
 		_control = 	_this select 0;
 		_parent = 	findDisplay 106;
@@ -321,7 +321,7 @@ if(!isDedicated) then {
 				_menu ctrlShow false;
 			};
 			_grpPos = ctrlPosition _control;
-			_grpPos set [3,0];
+			_grpPos set[3,0];
 			_control ctrlsetPosition _grpPos;
 			_control ctrlShow false;
 			_control ctrlCommit 0;
@@ -334,7 +334,7 @@ if(!isDedicated) then {
 	};
 
 	gear_ui_init = {
-		private ["_control","_parent","_menu","_grpPos"];
+		private["_control","_parent","_menu","_grpPos"];
 		disableSerialization;
 		_parent = findDisplay 106;
 		_control = 	_parent displayCtrl 6902;
@@ -343,7 +343,7 @@ if(!isDedicated) then {
 			_menu ctrlShow false;
 		};
 		_grpPos = ctrlPosition _control;
-		_grpPos set [3,0];
+		_grpPos set[3,0];
 		_control ctrlsetPosition _grpPos;
 		_control ctrlShow false;
 		_control ctrlCommit 0;
@@ -358,32 +358,32 @@ if(!isDedicated) then {
 	};
 
 	DZE_getModelName = {
-		private ["_i","_objInfo","_lenInfo","_objName"];
+		private["_i","_objInfo","_lenInfo","_objName"];
 		_objInfo = toArray(str(_this));
 		_lenInfo = count _objInfo - 1;
 		_objName = [];
 		_i = 0;
-		
+
 		{
 			if(58 == _objInfo select _i) exitWith {};
 			_i = _i + 1;
 		} count _objInfo;
 		_i = _i + 2; 
 		for "_k" from _i to _lenInfo do {
-			_objName set [(count _objName),(_objInfo select _k)];
+			_objName set[(count _objName),(_objInfo select _k)];
 		};
 		_objName = toLower(toString(_objName));
 		_objName
 	};
 
 	dze_isnearest_player = {
-		private ["_notClosest","_playerDistance","_nearPlayers","_playerNear"];
+		private["_notClosest","_playerDistance","_nearPlayers","_playerNear"];
 		if(!isNull _this) then {
 			_nearPlayers = _this nearEntities ["CAManBase",12];
 			_playerNear = ({isPlayer _x} count _nearPlayers) > 1;
 			_notClosest = false;
 			if(_playerNear) then {
-				
+
 				_playerDistance = player distance _this;
 				{
 					if(_playerDistance > (_x distance _this)) exitWith { _notClosest = true; };
@@ -394,7 +394,7 @@ if(!isDedicated) then {
 		};
 		_notClosest
 	};
-	
+
 	if(DZE_ConfigTrader) then {
 		call compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_traderMenuConfig.sqf";
 	} else {
@@ -405,13 +405,13 @@ if(!isDedicated) then {
 
 	[] spawn {
 		private["_timeOut","_display","_control1","_control2","_loadstatus","_maxtimeOut"];
-		
+
 		disableSerialization; 
-		
+
 		_timeOut 			= 0;
 		_display 			= uiNameSpace getVariable "BIS_loadingScreen";
 		dayz_loadScreenMsg 	= "";
-		
+
 		if(!isNil "_display") then {
 			_control1 = _display displayctrl 8400;
 			_control2 = _display displayctrl 102;
@@ -460,7 +460,7 @@ if(!isDedicated) then {
 	};
 
 	dayz_meleeMagazineCheck = {
-		private ["_meleeNum","_magType"];
+		private["_meleeNum","_magType"];
 		_magType = ([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
 		_meleeNum = ({_x == _magType} count magazines player);
 		if(_meleeNum < 1) then {
@@ -513,7 +513,7 @@ spawn_loot					= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\
 spawn_loot_small			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot_small.sqf";
 
 FNC_GetPlayerUID = {
-	private ["_object","_version","_PID"];
+	private["_object","_version","_PID"];
 	_object = _this select 0;
 	_version = productVersion select 3;
 	if(DayZ_UseSteamID) then {
@@ -530,18 +530,18 @@ FNC_GetPlayerUID = {
 };
 
 FNC_GetsetPos = { 
-	private ["_pos","_thingy"];
+	private["_pos","_thingy"];
 	_thingy = _this select 0;
 	_pos = getPosASL _thingy;
 	if(surfaceIsWater _pos) then {
 		_thingy setPosASL _pos;
 	} else {
-		_thingy setPos (ASLToATL _pos);
+		_thingy setPosATL (ASLToATL _pos);
 	};
 };
 
 FNC_GetPos = {
-	private ["_pos","_thingy"];
+	private["_pos","_thingy"];
 	if(isNil {_this select 0}) exitWith {[0,0,0]};
 	_thingy = _this select 0;
 	_pos = getPosASL _thingy;
@@ -559,17 +559,17 @@ local_setFuel =	{
 };
 
 zombie_initialize = {
-	private ["_unit","_id"];
+	private["_unit","_id"];
 	_unit = _this select 0;
 	if(isServer) then {
-		_unit addEventHandler ["local",{_this call zombie_findOwner}];
+		_unit addEventhandler["local",{_this call zombie_findOwner}];
 	};
-	_id = _unit addeventhandler ["HandleDamage",{ _this call local_zombieDamage }];
-	_id = _unit addeventhandler ["Killed",{ [_this,"zombieKills"] call local_eventKill }];
+	_id = _unit addeventhandler["HandleDamage",{ _this call local_zombieDamage }];
+	_id = _unit addeventhandler["Killed",{ [_this,"zombieKills"] call local_eventKill }];
 };
 
 dayz_EjectPlayer = {
-	private ["_noDriver","_vehicle","_inVehicle"];
+	private["_noDriver","_vehicle","_inVehicle"];
 	_vehicle = vehicle player;
 	_inVehicle = (_vehicle != player);
 	if(_inVehicle) then {
@@ -587,7 +587,7 @@ player_sumMedical = {
 	if(_character getVariable["USEC_injured",false]) then {
 		{
 			if(_character getVariable[_x,false]) then {
-				_wounds set [count _wounds,_x];
+				_wounds set[count _wounds,_x];
 			};
 		} count USEC_typeOfWounds;
 	};
@@ -615,5 +615,5 @@ if(isServer) then {
 } else {
 	eh_localCleanup = {};
 };
-	
+
 initialized = true;

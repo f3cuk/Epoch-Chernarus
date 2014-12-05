@@ -1,4 +1,4 @@
-private ["_characterID","_minutes","_playerID","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_randmsg","_loc_message","_key","_death_record","_victimGroup"];
+private["_characterID","_minutes","_playerID","_infected","_victim","_victimName","_killer","_killerName","_weapon","_distance","_message","_randmsg","_loc_message","_key","_death_record","_victimGroup"];
 
 _characterID 	= _this select 0;
 _minutes 		= _this select 1;
@@ -33,20 +33,20 @@ if((typeName _killer) == "OBJECT") then {
 		_message 		= format["[DEATH] %1 %2",_victimName,_randmsg];
 		_loc_message 	= format["PDEATH: %1 (%2) killed himself",_victimName,_playerID];
 	} else {
-	
+
 		if(isPlayer _killer) then {
 			_killerName = format["[Human] %1",_killerName];
 		} else {
 			_killerName = format["[AI] %1",_killerName];
 		};
-	
+
 		_message 		= format["[KILL] %1 was killed with a %2 from about %3m",_victimName,_weapon,round(_distance)];
 		_loc_message 	= format["PDEATH: %1 (%5) was killed by %2 with a %3 from %4m",_victimName,_killerName,_weapon,_distance,_playerID];
 		_death_record 	= [_victimName,_killerName,_weapon,_distance,ServerCurrentTime];
-		
-		PlayerDeaths set [count PlayerDeaths,_death_record];
+
+		PlayerDeaths set[count PlayerDeaths,_death_record];
 	};
-	
+
 } else {
 
 	_randmsg = [
@@ -58,7 +58,7 @@ if((typeName _killer) == "OBJECT") then {
 	] call BIS_fnc_selectRandom;
 	_message 		= format["[BREAKFAST] %1 %2",_victimName,_randmsg];
 	_loc_message 	= format["PDEATH: %1 (%2) got killed by a zombie",_victimName,_playerID];
-	
+
 };
 
 RemoteMessage = ["global",_message];

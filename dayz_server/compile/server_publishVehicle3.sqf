@@ -1,4 +1,4 @@
-private ["_activatingPlayer","_isOK","_object","_worldspace","_location","_dir","_class","_uid","_key","_keySelected","_characterID","_newObject","_continue","_result","_outcome","_countr","_objectID","_objectUID","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty"];
+private["_activatingPlayer","_isOK","_object","_worldspace","_location","_dir","_class","_uid","_key","_keySelected","_characterID","_newObject","_continue","_result","_outcome","_countr","_objectID","_objectUID","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty"];
 
 _object				= _this select 0;
 _worldspace			= _this select 1;
@@ -46,9 +46,9 @@ clearBackpackCargoGlobal _object;
 deleteVehicle _object;
 [_objectID,_objectUID,_activatingPlayer] call server_deleteObj;
 
-_newObject = createVehicle [_class,[0,0,0],[],0,"CAN_COLLIDE"];
+_newObject = createVehicle[_class,[0,0,0],[],0,"CAN_COLLIDE"];
 _newObject setDir _dir;
-_newObject setPos _location;
+_newObject setPosATL _location;
 
 _objWpnTypes	= _weapons select 0;
 _objWpnQty		= _weapons select 1;
@@ -81,7 +81,7 @@ _newObject setVariable["ObjectID",(_result select 1),true];
 _newObject setVariable["lastUpdate",time];
 _newObject setVariable["CharacterID",_characterID,true];
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_newObject];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_newObject];
 
 _newObject call fnc_veh_ResetEH;
 

@@ -1,4 +1,4 @@
-private ["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_fadeFire","_crashModel","_lootTable","_crashName","_spawnRoll","_position","_crash","_config","_hasAdjustment","_newHeight","_adjustedPos","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
+private["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_spawnFire","_fadeFire","_crashModel","_lootTable","_crashName","_spawnRoll","_position","_crash","_config","_hasAdjustment","_newHeight","_adjustedPos","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
 
 _guaranteedLoot = 3;
 _randomizedLoot = 4;
@@ -43,7 +43,7 @@ if(_spawnRoll <= _spawnChance) then {
 	};
 
 	_adjustedPos = [(_position select 0),(_position select 1),_newHeight];
-	_crash setPos _adjustedPos;
+	_crash setPosATL _adjustedPos;
     
 	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_crash];
 

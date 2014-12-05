@@ -1,4 +1,4 @@
-private ["_class","_uid","_charID","_object","_worldspace","_key","_allowed","_inventory","_hitpoints","_damage","_fuel"];
+private["_class","_uid","_charID","_object","_worldspace","_key","_allowed","_inventory","_hitpoints","_damage","_fuel"];
 
 _charID =		_this select 0;
 _object = 		_this select 1;
@@ -27,13 +27,13 @@ _object setVariable["ObjectUID",_uid,true];
 // _object setVariable["CharacterID",_charID,true];
 
 if(DZE_GodModeBase) then {
-	_object addEventHandler ["HandleDamage",{false}];
+	_object addEventhandler["HandleDamage",{false}];
 } else {
-	_object addMPEventHandler ["MPKilled",{_this call object_handleServerKilled;}];
+	_object addMPEventhandler["MPKilled",{_this call object_handleServerKilled;}];
 };
 // Test disabling simulation server side on buildables only.
 _object enableSimulation false;
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 
 diag_log ("PUBLISH: Created " + (_class) + " with ID " + _uid);

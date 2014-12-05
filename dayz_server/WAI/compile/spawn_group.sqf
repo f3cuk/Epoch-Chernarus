@@ -1,6 +1,6 @@
 if(isServer) then {
 
-    private ["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
+    private["_rocket","_launcher","_pos_x","_pos_y","_pos_z","_aiskin","_unarmed","_current_time","_gain","_mission","_ainum","_aitype","_mission","_aipack","_aicskill","_position","_unitnumber","_skill","_gun","_mags","_backpack","_skin","_gear","_aiweapon","_aigear","_aiskin","_skillarray","_unitGroup","_weapon","_magazine","_gearmagazines","_geartools","_unit"];
 
 	_position 			= _this select 0;
 	_pos_x 			= _position select 0;
@@ -14,7 +14,7 @@ if(isServer) then {
 	_skin 				= _this select 6;
 	_gear 				= _this select 7;
 	_aitype				= _this select 8;
-	
+
 	if(typeName _gun == "ARRAY") then {
 		_launcher		= _gun select 1;
 		_gun			= _gun select 0;
@@ -24,7 +24,7 @@ if(isServer) then {
 		_gain 			= _aitype select 1;
 		_aitype 		= _aitype select 0;
 	};
-	
+
 	if(count _this > 9) then {
 		_mission = _this select 9;
 	} else {
@@ -86,7 +86,7 @@ if(isServer) then {
 				if(_gear == "random") 	exitWith { _aigear = ai_gear_random call BIS_fnc_selectRandom; };
 			};
 		};
-		
+
 		_gearmagazines 	= _aigear select 0;
 		_geartools 		= _aigear select 1;
 
@@ -118,15 +118,15 @@ if(isServer) then {
 			if(_backpack == "none") 	exitWith { };
 			_aipack = _backpack;
 		};
-		
+
 		if(isNil "_mission") then {
-		
+
 			_unit enableAI "TARGET";
 			_unit enableAI "AUTOTARGET";
 			_unit enableAI "MOVE";
 			_unit enableAI "ANIM";
 			_unit enableAI "FSM";
-		
+
 		};
 
 		removeAllWeapons _unit;
@@ -155,7 +155,7 @@ if(isServer) then {
 		{
 			_unit addweapon _x
 		} count _geartools;
-		
+
 		call {
 			if(_skill == "easy") 		exitWith { _aicskill = ai_skill_easy; };
 			if(_skill == "medium") 		exitWith { _aicskill = ai_skill_medium; };
@@ -168,13 +168,13 @@ if(isServer) then {
 		{
 			_unit setSkill [(_x select 0),(_x select 1)]
 		} count _aicskill;
-		
+
 		ai_ground_units = (ai_ground_units + 1);
 
-		_unit addEventHandler ["Killed",{[_this select 0,_this select 1,"ground"] call on_kill;}];
+		_unit addEventhandler["Killed",{[_this select 0,_this select 1,"ground"] call on_kill;}];
 
 		if(!isNil "_mission") then {
-			wai_mission_data select _mission set [0,(((wai_mission_data select _mission) select 0) + 1)];
+			wai_mission_data select _mission set[0,(((wai_mission_data select _mission) select 0) + 1)];
 			_unit setVariable["missionclean","ground"];
 			_unit setVariable["mission",_mission,true];
 		};
@@ -214,7 +214,7 @@ if(isServer) then {
 		[_unitGroup,[_pos_x,_pos_y,_pos_z],_skill] spawn group_waypoints;
 	};
 
-	diag_log format ["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];
-	
+	diag_log format["WAI: Spawned a group of %1 AI (%3) at %2",_unitnumber,_position,_aitype];
+
 	_unitGroup
 };

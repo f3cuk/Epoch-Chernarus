@@ -2,7 +2,7 @@
 	File: AH.sqf
 	Author: Chris(tian) "infiSTAR" Lorenzen
 	Contact: infiSTAR23@gmail.com
-	
+
 	Description:
 	Arma AntiHack & AdminTools - infiSTAR.de
 */
@@ -263,7 +263,7 @@ diag_log format['infiSTAR.de - infiSTAR_DLL_PATH: %1',infiSTAR_DLL_PATH];
 DAYZ_INSTANCE_LOGGING = format['   |Instance: %1 - %2%3%4 - %5',dayZ_instance,productVersion select 1,productVersion select 2,productVersion select 3,iproductVersion];
 _allAdmins = _LAdmins + _NAdmins + _SAdmins;
 _BIS_MPF_RES = {
-	private ['_tmpRES','_array','_input','_perFnc','_perInput','_this'];
+	private['_tmpRES','_array','_input','_perFnc','_perInput','_this'];
 	_tmpRES = compile preprocessFile ('\ca\Modules\MP\data\scripts\remExServer.sqf');
 	if(typeName _this == 'ARRAY') then
 	{
@@ -317,7 +317,7 @@ fnc_infiSTAR_PlayerLog =
 {
 	_puid = _this select 0;_name = _this select 1;
 	if((_puid == '') && (_name == '__SERVER__')) exitWith {};
-	
+
 	if(isNil 'PlayerLogArray') then {PlayerLogArray = [];};
 	if(!(_puid in PlayerLogArray) || !(_name in PlayerLogArray)) then
 	{
@@ -347,7 +347,7 @@ fnc_infiSTAR_PlayerLog =
 		};
 		PlayerLogUpdateState = true;
 	};
-	
+
 	if(count _this > 2) then
 	{
 		_x = _this select 2;
@@ -373,7 +373,7 @@ fnc_infiSTAR_PlayerLog =
 						};
 					};
 				};
-				
+
 				if(_name in "+str _BlackList+") then
 				{
 					"+_randvar10+" = [_name,_puid,'BAN',toArray ('NAME IS BLACKLISTED')];
@@ -474,7 +474,7 @@ fnc_infiSTAR_PlayerLog =
 			};
 		};
 	};
-	
+
 	if(isNil 'PVAH_AHTMPBAN') then {PVAH_AHTMPBAN = [];} else {if(typeName PVAH_AHTMPBAN != 'ARRAY') then {PVAH_AHTMPBAN = [];};};
 	if((_puid in PVAH_AHTMPBAN) || (_name in PVAH_AHTMPBAN)) then
 	{
@@ -493,7 +493,7 @@ fnc_infiSTAR_PlayerLog =
 		private['_unit','_objectID','_objectUID','_killer'];
 		_unit = _this select 0;
 		_killer = _this select 1;
-		
+
 		if(!isNil '_unit') then
 		{
 			if(typeName _unit == 'OBJECT') then
@@ -519,7 +519,7 @@ fnc_infiSTAR_PlayerLog =
 				};
 			};
 		};
-		
+
 		_objectID =	 _unit getVariable['ObjectID','0'];
 		_objectUID = _unit getVariable['ObjectUID','0'];
 		[_objectID,_objectUID,_killer] call server_deleteObj;
@@ -579,7 +579,7 @@ if("+str _UDC+") then
 				_weaponState = weaponState (vehicle _attacker);
 				_type = typeOf _victim;
 				_posV = getPosATL _victim;
-				
+
 				_state = false;
 				{
 					if((_victim isKindOf _x) || (_type isKindOf _x)) exitWith
@@ -592,7 +592,7 @@ if("+str _UDC+") then
 				'ForestLargeCamoNet_DZ','SandNest_DZ','DeerStand_DZ','MetalPanel_DZ','WorkBench_DZ','LockboxStorageLocked','Land_DZE_GarageWoodDoor','Land_DZE_LargeWoodDoor',
 				'Land_DZE_WoodDoor','Land_DZE_GarageWoodDoorLocked','Land_DZE_LargeWoodDoorLocked','Land_DZE_WoodDoorLocked','CinderWallDoor_DZ','CinderWallDoorLocked_DZ',
 				'CinderWallDoorSmall_DZ','CinderWallDoorSmallLocked_DZ','GunRack_DZ','FireBarrel_DZ','WoodCrate_DZ','Scaffolding_DZ'];
-				
+
 				if((_state) && (_damage > 5)) then
 				{
 					_log = format['DamageHack? #1: %1 damage with %2 to %3 (%4) @%5 %6',_damage,_weaponState,_type,_victim,mapGridPosition _posV,_posV];
@@ -658,17 +658,17 @@ if("+str _UDC+") then
 			if(!isNull _x) then
 			{
 				_x removeAllEventHandlers 'Hit';
-				_x addEventHandler ['Hit',{_this call fnc_infiHIT"+_randvar5+";}];
+				_x addEventhandler['Hit',{_this call fnc_infiHIT"+_randvar5+";}];
 			};
 		} forEach _objects;
-		
+
 		if(!isNil 'fnc_plyrHit') then
 		{
 			fnc_plyrHit2 = fnc_plyrHit;
 			fnc_plyrHit =
 			{
 				_this spawn fnc_plyrHit2;
-				private ['_victim', '_attacker','_weapon','_damage'];
+				private['_victim', '_attacker','_weapon','_damage'];
 				_victim = _this select 0;
 				_attacker = _this select 1;
 				_damage = _this select 2;
@@ -1026,8 +1026,8 @@ publicVariable '"+_randvar28+"';
 				[_puid,_name] call "+_randvar11+";
 				if(isNil '"+_randvar21+"') then {call "+_randvar28+";};
 			};
-			
-			
+
+
 			[] spawn {
 				uiSleep 10;
 				if(isNil '"+_randvar35+"') then
@@ -1089,8 +1089,8 @@ publicVariable '"+_randvar28+"';
 					};
 				};
 			};
-			
-			
+
+
 			[] spawn {
 				uiSleep 10;
 				if(isNil '"+_randvar34+"') then
@@ -1110,15 +1110,15 @@ publicVariable '"+_randvar28+"';
 		if(!isNil '"+_randvar8+"') then {if(!isNull "+_randvar8+") then {clearVehicleInit "+_randvar8+";deleteVehicle "+_randvar8+";};};
 		"+_randvar8+" = _unit;
 		_unit setVehicleInit _zero;
-		
+
 		_unit = createAgent ['Rabbit', [(random 9000)+250,(random 9000)+250,0], [], 0, 'FORM'];
 		if(!isNil '"+_randvar7+"') then {if(!isNull "+_randvar7+") then {clearVehicleInit "+_randvar7+";deleteVehicle "+_randvar7+";};};
 		"+_randvar7+" = _unit;
 		_unit setVehicleInit _one;
-		
+
 		call compile 'processInitCommands;';
-		
-		
+
+
 		uiSleep 15;
 		{
 			if(!isNull _x) then
@@ -1131,14 +1131,14 @@ publicVariable '"+_randvar28+"';
 				};
 			};
 		} forEach playableUnits;
-		
-		
-		_obj = 'Rabbit' createVehicle [0,0,0];
-		_obj addMPEventHandler ['MPKilled',_zero];
-		_obj addMPEventHandler ['MPKilled',_one];
+
+
+		_obj = 'Rabbit' createVehicle[0,0,0];
+		_obj addMPEventhandler['MPKilled',_zero];
+		_obj addMPEventhandler['MPKilled',_one];
 		_obj setDamage 5;
 		deleteVehicle _obj;
-		
+
 		uiSleep 15;
 		if(isNil 'PlayerLogUpdateState') then {PlayerLogUpdateState = true;} else {if(typeName PlayerLogUpdateState != 'BOOL') then {PlayerLogUpdateState = true;};};
 		if(PlayerLogUpdateState) then
@@ -1196,24 +1196,24 @@ publicVariable '"+_randvar28+"';
 	_PVAH_AdminReq = {
 		diag_log format['infiSTAR.de fnc_AdminFirstReq: %1',_this select 1];
 		_playableUnits = "+str _allAdmins+";
-		
+
 		_array = _this select 1;
 		if(_array in ['']) exitWith {};
 		if(typeName _array != 'ARRAY') exitWith {};
-		
+
 		_option = _array select 0;
 		if(_option in ['']) exitWith {};
 		if(typeName _option != 'SCALAR') exitWith {};
-		
+
 		_playerObj = _array select 1;
 		if(_playerObj in ['']) exitWith {};
 		if(typeName _playerObj != 'OBJECT') exitWith {};
 		if(isNull _playerObj) exitWith {};
-		
+
 		_clientID = (owner _playerObj);
 		_clientUID = (getPlayerUID _playerObj);
 		_clientName = (name _playerObj);
-		
+
 		if((_clientUID in ['',' ','0']) || (typeName _clientUID != 'STRING')) exitWith
 		{
 			diag_log format['infiSTAR.de fnc_AdminFirstReq %1(%2): !!!!!!ADMIN-LOGIN-ERROR!!!!!!',_clientName,_clientUID];
@@ -1232,26 +1232,26 @@ publicVariable '"+_randvar28+"';
 			diag_log format['infiSTAR.de fnc_AdminFirstReq %1(%2): AdminRequest Failed (Local %3/ Server %4)',_clientName,_clientUID,_var,_array];
 			['SERVER',[_clientName,_clientUID,'HLOG',format['AdminRequest Failed: (Local %1/ Server %2)',_var,_array]]] call fnc_handle"+_randvar10+";
 		};
-		
-		
+
+
 		if(_option == 1) then
 		{
 			_unit = _array select 2;
 			_pos = _array select 3;
 			"+_AHpos+" = [_clientName,_clientUID,_pos];
 			{(owner _x) publicVariableClient '"+_AHpos+"';} forEach (crew vehicle _unit);
-			(vehicle _unit) setPos _pos;
+			(vehicle _unit) setPosATL _pos;
 		};
-		
+
 		_MOD_EPOCH = "+str _MEH+";
 		call fnc_AdminReqProceed;
 	};
 	_fnc_DisconnectCustom =
 	{
-		private ['_playerObj','_clientUID','_clientName','_characterID','_playerPos'];
+		private['_playerObj','_clientUID','_clientName','_characterID','_playerPos'];
 		_clientUID = _this select 0;
 		_clientName = _this select 1;
-		
+
 		_playerObj = objNull;
 		if(isNull _playerObj) then
 		{
@@ -1291,7 +1291,7 @@ publicVariable '"+_randvar28+"';
 				{
 					_log = format['%1 | PlayerUID: %2 CharacterID: %3 | Disconnected near Storage Unit @%4 | Resync Gear to prevent duping!',_clientName,_clientUID,_characterID,mapGridPosition _playerPos];
 					diag_log _log;
-					
+
 					[_playerObj,magazines _playerObj,true,true,false] call server_playerSync;
 				};
 			};
@@ -1327,7 +1327,7 @@ publicVariable '"+_randvar28+"';
 		onPlayerDisconnected {[_uid,_name] call server_onPlayerDisconnect_infiSTAR;};		
 		"+_randvar20+" = _PVAH_AdminReq;
 		'PVAH_AdminReq' addPublicVariableEventHandler {_this call "+_randvar20+";};
-		
+
 		dze_diag_fps = {};
 		_mPos = "+str _mPos+";
 		_debug = createMarker ['respawn_west',_mPos];
@@ -1335,7 +1335,7 @@ publicVariable '"+_randvar28+"';
 		if(_cmPos distance _mPos > 100) then
 		{
 			'respawn_west' setMarkerPos _mPos;
-			
+
 			_nearGuys = [];
 			{
 				_puid = getPlayerUID _x;
@@ -1445,7 +1445,7 @@ publicVariable '"+_randvar28+"';
 						{
 							_posV = getPosATL _x;
 							_crew = crew _x;
-							
+
 							_crewguys = [];
 							if(count _crew > 0) then
 							{
@@ -1457,7 +1457,7 @@ publicVariable '"+_randvar28+"';
 									};
 								} forEach _crew;
 							};
-							
+
 							_nearGuys = [];
 							{
 								_puid = getPlayerUID _x;
@@ -1470,8 +1470,8 @@ publicVariable '"+_randvar28+"';
 									};
 								};
 							} forEach (_posV nearEntities ['AllVehicles',150]);
-							
-							
+
+
 							if(count _crew == 0) then
 							{
 								_log = format['Forbidden Vehicle: %1 (deleted) Near: %2 @%3',_type,_nearGuys,mapGridPosition _posV];
@@ -1560,7 +1560,7 @@ publicVariable '"+_randvar28+"';
 					"+_randvar10+" = [_name,_puid,'BAN',toArray (_log)];
 					publicVariableServer '"+_randvar10+"';
 				};
-				
+
 				if("+str _RCK+") then
 				{
 					_map = ((findDisplay 12) displayCtrl 51);
@@ -1583,7 +1583,7 @@ publicVariable '"+_randvar28+"';
 							};
 							(findDisplay _x) displayRemoveAllEventHandlers 'KeyDown';
 							(findDisplay _x) displayRemoveAllEventHandlers 'KeyUp';
-							(findDisplay _x) displayAddEventHandler ['KeyUp','_this call "+_randvar6+"'];
+							(findDisplay _x) displayAddEventhandler['KeyUp','_this call "+_randvar6+"'];
 						};
 					} forEach [-1,12,18,49,106,129];
 					_display46 = (findDisplay 46);
@@ -1595,7 +1595,7 @@ publicVariable '"+_randvar28+"';
 						_display46 displayRemoveAllEventHandlers 'KeyPress';
 						_display46 displayRemoveAllEventHandlers 'KeyUp';
 						_display46 displayRemoveAllEventHandlers 'onMouseZChanged';
-						_display46 displayAddEventHandler ['KeyUp','_this call "+_randvar6+"'];
+						_display46 displayAddEventhandler['KeyUp','_this call "+_randvar6+"'];
 						_pos = getPos player;
 						_posZ = _pos select 2;
 						_veh = vehicle player;
@@ -1607,7 +1607,7 @@ publicVariable '"+_randvar28+"';
 								_display46 displayRemoveAllEventHandlers 'mouseholding';
 								_display46 displayRemoveAllEventHandlers 'KeyDown';
 								dayz_spaceInterrupt"+_randvar6+" = _dayz_spaceInterrupt;
-								_display46 displayAddEventHandler ['KeyDown','_this call dayz_spaceInterrupt"+_randvar6+"'];
+								_display46 displayAddEventhandler['KeyDown','_this call dayz_spaceInterrupt"+_randvar6+"'];
 							};
 						};
 					};
@@ -1618,7 +1618,7 @@ publicVariable '"+_randvar28+"';
 					if(!isNull _display46) then
 					{
 						_display46 displayRemoveAllEventHandlers 'KeyUp';
-						_display46 displayAddEventHandler ['KeyUp','_this call "+_randvar6+"'];
+						_display46 displayAddEventhandler['KeyUp','_this call "+_randvar6+"'];
 					};
 				};
 				if(format['%1',uiNamespace getVariable 'RscDisplayRemoteMissions'] != '<null>') then
@@ -1717,7 +1717,7 @@ publicVariable '"+_randvar28+"';
 							};
 						};
 					};
-					
+
 					_display = findDisplay 106;
 					if(!isNull _display) then
 					{
@@ -1768,7 +1768,7 @@ publicVariable '"+_randvar28+"';
 			{
 				private['_damage'];
 				_damage = _this select 2;
-				
+
 				if((str fnc_usec_damageHandler == '{}') || (str fnc_usec_damageHandler != str rdh"+_randvar5+")) then
 				{
 					_state = true;
@@ -1842,7 +1842,7 @@ publicVariable '"+_randvar28+"';
 				_source = _this select 3;
 				_B_4_my_V = _this select 4;
 				LASTDAMAGESOURCE = _source;
-				
+
 				_b_for_my_V = objNull;
 				if(!isNil '_B_4_my_V') then
 				{
@@ -1869,7 +1869,7 @@ publicVariable '"+_randvar28+"';
 					'ARTY_Sh_82_ILLUM','ARTY_R_227mm_HE_Rocket','ARTY_R_120mm_HE_Rocket'
 				];
 				if(_b_for_my_V in _b_for_my_Vs) exitWith {};
-				
+
 				_shooter = objNull;
 				if(!isNil '_source') then
 				{
@@ -1881,10 +1881,10 @@ publicVariable '"+_randvar28+"';
 						};
 					};
 				};
-				
+
 				_bang = ['R_MEEWS_HEAT','PipeBomb','FuelExplosion','TimedExplosion'];
 				if((isNull _shooter) || (_b_for_my_V in _bang)) exitWith {_this call checkdamage"+_randvar5+";};
-				
+
 				_exit = false;
 				if(!isNull _shooter) then
 				{
@@ -1911,10 +1911,10 @@ publicVariable '"+_randvar28+"';
 							};
 						};
 					};
-					
+
 				};
 				if(_exit) exitWith {};
-				
+
 				_this call checkdamage"+_randvar5+";
 			};
 			infi_fired"+_randvar5+" =
@@ -1933,7 +1933,7 @@ publicVariable '"+_randvar28+"';
 						player removeMagazines _cmag;
 						player removeWeapon _cwep;
 					};
-					
+
 					_maxAmmo = getNumber (configFile >> 'CfgMagazines' >> _cmag >> 'count');
 					if(_maxAmmo > 1) then
 					{
@@ -1952,7 +1952,7 @@ publicVariable '"+_randvar28+"';
 							};
 						};
 					};
-					
+
 					_swep = '';
 					{
 						if((getNumber (configFile >> 'CfgWeapons' >> _x >> 'Type')) == 2) exitWith
@@ -1997,17 +1997,17 @@ publicVariable '"+_randvar28+"';
 				player removeAllEventHandlers 'AnimStateChanged';
 				player removeAllEventHandlers 'Hit';
 				player removeAllEventHandlers 'FiredNear';
-				player addEventHandler ['FiredNear',{_this call player_weaponFiredNear"+_randvar5+"} ];
+				player addEventhandler['FiredNear',{_this call player_weaponFiredNear"+_randvar5+"} ];
 				player removeAllEventHandlers 'HandleDamage';
-				player addEventHandler ['HandleDamage',{_this call fnc_STAR_damageHandler"+_randvar5+"} ];
+				player addEventhandler['HandleDamage',{_this call fnc_STAR_damageHandler"+_randvar5+"} ];
 				player removeAllEventHandlers 'AnimChanged';
-				player addEventHandler ['AnimChanged', {_this call fnc_animchanged"+_randvar5+"}];
+				player addEventhandler['AnimChanged', {_this call fnc_animchanged"+_randvar5+"}];
 				player removeAllEventHandlers 'Respawn';
-				player addEventHandler ['Respawn', {_id = [] spawn player_death}];
+				player addEventhandler['Respawn', {_id = [] spawn player_death}];
 				player removeAllEventHandlers 'Killed';
-				player addEventHandler ['Killed', {if(isNil 'LASTDAMAGESOURCE') then {LASTDAMAGESOURCE = player;} else {if(isNull LASTDAMAGESOURCE) then {LASTDAMAGESOURCE = player;};};_id = [LASTDAMAGESOURCE,'shotheavy'] spawn player_death}];
+				player addEventhandler['Killed', {if(isNil 'LASTDAMAGESOURCE') then {LASTDAMAGESOURCE = player;} else {if(isNull LASTDAMAGESOURCE) then {LASTDAMAGESOURCE = player;};};_id = [LASTDAMAGESOURCE,'shotheavy'] spawn player_death}];
 				player removeAllEventHandlers 'Fired';
-				player addEventHandler ['Fired', {
+				player addEventhandler['Fired', {
 					_this call player_fired;
 					_this call infi_fired"+_randvar5+";
 					if(isNil 'inSafeZone') then { inSafeZone = false; } else { if(typeName inSafeZone != 'BOOL') then { inSafeZone = false;YOLO = true; }; };
@@ -2058,7 +2058,7 @@ publicVariable '"+_randvar28+"';
 						};
 					};
 				};
-				
+
 				{
 					_ctrlID = _x;
 					_control = ((uiNameSpace getVariable 'DAYZ_GUI_display') displayctrl _ctrlID);
@@ -2076,7 +2076,7 @@ publicVariable '"+_randvar28+"';
 						};
 					};
 				} forEach [1203,1204,1205,1206,1300,1301,1302,1303,1305,1306,1307];
-				
+
 				uiSleep 2;
 				_pPos = getPosATL player;
 				_noSafeZone = true;
@@ -2097,7 +2097,7 @@ publicVariable '"+_randvar28+"';
 						_noSafeZone = false;
 					};
 				} forEach (_pPos nearEntities ['Man',400]);
-				
+
 				if("+str _UZC+") then
 				{
 					if(_noSafeZone) then
@@ -2142,7 +2142,7 @@ publicVariable '"+_randvar28+"';
 						};
 					};
 				};
-				
+
 				if(!isNil 'PVDZE_veh_Publish2') then
 				{
 					_ap = PVDZE_veh_Publish2 select 5;
@@ -2197,11 +2197,11 @@ publicVariable '"+_randvar28+"';
 						_tempRemoveAction = vehicle player addaction['', '', [], 1, false, true, '', 'false'];
 						_startRemove = _tempRemoveAction - 10;
 						_endRemove = _tempRemoveAction + 99;
-						
+
 						_dayzActionsStr = "+str _dayzActions+";
 						_dayzActions = [];
 						{
-							private ['_var'];
+							private['_var'];
 							if(!isNil _x) then
 							{
 								_var = compile _x;
@@ -2210,7 +2210,7 @@ publicVariable '"+_randvar28+"';
 								{
 									if !(_y in _dayzActions) then
 									{
-										_dayzActions set [count _dayzActions,_y];
+										_dayzActions set[count _dayzActions,_y];
 									};
 								};
 								if(typeName _y == 'ARRAY') then
@@ -2218,14 +2218,14 @@ publicVariable '"+_randvar28+"';
 									{
 										if !(_x in _dayzActions) then
 										{
-											_dayzActions set [count _dayzActions,_x];
+											_dayzActions set[count _dayzActions,_x];
 										};
 									} forEach _y;
 								};
 							}; 
 							true
 						} count _dayzActionsStr;
-						
+
 						for '_i' from _startRemove to _endRemove do
 						{
 							if !(_i in _dayzActions) then
@@ -2386,7 +2386,7 @@ publicVariable '"+_randvar28+"';
 					player removeMagazine _item;
 					player removeWeapon _removeWeapon;
 					_pos = player modelToWorld [0,1,0];
-					_obj = createVehicle ['WeaponHolder', _pos, [], 1, 'CAN_COLLIDE'];
+					_obj = createVehicle['WeaponHolder', _pos, [], 1, 'CAN_COLLIDE'];
 					_obj addWeaponCargo [_addWeapon,1];
 					if(vehicle player != player) then
 					{
@@ -2404,7 +2404,7 @@ publicVariable '"+_randvar28+"';
 			while {1 == 1} do
 			{
 				player_useAttchment = _player_useAttchment;
-				
+
 				_posP = getPosATL (vehicle player);
 				_posPG = [_posP select 0,_posP select 1,0];
 				_state = true;
@@ -2434,7 +2434,7 @@ publicVariable '"+_randvar28+"';
 							_curInventory = [];
 							_curCargo = [];
 							_type = typeOf _object;
-							
+
 							_LD = ['Land_DZE_GarageWoodDoorLocked','Land_DZE_LargeWoodDoorLocked','Land_DZE_WoodDoorLocked','CinderWallDoorLocked_DZ','CinderWallDoorSmallLocked_DZ'];
 							if(isNil 'DZE_DoorsLocked') then {DZE_DoorsLocked = [];};
 							if(typeName DZE_DoorsLocked != 'ARRAY') then {DZE_DoorsLocked = [];YOLO = true;};
@@ -2481,7 +2481,7 @@ publicVariable '"+_randvar28+"';
 									};
 								};
 							};
-							
+
 							if(_object isKindOf 'Man') then
 							{
 								if((getPlayerUID _object == '') && (player distance _mPos > 500) && (_object distance _mPos > 500)) then
@@ -2520,7 +2520,7 @@ publicVariable '"+_randvar28+"';
 									};
 								};
 							};
-							
+
 							if(!isNull _object) then
 							{
 								_curInventory = ((weapons _object)+(magazines _object));
@@ -2539,7 +2539,7 @@ publicVariable '"+_randvar28+"';
 									_curInventory;
 								};
 								{_itemsNear = _itemsNear + [_x];} forEach _curInventory;
-								
+
 								_infiSTAR = ((getWeaponCargo _object)+(getMagazineCargo _object));
 								if(str(_infiSTAR) != '[[],[],[],[]]') then
 								{
@@ -2562,7 +2562,7 @@ publicVariable '"+_randvar28+"';
 										};
 									} forEach _wpnsInObjC;
 								};
-								
+
 								if("+str _CHB+") then
 								{
 									if(_type == 'Foodbox0') then
@@ -2581,8 +2581,8 @@ publicVariable '"+_randvar28+"';
 												_dirBox = getDir _object;
 												_posBox = getPosATL _object;
 												deleteVehicle _object;
-												
-												_object = createVehicle [_type,_posBox,[],0,'CAN_COLLIDE'];
+
+												_object = createVehicle[_type,_posBox,[],0,'CAN_COLLIDE'];
 												_object setPosATL _posBox;
 												_object setDir _dirBox;
 												_object setVariable['BRLCD','kk',true];
@@ -2622,7 +2622,7 @@ publicVariable '"+_randvar28+"';
 											{
 												_object hideObject true;
 												_object setPosATL [_pos select 0,_pos select 1,(_pos select 2)+45];
-												
+
 												_log = format['MaxCargo exceeded: %1 | %2 | @%3 %4 | %5 | %6',_type,_cntfnd,mapGridPosition _pos,_pos,_characterID,_infiSTAR];
 												"+_randvar10+" = [name player,getPlayerUID player,'HLOG',toArray (_log)];
 												publicVariableServer '"+_randvar10+"';
@@ -2634,7 +2634,7 @@ publicVariable '"+_randvar28+"';
 													{if(!isNull _x) then {_x action['eject',_object];};} forEach (crew _object);
 													_object hideObject true;
 													_object setPosATL [_pos select 0,_pos select 1,(_pos select 2)+45];
-													
+
 													_log = format['MaxCargo exceeded: %1 | %2 | @%3 %4 | %5 | %6',_type,_cntfnd,mapGridPosition _pos,_pos,_characterID,_infiSTAR];
 													"+_randvar10+" = [name player,getPlayerUID player,'HLOG',toArray (_log)];
 													publicVariableServer '"+_randvar10+"';
@@ -2646,7 +2646,7 @@ publicVariable '"+_randvar28+"';
 							};
 						};
 					} forEach _nearestObjects;
-					
+
 					_typePlr = typeOf player;
 					_invPLR = ((weapons player)+(magazines player));
 					_invPLR = _invPLR + [primaryWeapon player];
@@ -2664,9 +2664,9 @@ publicVariable '"+_randvar28+"';
 					if(isNil 'DayZ_onBack') then {DayZ_onBack = '';};
 					if(!isNil 'DZE_Lock_Door') then {DayZ_onBack = '';};
 					_TMP_onBack = DayZ_onBack;
-					
+
 					uiSleep 0.5;
-					
+
 					_inv_plrNEW = ((weapons player)+(magazines player));
 					_inv_plrNEW = _inv_plrNEW + [primaryWeapon player];
 					_inv_plrNEW = _inv_plrNEW + [currentWeapon player];
@@ -2685,7 +2685,7 @@ publicVariable '"+_randvar28+"';
 					if(isNil 'DayZ_onBack') then {DayZ_onBack = '';};
 					if(!isNil 'DZE_Lock_Door') then {DayZ_onBack = '';};
 					_allowed = [DayZ_onBack,_TMP_onBack,'Throw','Flare','Put'];
-					
+
 					_allIHave = [];
 					{
 						if !(_x in _allIHave) then
@@ -2737,7 +2737,7 @@ publicVariable '"+_randvar28+"';
 							};
 						} forEach _foundbad;
 					};
-					
+
 					_ItemsAdded = [];
 					{
 						if !(_x in _ItemsAdded) then
@@ -2783,7 +2783,7 @@ publicVariable '"+_randvar28+"';
 				if(isNil 'DayZ_onBack') then {DayZ_onBack = '';};
 				if(!isNil 'DZE_Lock_Door') then {DayZ_onBack = '';};
 				_inv = _inv + [DayZ_onBack];
-				
+
 				{
 					if((_x in _inv) && (_x != '')) then
 					{
@@ -2799,7 +2799,7 @@ publicVariable '"+_randvar28+"';
 								player setDamage 5;
 								deleteVehicle player;
 							};
-							
+
 							[] spawn "+_randvar2+";
 							_log = format['BadItem: %1',_x];
 							"+_randvar10+" = [name player,getPlayerUID player,'BAN',toArray (_log)];
@@ -2829,7 +2829,7 @@ publicVariable '"+_randvar28+"';
 			};
 		};
 		[] spawn {
-			private ['_maxdist','_lastVeh','_curVeh','_lastPos','_curPos','_worldspace','_spawnPos'];
+			private['_maxdist','_lastVeh','_curVeh','_lastPos','_curPos','_worldspace','_spawnPos'];
 			_spawnPos = "+str _mPos+";
 			dayz_spawnPos = getPosATL player;
 			_spawnPos = getPosATL player;
@@ -3114,12 +3114,12 @@ publicVariable '"+_randvar28+"';
 		};
 		"+_randvar4+" = {
 			_bkey = _this select 0;
-			
+
 			_log = format['<infiSTAR.de>: You have pressed a forbidden Key! (%1)',_bkey];
 			cutText[_log,'WHITE IN'];
 			hint _log;
 			systemchat _log;
-			
+
 			for '_start' from 0 to 5 do {disableUserInput true;};
 			_log = format['BadKey: %1',_bkey];
 			"+_randvar10+" = [name player,getPlayerUID player,'SLOG',toArray (_log)];
@@ -3195,7 +3195,7 @@ publicVariable '"+_randvar28+"';
 								_msg = '<infiSTAR.de>: NO VOICE ON SIDE/GLOBAL!';
 								hint _msg;
 								1 cutText[format ['%1',_msg],'PLAIN DOWN'];
-								
+
 								_voicecount = _voicecount + 1;
 								if(_voicecount > 2) then {findDisplay 46 closeDisplay 0;};
 							};
@@ -3221,7 +3221,7 @@ publicVariable '"+_randvar28+"';
 						publicVariableServer '"+_randvar10+"';
 					};
 				};
-				
+
 				_cwep = currentWeapon player;
 				if(_cwep != '') then
 				{
@@ -3278,7 +3278,7 @@ publicVariable '"+_randvar28+"';
 					{
 						r_player_blood = -500;
 						[] spawn "+_randvar2+";
-						
+
 						_log = format['To much Blood: %1 should be max 12000',_r_player_blood];
 						"+_randvar10+" = [_name,_puid,'BAN',toArray (_log)];
 						publicVariableServer '"+_randvar10+"';
@@ -3382,7 +3382,7 @@ publicVariable '"+_randvar28+"';
 														_pos = getPos _x;
 														_mgp = mapGridPosition _pos;
 														_x setDamage 5;
-														
+
 														_log = format['Vehicle with Invalid ID: %1 @%2 (waited 30 seconds..)',_type,_mgp];
 														"+_randvar10+" = [_name,_puid,'HLOG',toArray (_log)];
 														publicVariableServer '"+_randvar10+"';
@@ -3402,7 +3402,7 @@ publicVariable '"+_randvar28+"';
 		{
 			[_name,_puid] spawn {
 				_name = _this select 0;_puid = _this select 1;
-				private ['_fuelpumparray','_fueltruckarray','_fuelsources'];
+				private['_fuelpumparray','_fueltruckarray','_fuelsources'];
 				_antirefuel = true;
 				_anticargod = true;
 				_cheatref = 0;
@@ -3512,7 +3512,7 @@ publicVariable '"+_randvar28+"';
 												_cheatrep = 0;
 												[_vehnew] spawn {
 													_vehnew = _this select 0;
-													
+
 													vehicle_getHitpoints = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\vehicle_getHitpoints.sqf';
 													_getHitpoints = vehicle_getHitpoints;
 													_hitp = _vehnew call _getHitpoints;
@@ -3545,7 +3545,7 @@ publicVariable '"+_randvar28+"';
 											{
 												if((typeOf _x) in _fueltruckarray) exitWith {_fveh = true;};
 											} forEach _listveh;
-											
+
 											if(!_fveh && ((count _listfuel) == 0)) then {_cheatref = _cheatref + 1;};
 											if(_cheatref > 2) then 
 											{
@@ -3785,7 +3785,7 @@ publicVariable '"+_randvar28+"';
 				{
 					if(typeName r_player_unconscious != 'BOOL') then {r_player_unconscious = false;};
 					if(isNil 'deathHandled') then { deathHandled = true; } else { if(typeName deathHandled != 'BOOL') then { deathHandled = true;YOLO = true; }; };
-					
+
 					_obj = player;
 					if(isNil 'inSafeZone') then { inSafeZone = false; } else { if(typeName inSafeZone != 'BOOL') then { inSafeZone = false;YOLO = true; }; };
 					if(inSafeZone) then
@@ -3858,21 +3858,21 @@ publicVariable '"+_randvar28+"';
 			{
 				waitUntil {!isNull findDisplay 49};
 				_display = findDisplay 49;
-				
+
 				_btnSave = _display displayCtrl 103;
 				_btnSave ctrlShow true;
 				_btnSave ctrlEnable false;
 				_btnSave ctrlSetScale 0.9;
 				_btnSave ctrlSetText 'PlayerUID (SteamID):';
 				_btnSave ctrlCommit 0;
-				
+
 				_btnRestart = _display displayCtrl 119;
 				_btnRestart ctrlShow true;
 				_btnRestart ctrlEnable false;
 				_btnRestart ctrlSetScale 0.9;
 				_btnRestart ctrlSetText (format['%1',getPlayerUID player]);
 				_btnRestart ctrlCommit 0;
-				
+
 				_btnRespawn = _display displayCtrl 1010;
 				_btnRespawn ctrlShow true;
 				_btnRespawn ctrlSetScale 0.9;
@@ -3899,19 +3899,19 @@ publicVariable '"+_randvar28+"';
 				};
 				_btnRespawn buttonSetAction 'call fnc_btnRespawn;';
 				_btnRespawn ctrlCommit 0;
-				
+
 				_btnTitle0 = _display displayCtrl 523;
 				_btnTitle0 ctrlSetText _btnTitle0TXT;
 				_btnTitle0 ctrlSetTextColor _colorTXT;
 				_btnTitle0 ctrlSetScale 0.9;
 				_btnTitle0 ctrlCommit 0;
-				
+
 				_btnTitle1 = _display displayCtrl 121;
 				_btnTitle1 ctrlSetText _btnTitle1TXT;
 				_btnTitle1 ctrlSetTextColor _colorTXT;
 				_btnTitle1 ctrlSetScale 0.9;
 				_btnTitle1 ctrlCommit 0;
-				
+
 				_btnTitle2 = _display displayCtrl 120;
 				_btnTitle2 ctrlSetText _btnTitle2TXT;
 				_btnTitle2 ctrlSetTextColor _colorTXT;
@@ -4103,7 +4103,7 @@ publicVariable '"+_randvar28+"';
 			];
 			_bad = [];
 			{
-				_obj = _x createVehicleLocal [2500,2500,0];
+				_obj = _x createVehicleLocal[2500,2500,0];
 				uiSleep 0.3;
 				_size = sizeOf _x;
 				if(_size == 0) then
@@ -4169,7 +4169,7 @@ publicVariable '"+_randvar28+"';
 		};
 	};
 	BIS_fnc_numberDigits = {
-		private ['_number','_step','_stepLocal','_result','_numberLocal','_add'];
+		private['_number','_step','_stepLocal','_result','_numberLocal','_add'];
 		_number = [_this,0,0,[0]] call bis_fnc_param;
 		if(_number < 10) then
 		{
@@ -4198,7 +4198,7 @@ publicVariable '"+_randvar28+"';
 		};
 	};
 	BIS_fnc_numberText = {
-		private ['_number','_mod','_digots','_digitsCount','_modBase','_numberText'];
+		private['_number','_mod','_digots','_digitsCount','_modBase','_numberText'];
 		_number = [_this,0,0,[0, '']] call bis_fnc_param;
 		_mod = [_this,1,3,[0]] call bis_fnc_param;
 		if(typeName _number == 'STRING') then
@@ -4216,7 +4216,7 @@ publicVariable '"+_randvar28+"';
 		_numberText
 	};
 	fnc_format_humanity = {
-		private ['_number', '_minus', '_out'];
+		private['_number', '_minus', '_out'];
 		_number = _this select 0;
 		_minus = false;
 		if(_number < 0) then
@@ -4279,10 +4279,10 @@ publicVariable '"+_randvar28+"';
 						_pic = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'picture'));
 						if(player == vehicle player) then {_pic = (getText (configFile >> 'CfgWeapons' >> (currentWeapon player) >> 'picture'));
 						} else {_pic = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'picture'));};
-						
+
 						_txt = '';
 						_txt = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'displayName'));
-						
+
 						_stime = 0;
 						if(serverTime > 36000)then{_stime = time;} else {_stime = serverTime;};
 						_hours = (_stime/60/60);
@@ -4293,7 +4293,7 @@ publicVariable '"+_randvar28+"';
 						_hours = call  _hours;
 						_minutes = floor(_stime/60);
 						_minutes2 = ((_minutes - (_hours*60)) min 60) max 0;if(_minutes2 < 10) then {_minutes2 = format['0%1',_minutes2];};
-						
+
 						_pOn = [];
 						{
 							if(!isNull _x) then
@@ -4314,7 +4314,7 @@ publicVariable '"+_randvar28+"';
 							};
 						} forEach ([0,0,0] nearEntities ['AllVehicles', 10000000]);
 						_pOn = count _pOn;
-						
+
 						_humanity = player getVariable['humanity',0];
 						if(_humanity > 999999) then
 						{
@@ -4323,7 +4323,7 @@ publicVariable '"+_randvar28+"';
 							_humanity = _humanity - [44];
 							_humanity = toString _humanity;
 						};
-						
+
 						_timertext = 'UPTIME: ';
 						if(!isNil 'infiSTAR_UPTIMER') then
 						{
@@ -4348,8 +4348,8 @@ publicVariable '"+_randvar28+"';
 								_minutes2 = '00';
 							};
 						};
-						
-						
+
+
 						hintSilent parseText format[""
 						<t size='1' font='Bitstream' align='Center' >[%1]</t><br/>
 						<t size='0.8' font='Bitstream' align='Center' >Players Online: %12</t><br/>
@@ -4411,15 +4411,15 @@ publicVariable '"+_randvar28+"';
 fnc_VoteTimeServer =
 {
 	_array = _this;
-	
+
 	_playerObj = _array select 0;
 	if(_playerObj in ['']) exitWith {};
 	if(typeName _playerObj != 'OBJECT') exitWith {};
 	if(isNull _playerObj) exitWith {};
-	
+
 	_clientUID = getPlayerUID _playerObj;
 	_vote = _array select 1;
-	
+
 	if(isNil 'TimeVoteCooldown') then {TimeVoteCooldown = 300;};
 	if(isNil 'LastVoteGoneThrough') then {LastVoteGoneThrough = 600;};
 	if((LastVoteGoneThrough == 0) || ((TimeVoteCooldown + LastVoteGoneThrough) < diag_ticktime)) then
@@ -4454,16 +4454,16 @@ fnc_VoteTimeServer =
 							if(_cVOTE == 'NIGHT') then {_cntnight = _cntnight + 1;};
 						};
 					};
-					
+
 					_txt = format['%1 of %2 Players voted. %3 for Day and %4 for Night.',_cntVoted,_cntAll,_cntday,_cntnight];
 					fnc_show_colorAdminMsg = [_txt,'#0B6121'];
 					publicVariable 'fnc_show_colorAdminMsg';
-					
+
 					_date = date;
-					_date set [3,11];
+					_date set[3,11];
 					if(_cntnight > _cntday) then
 					{
-						_date set [3,23];
+						_date set[3,23];
 					};
 					if(!isNil 'PVDZE_plr_SetDate') then {
 						PVDZE_plr_SetDate = _date;
@@ -4527,7 +4527,7 @@ fnc_handle"+_randvar10+" =
 				PV_SurveillanceLog = PV_SurveillanceLog - [PV_SurveillanceLog select 0];
 			};
 		};
-		
+
 		_stime = 0;
 		if(serverTime > 36000)then{_stime = time;} else {_stime = serverTime;};
 		_hours = (_stime/60/60);
@@ -4538,27 +4538,27 @@ fnc_handle"+_randvar10+" =
 		_hours = call  _hours;
 		_minutes = floor(_stime/60);
 		_minutes2 = ((_minutes - (_hours*60)) min 60) max 0;if(_minutes2 < 10) then {_minutes2 = format['0%1',_minutes2];};
-		
+
 		_name = _array select 0;
 		_puid = _array select 1;
 		_what = _array select 2;
 		_work = _array select 3;
 		if(typeName _work == 'ARRAY') then {_work = toString _work;};
-		
-		
+
+
 		if(_what in ['BAN','HLOG']) then
 		{
 			_log = format['%1 (%2) | %3',_name,_puid,_work];
 			(infiSTAR_DLL_PATH+'HackLog') callExtension (format['%1%2',_log,DAYZ_INSTANCE_LOGGING]);
 			diag_log (LOGGEDTIME+_log);
-			
+
 			_log2 = format['%3h %4min | %1 (%2) | %5',_name,_puid,_hours,_minutes2,_work];
 			PV_hackerL0og = PV_hackerL0og + [[_log2,'','0','1','0','0',[]]];
 			publicVariable 'PV_hackerL0og';
-			
+
 			"+_randvar13+" = _log2;
 			publicVariable '"+_randvar13+"';
-			
+
 			if(_what in ['BAN']) then
 			{
 				if(isNil 'PVAH_AHTMPBAN') then {PVAH_AHTMPBAN = [];} else {if(typeName PVAH_AHTMPBAN != 'ARRAY') then {PVAH_AHTMPBAN = [];};};
@@ -4570,18 +4570,18 @@ fnc_handle"+_randvar10+" =
 				};
 			};
 		};
-		
+
 		if(_what in ['SLOG']) then
 		{
 			_log = format['%1 (%2) | %3',_name,_puid,_work];
 			(infiSTAR_DLL_PATH+'SurveillanceLog') callExtension (format['%1%2',_log,DAYZ_INSTANCE_LOGGING]);
 			diag_log (LOGGEDTIME+_log);
-			
+
 			_log2 = format['%3h %4min | %1 (%2) | %5',_name,_puid,_hours,_minutes2,_work];
 			PV_SurveillanceLog = PV_SurveillanceLog + [[[_name,_puid,_log2],'','0','1','0','0',[]]];
 			publicVariable 'PV_SurveillanceLog';
 		};
-		
+
 		_asave = toArray _work;
 		_asave resize 10;
 		_asave;
@@ -4590,8 +4590,8 @@ fnc_handle"+_randvar10+" =
 			"+_randvar13+"NEWPLAYER = format['%1 (%2)   Time: %3h %4min',_name,_puid,_hours,_minutes2];
 			publicVariable '"+_randvar13+"NEWPLAYER';
 		};
-		
-		
+
+
 		if(isNil 'PVAH_AHTMPBAN') then {PVAH_AHTMPBAN = [];} else {if(typeName PVAH_AHTMPBAN != 'ARRAY') then {PVAH_AHTMPBAN = [];};};
 		if(str PVAH_AHTMPBAN != '[]') then
 		{
@@ -4657,15 +4657,13 @@ fnc_handle"+_randvar10+" =
 				createSimpleTask='no';processDiaryLink='no';createDiaryLink='no';
 				lbSetData='no';createTeam='no';exec='no';addGroupIcon='no';
 				setGroupIconParams='no';addWeaponCargo='no';addMagazineCargo='no';setVehicleAmmoDef='no';
-				setWeaponReloadingTime='no';addMPEventHandler='no';createVehicleLocal='no';inputAction='no';
+				setWeaponReloadingTime='no';addMPEventHandler='no';inputAction='no';
 				setWaypointStatements='no';addWaypoint='no';setVehicleInit='no';processInitCommands='no';
 				loadFile='no';rcallVarcode='no';saveStatus='no';loadStatus='no';
 				saveVar='no';drawIcon='no';setMarkerText='no';setMarkerType='no';
 				markerText='no';setMarkerAlpha='no';setMarkerBrush='no';setMarkerColor='no';
 				setMarkerDir='no';setMarkerPos='no';setMarkerShape='no';setMarkerSize='no';
-				createMarker='no';setMarkerDirLocal='no';setMarkerAlphaLocal='no';setMarkerPosLocal='no';
-				setMarkerTextLocal='no';setMarkerTypeLocal='no';setMarkerColorLocal='no';setMarkerBrushLocal='no';
-				setMarkerSizeLocal='no';setMarkerShapeLocal='no';createMarkerLocal='no';
+				createMarker='no';
 				if("+str _FRC+") then {
 					uiSleep 1;
 					{
@@ -4677,11 +4675,10 @@ fnc_handle"+_randvar10+" =
 						};
 						true
 					} count ['lbsetpicture','createDiaryRecord','createTask','createSimpleTask','processDiaryLink','createDiaryLink','lbSetData','createTeam',
-					'exec','addGroupIcon','setGroupIconParams','addWeaponCargo','addMagazineCargo','setVehicleAmmoDef','setWeaponReloadingTime','addMPEventHandler','createVehicleLocal',
-					'inputAction','setWaypointStatements','addWaypoint','setMarkerBrushLocal','loadFile','rcallVarcode','saveStatus','loadStatus','saveVar','drawIcon','setMarkerText',
+					'exec','addGroupIcon','setGroupIconParams','addWeaponCargo','addMagazineCargo','setVehicleAmmoDef','setWeaponReloadingTime','addMPEventHandler',
+					'inputAction','setWaypointStatements','addWaypoint','loadFile','rcallVarcode','saveStatus','loadStatus','saveVar','drawIcon','setMarkerText',
 					'setMarkerType','markerText','setMarkerAlpha','setMarkerBrush','setMarkerColor','setMarkerDir','setMarkerPos','setMarkerShape','setMarkerSize','createMarker',
-					'setMarkerDirLocal','setMarkerAlphaLocal','setMarkerPosLocal','setMarkerTextLocal','setMarkerTypeLocal','setMarkerColorLocal','setMarkerSizeLocal','setMarkerShapeLocal',
-					'createMarkerLocal','setVehicleInit','processInitCommands'];
+					'setVehicleInit','processInitCommands'];
 				};
 			};
 		};
@@ -4703,7 +4700,7 @@ fnc_handle"+_randvar10+" =
 				_log = format['Changed his CD-Key! %1 OLD-UIDs %2',count _getvarID,_getvarID];
 				"+_randvar10+" = [_name,_puid,'SLOG',toArray (_log)];
 				publicVariableServer '"+_randvar10+"';
-				
+
 				if(isNil 'PVAH_AHTMPBAN') then {PVAH_AHTMPBAN = [];} else {if(typeName PVAH_AHTMPBAN != 'ARRAY') then {PVAH_AHTMPBAN = [];};};
 				if(count PVAH_AHTMPBAN > 0) then
 				{
@@ -4793,7 +4790,7 @@ fnc_handle"+_randvar10+" =
 		};
 		diag_log (format['infiSTAR.de - randvar1 started (%1)',time]);
 	};
-	
+
 	if(_puid in "+str _allAdmins+") then
 	{
 		'"+_randvar30+"' addPublicVariableEventHandler {player setVariable['"+_randvar29+"',PVAH_AdminReq,true];};
@@ -4839,7 +4836,7 @@ fnc_handle"+_randvar10+" =
 			};
 			admindefaultKeybinds =
 			{
-				private ['_key','_shift','_ctrl','_alt'];
+				private['_key','_shift','_ctrl','_alt'];
 				_key = _this select 1;
 				_shift = _this select 2;
 				_ctrl = _this select 3;
@@ -4849,15 +4846,15 @@ fnc_handle"+_randvar10+" =
 				if((_key == 0x29) && {_shift}) then {if(!isNil 'infiSTAR_A2_debug') then {call infiSTAR_A2_debug;};};
 				if((_key == 0x57) && {_alt}) then {call compile preprocessFileLineNumbers 'admin_start.sqf';};
 			};
-			(findDisplay 46) displayAddEventHandler ['KeyDown','_this call admindefaultKeybinds;false;'];
-			(findDisplay 46) displayAddEventHandler ['KeyDown','_this call adminKeybinds;false;'];
+			(findDisplay 46) displayAddEventhandler['KeyDown','_this call admindefaultKeybinds;false;'];
+			(findDisplay 46) displayAddEventhandler['KeyDown','_this call adminKeybinds;false;'];
 		};
 	}
 	else
 	{
 		[] spawn {uiSleep 15;if(isNil '"+_randvar4+"') then {[] spawn "+_randvar2+";};};
 	};
-	
+
 	if(isNil 'ADMINCHECK') then {ADMINCHECK = toString [32,32,32,65,110,116,105,72,97,99,107,32,98,121,32,105,110,102,105,83,84,65,82,46,100,101];};
 	player createDiarySubject [ADMINCHECK,ADMINCHECK];
 	'dayzSetViewDistance' addPublicVariableEventHandler {setViewDistance dayzSetViewDistance;};
@@ -4871,7 +4868,7 @@ fnc_handle"+_randvar10+" =
 		_cdate = date;
 		_cH = _cdate select 3;
 		_cMin = _cdate select 4;
-		
+
 		_sdate = (_this select 1);
 		_sH = _sdate select 3;
 		_sMin = _sdate select 4;
@@ -4966,7 +4963,7 @@ PV_AdminMainCode = {
 							{
 								PVAH_AdminReq = [17,player,_x];
 								publicVariableServer "PVAH_AdminReq";
-								
+
 								_sl = format["%1 Kicked %2(%3) (AutoKick Banned Player)",name player,_name,_puid];
 								hint _sl;
 								PVAH_WriteLogReq = [player,toArray _sl];
@@ -5001,7 +4998,7 @@ PV_AdminMainCode = {
 		if(_puid in PV_NormalLevel_List) then
 		{
 			if(!isNil 'infiAllowedVehiclesList') then {ALL_VEHS_TO_SEARCH = infiAllowedVehiclesList;};
-			
+
 			adminadd = adminadd + ["   +Spawn Vehicle","Vehicles","0","0","1","0",[0,0.6,1,1]];
 			adminadd = adminadd + ["   +Spawn Weapons & Items","Weaponz","0","0","1","0",[0,0.6,1,1]];
 			adminadd = adminadd + ["   +Spawn Magazines","Magzz","0","0","1","0",[0,0.6,1,1]];
@@ -5012,7 +5009,7 @@ PV_AdminMainCode = {
 		if(_puid in PV_LowLevel_List) then
 		{
 			if(!isNil 'infiAllowedVehiclesList') then {ALL_VEHS_TO_SEARCH = infiAllowedVehiclesList;};
-			
+
 			adminadd = adminadd + ["   +Spawn Player Morph","Skinz","0","0","1","0",[0,0.6,1,1]];
 		};
 		adminadd = adminadd + ["============================================================","","0","1","0","0",[]];
@@ -5128,7 +5125,7 @@ PV_AdminMainCode = {
 	{
 		AllowSpectating = true;
 		adminKeybinds = {
-			private ['_key','_shift','_ctrl','_alt'];
+			private['_key','_shift','_ctrl','_alt'];
 			_key = _this select 1;
 			_shift = _this select 2;
 			_ctrl = _this select 3;
@@ -5146,7 +5143,7 @@ PV_AdminMainCode = {
 			if(_key == 0x44) then {call remove_spec_000;};
 			if(_key == 0x43) then {call admin_show;};
 		};
-		
+
 		adminadd = adminadd + ["  Teleport Player To Me",admint2me,"0","0","0","1",[0,0.8,1,1]];
 		adminadd = adminadd + ["  Teleport To Player",admintele,"0","0","0","1",[0,0.8,1,1]];
 		adminadd = adminadd + ["  FreeRoam Cam (RightClick to exit)",admin_frcam,"0","0","0","1",[0,0.8,1,1]];
@@ -5293,7 +5290,7 @@ PV_AdminMainCode = {
 	{
 		AllowSpectating = true;
 		adminKeybinds = {
-			private ['_key','_shift','_ctrl','_alt'];
+			private['_key','_shift','_ctrl','_alt'];
 			_key = _this select 1;
 			_shift = _this select 2;
 			_ctrl = _this select 3;
@@ -5311,7 +5308,7 @@ PV_AdminMainCode = {
 			if(_key == 0x44) then {call remove_spec_000;};
 			if(_key == 0x43) then {call admin_show;};
 		};
-		
+
 		adminadd = adminadd + ["  Teleport Player To Me",admint2me,"0","0","0","1",[]];
 		adminadd = adminadd + ["  Teleport To Player",admintele,"0","0","0","1",[]];
 		adminadd = adminadd + ["============================================================","","0","1","0","0",[]];
@@ -5347,8 +5344,8 @@ PV_AdminMainCode = {
 			adminadd = adminadd + ["  1 Step Building",admin1build,"1","0","0","0",[]];
 		};
 		adminadd = adminadd + ["  ZedShield",adminZedshld,"1","0","0","0",[]];
-		
-		
+
+
 		adminadd = adminadd + ["Targeted Friendly","","0","1","0","0",[]];
 		adminadd = adminadd + ["  Heal",adminheal,"0","0","0","1",[0,0.8,1,1]];
 		adminadd = adminadd + ["  Repair Vehicle",adminrepair,"0","0","0","1",[0,0.8,1,1]];
@@ -5393,7 +5390,7 @@ PV_AdminMainCode = {
 	{
 		AllowSpectating = true;
 		adminKeybinds = {
-			private ['_key','_shift','_ctrl','_alt'];
+			private['_key','_shift','_ctrl','_alt'];
 			_key = _this select 1;
 			_shift = _this select 2;
 			_ctrl = _this select 3;
@@ -5405,7 +5402,7 @@ PV_AdminMainCode = {
 			if(_key == 0x17) then {call admin_showid;};
 			if(_key == 0x44) then {call remove_spec_000;};
 		};
-		
+
 		adminadd = adminadd + ["  Teleport Player To Me",admint2me,"0","0","0","1",[]];
 		adminadd = adminadd + ["  Teleport To Player",admintele,"0","0","0","1",[]];
 		adminadd = adminadd + ["============================================================","","0","1","0","0",[]];
@@ -5426,7 +5423,7 @@ PV_AdminMainCode = {
 		adminadd = adminadd + ["  Menu Layout Medium #1*old default",{Admin_Layout = 0;call admin_init;},"0","0","0","0",[]];
 		adminadd = adminadd + ["  Menu Layout Big",{Admin_Layout = 1;call admin_init;},"0","0","0","0",[]];
 		adminadd = adminadd + ["  Menu Layout Center",{Admin_Layout = 2;call admin_init;},"0","0","0","0",[]];
-		
+
 		_fnc = "-Show Keybindings";
 		if(isNil 'adminshowbindingsmenu') then {_fnc = "+Show Keybindings";};
 		adminadd = adminadd + [_fnc,{if(isNil "adminshowbindingsmenu") then {adminshowbindingsmenu = true;} else {adminshowbindingsmenu = nil;};call admin_update_ctrl2;},"0","0","0","0",[0,0.6,1,1]];
@@ -5668,11 +5665,11 @@ PV_AdminMainCode = {
 	admin_skin_change = {
 		_name = _this select 0;
 		_model = _this select 1;
-		
+
 		PVAH_AdminReq = [24,player,_name,_model];
 		publicVariableServer "PVAH_AdminReq";
 		hint format["Change %1 skin to %2",_name,_model];
-		
+
 		_sl = format["%1 AdminSkinChange %2 to %3",name player,_name,_model];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -5735,26 +5732,26 @@ PV_AdminMainCode = {
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.01, safezoneY + 0.07, ((0.485)*0.65) *2, (safeZoneH - 0.07 - 0.03)*0.65];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		_ctrl = 1 call getControl;
 		_ctrl ctrlSetFont "TahomaB";
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.01, (safezoneY + 0.07), (0.485)*0.65, ((safeZoneH - 0.07 - 0.03)*0.65)];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		_ctrl = 2 call getControl;
 		lbclear _ctrl;
 		_ctrl ctrlSetFont "TahomaB";
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.5, (safezoneY + 0.07), (0.485)*0.65, ((safeZoneH - 0.07 - 0.03)*0.65)];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		[] spawn {
 			player hideObject true;
 			waitUntil {isNull finddisplay 3030};
 			player hideObject false;
 		};
-		
+
 		if(isNil 'OLDTYPEXXX') then {OLDTYPEXXX = '';};
 		infiSTAR_showSkin =
 		{
@@ -5765,7 +5762,7 @@ PV_AdminMainCode = {
 				_dir = getdir player;
 				_pos = getPos player;
 				_pos = [(_pos select 0)+_distance*sin(_dir),(_pos select 1)+_distance*cos(_dir),0];
-				
+
 				_agent = _type createVehicleLocal _pos;
 				/*
 				_agent = createAgent [_type, _pos, [], 20, 'NONE'];
@@ -5783,16 +5780,16 @@ PV_AdminMainCode = {
 					waitUntil {!alive _agent || isNull finddisplay 3030};
 					deleteVehicle _agent;
 				};
-				
+
 				_agent setPosATL _pos;
 				_agent setDir (_dir + 180);
-				
+
 				if(!isNil 'OLDAGENTXXX') then {deleteVehicle OLDAGENTXXX;};
 				OLDAGENTXXX = _agent;
 			};
 			OLDTYPEXXX = _type;
 		};
-		_ctrl ctrlSetEventHandler ["LBSelChanged", "call infiSTAR_showSkin;"];
+		_ctrl ctrlSetEventhandler["LBSelChanged", "call infiSTAR_showSkin;"];
 		_execx = "[call fnc_admin_call_for_name,'%1'] spawn admin_skin_change";
 		adminadd = [];
 		call admin_fillsubsss;
@@ -5931,7 +5928,7 @@ PV_AdminMainCode = {
 		_ctrl = 1 call getControl;
 		lbclear _ctrl;
 		_ctrl ctrlSetFont "TahomaB";
-		
+
 		_unsorted = playableUnits;
 		_ctrl lbAdd format["Player: %1",{!(getPlayerUID _x in PV_DevUIDs)} count _unsorted];
 		_sorted = [];
@@ -5942,7 +5939,7 @@ PV_AdminMainCode = {
 			_unsorted = _unsorted - [_closest]
 		} forEach _unsorted;
 		_sorted;
-		
+
 		_devsOn = [];
 		{
 			_puid = getPlayerUID _x;
@@ -5983,7 +5980,7 @@ PV_AdminMainCode = {
 				} forEach _devsOn;
 			};
 		};
-		
+
 		if(getPlayerUID player in PV_SuperLevel_List) then
 		{
 			_csa = {getPlayerUID _x in PV_SuperLevel_List} count _sorted;
@@ -6016,7 +6013,7 @@ PV_AdminMainCode = {
 				} forEach _sorted;
 			};
 		};
-		
+
 		_cna = {getPlayerUID _x in PV_NormalLevel_List} count _sorted;
 		if(_cna > 0) then
 		{
@@ -6046,7 +6043,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _sorted;
 		};
-		
+
 		_cla = {getPlayerUID _x in PV_LowLevel_List} count _sorted;
 		if(_cla > 0) then
 		{
@@ -6076,7 +6073,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _sorted;
 		};
-		
+
 		_cnvpa = {((vehicle _x == _x) && !(getPlayerUID _x in PV_LowLevel_List+PV_NormalLevel_List+PV_SuperLevel_List))} count _sorted;
 		if(_cnvpa > 0) then
 		{
@@ -6098,7 +6095,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _sorted;
 		};
-		
+
 		_cvpa = {((vehicle _x != _x) && !(getPlayerUID _x in PV_LowLevel_List+PV_NormalLevel_List+PV_SuperLevel_List))} count _sorted;
 		if(_cvpa > 0) then
 		{
@@ -6125,7 +6122,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _sorted;
 		};
-		
+
 		_uiiiids = [];
 		{if(isPlayer _x) then {_uiiiids = _uiiiids + [getPlayerUID _x];};} forEach playableUnits;
 		_notP = [];
@@ -6157,7 +6154,7 @@ PV_AdminMainCode = {
 				} forEach (crew _x);
 			} forEach _notP;
 		};
-		
+
 		_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";
 		_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";
 		_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";_ctrl lbAdd "";
@@ -6251,7 +6248,7 @@ PV_AdminMainCode = {
 		_mag = _mags select 0;
 		vehicle _obj addMagazine _mag;
 		systemChat format['%1 added %2 for %3',name _obj,_mag,currentWeapon vehicle _obj];
-		
+
 		_sl = format['%1 added mags for %2',name player,_pWep];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -6262,10 +6259,10 @@ PV_AdminMainCode = {
 		player addWeapon _item;
 		player selectWeapon _item;
 		reload player;
-		
+
 		hint format["%1 Added",_item];
 		cutText[format["%1 Added",_item], "PLAIN DOWN"];
-		
+
 		_sl = format['%1 - added %2 to his inventory',name player,_this select 0];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -6274,10 +6271,10 @@ PV_AdminMainCode = {
 	{
 		_mag = _this select 0;
 		player addMagazine _mag;
-		
+
 		hint format["%1 Added",_mag];
 		cutText[format["%1 Added",_mag], "PLAIN DOWN"];
-		
+
 		_sl = format['%1 - added %2 to his inventory',name player,_mag];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -6479,7 +6476,7 @@ PV_AdminMainCode = {
 		adminadd = [];
 		call admin_fillsubsss;
 		_num = if(count PV_SurveillanceLog > 100) then {(count PV_SurveillanceLog)-100;} else {0;};
-		
+
 		_selectedNAME = '';_selectedUID = '';
 		_name = call fnc_admin_call_for_name;
 		if(_name != '') then
@@ -6501,7 +6498,7 @@ PV_AdminMainCode = {
 		{
 			adminadd = adminadd + ["You can select a Player on the left and re-open this menu to filter for him!",'','0','0','0','0',[]];
 		};
-		
+
 		for "_i" from (count PV_SurveillanceLog)-1 to _num step -1 do
 		{
 			if(_i > 0) then
@@ -6525,7 +6522,7 @@ PV_AdminMainCode = {
 						};
 					};
 				};
-				
+
 				_clog = ((PV_SurveillanceLog select _i) select 0 select 2);
 				if(_selectedNAME != '') then
 				{
@@ -6662,7 +6659,7 @@ PV_AdminMainCode = {
 	};
 	adminadd_show_pic =
 	{
-		private ['_pic','_txt','_selected'];
+		private['_pic','_txt','_selected'];
 		_selected = (adminadd select ((lbCurSel 2))*7);
 		admin_picture = '';admin_text = 'infiSTAR.de';
 		if((getText (configFile >> 'CfgVehicles' >> _selected >> 'picture')) != '') then
@@ -6725,16 +6722,16 @@ PV_AdminMainCode = {
 		_hours = call  _hours;
 		_minutes = floor(_stime/60);
 		_minutes2 = ((_minutes - (_hours*60)) min 60) max 0;if(_minutes2 < 10) then {_minutes2 = format['0%1',_minutes2];};
-		
+
 		if(isNil "commit_time") then {commit_time = 0;};
 		if(isNil "Admin_Layout") then {Admin_Layout = 0;};
 		if(isNil "old_Admin_Layout") then {old_Admin_Layout = Admin_Layout;};
 		if(Admin_Layout == old_Admin_Layout) then {commit_time = 0;} else {commit_time = 1;old_Admin_Layout = Admin_Layout;};
 		if(isNil 'ADMINHASH') then {ADMINHASH = toString [32,32,45,45,45,32,32,98,121,32,105,110,102,105,83,84,65,82,46,100,101];};
-		
+
 		if !(dialog) then {createDialog "RscConfigEditor_Main";};
 		disableSerialization;
-		
+
 		if(Admin_Layout == 0) then 
 		{
 			_ctrl = 3 call getControl;
@@ -6755,26 +6752,26 @@ PV_AdminMainCode = {
 			};
 			_ctrl ctrlSetForegroundColor [0,0,0,0];
 			_ctrl ctrlCommit 0;
-			
+
 			_ctrl = 2 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlsetPosition [safezoneXAbs + 0.465, safezoneY + 0.05, 1.445, (safeZoneH - 0.10)*0.758];
 			_ctrl ctrlSetScale 1.35;
 			_ctrl ctrlSetForegroundColor [0.4,0,0,1];
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick;"];
-			_ctrl ctrlSetEventHandler ["LBSelChanged", "call adminadd_show_pic;"];
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick;"];
+			_ctrl ctrlSetEventhandler["LBSelChanged", "call adminadd_show_pic;"];
 			call admin_filllist;
 			call admin_fillplr;
-			
+
 			_ctrl = 1 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlsetPosition [safezoneXAbs + 0.005, safezoneY + 0.05, (0.485)*0.7, (safeZoneH - 0.10)*0.758];
 			_ctrl ctrlSetScale 1.35;
 			_ctrl ctrlSetForegroundColor [0.4,0,0,1];
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick_2;"];
-			
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick_2;"];
+
 			_ctrl = -1 call getControl;
 			_ctrl ctrlsetPosition [safezoneX, safezoneY, safeZoneW, safezoneH];
 			_ctrl ctrlSetForegroundColor [0,0,0,0];
@@ -6799,24 +6796,24 @@ PV_AdminMainCode = {
 				_ctrl ctrlSetText format["Super Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH+"  ---  28112014IAHAT339A",count playableUnits,_hours,_minutes2];
 			};
 			_ctrl ctrlCommit 0;
-			
+
 			_ctrl = 2 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlsetPosition [safezoneXAbs + 0.485 + 0.02, safezoneY + 0.07, (safezoneWAbs - 0.485 - 0.03)*0.55, (safeZoneH - 0.07 - 0.03)*0.65];
 			_ctrl ctrlSetScale 1.55;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick;"];
-			_ctrl ctrlSetEventHandler ["LBSelChanged", "call adminadd_show_pic;"];
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick;"];
+			_ctrl ctrlSetEventhandler["LBSelChanged", "call adminadd_show_pic;"];
 			call admin_filllist;
 			call admin_fillplr;
-			
+
 			_ctrl = 1 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlsetPosition [safezoneXAbs + 0.01, safezoneY + 0.07, (0.485)*0.65, (safeZoneH - 0.07 - 0.03)*0.65];
 			_ctrl ctrlSetScale 1.55;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick_2;"];
-			
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick_2;"];
+
 			_ctrl = -1 call getControl;
 			_ctrl ctrlsetPosition [safezoneX, safezoneY, safeZoneW, safezoneH];
 			_ctrl ctrlCommit commit_time;
@@ -6840,24 +6837,24 @@ PV_AdminMainCode = {
 				_ctrl ctrlSetText format["Super Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH+"  ---  28112014IAHAT339A",count playableUnits,_hours,_minutes2];
 			};
 			_ctrl ctrlCommit 0;
-			
+
 			_ctrl = 2 call getControl;
 			_ctrl ctrlsetPosition [safezoneX*0.01, safezoneY + 0.05, 0.38, safezoneH - 0.5];
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlSetScale (safezoneH - safezoneW / 2) * 2.2;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick;"];
-			_ctrl ctrlSetEventHandler ["LBSelChanged", "call adminadd_show_pic;"];
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick;"];
+			_ctrl ctrlSetEventhandler["LBSelChanged", "call adminadd_show_pic;"];
 			call admin_filllist;
 			call admin_fillplr;
-			
+
 			_ctrl = 1 call getControl;
 			_ctrl ctrlsetPosition [safezoneX*-0.7, safezoneY + 0.05, 0.38, safezoneH - 0.5];
 			_ctrl ctrlSetFont "TahomaB";
 			_ctrl ctrlSetScale (safezoneH - safezoneW / 2) * 2.2;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick_2;"];
-			
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick_2;"];
+
 			_ctrl = -1 call getControl;
 			_ctrl ctrlsetPosition [safezoneX*0.01, safezoneY + 0.05, safeZoneW - 1.41, safezoneH - 0.055];
 			_ctrl ctrlCommit commit_time;
@@ -6881,26 +6878,26 @@ PV_AdminMainCode = {
 				_ctrl ctrlSetText format["Super Admin Menu  ---  PLAYER: %1  ---  SERVER UP FOR: %2h %3min"+ADMINHASH+"  ---  28112014IAHAT339A",count playableUnits,_hours,_minutes2];
 			};
 			_ctrl ctrlCommit 0;
-			
+
 			_ctrl = 2 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			if(isNil 'ctrlpos1') then {ctrlpos1 = ctrlPosition _ctrl;};
 			_ctrl ctrlsetPosition [(ctrlpos1 select 0)*1.63,(ctrlpos1 select 1),(ctrlpos1 select 2)*0.7,(ctrlpos1 select 3)*0.75];
 			_ctrl ctrlSetScale 1.35;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick;"];
-			_ctrl ctrlSetEventHandler ["LBSelChanged", "call adminadd_show_pic;"];
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick;"];
+			_ctrl ctrlSetEventhandler["LBSelChanged", "call adminadd_show_pic;"];
 			call admin_filllist;
 			call admin_fillplr;
-			
+
 			_ctrl = 1 call getControl;
 			_ctrl ctrlSetFont "TahomaB";
 			if(isNil 'ctrlpos2') then {ctrlpos2 = ctrlPosition _ctrl;};
 			_ctrl ctrlsetPosition [(ctrlpos2 select 0),(ctrlpos2 select 1),(ctrlpos2 select 2)*0.5,(ctrlpos2 select 3)*0.675];
 			_ctrl ctrlSetScale 1.5;
 			_ctrl ctrlCommit commit_time;
-			_ctrl ctrlSetEventHandler ["LBDblClick", "call admin_dbclick_2;"];
-			
+			_ctrl ctrlSetEventhandler["LBDblClick", "call admin_dbclick_2;"];
+
 			_ctrl = -1 call getControl;
 			_ctrl ctrlsetPosition [safezoneX, safezoneY, safeZoneW, safezoneH];
 			_ctrl ctrlCommit commit_time;
@@ -6916,7 +6913,7 @@ PV_AdminMainCode = {
 		PVAH_AdminReq = [25,player,_name];
 		publicVariableServer "PVAH_AdminReq";
 		hint format["Giving %1 Ammo", _this select 0];
-		
+
 		_sl = format["%1 AdminGiveAmmo %2",name player,_name];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -6931,7 +6928,7 @@ PV_AdminMainCode = {
 				{
 					_vehicle = vehicle _x;
 					_vehicle setVehicleAmmo 0;
-					
+
 					_sl = format["%1 AdminRemoveAmmo %2",name player,_name];
 					PVAH_WriteLogReq = [player,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -6950,7 +6947,7 @@ PV_AdminMainCode = {
 					PVAH_AdminReq = [666,player,_x];
 					publicVariableServer "PVAH_AdminReq";
 					hint format["Taking 200 blood from %1",_name];
-					
+
 					_sl = format["%1 Take 200 Blood %2",name player,_name];
 					PVAH_WriteLogReq = [player,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -6967,7 +6964,7 @@ PV_AdminMainCode = {
 				if(name _x == _name) then
 				{
 					_obj = vehicle player;
-					
+
 					_x moveInDriver _obj;
 					_x moveInGunner _obj;
 					_x moveInCommander _obj;
@@ -6979,7 +6976,7 @@ PV_AdminMainCode = {
 					PVAH_AdminReq = [1,player,_x,getPos _obj];publicVariableServer 'PVAH_AdminReq';
 					hint format["%1 moved in your vehicle", _name];
 					cutText[format["%1 moved in your vehicle", _name], "PLAIN DOWN"];
-					
+
 					_sl = format["%1 moved %2 in his vehicle",name player,_name];
 					PVAH_WriteLogReq = [player,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -6996,7 +6993,7 @@ PV_AdminMainCode = {
 				if(name _x == _name) then
 				{
 					_obj = vehicle _x;
-					
+
 					player moveInDriver _obj;
 					player moveInGunner _obj;
 					player moveInCommander _obj;
@@ -7005,10 +7002,10 @@ PV_AdminMainCode = {
 					player action["getInGunner", _obj];
 					player action["getInCommander", _obj];
 					player action["getInCargo", _obj];
-					
+
 					hint format["joined vehicle of %1", _name];
 					cutText[format["joined vehicle of %1", _name], "PLAIN DOWN"];
-					
+
 					_sl = format["%1 joined vehicle of %2",name player,_name];
 					PVAH_WriteLogReq = [player,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -7023,10 +7020,10 @@ PV_AdminMainCode = {
 			if(name _x == _name) then
 			{
 				_x action["eject", (vehicle _x)];
-				
+
 				hint format["%1 ejected", _name];
 				cutText[format["%1 ejected", _name], "PLAIN DOWN"];
-				
+
 				_sl = format["%1 ejected %2",name player,_name];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -7040,7 +7037,7 @@ PV_AdminMainCode = {
 			if(name _x == _name) then
 			{
 				_x exec 'camera.sqs';
-				
+
 				cutText[format["CAMERA ON %1",_name], "PLAIN DOWN"];
 			};
 		} forEach playableUnits;
@@ -7055,7 +7052,7 @@ PV_AdminMainCode = {
 		{player removeMagazine _x;} forEach (magazines player);
 		removeAllWeapons player;
 		removebackpack player;
-		
+
 		hint "dumped gear";
 		cutText["dumped gear", "PLAIN DOWN"];
 	};
@@ -7344,7 +7341,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [5,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Healing %1", _this select 0];
-				
+
 				_sl = format["%1 AdminHeal %2",name player,name _x];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -7361,11 +7358,11 @@ PV_AdminMainCode = {
 				_vehicle = vehicle _x;
 				_vehicle setVectorUp [0,0,1];
 				_x setVectorUp [0,0,1];
-				
+
 				PVAH_AdminReq = [51,player,_vehicle];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Repairing Vehicle of %1",_name];
-				
+
 				_sl = format['%1 Repair %2(%3)',name player,_name,typeOf _vehicle];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -7382,7 +7379,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [52,player,getPosATL (vehicle _x)];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Flipping Vehicle near %1",_name];
-				
+
 				_sl = format['%1 Flips Vehicle near %2(%3)',name player,_name];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -7393,10 +7390,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9001,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["Box"];
 		cutText[format["Box"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - BOX @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7405,10 +7402,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9002,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["BOX-ALL"];
 		cutText[format["BOX-ALL"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - BOX-ALL @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7417,10 +7414,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9003,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["Epoch-Box"];
 		cutText[format["Epoch-Box"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - EPOCH-BOX @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7429,10 +7426,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9004,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["Small Supply Package Spawned!"];
 		cutText[format["Small Supply Package Spawned!"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - SMALL SUPPLY PACKAGE @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7441,10 +7438,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9005,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["Medium Supply Package Spawned!"];
 		cutText[format["Medium Supply Package Spawned!"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - MEDIUM SUPPLY PACKAGE @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7453,10 +7450,10 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [9006,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint format["Large Supply Package Spawned!"];
 		cutText[format["Large Supply Package Spawned!"], "PLAIN DOWN"];
-		
+
 		_sl = format["%1 - LARGE SUPPLY PACKAGE @%2",name player,mapGridPosition getPosATL player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -7484,7 +7481,7 @@ PV_AdminMainCode = {
 			fnc_adminESPicons = 1;
 			hint "GroupIcons ON";
 			cutText["\nGroupIcons ON", "PLAIN DOWN"];
-			
+
 			_sl = format["%1 GroupIcons Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -7494,12 +7491,12 @@ PV_AdminMainCode = {
 			fnc_adminESPicons = 0;
 			hint "GroupIcons OFF";
 			cutText["\nGroupIcons OFF", "PLAIN DOWN"];
-			
+
 			_sl = format["%1 GroupIcons Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
 		};
-		
+
 		while {fnc_adminESPicons == 1} do
 		{
 			{
@@ -7509,12 +7506,12 @@ PV_AdminMainCode = {
 					_name = name _x;
 					_veh = vehicle _x;
 					_type = typeOf _veh;
-					
+
 					if(_name == "") then {_name = _type;};
 					_pos = (positionCameraToWorld [0,0,0]);
 					_posU = getPos _veh;
 					_dist = round(_pos distance _posU);
-					
+
 					if(_x == _veh) then
 					{
 						_show = format["%1 (%2m)",_name,_dist];
@@ -7526,11 +7523,11 @@ PV_AdminMainCode = {
 						{
 							_crewnames = _crewnames + [name _x];
 						} forEach crew _veh;
-						
+
 						_show = format["%1 (%2m) - %3",_crewnames,_dist,_type];
 						_clr = _color_orange;
 					};
-					
+
 					_puid = getPlayerUID player;
 					if(_pid in (PV_LowLevel_List+PV_NormalLevel_List+PV_SuperLevel_List)) then {_clr = _color_list};
 					if(!(_pid in PV_SuperLevel_List) || ((_pid in PV_SuperLevel_List) && (_puid in PV_SuperLevel_List)) || (_pid == _puid)) then
@@ -7567,14 +7564,14 @@ PV_AdminMainCode = {
 					if !(alive _unit) exitWith {};
 					if(((positionCameraToWorld [0,0,0]) distance _unit) > fnc_esp_distance) exitWith {};
 					if((fnc_esp_state == 0) || (visibleMap)) exitWith {};
-					
+
 					_exit = false;
 					_dist = (positionCameraToWorld [0,0,0]) distance _unit;
 					_veh = vehicle _unit;					
 					_pos2D = worldToScreen (_veh modelToWorld [0,0,(((boundingBox _veh) select 1) select 2)]);
-					
+
 					if(count _pos2D == 0) exitWith {};
-					
+
 					_Tsize = 0.45;
 					_text = format['<t size=''%3'' color=''#0B80FF''>%1 (%2m)</t>',name _unit,round _dist,_Tsize];
 					if(name _unit == name player) then {_text = ''};
@@ -7666,7 +7663,7 @@ PV_AdminMainCode = {
 		fnc_CWEPS = {
 			if(isNil "show_cWEPm_infiSTAR") then {show_cWEPm_infiSTAR = false;} else {show_cWEPm_infiSTAR = !show_cWEPm_infiSTAR;};
 		};
-		
+
 		fnc_MapIconConfigCM =
 		{
 			MapIconConfigCM =
@@ -7688,7 +7685,7 @@ PV_AdminMainCode = {
 		disableSerialization;
 		if(isNil "fnc_MapIcons_run") then
 		{
-			MapIconConfigCMKey = (findDisplay 46) displayAddEventHandler ["KeyDown","if((_this select 1) == 0x3F) then {call fnc_MapIconConfigCM};false;"];
+			MapIconConfigCMKey = (findDisplay 46) displayAddEventhandler["KeyDown","if((_this select 1) == 0x3F) then {call fnc_MapIconConfigCM};false;"];
 			if(MOD_EPOCH) then
 			{
 				cutText["MapIcons Enabled - Option on F5\nBlue = Unlockable Vehicles\nRed = Lockable Vehicles", "PLAIN"];
@@ -7697,23 +7694,23 @@ PV_AdminMainCode = {
 			{
 				cutText["MapIcons Enabled - Option on F5", "PLAIN"];
 			};
-			
+
 			fnc_MapIcons_run = true;
-			
+
 			_map = (findDisplay 12) displayCtrl 51;
-			_mapdraw = _map ctrlSetEventHandler ["Draw", "_this call fnc_draw_MapIcons;"];
-			
+			_mapdraw = _map ctrlSetEventhandler["Draw", "_this call fnc_draw_MapIcons;"];
+
 			_minimap = (uiNameSpace getVariable "BIS_RscMiniMap") displayCtrl 101;
 			if(!isNil "_minimap") then
 			{
-				_minimapdraw = _minimap ctrlSetEventHandler ["Draw", "_this call fnc_draw_MapIcons;"];
+				_minimapdraw = _minimap ctrlSetEventhandler["Draw", "_this call fnc_draw_MapIcons;"];
 			};
 		}
 		else
 		{
-			(findDisplay 46) displayRemoveEventHandler ["KeyDown", MapIconConfigCMKey];
+			(findDisplay 46) displayRemoveEventhandler["KeyDown", MapIconConfigCMKey];
 			cutText["MapIcons Disabled", "PLAIN"];
-			
+
 			fnc_MapIcons_run = nil;
 		};
 		fnc_draw_MapIcons =
@@ -7726,7 +7723,7 @@ PV_AdminMainCode = {
 				_irad = 27;
 				_color = [0, 0, 0, 1];
 				_icon = "\ca\ui\data\icon_zora_ca.paa";
-				
+
 				if(show_buildables_epoch) then
 				{
 					if(visibleMap) then
@@ -7764,7 +7761,7 @@ PV_AdminMainCode = {
 						lootBoxesArray = (allMissionObjects "ReammoBox");
 						[] spawn {uiSleep 10;lootBoxesArray = nil;};
 					};
-					
+
 					{
 						if(!isNull _x) then
 						{
@@ -7867,7 +7864,7 @@ PV_AdminMainCode = {
 			_config = ["ItemGPS"];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		stopadminwrecks =
 		{
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminwrecks" + (str _i));};
@@ -7882,7 +7879,7 @@ PV_AdminMainCode = {
 				for "_i" from 0 to (count _objects)-1 do
 				{
 					deleteMarkerLocal ("adminwrecks" + (str _i));
-					
+
 					_selected = _objects select _i;
 					_type = typeOf _selected;
 					if((getText (configFile >> 'CfgVehicles' >> (typeOf _selected) >> 'displayName') == 'Wreck') || 
@@ -7890,9 +7887,9 @@ PV_AdminMainCode = {
 					(_selected isKindOf "ReammoBox") || (_selected isKindOf "Supply_Crate_DZE") || (_selected isKindOf "Wreck_Base") || (_selected isKindOf "Wreck")) then 
 					{
 						deleteMarkerLocal ("adminwrecks" + (str _i));
-						_vm = createMarkerLocal [("adminwrecks" + (str _i)), getPos _selected];
+						_vm = createMarkerLocal[("adminwrecks" + (str _i)), getPos _selected];
 						_vm setMarkerTypeLocal "SupplyVehicle";
-						_vm setMarkerSizeLocal [0.8, 0.8];
+						_vm setMarkerSizeLocal[0.8, 0.8];
 						_vm setMarkerTextLocal format[" %1", getText (configFile >> 'CfgVehicles' >> (typeOf _selected) >> 'displayName')];
 						_vm setMarkerColorLocal ("ColorYellow");
 					};
@@ -7907,7 +7904,7 @@ PV_AdminMainCode = {
 			markadwreck = 1;
 			hint "2D Map WRECK Markers Activated";
 			[] spawn adminwrecks;
-			
+
 			_sl = format["%1 WRECK Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -7916,9 +7913,9 @@ PV_AdminMainCode = {
 		{
 			markadwreck = 0;
 			hint "2D Map WRECK Markers Disabled";
-			
+
 			[] spawn stopadminwrecks;
-			
+
 			_sl = format["%1 WRECK Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -7931,7 +7928,7 @@ PV_AdminMainCode = {
 			_config = ["ItemGPS"];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		admintents =
 		{
 			while {markadtent == 1} do
@@ -7945,9 +7942,9 @@ PV_AdminMainCode = {
 				{
 					_selected = _objects select _i;
 					deleteMarkerLocal ("admintents" + (str _i));
-					_vm = createMarkerLocal [("admintents" + (str _i)), getPos _selected];
+					_vm = createMarkerLocal[("admintents" + (str _i)), getPos _selected];
 					_vm setMarkerTypeLocal "Camp";
-					_vm setMarkerSizeLocal [0.8, 0.8];
+					_vm setMarkerSizeLocal[0.8, 0.8];
 					_vm setMarkerTextLocal format[" %1", getText (configFile >> 'CfgVehicles' >> (typeOf _selected) >> 'displayName')];
 					_vm setMarkerColorLocal ("ColorGreen");
 				};
@@ -7961,7 +7958,7 @@ PV_AdminMainCode = {
 			markadtent = 1;
 			hint "2D Map Tent Markers Activated";
 			[] spawn admintents;
-			
+
 			_sl = format["%1 TentMarker Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -7970,9 +7967,9 @@ PV_AdminMainCode = {
 		{
 			markadtent = 0;
 			hint "2D Map Tent Markers Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("admintents" + (str _i));};
-			
+
 			_sl = format["%1 TentMarker Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -7999,9 +7996,9 @@ PV_AdminMainCode = {
 					_selected = _objects select _i;
 					if(typeOf _selected == 'GraveDZE') then
 					{
-						_vm = createMarkerLocal [("adminDEADs" + (str _i)), getPos _selected];
+						_vm = createMarkerLocal[("adminDEADs" + (str _i)), getPos _selected];
 						_vm setMarkerTypeLocal "Camp";
-						_vm setMarkerSizeLocal [0.4, 0.4];
+						_vm setMarkerSizeLocal[0.4, 0.4];
 						_vm setMarkerTextLocal format["%1","GRAVE"];
 						_vm setMarkerColorLocal ("ColorRED");
 					}
@@ -8012,9 +8009,9 @@ PV_AdminMainCode = {
 							_name = (_selected getVariable["bodyName", name _selected]);
 							if(_name != "Error: No unit") then
 							{
-								_vm = createMarkerLocal [("adminDEADs" + (str _i)), getPos _selected];
+								_vm = createMarkerLocal[("adminDEADs" + (str _i)), getPos _selected];
 								_vm setMarkerTypeLocal "Camp";
-								_vm setMarkerSizeLocal [0.4, 0.4];
+								_vm setMarkerSizeLocal[0.4, 0.4];
 								_vm setMarkerTextLocal format["%1",_name];
 								_vm setMarkerColorLocal ("ColorRED");
 							};
@@ -8031,7 +8028,7 @@ PV_AdminMainCode = {
 			markadDEAD = 1;
 			hint "2D Map DEADMarker Activated";
 			[] spawn adminDEADs;
-			
+
 			_sl = format["%1 DEADMarker Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8040,9 +8037,9 @@ PV_AdminMainCode = {
 		{
 			markadDEAD = 0;
 			hint "2D Map DEADMarker Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminDEADs" + (str _i));};
-			
+
 			_sl = format["%1 DEADMarker Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8064,24 +8061,24 @@ PV_AdminMainCode = {
 				for '_i' from 0 to (count ADMIN_PlotPole_LIST)-1 do
 				{
 					if(markadPlotPole == 0) exitWith {};
-					
+
 					deleteMarkerLocal ('adminPlotPoles' + (str _i));
 					_selected = ADMIN_PlotPole_LIST select _i;
-					_vm = createMarkerLocal [('adminPlotPoles' + (str _i)), getPos _selected];
+					_vm = createMarkerLocal[('adminPlotPoles' + (str _i)), getPos _selected];
 					_vm setMarkerAlphaLocal 0.8;
 					_vm setMarkerBrushLocal 'Grid';
-					_vm setMarkerSizeLocal [300,300];
+					_vm setMarkerSizeLocal[300,300];
 					_vm setMarkerShapeLocal 'ELLIPSE';
 					_vm setMarkerColorLocal 'ColorGreen';
-					
+
 					_k = _i + 4000;
 					deleteMarkerLocal ('adminPlotPoles' + (str _k));
-					_vm = createMarkerLocal [('adminPlotPoles' + (str _k)), getPos _selected];
+					_vm = createMarkerLocal[('adminPlotPoles' + (str _k)), getPos _selected];
 					_vm setMarkerTypeLocal 'mil_start';
-					_vm setMarkerSizeLocal [0.5, 0.5];
+					_vm setMarkerSizeLocal[0.5, 0.5];
 					_vm setMarkerTextLocal 'Plot';
 					_vm setMarkerColorLocal 'ColorGreen';
-					
+
 					if(markadPlotPole == 0) exitWith {};
 				};
 				if(markadPlotPole == 0) exitWith {};
@@ -8095,7 +8092,7 @@ PV_AdminMainCode = {
 			markadPlotPole = 1;
 			hint '2D Map PlotPoleMarker Activated';
 			[] spawn adminPlotPoles;
-			
+
 			_sl = format['%1 PlotPoleMarker Activated',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8104,9 +8101,9 @@ PV_AdminMainCode = {
 		{
 			markadPlotPole = 0;
 			hint '2D Map PlotPoleMarker Disabled';
-			
+
 			for '_i' from 0 to 8888 do {deleteMarkerLocal ('adminPlotPoles' + (str _i));deleteMarkerLocal ('adminPlotPoles' + (str (_i+4000)));};
-			
+
 			_sl = format['%1 PlotPoleMarker Disabled',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8124,7 +8121,7 @@ PV_AdminMainCode = {
 			while {markadVAULT == 1} do
 			{
 				ADMIN_VAULT_LIST = [] + (allMissionObjects "VaultStorage"+allMissionObjects "VaultStorageLocked"+allMissionObjects "LockboxStorageLocked"+allMissionObjects "LockboxStorage");
-				
+
 				if !(markadVAULT == 1) exitWith {
 					for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminVAULTs" + (str _i));};
 				};
@@ -8132,9 +8129,9 @@ PV_AdminMainCode = {
 				{
 					deleteMarkerLocal ("adminVAULTs" + (str _i));
 					_selected = ADMIN_VAULT_LIST select _i;
-					_vm = createMarkerLocal [("adminVAULTs" + (str _i)), getPos _selected];
+					_vm = createMarkerLocal[("adminVAULTs" + (str _i)), getPos _selected];
 					_vm setMarkerTypeLocal "Camp";
-					_vm setMarkerSizeLocal [0.5, 0.5];
+					_vm setMarkerSizeLocal[0.5, 0.5];
 					_vm setMarkerTextLocal "VAULT";
 					_vm setMarkerColorLocal ("ColorYellow");
 				};
@@ -8148,7 +8145,7 @@ PV_AdminMainCode = {
 			markadVAULT = 1;
 			hint "2D Map VAULTMarker Activated";
 			[] spawn adminVAULTs;
-			
+
 			_sl = format["%1 VAULTMarker Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8157,9 +8154,9 @@ PV_AdminMainCode = {
 		{
 			markadVAULT = 0;
 			hint "2D Map VAULTMarker Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminVAULTs" + (str _i));};
-			
+
 			_sl = format["%1 VAULTMarker Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8177,7 +8174,7 @@ PV_AdminMainCode = {
 			while {markadVEINE == 1} do
 			{
 				ADMIN_VEINE_LIST = [] + (allMissionObjects "Iron_Vein_DZE"+allMissionObjects "Silver_Vein_DZE"+allMissionObjects "Gold_Vein_DZE");
-				
+
 				if !(markadVEINE == 1) exitWith {
 					for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminVEINEs" + (str _i));};
 				};
@@ -8185,9 +8182,9 @@ PV_AdminMainCode = {
 				{
 					deleteMarkerLocal ("adminVEINEs" + (str _i));
 					_selected = ADMIN_VEINE_LIST select _i;
-					_vm = createMarkerLocal [("adminVEINEs" + (str _i)), getPos _selected];
+					_vm = createMarkerLocal[("adminVEINEs" + (str _i)), getPos _selected];
 					_vm setMarkerTypeLocal "DestroyedVehicle";
-					_vm setMarkerSizeLocal [0.5, 0.5];
+					_vm setMarkerSizeLocal[0.5, 0.5];
 					_vm setMarkerTextLocal "VEINE";
 					_vm setMarkerColorLocal ("ColorYellow");
 				};
@@ -8201,7 +8198,7 @@ PV_AdminMainCode = {
 			markadVEINE = 1;
 			hint "2D Map VEINEMarker Activated";
 			[] spawn adminVEINEs;
-			
+
 			_sl = format["%1 VEINEMarker Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8210,9 +8207,9 @@ PV_AdminMainCode = {
 		{
 			markadVEINE = 0;
 			hint "2D Map VEINEMarker Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminVEINEs" + (str _i));};
-			
+
 			_sl = format["%1 VEINEMarker Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8226,7 +8223,7 @@ PV_AdminMainCode = {
 			_config = ['ItemGPS'];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		adminvehlocmark =
 		{
 			_markerscreated = 0;
@@ -8245,11 +8242,11 @@ PV_AdminMainCode = {
 						_removeKeys = _removeKeys + [_x];
 					};
 				} forEach _items;
-				
+
 				for '_i' from 0 to (_markerscreated+1) do {deleteMarkerLocal ('vehicleLocMarker'+ (str _i));};
 				_markerscreated = 0;
-				
-				
+
+
 				{
 					if(!isNil '_x') then
 					{
@@ -8263,17 +8260,17 @@ PV_AdminMainCode = {
 								_targetPosition = getPosATL _x;
 								_vehicleName = gettext (configFile >> 'CfgVehicles' >> (typeOf _x) >> 'displayName');
 								_Marker = 'vehicleLocMarker' + (str _markerscreated);
-								_vehicleLocMarker = createMarkerLocal [_Marker,[(_targetPosition select 0),(_targetPosition select 1)]];
+								_vehicleLocMarker = createMarkerLocal[_Marker,[(_targetPosition select 0),(_targetPosition select 1)]];
 								_vehicleLocMarker setMarkerShapeLocal 'ICON';
 								_vehicleLocMarker setMarkerTypeLocal 'DOT';
 								_vehicleLocMarker setMarkerColorLocal 'ColorYellow';
-								_vehicleLocMarker setMarkerSizeLocal [1.0, 1.0];
-								
+								_vehicleLocMarker setMarkerSizeLocal[1.0, 1.0];
+
 								_keyName = _temp_keys select (_ftID+1);
 								_keyItem = _temp_keys select (_ftID+2);
 								_vehicleLocMarker setMarkerTextLocal format['%1 - %2',_vehicleName,_keyName];
 								_markerscreated = _markerscreated + 1;
-								
+
 								_removeKeys = _removeKeys - [_keyItem];
 							};
 						};
@@ -8292,7 +8289,7 @@ PV_AdminMainCode = {
 			vehlocmark = 1;
 			hint 'Check the map to locate your vehicle(s)!';
 			[] spawn adminvehlocmark;
-			
+
 			_sl = format['%1 Vehicle Location Markers Activated',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8301,7 +8298,7 @@ PV_AdminMainCode = {
 		{
 			vehlocmark = 0;
 			hint 'Your Vehicle Locations are removed..';
-			
+
 			_sl = format['%1 Vehicle Location Markers Disabled',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8314,7 +8311,7 @@ PV_AdminMainCode = {
 			_config = ["ItemGPS"];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		adminpmark =
 		{
 			while {mark == 1} do
@@ -8332,9 +8329,9 @@ PV_AdminMainCode = {
 						{
 							if(!(_pid in PV_DevUIDs) || (_puid in PV_DevUIDs)) then
 							{
-								_pm = createMarkerLocal [("adminpmark" + (str _i)), getPos (_playableUnits select _i)];
+								_pm = createMarkerLocal[("adminpmark" + (str _i)), getPos (_playableUnits select _i)];
 								_pm setMarkerTypeLocal "DestroyedVehicle";
-								_pm setMarkerSizeLocal [0.8, 0.8];
+								_pm setMarkerSizeLocal[0.8, 0.8];
 								_pm setMarkerTextLocal format["%1", name (_playableUnits select _i)];
 								_pm setMarkerColorLocal ("ColorBlue");
 							};
@@ -8351,7 +8348,7 @@ PV_AdminMainCode = {
 			mark = 1;
 			hint "2D Map Player Markers Activated";
 			[] spawn adminpmark;
-			
+
 			_sl = format["%1 PlayerMarkers Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8360,9 +8357,9 @@ PV_AdminMainCode = {
 		{
 			mark = 0;
 			hint "2D Map Player Markers Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminpmark" + (str _i));};
-			
+
 			_sl = format["%1 PlayerMarkers Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8375,7 +8372,7 @@ PV_AdminMainCode = {
 			_config = ["ItemGPS"];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		adminvmark_U =
 		{
 			while {markveh_U == 1} do
@@ -8393,20 +8390,20 @@ PV_AdminMainCode = {
 							{
 								_crewnames = _crewnames + [name _x];
 							} forEach crew _cveh;
-							
+
 							deleteMarkerLocal ("adminvmark_U" + (str _i));
-							_vm = createMarkerLocal [("adminvmark_U" + (str _i)), getPos _cveh];
+							_vm = createMarkerLocal[("adminvmark_U" + (str _i)), getPos _cveh];
 							_vm setMarkerTypeLocal "DestroyedVehicle";
-							_vm setMarkerSizeLocal [0.8, 0.8];
+							_vm setMarkerSizeLocal[0.8, 0.8];
 							_vm setMarkerTextLocal format["%1 in %2", _crewnames,getText (configFile >> 'CfgVehicles' >> (typeOf _cveh) >> 'displayName')];
 							_vm setMarkerColorLocal ("ColorRed");
 						}
 						else
 						{
 							deleteMarkerLocal ("adminvmark_U" + (str _i));
-							_vm = createMarkerLocal [("adminvmark_U" + (str _i)), getPos _cveh];
+							_vm = createMarkerLocal[("adminvmark_U" + (str _i)), getPos _cveh];
 							_vm setMarkerTypeLocal "DestroyedVehicle";
-							_vm setMarkerSizeLocal [0.8, 0.8];
+							_vm setMarkerSizeLocal[0.8, 0.8];
 							_vm setMarkerTextLocal format["%1", getText (configFile >> 'CfgVehicles' >> (typeOf _cveh) >> 'displayName')];
 							_vm setMarkerColorLocal ("ColorBlack");
 						};
@@ -8422,7 +8419,7 @@ PV_AdminMainCode = {
 			markveh_U = 1;
 			hint "2D Map (unlocked) VEHICLE Markers Activated";
 			[] spawn adminvmark_U;
-			
+
 			_sl = format["%1 (unlocked) VEHICLEMarkers Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8431,9 +8428,9 @@ PV_AdminMainCode = {
 		{
 			markveh_U = 0;
 			hint "2D Map (unlocked) VEHICLE Markers Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminvmark_U" + (str _i));};
-			
+
 			_sl = format["%1 (unlocked) VEHICLEMarkers Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8446,7 +8443,7 @@ PV_AdminMainCode = {
 			_config = ["ItemGPS"];
 			_isOK = [player,_config] call BIS_fnc_invAdd;
 		};
-		
+
 		adminvmark_L =
 		{
 			while {markveh_L == 1} do
@@ -8464,20 +8461,20 @@ PV_AdminMainCode = {
 							{
 								_crewnames = _crewnames + [name _x];
 							} forEach crew _cveh;
-							
+
 							deleteMarkerLocal ("adminvmark_L" + (str _i));
-							_vm = createMarkerLocal [("adminvmark_L" + (str _i)), getPos _cveh];
+							_vm = createMarkerLocal[("adminvmark_L" + (str _i)), getPos _cveh];
 							_vm setMarkerTypeLocal "DestroyedVehicle";
-							_vm setMarkerSizeLocal [0.8, 0.8];
+							_vm setMarkerSizeLocal[0.8, 0.8];
 							_vm setMarkerTextLocal format["%1 in %2", _crewnames,getText (configFile >> 'CfgVehicles' >> (typeOf _cveh) >> 'displayName')];
 							_vm setMarkerColorLocal ("ColorRed");
 						}
 						else
 						{
 							deleteMarkerLocal ("adminvmark_L" + (str _i));
-							_vm = createMarkerLocal [("adminvmark_L" + (str _i)), getPos _cveh];
+							_vm = createMarkerLocal[("adminvmark_L" + (str _i)), getPos _cveh];
 							_vm setMarkerTypeLocal "DestroyedVehicle";
-							_vm setMarkerSizeLocal [0.8, 0.8];
+							_vm setMarkerSizeLocal[0.8, 0.8];
 							_vm setMarkerTextLocal format["%1", getText (configFile >> 'CfgVehicles' >> (typeOf _cveh) >> 'displayName')];
 							_vm setMarkerColorLocal ("ColorBrown");
 						};
@@ -8493,7 +8490,7 @@ PV_AdminMainCode = {
 			markveh_L = 1;
 			hint "2D Map (locked) VEHICLE Markers Activated";
 			[] spawn adminvmark_L;
-			
+
 			_sl = format["%1 (locked) VEHICLEMarkers Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8502,9 +8499,9 @@ PV_AdminMainCode = {
 		{
 			markveh_L = 0;
 			hint "2D Map (locked) VEHICLE Markers Disabled";
-			
+
 			for "_i" from 0 to 8888 do {deleteMarkerLocal ("adminvmark_L" + (str _i));};
-			
+
 			_sl = format["%1 (locked) VEHICLEMarkers Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8515,26 +8512,26 @@ PV_AdminMainCode = {
 		if(!adminAntiAggro_zxeds) then
 		{
 			adminAntiAggro_zxeds = true;
-			
+
 			hint "No Zed Aggro - On";
 			cutText[format["No Zed Aggro - On"], "PLAIN DOWN"];
 			_sl = format["%1 No Zed Aggro - On",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
+
 			player_zombieCheck = {};
 			player_zombieAttack = {};
 		}
 		else
 		{
 			adminAntiAggro_zxeds = false;
-			
+
 			hint "No Zed Aggro - Disabled";
 			cutText[format["No Zed Aggro - Disabled"], "PLAIN DOWN"];
 			_sl = format["%1 No Zed Aggro - Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
+
 			player_zombieCheck = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_zombieCheck.sqf';
 			player_zombieAttack = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\player_zombieAttack.sqf';
 		};
@@ -8549,14 +8546,14 @@ PV_AdminMainCode = {
 			_sl = format["%1 Vehboost On",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
+
 			waitUntil {!isNull (finddisplay 46)};
-			booostkey_KI_0 = (findDisplay 46) displayAddEventHandler ["KeyDown","_this select 1 call booostkey_FNC_spd_0;false;"];
+			booostkey_KI_0 = (findDisplay 46) displayAddEventhandler["KeyDown","_this select 1 call booostkey_FNC_spd_0;false;"];
 			booostkey_FNC_spd_0 = 
 			{
 				_vehicle_player = vehicle player;
 				if(_vehicle_player == player)exitwith{};
-				
+
 				if(isEngineOn _vehicle_player) then 
 				{
 					switch (_this) do 
@@ -8585,8 +8582,8 @@ PV_AdminMainCode = {
 			_sl = format["%1 Vehboost Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
-			(findDisplay 46) displayRemoveEventHandler ["KeyDown", booostkey_KI_0];
+
+			(findDisplay 46) displayRemoveEventhandler["KeyDown", booostkey_KI_0];
 			_vehicle_player = nil;
 		};
 	};
@@ -8599,7 +8596,7 @@ PV_AdminMainCode = {
 			if(zoombiieshieldd) then 
 			{	
 				cutText[format["ZedShield ON for 50m"],"PLAIN DOWN"];
-				
+
 				_sl = format["%1 ZedShield Activated",name player];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -8607,7 +8604,7 @@ PV_AdminMainCode = {
 			else 
 			{
 				cutText["ZedShield OFF","PLAIN DOWN"];
-				
+
 				_sl = format["%1 ZedShield Disabled",name player];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -8647,7 +8644,7 @@ PV_AdminMainCode = {
 					_lootTypeCfg = getArray (configFile >> "CfgLoot" >> _lootType);
 					_array = [];
 					{
-						_array set [count _array, _x select 0];
+						_array set[count _array, _x select 0];
 					} count _lootTypeCfg;
 					if(count _array > 0) then
 					{
@@ -8685,7 +8682,7 @@ PV_AdminMainCode = {
 			admin_loop1=1;
 			cutText[format['Infinite AMMO and No Recoil ON'], 'PLAIN DOWN'];
 			hint 'Infinite AMMO and No Recoil ON';
-			
+
 			_sl = format['%1 adminammo_recoil ON',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8695,7 +8692,7 @@ PV_AdminMainCode = {
 			admin_loop1=0;
 			cutText[format['Infinite AMMO and No Recoil OFF'], 'PLAIN DOWN'];
 			hint 'Infinite AMMO and No Recoil OFF';
-			
+
 			_sl = format['%1 adminammo_recoil OFF',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8715,7 +8712,7 @@ PV_AdminMainCode = {
 			admin_loop2=1;
 			cutText[format['FastFire ON'], 'PLAIN DOWN'];
 			hint 'FastFire ON';
-			
+
 			_sl = format['%1 FastFire ON',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8725,7 +8722,7 @@ PV_AdminMainCode = {
 			admin_loop2=0;
 			cutText[format['FastFire OFF'], 'PLAIN DOWN'];
 			hint 'FastFire OFF';
-			
+
 			_sl = format['%1 FastFire OFF',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8766,7 +8763,7 @@ PV_AdminMainCode = {
 			gmdadmin = 1;
 			hint 'God ON';
 			cutText['God ON', 'PLAIN'];
-			
+
 			[] spawn {
 				while {gmadmin == 1} do
 				{
@@ -8779,16 +8776,16 @@ PV_AdminMainCode = {
 					fnc_usec_damageHandler = {};
 					player allowDamage false;
 					player removeAllEventhandlers 'handleDamage';
-					player addEventhandler ['handleDamage', {false}];
+					player addEventhandler['handleDamage', {false}];
 					uiSleep 0.5;
 				};
 				uiSleep 1;
 				fnc_usec_damageHandler = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_damageHandler.sqf';
 				player allowDamage true;
 				player removeAllEventHandlers 'HandleDamage';
-				player addeventhandler ['HandleDamage',{_this call fnc_usec_damageHandler;} ];
+				player addeventhandler['HandleDamage',{_this call fnc_usec_damageHandler;} ];
 			};
-			
+
 			_sl = format['%1 G_o_d ON',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8799,12 +8796,12 @@ PV_AdminMainCode = {
 			gmdadmin = 0;
 			hint 'God OFF';
 			cutText['God OFF', 'PLAIN'];
-			
+
 			fnc_usec_damageHandler = compile preprocessFileLineNumbers '\z\addons\dayz_code\compile\fn_damageHandler.sqf';
 			player allowDamage true;
 			player removeAllEventHandlers 'HandleDamage';
-			player addeventhandler ['HandleDamage',{_this call fnc_usec_damageHandler;} ];
-			
+			player addeventhandler['HandleDamage',{_this call fnc_usec_damageHandler;} ];
+
 			_sl = format['%1 G_o_d OFF',name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -8818,13 +8815,13 @@ PV_AdminMainCode = {
 		{
 			if(isNil 'oDZE_BuildingLimit') then {oDZE_BuildingLimit = DZE_BuildingLimit;};
 			DZE_BuildingLimit = 9999999;
-			
+
 			_log = 'No Build Limit - ON';
 		}
 		else
 		{
 			DZE_BuildingLimit = oDZE_BuildingLimit;
-			
+
 			_log = 'No Build Limit - OFF';
 		};
 		hint _log;
@@ -8896,14 +8893,14 @@ PV_AdminMainCode = {
 		{
 			DZE_StaticConstructionCount = 1;
 			systemChat format['DZE_StaticConstructionCount changed to: %1',DZE_StaticConstructionCount];
-			
+
 			_log = '1 Step Building - ON';
 		}
 		else
 		{
 			DZE_StaticConstructionCount = 0;
 			systemChat 'DZE_StaticConstructionCount changed to default';
-			
+
 			_log = '1 Step Building - OFF';
 		};
 		hint _log;
@@ -8920,14 +8917,14 @@ PV_AdminMainCode = {
 		{
 			DZE_PlotPole = [1,1];
 			DZE_requireplot = 0;
-			
+
 			_log = 'No PlotPole - ON';
 		}
 		else
 		{
 			DZE_PlotPole = [50,75];
 			DZE_requireplot = 1;
-			
+
 			_log = 'No PlotPole - OFF';
 		};
 		hint _log;
@@ -8944,7 +8941,7 @@ PV_AdminMainCode = {
 				_humanity = _x getVariable['humanity',0];
 				_x setVariable['humanity',_humanity+2500,true];
 				hint format['Gave %1 +2500 Humanity!',_this select 0];
-				
+
 				_sl = format['%1 plus 2500 Humanity to %2',name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -8959,7 +8956,7 @@ PV_AdminMainCode = {
 				_humanity = _x getVariable['humanity',0];
 				_x setVariable['humanity',_humanity-2500,true];
 				hint format['Gave %1 -2500 Humanity!',_this select 0];
-				
+
 				_sl = format['%1 minus 2500 Humanity to %2',name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -8969,7 +8966,7 @@ PV_AdminMainCode = {
 	adminCloneTarget =
 	{
 		_name = _this select 0;
-		
+
 		{
 			if(!isNull _x) then
 			{
@@ -8983,7 +8980,7 @@ PV_AdminMainCode = {
 						_magazines = magazines _x;
 						{player addWeapon _x;} forEach _weapons;
 						{player addMagazine _x;} forEach _magazines;
-						
+
 						removebackpack player;
 						_xbag = unitBackpack _x;
 						if(!isNull _xbag) then
@@ -8995,9 +8992,9 @@ PV_AdminMainCode = {
 							{pbag addWeaponCargoGlobal [_x,(_BW select 1)select _forEachIndex];} forEach (_BW select 0);
 							{pbag addMagazineCargoGlobal [_x,(_BM select 1)select _forEachIndex];} forEach (_BM select 0);
 						};
-						
+
 						[dayz_playerUID,dayz_characterID,typeOf _x] spawn player_humanityMorph;
-						
+
 						hint format['Cloned %1',_name];
 						_sl = format['%1 Cloned %2',name player,_name];
 						PVAH_WriteLogReq = [player,toArray _sl];
@@ -9031,7 +9028,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _lootpiles;
 			systemChat format['infiSTAR.de CLEANUP: cleaning ReammoBoxes - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
-			
+
 			systemChat format['infiSTAR.de CLEANUP: cleaning Weaponholder - start time: %1 - fps: %2',diag_tickTime,diag_fps];
 			_allstartlk = ((allMissionObjects 'WeaponHolder')+(allMissionObjects 'Sound_Flies')+(allDead)+([0,0,0] nearEntities ['CAAnimalBase', 10000000]));
 			_deleted = 0;
@@ -9064,7 +9061,7 @@ PV_AdminMainCode = {
 				};
 			} foreach _allstartlk;
 			systemChat format['infiSTAR.de CLEANUP: cleaning Weaponholder - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
-			
+
 			systemChat format['infiSTAR.de CLEANUP: cleaning Bikes - start time: %1 - fps: %2',diag_tickTime,diag_fps];
 			_bikes = entities 'MMT_Civ';
 			_deleted = 0;
@@ -9080,7 +9077,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _bikes;
 			systemChat format['infiSTAR.de CLEANUP: cleaning Bikes - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
-			
+
 			systemChat format['infiSTAR.de CLEANUP: cleaning Graves - start time: %1 - fps: %2',diag_tickTime,diag_fps];
 			_graves = allMissionObjects 'GraveDZE';
 			_deleted = 0;
@@ -9096,7 +9093,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _graves;
 			systemChat format['infiSTAR.de CLEANUP: cleaning Graves - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
-			
+
 			systemChat format['infiSTAR.de CLEANUP: cleaning Zombies - start time: %1 - fps: %2',diag_tickTime,diag_fps];
 			_zeds = entities 'zZombie_Base';
 			_deleted = 0;
@@ -9112,7 +9109,7 @@ PV_AdminMainCode = {
 				};
 			} forEach _zeds;
 			systemChat format['infiSTAR.de CLEANUP: cleaning Zombies - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
-			
+
 			systemChat format['infiSTAR.de CLEANUP: cleaning Seagulls - start time: %1 - fps: %2',diag_tickTime,diag_fps];
 			_deleted = 0;
 			{
@@ -9126,7 +9123,7 @@ PV_AdminMainCode = {
 			systemChat format['infiSTAR.de CLEANUP: cleaning Seagulls - end time: %1 - fps: %2 - deleted: %3',diag_tickTime,diag_fps,_deleted];
 		};
 		[] spawn fnc_fix_now;
-		
+
 		_log = 'Fixing FPS';
 		hint _log;
 		cutText[_log,'PLAIN'];
@@ -9157,7 +9154,7 @@ PV_AdminMainCode = {
 			adminCarGodToggle = 0;
 			hint "CarGod - OFF";
 		};
-		
+
 		_sl = format["%1 adminCarGod %2",name player,adminCarGodToggle];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -9169,10 +9166,10 @@ PV_AdminMainCode = {
 		{
 			PVAH_AdminReq = [3,player];
 			publicVariableServer "PVAH_AdminReq";
-			
+
 			inv1 = 1;
 			hint "Invisibility Activated";
-			
+
 			_sl = format["%1 Invisibility Activated",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -9181,10 +9178,10 @@ PV_AdminMainCode = {
 		{
 			PVAH_AdminReq = [3,player];
 			publicVariableServer "PVAH_AdminReq";
-			
+
 			inv1 = 0;
 			hint "Invisibility Disabled";
-			
+
 			_sl = format["%1 Invisibility Disabled",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -9199,10 +9196,10 @@ PV_AdminMainCode = {
 			_pic = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'picture'));
 			if(player == vehicle player) then {_pic = (getText (configFile >> 'CfgWeapons' >> (currentWeapon player) >> 'picture'));
 			} else {_pic = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'picture'));};
-			
+
 			_txt = '';
 			_txt = (getText (configFile >> 'CfgVehicles' >> (typeOf vehicle player) >> 'displayName'));
-			
+
 			_stime = 0;
 			if(serverTime > 36000)then{_stime = time;} else {_stime = serverTime;};
 			_hours = (_stime/60/60);
@@ -9214,7 +9211,7 @@ PV_AdminMainCode = {
 			_minutes = floor(_stime/60);
 			_minutes2 = ((_minutes - (_hours*60)) min 60) max 0;if(_minutes2 < 10) then {_minutes2 = format['0%1',_minutes2];};
 			_pos = getPosATL player;
-			
+
 			_humanity = player getVariable['humanity',0];
 			if(_humanity > 999999) then
 			{
@@ -9223,7 +9220,7 @@ PV_AdminMainCode = {
 				_humanity = _humanity - [44];
 				_humanity = toString _humanity;
 			};
-			
+
 			hintSilent parseText format["
 			<t size='1' font='Bitstream' align='Center' >[%1]</t><br/>
 			<img size='4.75' image='%4'/><br/>
@@ -9327,12 +9324,12 @@ PV_AdminMainCode = {
 	};
 	admin_generatekey =
 	{
-		private ["_ct","_id","_result","_inventory","_backpack"];
+		private["_ct","_id","_result","_inventory","_backpack"];
 		_ct = cursorTarget;
 		if(!isNull _ct) then {
 			if(_ct distance player > 12) exitWith {cutText[format["%1 is to far away.",typeOf _ct], "PLAIN"];};
 			if !((_ct isKindOf "LandVehicle") || (_ct isKindOf "Air") || (_ct isKindOf "Ship")) exitWith {cutText[format["%1 is not a vehicle..",typeOf _ct], "PLAIN"];};
-			
+
 			_id = _ct getVariable["CharacterID","0"];
 			_id = parsenumber _id;
 			if(_id == 0) exitWith {cutText[format["%1 has ID 0 - No Key possible.",typeOf _ct], "PLAIN"];};
@@ -9341,7 +9338,7 @@ PV_AdminMainCode = {
 			if((_id > 5000) && (_id <= 7500)) then {_result = format["ItemKeyBlue%1",_id-5000];};
 			if((_id > 7500) && (_id <= 10000)) then {_result = format["ItemKeyYellow%1",_id-7500];};
 			if((_id > 10000) && (_id <= 12500)) then {_result = format["ItemKeyBlack%1",_id-10000];};
-			
+
 			_inventory = (weapons player);
 			_backpack = ((getWeaponCargo unitBackpack player) select 0);
 			if(_result in (_inventory+_backpack)) then
@@ -9353,7 +9350,7 @@ PV_AdminMainCode = {
 			{
 				player addweapon _result;
 				cutText[format["Key [%1] added to your inventory!",_result], "PLAIN"];
-				
+
 				_pos = getPos _ct;
 				_sl = format["%1 generated Key %2 for %3 (CharID %4) @%5",name player,_result,typeOf _ct,_id,mapGridPosition _pos];
 				PVAH_WriteLogReq = [player,toArray _sl];
@@ -9392,7 +9389,7 @@ PV_AdminMainCode = {
 						_colors = ['Green', 'Red', 'Blue', 'Yellow', 'Black'];
 						_key = format['ItemKey%1%2', _colors select floor(_vID / 2500), (_vID - (floor(_vID / 2500) * 2500))];
 						_displayName = (getText (configFile >> 'CfgWeapons' >> _key >> 'displayName'));
-						
+
 						_log2 = format['Key: %1 (%2) - CharID: %3, objID: %4, objUID: %5',_key,_displayName,_charID,_objID,_objUID];
 					};
 				};
@@ -9484,30 +9481,30 @@ PV_AdminMainCode = {
 		if(isnil 'FlyOnTheWingsOfLove') then 
 		{
 			cutText['Fly On','PLAIN DOWN'];
-			
+
 			systemchat 'Admin Fly Keybinds:';
 			systemchat '   Q up Z/Y down | WASD to Move around | H to Hover';
-			
+
 			FlyOnTheWingsOfLove = true;
-			fly_keyForward = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 17) then {call fnc_move_forward;}'];
-			fly_keyLeft = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 30) then {call fnc_move_left;}'];
-			fly_keyBackward = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 31) then {call fnc_move_backward;}'];
-			fly_keyRight = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 32) then {call fnc_move_right;}'];
-			fly_keyUp = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 16) then {call fnc_move_up;}'];
-			fly_keyDown = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) in [44,21]) then {call fnc_move_down;}'];
-			fly_keyHover = (findDisplay 46) displayAddEventHandler ['KeyDown','if((_this select 1) == 35) then {call fnc_Hover;}'];
+			fly_keyForward = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 17) then {call fnc_move_forward;}'];
+			fly_keyLeft = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 30) then {call fnc_move_left;}'];
+			fly_keyBackward = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 31) then {call fnc_move_backward;}'];
+			fly_keyRight = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 32) then {call fnc_move_right;}'];
+			fly_keyUp = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 16) then {call fnc_move_up;}'];
+			fly_keyDown = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) in [44,21]) then {call fnc_move_down;}'];
+			fly_keyHover = (findDisplay 46) displayAddEventhandler['KeyDown','if((_this select 1) == 35) then {call fnc_Hover;}'];
 		}
 		else
 		{
 			cutText['Fly OFF','PLAIN DOWN'];
 			FlyOnTheWingsOfLove = nil;
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyForward];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyLeft];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyBackward];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyRight];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyUp];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyDown];
-			(findDisplay 46) displayRemoveEventHandler ['KeyDown', fly_keyHover];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyForward];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyLeft];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyBackward];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyRight];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyUp];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyDown];
+			(findDisplay 46) displayRemoveEventhandler['KeyDown', fly_keyHover];
 		};
 	};
 	admin_fly_up =
@@ -9533,7 +9530,7 @@ PV_AdminMainCode = {
 		{
 			hint "TP infront of you ON";
 			cutText["TP infront of you ON", "PLAIN DOWN"];
-			
+
 			_sl = format["%1 TP infront of you ON",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -9542,7 +9539,7 @@ PV_AdminMainCode = {
 		{
 			hint "TP infront of you OFF";
 			cutText["TP infront of you OFF", "PLAIN DOWN"];
-			
+
 			_sl = format["%1 TP infront of you OFF",name player];
 			PVAH_WriteLogReq = [player,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -9552,7 +9549,7 @@ PV_AdminMainCode = {
 	{
 		if(isNil "admin_tpdirection_0n") exitWith {};
 		if(!admin_tpdirection_0n) exitWith {};
-		
+
 		_distance = 10;
 		_object = (vehicle player);
 		_dir = getdir _object;
@@ -9594,9 +9591,9 @@ PV_AdminMainCode = {
 				_config = ["ItemGPS"];
 				_isOK = [player,_config] call BIS_fnc_invAdd;
 			};
-			
-			(findDisplay 46) displayAddEventHandler ["KeyDown", "altstate_Admin = _this select 4;false;"];
-			((findDisplay 12) displayCtrl 51) ctrlAddEventHandler ["MouseButtonDown", "if(((_this select 1) == 0) && altstate_Admin) then
+
+			(findDisplay 46) displayAddEventhandler["KeyDown", "altstate_Admin = _this select 4;false;"];
+			((findDisplay 12) displayCtrl 51) ctrlAddEventhandler["MouseButtonDown", "if(((_this select 1) == 0) && altstate_Admin) then
 			{
 				_pos = ((_this select 0) posScreenToWorld [_this select 2, _this select 3]);
 				PVAH_AdminReq = [1,player,player,_pos];publicVariableServer 'PVAH_AdminReq';
@@ -9621,7 +9618,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [2,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Breaking %1's legs", _this select 0];
-				
+
 				_sl = format["%1 Break Legs %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9679,7 +9676,7 @@ PV_AdminMainCode = {
 			while {!isNil 'SpecateLoopActive'} do
 			{
 				uiSleep 0.2;
-				
+
 				if(isNil 'VARIABLE_ADMIN_TARGET_UID') exitWith {};
 				_unit = objNull;
 				{
@@ -9691,18 +9688,18 @@ PV_AdminMainCode = {
 				if(isNull _unit) then {_unit = player;};
 				if(str(_unit) == '<NULL-object>') then {_unit = player;};
 				if(getPlayerUID _unit == '') then {_unit = player;};
-				
-				
+
+
 				_veh = vehicle _unit;
 				if(str _veh != str cameraOn) then {_veh switchCamera cameraView;for '_i' from 3025 to 3045 do {['',0,0,1,0,0,_i] spawn bis_fnc_dynamicText;};};
-				
-				
+
+
 				_log = format['%1 (%2) @%3 SPD %4',name _unit,getPlayerUID _unit,mapGridPosition _veh,abs(speed _veh)];
 				['<t align=''left'' size=''0.5'' color=''#238701''>'+_log+'</t>',safezoneX+0.2,safezoneY+0.405,0.3,0,0,3033] spawn bis_fnc_dynamicText;
-				
+
 				_log2 = format['Blood: %1  Humanity: %2',(_unit getVariable['USEC_BloodQty',12000]),(_unit getVariable['humanity',0])];
 				['<t align=''left'' size=''0.5'' color=''#238701''>'+_log2+'</t>',safezoneX+0.2,safezoneY+0.435,0.3,0,0,3034] spawn bis_fnc_dynamicText;
-				
+
 				_cwep = '';
 				_cammo = '';
 				_cmags = '';
@@ -9727,14 +9724,14 @@ PV_AdminMainCode = {
 					_cfg = _type call fnc_getConfig;
 					_displayName = getText (configFile >> _cfg >> _type >> 'displayName');
 					_pic = getText (configFile >> _cfg >> _type >> 'picture');
-					
+
 					_log3 = format[' %1 [%2] (%3/%4)',_displayName,_cwep,_cammo,_cmags];
 					['
 					<img size=''0.75'' image='''+_pic+''' align=''left''/>
 					<t align=''left'' size=''0.5'' color=''#238701''>'+_log3+'</t>
 					',
 					safezoneX+0.2,safezoneY+0.465,0.3,0,0,3035] spawn bis_fnc_dynamicText;
-					
+
 					if(_veh != _unit) then
 					{
 						_cwepsV = weapons _veh;
@@ -9746,27 +9743,27 @@ PV_AdminMainCode = {
 						{
 							_id = 3032;
 							_YPOS = safezoneY+0.355;
-							
+
 							{
 								_cwep = _x;
 								_cammo = _veh ammo _cwep;
 								_cmags = {currentMagazine _veh == _x} count magazines _veh;
-								
+
 								_type = _cwep;
 								_cfg = _type call fnc_getConfig;
 								_displayName = getText (configFile >> _cfg >> _type >> 'displayName');
-								
+
 								_log3a = format[' %1 [%2] (%3/%4)',_displayName,_cwep,_cammo,_cmags];
 								['<t align=''left'' size=''0.5'' color=''#A90F68''>'+_log3a+'</t>',safezoneX+0.2,_YPOS,0.3,0,0,_id] spawn bis_fnc_dynamicText;
-								
+
 								_id = _id - 1;
 								_YPOS = _YPOS - 0.03;
 							} forEach _cwepsV;
 						};
 					};
 				};
-				
-				
+
+
 				_ct = cursorTarget;
 				if(!isNull _ct) then
 				{
@@ -9775,13 +9772,13 @@ PV_AdminMainCode = {
 						_cwep_ct = currentWeapon _ct;
 						_cammo_ct = _ct ammo _cwep_ct;
 						_cmags_ct = {currentMagazine _ct == _x} count magazines _ct;
-						
+
 						_log4 = format['%1 (%2) @%3 SPD %4',name _ct,getPlayerUID _ct,mapGridPosition _ct,abs(speed _ct)];
 						['<t align=''left'' size=''0.5'' color=''#B80B36''>'+_log4+'</t>',safezoneX+0.2,safezoneY+0.545,0.3,0,0,3036] spawn bis_fnc_dynamicText;
-						
+
 						_log5 = format['Blood: %1  Humanity: %2  Distance: %3m',(_ct getVariable['USEC_BloodQty',12000]),(_ct getVariable['humanity',0]),round(cameraOn distance _ct)];
 						['<t align=''left'' size=''0.5'' color=''#B80B36''>'+_log5+'</t>',safezoneX+0.2,safezoneY+0.575,0.3,0,0,3037] spawn bis_fnc_dynamicText;
-						
+
 						_type = _cwep_ct;
 						_cfg = _type call fnc_getConfig;
 						_displayName = getText (configFile >> _cfg >> _type >> 'displayName');
@@ -9800,13 +9797,13 @@ PV_AdminMainCode = {
 						_displayName = getText (configFile >> _cfg >> _type >> 'displayName');
 						_log4 = format['%1 [%2] @%3',_displayName,_type,mapGridPosition _ct];
 						['<t align=''left'' size=''0.5'' color=''#B80B36''>'+_log4+'</t>',safezoneX+0.2,safezoneY+0.545,0.3,0,0,3036] spawn bis_fnc_dynamicText;
-						
+
 						_log5 = format['Health: %1 - Distance: %2m',(1-(damage _ct))*100,round(cameraOn distance _ct)];
 						['<t align=''left'' size=''0.5'' color=''#B80B36''>'+_log5+'</t>',safezoneX+0.2,safezoneY+0.575,0.3,0,0,3037] spawn bis_fnc_dynamicText;
-						
+
 						['',0,0,1,0,0,3038] spawn bis_fnc_dynamicText;
 					};
-					
+
 					_vehCT = vehicle _ct;
 					if((_vehCT isKindOf 'LandVehicle') || (_vehCT isKindOf 'Air') || (_vehCT isKindOf 'Ship') || (_vehCT isKindOf 'Static')) then
 					{
@@ -9819,19 +9816,19 @@ PV_AdminMainCode = {
 						{
 							_id = 3039;
 							_YPOS = safezoneY+0.655;
-							
+
 							{
 								_cwep = _x;
 								_cammo = _vehCT ammo _cwep;
 								_cmags = {currentMagazine _vehCT == _x} count magazines _vehCT;
-								
+
 								_type = _cwep;
 								_cfg = _type call fnc_getConfig;
 								_displayName = getText (configFile >> _cfg >> _type >> 'displayName');
-								
+
 								_log6a = format[' %1 [%2] (%3/%4)',_displayName,_cwep,_cammo,_cmags];
 								['<t align=''left'' size=''0.5'' color=''#A90F68''>'+_log6a+'</t>',safezoneX+0.2,_YPOS,0.3,0,0,_id] spawn bis_fnc_dynamicText;
-								
+
 								_id = _id + 1;
 								_YPOS = _YPOS + 0.03;
 							} forEach _cwepsV;
@@ -9850,7 +9847,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [4,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Killing %1", _this select 0];
-				
+
 				_sl = format["%1 Adminkilled %2",name player, _this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9865,7 +9862,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [21,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Slap %1", _this select 0];
-				
+
 				_sl = format["%1 Slaps %2",name player, _this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9880,7 +9877,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [111,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Burning %1 ...", _this select 0];
-				
+
 				_sl = format["%1 burning %2 ...",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9895,7 +9892,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [10,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Disconnect %1", _this select 0];
-				
+
 				_sl = format["%1 Disconnected %2",name player, _this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9910,7 +9907,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [8,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["%1 Gear Removed", _this select 0];
-				
+
 				_sl = format["%1 Removes %2 Gear",name player, _this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9946,7 +9943,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [1,player,_x,_pos];publicVariableServer 'PVAH_AdminReq';
 				hint format["%1 Moved to %2",name _x, name player];
 				cutText[format["%1 Moved to %2",name _x, name player], "PLAIN"];
-				
+
 				_sl = format["%1 Moved to %2",name _x, name player];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -9969,8 +9966,8 @@ PV_AdminMainCode = {
 				call adminport_prevLoc;
 			};
 		};
-		if(!isNil 'adminKeybinds2') then {(findDisplay 46) displayRemoveEventHandler ['KeyDown', adminKeybinds2];};
-		adminKeybinds2 = (findDisplay 46) displayAddEventHandler ['KeyDown','_this call fnc_adminKeybinds2;false;'];
+		if(!isNil 'adminKeybinds2') then {(findDisplay 46) displayRemoveEventhandler['KeyDown', adminKeybinds2];};
+		adminKeybinds2 = (findDisplay 46) displayAddEventhandler['KeyDown','_this call fnc_adminKeybinds2;false;'];
 		if(isNil 'prevLoc') then
 		{
 			prevLoc = getPosATL player;
@@ -9986,7 +9983,7 @@ PV_AdminMainCode = {
 				(vehicle player) setPosATL _pos;
 				(vehicle player) setDir _dir;
 				{player reveal _x;} forEach (player nearObjects ['All',25]);
-				
+
 				hint format['Moving to %1 - press BACKSPACE to revert teleport',name _x];
 				cutText[format['Moving to %1\npress BACKSPACE to revert teleport',name _x], 'PLAIN'];
 				_sl = format['%1 Moving to %2',name player,_this select 0];
@@ -10002,7 +9999,7 @@ PV_AdminMainCode = {
 		_pos = [(_pos select 0)+8*sin(_dir),(_pos select 1)+8*cos(_dir),0];
 		PVAH_AdminReq = [0, player, _this select 0, _pos];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		cutText[format["SPAWNED: %1 @%2",_this select 0,_pos], "PLAIN DOWN"];
 	};
 	adminsvehhive =
@@ -10012,7 +10009,7 @@ PV_AdminMainCode = {
 		_pos = getPos vehicle player;
 		_pos = [(_pos select 0)+8*sin(_dir),(_pos select 1)+8*cos(_dir),0];
 		_worldspace = [_dir,_pos];
-		
+
 		if(MOD_EPOCH) then
 		{
 			_keyColor = ["Green","Red","Blue","Yellow","Black"] call BIS_fnc_selectRandom;
@@ -10021,7 +10018,7 @@ PV_AdminMainCode = {
 			_isKeyOK = 	isClass(configFile >> "CfgWeapons" >> _keySelected);
 			_config = _keySelected;
 			_isOk = [player,_config] call BIS_fnc_invAdd;
-			
+
 			PVAH_AdminReq = [-3, player, _class, _worldspace,_keySelected];
 			publicVariableServer "PVAH_AdminReq";
 			cutText[format["HIVESPAWNED: %1 @%2\n%3 added to toolbelt.",_class,_worldspace,_keySelected], "PLAIN DOWN"];
@@ -10040,20 +10037,20 @@ PV_AdminMainCode = {
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.01, safezoneY + 0.07, ((0.485)*0.65) *2, (safeZoneH - 0.07 - 0.03)*0.65];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		_ctrl = 1 call getControl;
 		_ctrl ctrlSetFont "TahomaB";
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.01, (safezoneY + 0.07), (0.485)*0.65, ((safeZoneH - 0.07 - 0.03)*0.65)];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		_ctrl = 2 call getControl;
 		lbclear _ctrl;
 		_ctrl ctrlSetFont "TahomaB";
 		_ctrl ctrlsetPosition [safezoneXAbs + 0.5, (safezoneY + 0.07), (0.485)*0.65, ((safeZoneH - 0.07 - 0.03)*0.65)];
 		_ctrl ctrlSetScale 1.55;
 		_ctrl ctrlCommit 0;
-		
+
 		if(isNil 'GLOBAL_OBJECTTYPE') then {GLOBAL_OBJECTTYPE = '';};
 		if(isNil 'infiSTAR_showOBJ') then
 		{
@@ -10066,23 +10063,23 @@ PV_AdminMainCode = {
 					_dir = getdir player;
 					_pos = getPos player;
 					_pos = [(_pos select 0)+_distance*sin(_dir),(_pos select 1)+_distance*cos(_dir),0];
-					
+
 					_obj = _type createVehicleLocal _pos;
 					[_obj] spawn {
 						_obj = _this select 0;
 						waitUntil {isNull finddisplay 3030};
 						deleteVehicle _obj;
 					};
-					
+
 					_obj setPosATL _pos;
 					_obj setDir (_dir + 180);
-					
+
 					if(!isNil 'GLOBAL_OBJECT') then {deleteVehicle GLOBAL_OBJECT;};
 					GLOBAL_OBJECT = _obj;
 				};
 				GLOBAL_OBJECTTYPE = _type;
 			};
-			_ctrl ctrlSetEventHandler ["LBSelChanged", "call infiSTAR_showOBJ;"];
+			_ctrl ctrlSetEventhandler["LBSelChanged", "call infiSTAR_showOBJ;"];
 		};
 		_spwx = "['%1'] call adminsobj;";
 		adminadd = [];
@@ -10110,7 +10107,7 @@ PV_AdminMainCode = {
 		_dir = getDir player;
 		_pos = getPosATL player;
 		_pos = [(_pos select 0) + 15 *sin(_dir),(_pos select 1) + 15 *cos(_dir),0];
-		GLOBAL_OBJECT = createVehicle [_classname, _pos, [], 0, 'CAN_COLLIDE'];
+		GLOBAL_OBJECT = createVehicle[_classname, _pos, [], 0, 'CAN_COLLIDE'];
 		GLOBAL_OBJECT attachTo [player,GLOBAL_OFFSET];
 		_key = '';
 		{
@@ -10130,7 +10127,7 @@ PV_AdminMainCode = {
 		if(isNil 'GLOBAL_OBJECT') exitWith {};
 		if(isNull GLOBAL_OBJECT) exitWith {};
 		detach GLOBAL_OBJECT;
-		private ['_key','_shift','_ctrl','_alt'];
+		private['_key','_shift','_ctrl','_alt'];
 		_key = _this select 1;
 		_shift = _this select 2;
 		_ctrl = _this select 3;
@@ -10181,10 +10178,10 @@ PV_AdminMainCode = {
 		};
 		{player reveal _x;} forEach (player nearObjects ['All',75]);
 	};
-	if(!isNil 'ConstructKeyBinds') then {(findDisplay 46) displayRemoveEventHandler ['KeyDown', ConstructKeyBinds];ConstructKeyBinds = nil;};
-	ConstructKeyBinds = (findDisplay 46) displayAddEventHandler ['KeyDown','_this call fnc_ConstructKeyBinds;false;'];
+	if(!isNil 'ConstructKeyBinds') then {(findDisplay 46) displayRemoveEventhandler['KeyDown', ConstructKeyBinds];ConstructKeyBinds = nil;};
+	ConstructKeyBinds = (findDisplay 46) displayAddEventhandler['KeyDown','_this call fnc_ConstructKeyBinds;false;'];
 	(findDisplay 46) displayRemoveAllEventHandlers 'MouseZChanged';
-	(findDisplay 46) displayAddEventHandler ['MouseZChanged','_this call fnc_ForwardBack;false;'];
+	(findDisplay 46) displayAddEventhandler['MouseZChanged','_this call fnc_ForwardBack;false;'];
 	fnc_ForwardBack =
 	{
 		if(isNil 'GLOBAL_OBJECT') exitWith {};
@@ -10249,7 +10246,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [11,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Knocked %1 out...", _this select 0];
-				
+
 				_sl = format["%1 Knocks %2 out...",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10264,7 +10261,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [112,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Freezing %1", _this select 0];
-				
+
 				_sl = format["%1 Froze %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10279,7 +10276,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [113,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Un-Freezing %1", _this select 0];
-				
+
 				_sl = format["%1 Un-Froze %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10301,7 +10298,7 @@ PV_AdminMainCode = {
 			_ctrl ctrlSetFont "TahomaB";
 			adminadd = [];
 			call admin_fillsubsss;
-			
+
 			_veh = objNull;
 			_nametarget = call fnc_admin_call_for_name;
 			{
@@ -10322,7 +10319,7 @@ PV_AdminMainCode = {
 			};
 			_getHitpoints = compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\vehicle_getHitpoints.sqf";
 			_hitPoints = _veh call _getHitpoints;
-			
+
 			_spwx = "[call fnc_admin_call_for_name,'%1',1] spawn adminHitVeh;";
 			{
 				adminadd = adminadd + ["  "+_x,format[_spwx,_x],"0","0","0","0",[0.99,0.8,0.8,1]];
@@ -10339,11 +10336,11 @@ PV_AdminMainCode = {
 				if(name _x == _name) then
 				{
 					_vehicle = vehicle _x;
-					
+
 					PVAH_AdminReq = [110,player,_x,_hitpoint,_damage];
 					publicVariableServer 'PVAH_AdminReq';
 					hint format['%3 of %1(%2) with %4 damage',_name,typeOf _vehicle,_hitpoint,_damage];
-					
+
 					_sl = format['%1 %4 %2(%3) with %5 damage',name player,_name,typeOf _vehicle,_hitpoint,_damage];
 					PVAH_WriteLogReq = [player,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -10355,9 +10352,9 @@ PV_AdminMainCode = {
 	{
 		PVAH_AdminReq = [14,player];
 		publicVariableServer "PVAH_AdminReq";
-		
+
 		hint "deleting boxes..";
-		
+
 		_sl = format["%1 deleted boxes",name player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -10370,7 +10367,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [15,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Drugging %1...", _this select 0];
-				
+
 				_sl = format["%1 drugged %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10385,7 +10382,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [22,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Suiciding %1", _this select 0];
-				
+
 				_sl = format["%1 Suiciding %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10397,7 +10394,7 @@ PV_AdminMainCode = {
 		PVAH_AdminReq = [16,player];
 		publicVariableServer "PVAH_AdminReq";
 		hint "Bans cleared!";
-		
+
 		_sl = format["%1 cleared Bans",name player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -10410,7 +10407,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [17,player,_x];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Kicked %1...", _this select 0];
-				
+
 				_sl = format["%1 Kicked %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10425,7 +10422,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [18,player,_x,1];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["TempBanned %1...", _this select 0];
-				
+
 				_sl = format["%1 TempBanned %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10440,7 +10437,7 @@ PV_AdminMainCode = {
 				PVAH_AdminReq = [18,player,_x,2];
 				publicVariableServer "PVAH_AdminReq";
 				hint format["Banned %1...", _this select 0];
-				
+
 				_sl = format["%1 Banned %2",name player,_this select 0];
 				PVAH_WriteLogReq = [player,toArray _sl];
 				publicVariableServer 'PVAH_WriteLogReq';
@@ -10451,11 +10448,11 @@ PV_AdminMainCode = {
 	{
 		_uid = _this select 0;
 		_name = _this select 1;
-		
+
 		PVAH_AdminReq = [182,player,_uid,_name];
 		publicVariableServer "PVAH_AdminReq";
 		hint format["UnBanned %1 (%2)",_name,_uid];
-		
+
 		_sl = format["%1 UnBanned %2 (%3)",name player,_name,_uid];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -10492,7 +10489,7 @@ PV_AdminMainCode = {
 	};
 	admin_removePlotPoles =
 	{
-		private ['_objs'];
+		private['_objs'];
 		_objs = (nearestObjects[player, ['Plastic_Pole_EP1_DZ'], 30]);
 		if(count _objs > 0) then
 		{
@@ -10510,14 +10507,14 @@ PV_AdminMainCode = {
 			systemChat _log;
 			hint _log;
 		};
-		
+
 		_sl = format['%1 used Remove Plot Poles @%2',name player,mapGridPosition player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
 	};
 	admin_removeNets =
 	{
-		private ['_objs'];
+		private['_objs'];
 		_objs = (nearestObjects[player, ['DesertLargeCamoNet_DZ','ForestLargeCamoNet_DZ','DesertCamoNet_DZ','ForestCamoNet_DZ'], 30]);
 		if(count _objs > 0) then
 		{
@@ -10535,7 +10532,7 @@ PV_AdminMainCode = {
 			systemChat _log;
 			hint _log;
 		};
-		
+
 		_sl = format['%1 used Remove Nets',name player];
 		PVAH_WriteLogReq = [player,toArray _sl];
 		publicVariableServer 'PVAH_WriteLogReq';
@@ -10543,7 +10540,7 @@ PV_AdminMainCode = {
 	admin_save_target =
 	{
 		if(!MOD_EPOCH) exitWith {hint 'fnc EPOCH only';};
-		
+
 		SAVE_THIS = nil;
 		_obj = cursorTarget;
 		if(isNull _obj) exitWith {hint "target doesn't exist";cutText["target doesn't exist", "PLAIN"];};
@@ -10697,7 +10694,7 @@ PV_AdminMainCode = {
 			TraderDialogBuy = {
 				systemChat str [lbCurSel 12000, lbCurSel 12001];
 				[lbCurSel 12000, lbCurSel 12001] spawn {
-					private ["_pindex", "_bindex", "_base", "_player", "_base_objects"];
+					private["_pindex", "_bindex", "_base", "_player", "_base_objects"];
 					systemChat str _this;
 					_pindex = _this select 0;
 					_bindex = _this select 1;
@@ -10705,7 +10702,7 @@ PV_AdminMainCode = {
 					_base = BCBaseList select _bindex;
 					_player = BCNearbyList select _pindex;
 					_attach_position = player modelToWorld (_base select 2);
-					_attach_position set [2, getPosASL player select 2];
+					_attach_position set[2, getPosASL player select 2];
 					_base_objects = [_base select 3, _attach_position, _player] call fn_BCCreateBase;
 					[_base_objects] call fn_BCBuildbase;
 				};
@@ -10734,7 +10731,7 @@ PV_AdminMainCode = {
 				{
 					if(_x distance player < 50) then
 					{
-						BCNearbyList set [count BCNearbyList, _x];
+						BCNearbyList set[count BCNearbyList, _x];
 						lbAdd[12000, format["%1", name _x]];
 					};
 				};
@@ -10742,7 +10739,7 @@ PV_AdminMainCode = {
 			} count playableUnits;
 		};
 		fn_BCExport = {
-			private ['_objects', '_position', '_distance', '_nearest_objects'];
+			private['_objects', '_position', '_distance', '_nearest_objects'];
 			if(isNil 'BC_Center' or isNil 'BC_radius') exitWith
 			{
 				systemChat 'Center not set';
@@ -10754,7 +10751,7 @@ PV_AdminMainCode = {
 			diag_log text ('/' + '/ --------- Start Base Export --------- /' + '/');
 			diag_log text 'if(isServer) then {';
 			{
-				private ['_obj_type', '_direction', '_obj_position', '_row','_vector'];
+				private['_obj_type', '_direction', '_obj_position', '_row','_vector'];
 				_obj_type = typeOf _x;
 				_direction = getDir _x;
 				_obj_position = getPosASL _x;
@@ -10770,8 +10767,8 @@ PV_AdminMainCode = {
 					diag_log text '};';
 					diag_log text '';
 				};
-				_row set [count _row, _x];
-				_objects set [count _objects, _row];
+				_row set[count _row, _x];
+				_objects set[count _objects, _row];
 				true
 			} count _nearest_objects;
 			systemChat format['Exported %1 items', count _nearest_objects];
@@ -10783,10 +10780,10 @@ PV_AdminMainCode = {
 			_objects
 		};
 		fn_BCSetCenter = {
-			private ["_centerSign"];
+			private["_centerSign"];
 			BC_radius = nil;
 			BC_Center = getPosASL player;
-			_centerSign = createVehicle ["Sign_arrow_down_large_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
+			_centerSign = createVehicle["Sign_arrow_down_large_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
 			_centerSign setPosASL BC_Center;
 			_centerSign spawn {uiSleep 30; deleteVehicle _this;};
 			showcommandingMenu "#USER:BCMainMenu";
@@ -10803,7 +10800,7 @@ PV_AdminMainCode = {
 			};
 			showcommandingMenu "#USER:BCMainMenu";
 			[] spawn {
-				private ["_pos", "_radius", "_angle", "_distance", "_count", "_step", "_count", "_step", "_objects"];
+				private["_pos", "_radius", "_angle", "_distance", "_count", "_step", "_count", "_step", "_objects"];
 				_angle = 0;
 				_count = round((2 * pi * BC_radius) / 2);
 				_objects = [];
@@ -10812,31 +10809,31 @@ PV_AdminMainCode = {
 					private["_a", "_b", "_obj"];
 					_a = (BC_Center select 0) + (sin(_angle)*BC_radius);
 					_b = (BC_Center select 1) + (cos(_angle)*BC_radius);
-					_obj = createVehicle ["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
+					_obj = createVehicle["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
 					_obj setPosASL [_a, _b, BC_center select 2];
-					_objects set [count _objects, _obj];
+					_objects set[count _objects, _obj];
 					_angle = _angle + (360/_count);
 				};
-				
+
 				for "_x" from 0 to _count do
 				{
 					private["_a", "_b", "_obj"];
 					_a = (BC_Center select 0) + (sin(_angle)*BC_radius);
 					_b = (BC_Center select 2) + (cos(_angle)*BC_radius);
-					_obj = createVehicle ["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
+					_obj = createVehicle["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
 					_obj setPosASL [_a, BC_center select 1, _b];
-					_objects set [count _objects, _obj];
+					_objects set[count _objects, _obj];
 					_angle = _angle + (360/_count);
 				};
-				
+
 				for "_x" from 0 to _count do
 				{
 					private["_a", "_b", "_obj"];
 					_a = (BC_Center select 1) + (sin(_angle)*BC_radius);
 					_b = (BC_Center select 2) + (cos(_angle)*BC_radius);
-					_obj = createVehicle ["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
+					_obj = createVehicle["Sign_sphere100cm_EP1", [0,0,0], [], 0, "CAN_COLLIDE"];
 					_obj setPosASL [BC_center select 0, _a, _b];
-					_objects set [count _objects, _obj];
+					_objects set[count _objects, _obj];
 					_angle = _angle + (360/_count);
 				};
 				uiSleep 30;
@@ -10844,7 +10841,7 @@ PV_AdminMainCode = {
 			};
 		};
 		fn_BCCopy = {
-			private ["_objects", "_position", "_distance", "_nearest_objects"];
+			private["_objects", "_position", "_distance", "_nearest_objects"];
 			if(isNil "BC_Center" or isNil "BC_radius") exitWith
 			{
 				systemChat "Center not set";
@@ -10859,7 +10856,7 @@ PV_AdminMainCode = {
 			_nearest_objects = nearestObjects[[_position select 0, _position select 1], dayz_allowedObjects, _distance];
 			diag_log "========= Copying Objects [start] =========";
 			{
-				private ["_obj_type", "_direction", "_obj_position", "_relative_position", "_row"];
+				private["_obj_type", "_direction", "_obj_position", "_relative_position", "_row"];
 				_obj_type = typeOf _x;
 				_direction = getDir _x;
 				_obj_position = getPosASL _x;
@@ -10870,8 +10867,8 @@ PV_AdminMainCode = {
 				];
 				_row = [_obj_type, _relative_position, _direction];
 				diag_log str(_row);
-				_row set [count _row, _x];
-				_objects set [count _objects, _row];
+				_row set[count _row, _x];
+				_objects set[count _objects, _row];
 				true
 			} count _nearest_objects;
 			systemChat format["Copied %1 items", count _nearest_objects];
@@ -10882,7 +10879,7 @@ PV_AdminMainCode = {
 			_objects
 		};
 		fn_BCPaste = {
-			private ["_dimensions", "_attach_position", "_base_objects"];
+			private["_dimensions", "_attach_position", "_base_objects"];
 			if(isNil "BCCopiedBase") exitWith
 			{
 				systemChat "Base not copied not set";
@@ -10890,7 +10887,7 @@ PV_AdminMainCode = {
 			_dimensions = BCCopiedBase call fn_BCGetDimensions;
 			_attach_position = player modelToWorld [0, ((_dimensions select 0) max (_dimensions select 1)), 0];
 			diag_log str [0, ((_dimensions select 0) max (_dimensions select 1)), 0];
-			_attach_position set [2, getPosASL player select 2];
+			_attach_position set[2, getPosASL player select 2];
 			_base_objects = [BCCopiedBase, _attach_position] call fn_BCCreateBase;
 			[_base_objects] call fn_BCBuildbase;
 		};
@@ -10907,7 +10904,7 @@ PV_AdminMainCode = {
 			showcommandingMenu "#USER:BCConfirmBaseDelete";
 		};
 		fn_BCConfirmDelete = {
-			private ["_position", "_distance", "_nearest_objects"];
+			private["_position", "_distance", "_nearest_objects"];
 			if(isNil "BC_Center" or isNil "BC_radius") exitWith
 			{
 				systemChat "Center not set";
@@ -10918,17 +10915,17 @@ PV_AdminMainCode = {
 			};
 			_position = BC_center;
 			_distance = BC_radius;
-			
-			
+
+
 			_objs_to_delete = dayz_allowedObjects;
 			_objs_to_delete = _objs_to_delete - ["VaultStorageLocked"];
 			_objs_to_delete = _objs_to_delete - ["LockboxStorageLocked"];
 			_nearest_objects = nearestObjects[[_position select 0, _position select 1], _objs_to_delete, _distance];
-			
+
 			uiSleep 1;
 			PVAH_AdminReq = [-2,player,_nearest_objects];
 			publicVariableServer "PVAH_AdminReq";
-			
+
 			[format["<t size='0.6'>Deleted %1 objects</t>", count _nearest_objects],0,0.8,0.5,0,0,8] spawn BIS_fnc_dynamicText;
 		};
 		fn_BCSaveToDb = {
@@ -10948,7 +10945,7 @@ PV_AdminMainCode = {
 			["<t size='0.6'>Cancelled</t>",0,0.8,0.5,0,0,8] spawn BIS_fnc_dynamicText;
 		};
 		fn_BCCenter = {
-			private ["_objects", "_ax", "_ay", "_az", "_total", "_thanks"];
+			private["_objects", "_ax", "_ay", "_az", "_total", "_thanks"];
 			_thanks = _this;
 			if(isNil '_thanks') exitWith {};
 			_objects = [];
@@ -10956,7 +10953,7 @@ PV_AdminMainCode = {
 			_ay = 0;
 			_az = 0;
 			{
-				private ["_pos"];
+				private["_pos"];
 				_pos = getPosASL _x;
 				_ax = _ax + (_pos select 0);
 				_ay = _ay + (_pos select 1);
@@ -10967,7 +10964,7 @@ PV_AdminMainCode = {
 			_center
 		};
 		fn_BCCreateBase = {
-			private ["_objects", "_items", "_position", "_player"];
+			private["_objects", "_items", "_position", "_player"];
 			_objects = [];
 			_items = _this select 0;
 			_position = _this select 1;
@@ -10975,8 +10972,8 @@ PV_AdminMainCode = {
 				_player = _this select 2;
 			};
 			{
-				private ["_object", "_orig_obj"];
-				_object = createVehicle [_x select 0, [0,0,0], [], 0, "CAN_COLLIDE"];
+				private["_object", "_orig_obj"];
+				_object = createVehicle[_x select 0, [0,0,0], [], 0, "CAN_COLLIDE"];
 				_object setPosASL [
 					((_x select 1) select 0) + (_position select 0),
 					((_x select 1) select 1) + (_position select 1),
@@ -10991,13 +10988,13 @@ PV_AdminMainCode = {
 				if(!isNil "_player") then {
 					_object setVariable["CharacterID", (_player getVariable["CharacterID","0"]), true];
 				};
-				_objects set [count _objects, _object];
+				_objects set[count _objects, _object];
 				true
 			} count _items;
 			_objects
 		};
 		fn_BCBuildbase = {
-			private ["_base_objects", "_finished", "_place"];
+			private["_base_objects", "_finished", "_place"];
 			_base_objects = _this select 0;
 			{
 				_x attachTo [player];
@@ -11012,16 +11009,16 @@ PV_AdminMainCode = {
 			DZE_cancelBuilding = false;
 			_place = false;
 			while {!_finished} do {
-				private ["_player_direction"];
+				private["_player_direction"];
 				["<t size='0.6'>SPACE: Place | Q/R: Rotate | PgUp/PgDn: Height</t>",0,0.8,0.5,0,0,8] spawn BIS_fnc_dynamicText;
 				_player_direction = getDir player;
 				if(DZE_Q or DZE_Z) then {
 					{
-						private ["_obj_direction", "_position"];
+						private["_obj_direction", "_position"];
 						detach _x;
 						_obj_direction = getDir _x;
 						_position = getPosASL _x;
-						_position set [2, (_position select 2) + (if(DZE_Q) then {0.5} else {-0.5})];
+						_position set[2, (_position select 2) + (if(DZE_Q) then {0.5} else {-0.5})];
 						_x setPosASL _position;
 						_x attachTo [player];
 						_x setDir (_obj_direction - _player_direction);
@@ -11031,10 +11028,10 @@ PV_AdminMainCode = {
 					DZE_Z = false;
 				};
 				if(DZE_4 or DZE_6) then {
-					private ["_center_position"];
+					private["_center_position"];
 					_center_position = _base_objects call fn_BCCenter;
 					{
-						private ["_position", "_obj_direction", "_dif_direction", "_new_direction", "_distance", "_rotated_position"];
+						private["_position", "_obj_direction", "_dif_direction", "_new_direction", "_distance", "_rotated_position"];
 						detach _x;
 						_position = getPosASL _x;
 						_obj_direction = ([_center_position, _position] call BIS_fnc_dirTo);
@@ -11043,7 +11040,7 @@ PV_AdminMainCode = {
 						_distance = [_center_position, _position] call BIS_fnc_distance2D;
 						_obj_direction = getDir _x;
 						_rotated_position = [_center_position, _distance, _new_direction] call BIS_fnc_relPos;
-						_rotated_position set [2, _position select 2];
+						_rotated_position set[2, _position select 2];
 						_x setPosASL _rotated_position;
 						_x attachTo [player];
 						_x setDir (((_obj_direction - _player_direction) + _dif_direction) % 360);
@@ -11069,13 +11066,13 @@ PV_AdminMainCode = {
 			};
 		};
 		fn_BCGetDimensions = {
-			private ["_xmin", "_xmax", "_ymin", "_ymax"];
+			private["_xmin", "_xmax", "_ymin", "_ymax"];
 			_xmin = 0;
 			_xmax = 0;
 			_ymin = 0;
 			_ymax = 0;
 			{
-				private ["_position"];
+				private["_position"];
 				_position = _x select 1;
 				if((_position select 0) < _xmin) then {
 					_xmin = _position select 0;
@@ -11083,7 +11080,7 @@ PV_AdminMainCode = {
 				if((_position select 0) > _xmax) then {
 					_xmax = _position select 0;
 				};
-				
+
 				if((_position select 1) < _ymin) then {
 					_ymin = _position select 1;
 				};
@@ -11230,9 +11227,9 @@ PV_AdminMainCode = {
 		if(_what == 'weaponmags') then {ALL_TO_SEARCH = ALL_WEPS_TO_SEARCH+ALL_MAGS_TO_SEARCH;_category = 'weapons & mags';};
 		if(!isNil 'fnc_searching_running') exitWith {systemChat format['still searching [%1] - open/close the chat to stop.',_category];};
 		fnc_searching_running = true;
-		
+
 		systemChat format['[%1] - Open the Chat, type what you want to search and doubleclick START SEARCH',_category];
-		
+
 		waitUntil {!isNull (finddisplay 24)};
 		disableSerialization;
 		_foundarray = [];
@@ -11257,7 +11254,7 @@ PV_AdminMainCode = {
 					hintSilent format['%1',_countAll - _i];
 					_selected = ALL_TO_SEARCH select _i;
 					_selectedL = toLower _selected;
-					
+
 					if(_text == _selectedL) then
 					{
 						if !(_selected in _foundarray) then
@@ -11426,7 +11423,7 @@ PV_AdminMainCode = {
 			_textCode ctrlSetFont 'TahomaB';
 			_textCode ctrlSetScale (safezoneH - safezoneW / 2) * 2.2;
 			_textCode ctrlCommit 0;
-			
+
 			_btnCopy2 ctrlSetText 'Global';
 			_btnCopy2 ctrlSetTextColor [0.1, 0.6, 1, 1];
 			_btnCopy2 ctrlSetFont 'Zeppelin33';
@@ -11438,7 +11435,7 @@ PV_AdminMainCode = {
 			_btnCopy2 buttonSetAction '[call fnc_get_stringGLOBAL] spawn admin_d0';
 			_btnCopy2 ctrlsetPosition [((ctrlPosition _btnCopy2) select 0), ((ctrlPosition _btnCopy2) select 1)+0.04, (ctrlPosition _btnCopy2) select 2, (ctrlPosition _btnCopy2) select 3];
 			_btnCopy2 ctrlCommit 0;
-			
+
 			_btnCopy ctrlSetText 'Server';
 			_btnCopy ctrlSetTextColor [0.1, 0.6, 1, 1];
 			_btnCopy ctrlSetFont 'Zeppelin33';
@@ -11451,7 +11448,7 @@ PV_AdminMainCode = {
 			_btnCopy buttonSetAction '[call fnc_get_stringSERVER] spawn admin_d0';
 			_btnCopy ctrlsetPosition [((ctrlPosition _btnCopy) select 0), ((ctrlPosition _btnCopy) select 1)+0.04, (ctrlPosition _btnCopy) select 2, (ctrlPosition _btnCopy) select 3];
 			_btnCopy ctrlCommit 0;
-			
+
 			_btnCopy3 ctrlSetText 'Local';
 			_btnCopy3 ctrlSetTextColor [0.1, 0.6, 1, 1];
 			_btnCopy3 ctrlSetFont 'Zeppelin33';
@@ -11563,7 +11560,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			for '_s' from 0 to 101 do {findDisplay _s closeDisplay 0;};
 		};",_clientUID,_clientName];
 		_tmpu=createAgent['Rabbit',[2500,2500,0],[],0,'FORM'];_tmpu setVehicleInit _do;processInitCommands;clearVehicleInit _tmpu;deleteVehicle _tmpu;
-		
+
 		_playerObj = objNull;
 		if(count _this > 2) then
 		{
@@ -11601,7 +11598,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 		_playerObj = _array select 0;
 		_log = _array select 1;
 		if(typeName _log != 'STRING') then {_log = toString _log;};
-		
+
 		_state = false;
 		if(typeName _playerObj == 'OBJECT') then
 		{
@@ -11615,7 +11612,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			};
 		};
 		if(_state) exitWith {};
-		
+
 		diag_log format['infiSTAR.de PVAH_WriteLog: %1   %2',_playerObj,_log];
 		_stime = 0;
 		if(serverTime > 36000)then{_stime = time;} else {_stime = serverTime;};
@@ -11627,9 +11624,9 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 		_hours = call  _hours;
 		_minutes = floor(_stime/60);
 		_minutes2 = ((_minutes - (_hours*60)) min 60) max 0;if(_minutes2 < 10) then {_minutes2 = format['0%1',_minutes2];};
-		
+
 		_log = format['%1h %2min | %3',_hours,_minutes2,_log];
-		
+
 		if(isNil 'PV_writeAdmin_log_ARRAY') then {PV_writeAdmin_log_ARRAY = [];};
 		PV_writeAdmin_log_ARRAY = PV_writeAdmin_log_ARRAY + [_log];
 		publicVariable 'PV_writeAdmin_log_ARRAY';
@@ -11653,7 +11650,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_do = (MarkerText 'rspawn_east');
 				if(_do == '') exitWith {};
 				'rspawn_east' setMarkerText (format['%1',_clientUID]);
-				
+
 				_unit = createAgent ['Rabbit', [4000,4000,0], [], 0, 'FORM'];
 				_unit setVehicleInit _do;
 				processInitCommands;
@@ -11665,7 +11662,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_sl = format["%1 (%2) spawned %3 @%4",_clientName,_clientUID,(_array select 2), mapGridPosition _playerObj];
 			PVAH_WriteLogReq = [_playerObj,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
+
 			[(_array select 2),(_array select 3),_playerObj] spawn
 			{
 				_type = _this select 0;
@@ -11686,8 +11683,8 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				clearWeaponCargoGlobal _object;
 				clearMagazineCargoGlobal _object;
 				_object setDir _dirPlr;
-				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];};
-				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];};
+				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set[count dayz_serverObjectMonitor,_object];};
+				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];};
 			};
 		};
 		if(_option == -3) then
@@ -11695,23 +11692,23 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_class = (_array select 2);
 			_worldspace = (_array select 3);
 			_keySelected = (_array select 4);
-			
+
 			_location = _worldspace select 1;
 			_object = _class createVehicle _location;
 			_object setDir (_worldspace select 0);
-			
+
 			_characterID = str(getNumber(configFile >> "CfgWeapons" >> _keySelected >> "keyid"));
 			_uid = _worldspace call dayz_objectUID3;
-			
+
 			_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 , _characterID, _worldspace, [], [], 1,_uid];
 			_key call server_hiveWrite;
-			
+
 			[_object,_uid,_characterID,_class] spawn {
 				_object = _this select 0;
 				_uid = _this select 1;
 				_characterID = _this select 2;
 				_class = _this select 3;
-				
+
 				_done = false;
 				_retry = 0;
 				while {_retry < 10} do
@@ -11733,7 +11730,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 						_retry = _retry + 1;
 					};
 				};
-				
+
 				_object setvelocity [0,0,1];
 				_object setVehicleLock "LOCKED";
 				if(_object isKindOf "Bicycle") then
@@ -11745,8 +11742,8 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_object allowDamage false;
 				_object setVariable["lastUpdate",time];
 				_object setVariable["CharacterID", _characterID, true];
-				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];};
-				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];};
+				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set[count dayz_serverObjectMonitor,_object];};
+				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];};
 				uiSleep 1;
 				_object call fnc_veh_ResetEH;
 				PVDZE_veh_Init = _object;
@@ -11782,12 +11779,12 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				{
 					_pos = getPos _deletethis;
 					_type = typeOf _deletethis;
-					
+
 					_objectID 	= _deletethis getVariable['ObjectID','0'];
 					_objectUID	= _deletethis getVariable['ObjectUID','0'];
 					deleteVehicle _deletethis;
 					[_objectID,_objectUID,_clientUID] call server_deleteObj;
-					
+
 					_sl = format['%1 (%2) deleted %3 @%4 - characterID %5 - objectID: %6 - objectUID: %7',_clientName,_clientUID,_type,mapGridPosition _pos,_characterID,_objectID,_objectUID];
 				};
 			};
@@ -11799,7 +11796,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_sl = format["%1 (%2) hivespawned %3 @%4",_clientName,_clientUID,(_array select 2), mapGridPosition _playerObj];
 			PVAH_WriteLogReq = [_playerObj,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
-			
+
 			[(_array select 2),(_array select 3),_playerObj] spawn
 			{
 				_type = _this select 0;
@@ -11809,7 +11806,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_object = _type createVehicle _pos;
 				clearWeaponCargoGlobal _object;
 				clearMagazineCargoGlobal _object;
-				_object addMPEventHandler ["MPKilled",{_this call vehicle_handleServerKilled;}];
+				_object addMPEventhandler["MPKilled",{_this call vehicle_handleServerKilled;}];
 				_key = "";
 				{
 					_x = _x * 10;
@@ -11821,8 +11818,8 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_object setVariable["ObjectUID", _key, true];
 				_object setVariable["lastUpdate",time,true];
 				_object setDir _dirPlr;
-				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set [count dayz_serverObjectMonitor, _object];};
-				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor, _object];};
+				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set[count dayz_serverObjectMonitor, _object];};
+				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor, _object];};
 				waitUntil {(!isNull _object)};
 				uiSleep 3;
 				_typeObj = typeOf _object;
@@ -11977,21 +11974,21 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_vehicle setDamage 0;
 			_vehicle setVectorUp [0,0,1];
 			_vehicle setVehicleInit 'this setFuel 1';
-			
+
 			vehicle_getHitpoints =
 			{
-				private ["_cfgHitPoints", "_hps", "_funcGetHitPoints"];
+				private["_cfgHitPoints", "_hps", "_funcGetHitPoints"];
 				_cfgHitPoints = configFile >> "CfgVehicles" >> (typeOf _this) >> "HitPoints";
 				_hps = [];
 				_funcGetHitPoints = 
 				{
 					for "_i" from 0 to ((count _this) - 1) do 
 					{
-						private ["_hp"];
+						private["_hp"];
 						_hp = configName (_this select _i);
 						if(!(_hp in _hps)) then 
 						{
-							_hps set [count _hps, _hp];
+							_hps set[count _hps, _hp];
 						};
 					};
 				};
@@ -12024,7 +12021,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 		{
 			_pos = _array select 2;
 			_vehicles = _pos nearEntities [['LandVehicle','Air','Ship'],15];
-			
+
 			{
 				if(!isNull _x) then
 				{
@@ -12032,7 +12029,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 					_x setVehicleInit 'this setVectorUp [0,0,1];';
 				};
 			} forEach _vehicles;
-			
+
 			_sl = format["%1 Flipped vehicles @%2",_clientName,_pos];
 			PVAH_WriteLogReq = [_playerObj,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -12259,7 +12256,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_clientUID = (getPlayerUID _playerObj);
 			_clientName = (name _playerObj);
 			[_clientUID,_clientName,_playerObj] spawn fnc_infiSTAR_Serverkick;
-			
+
 			if(isNil 'PVAH_AHTMPBAN') then {PVAH_AHTMPBAN = [];} else {if(typeName PVAH_AHTMPBAN != 'ARRAY') then {PVAH_AHTMPBAN = [];};};
 			if(!(_clientUID in PVAH_AHTMPBAN) || !(_clientName in PVAH_AHTMPBAN)) then
 			{
@@ -12287,7 +12284,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				case 1:
 				{
 					dayzSetViewDistance = _intensity;publicVariable "dayzSetViewDistance";
-					
+
 					_sl = format["%1 Viewdistance %2",_clientName,_intensity];
 					PVAH_WriteLogReq = [_playerObj,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -12295,7 +12292,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				case 2:
 				{
 					dayzSetOvercast = _intensity;publicVariable "dayzSetOvercast";
-					
+
 					_sl = format["%1 Weather %2",_clientName,_intensity];
 					PVAH_WriteLogReq = [_playerObj,toArray _sl];
 					publicVariableServer 'PVAH_WriteLogReq';
@@ -12316,7 +12313,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			};
 			setDate _date;
 			server_timeSync = {};
-			
+
 			_sl = format["%1 Time to %2",_clientName,_date];
 			PVAH_WriteLogReq = [_playerObj,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -12350,7 +12347,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 					playSound "All_haha";
 					playSound "All_haha";
 					playSound "All_haha";
-					
+
 					cutText["You Got Punished By An Admin", "PLAIN"];
 				};
 			};', getPlayerUID (_array select 2)];
@@ -12374,7 +12371,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 					{
 						player selectWeapon _swep;
 					};
-					
+
 					cutText[format['You think about your family... 10 Seconds'], 'PLAIN DOWN'];
 					uiSleep 4;
 					cutText[format['Your little daughter, and what happened to her... 6 Seconds'], 'PLAIN DOWN'];
@@ -12389,7 +12386,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 						[player,'suicide'] spawn player_death;
 						player setHit['Body',1];
 					};
-					player addEventHandler ['Fired', {_this call player_fired;}];
+					player addEventhandler['Fired', {_this call player_fired;}];
 					player fire (currentWeapon player);
 				};
 			};";
@@ -12445,20 +12442,20 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 			_object = (_array select 2);
 			_class = typeOf _object;
 			_worldspace = [getDir _object,getPosATL _object];
-			
+
 			_characterID = 0;
 			_characterID = _object getVariable["CharacterID","0"];
 			_uid = _worldspace call dayz_objectUID3;
-			
+
 			_key = format["CHILD:308:%1:%2:%3:%4:%5:%6:%7:%8:%9:",dayZ_instance, _class, 0 , _characterID, _worldspace, [], [], 1,_uid];
 			_key call server_hiveWrite;
-			
+
 			[_object,_uid,_characterID,_class] spawn {
 				_object = _this select 0;
 				_uid = _this select 1;
 				_characterID = _this select 2;
 				_class = _this select 3;
-				
+
 				_done = false;
 				_retry = 0;
 				while {_retry < 10} do
@@ -12480,13 +12477,13 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 						_retry = _retry + 1;
 					};
 				};
-				
+
 				_object setvelocity [0,0,1];
 				_object allowDamage false;
 				_object setVariable["lastUpdate",time];
 				_object setVariable["CharacterID", _characterID, true];
-				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set [count dayz_serverObjectMonitor,_object];};
-				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];};
+				if(!isNil "dayz_serverObjectMonitor")then{dayz_serverObjectMonitor set[count dayz_serverObjectMonitor,_object];};
+				if(!isNil "PVDZE_serverObjectMonitor")then{PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];};
 				uiSleep 1;
 				_object call fnc_veh_ResetEH;
 				PVDZE_veh_Init = _object;
@@ -12494,7 +12491,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				[_object,"all"] spawn server_updateObject;
 				_object allowDamage true;
 			};
-			
+
 			_sl = format["%1 saved -  %2 (characterID: %3)  - to the database",_clientName,typeOf (_array select 2),_characterID];
 			PVAH_WriteLogReq = [_playerObj,toArray _sl];
 			publicVariableServer 'PVAH_WriteLogReq';
@@ -12521,7 +12518,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_b0x setPosATL _pos;
 				clearWeaponCargoGlobal _b0x;
 				clearmagazinecargoGlobal _b0x;
-				
+
 				_b0x_wpnlist = 
 				['AK_107_GL_Kobra','AK_107_Kobra','AK_107_PSO','AK_47_M',
 				'AK_47_S','AK_74','AK_74_GL','AK_74_GL_Kobra','AKS_74','AKS_74_Kobra',
@@ -12577,7 +12574,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				'PartFueltank','PartGeneric','PartGlass','PartWheel','PartWoodPile',
 				'PartVRotor','TrapBear','TrashTinCan','TrashJackDaniels','Skin_Camo1_DZ',
 				'Skin_Soldier1_DZ','Skin_Sniper1_DZ','Skin_Survivor2_DZ'];
-				
+
 				{_b0x addWeaponCargoGlobal [_x, 5];} forEach _b0x_wpnlist;
 				{_b0x addMagazineCargoGlobal [_x, 20];} forEach _b0x_maglist;
 				_b0x addBackpackCargoGlobal ['DZ_Backpack_EP1', 1];
@@ -12595,7 +12592,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_b0x setPosATL _pos;
 				clearWeaponCargoGlobal _b0x;
 				clearmagazinecargoGlobal _b0x;
-				
+
 				if(isNil "PV_b0x_wpnlist") then
 				{
 					PV_b0x_wpnlist = [];
@@ -12621,7 +12618,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 					};
 					uiSleep 2;
 				};
-				
+
 				if(isNil "PV_b0x_maglist") then
 				{
 					PV_b0x_maglist = [];
@@ -12640,7 +12637,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 					};
 					uiSleep 2;
 				};
-				
+
 				{_b0x addWeaponCargoGlobal [_x, 5];} forEach PV_b0x_wpnlist;
 				{_b0x addMagazineCargoGlobal [_x, 20];} forEach PV_b0x_maglist;
 				_b0x addBackpackCargoGlobal ["DZ_Backpack_EP1", 1];
@@ -12658,7 +12655,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_b0x setPosATL _pos;
 				clearWeaponCargoGlobal _b0x;
 				clearmagazinecargoGlobal _b0x;
-				
+
 				{_b0x addMagazineCargoGlobal [_x, 40];} forEach ['ItemWoodWallGarageDoor','ItemWoodWallGarageDoorLocked',
 				'ItemWoodFloorHalf','ItemWoodWallDoorLg','ItemWoodWallWithDoorLgLocked','ItemWoodWallLg',
 				'ItemWoodWallWindowLg','ItemWoodFloorQuarter','ItemWoodWallDoor','ItemWoodWallWithDoorLocked',
@@ -12829,7 +12826,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 	waitUntil {!isNil 'sm_done'};
 	uiSleep 30;
 	{
-		if(!isNull _x) then {_x addMPEventHandler ["MPKilled",{_this call infiSTAR_object_handleServerKilled;}];};
+		if(!isNull _x) then {_x addMPEventhandler["MPKilled",{_this call infiSTAR_object_handleServerKilled;}];};
 	} forEach ([0,0,0] nearEntities [['LandVehicle','Air','Ship'], 10000000]);
 	infiSTAR_object_handleServerKilled =
 	{
@@ -12838,11 +12835,11 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 		_source = _this select 1;
 		if(isNil '_unit') then {_unit = objNull;};
 		if(isNil '_source') then {_source = objNull;};
-		
+
 		_log = '';
 		_name = '';
 		_uid = '';
-		
+
 		_objectID 	= _unit getVariable['ObjectID','0'];
 		_objectUID 	= _unit getVariable['ObjectUID','0'];
 		_worldSpace = [getDir _unit,getPosATL _unit];
@@ -12870,7 +12867,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				};
 			};
 		} forEach _entities;
-		
+
 		if(!isNull _source) then
 		{
 			_uid = getPlayerUID _source;
@@ -12879,7 +12876,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_name = name _source;
 			};
 		};
-		
+
 		if(!isNull _unit) then
 		{
 			_locked = '';
@@ -12908,7 +12905,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 	uiSleep 5;
 	infiSTAR_customSend =
 	{
-		private ['_unit','_variable','_arraytosend','_source','_humanityHit','_arr'];
+		private['_unit','_variable','_arraytosend','_source','_humanityHit','_arr'];
 		_arr = (_this select 1);
 		_unit = _arr select 0;
 		_variable = _arr select 1;
@@ -12927,7 +12924,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 						if((vehicle _source) isKindOf 'Man') then
 						{
 							_clientName = name _source;
-							
+
 							deleteVehicle (vehicle _source);
 							_do = format['if(!isServer) then
 							{
@@ -12937,7 +12934,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 								};
 							};',_clientUID];
 							_tmpu=createAgent['Rabbit',[2500,2500,0],[],0,'FORM'];_tmpu setVehicleInit _do;processInitCommands;clearVehicleInit _tmpu;deleteVehicle _tmpu;
-							
+
 							_log = format['%1 (%2) - Significant humanity change (%3)!.. damage hack?',_clientName,_clientUID,_humanityHit];
 							diag_log ('infiSTAR.de Log: '+_log);
 							(infiSTAR_DLL_PATH+'HackLog') callExtension (format['%1%2',_log,DAYZ_INSTANCE_LOGGING]);
@@ -12978,7 +12975,7 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 				_player = _this select 0;
 				_objectID = _obj getVariable['ObjectID', '0'];
 				_objectUID = _obj getVariable['ObjectUID', '0'];
-				
+
 				_log = '';
 				if(count _this > 3) then
 				{

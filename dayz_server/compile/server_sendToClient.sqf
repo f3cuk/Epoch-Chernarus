@@ -1,15 +1,15 @@
-private ["_unit","_variable","_arraytosend","_owner","_vehicle","_qty"];
+private["_unit","_variable","_arraytosend","_owner","_vehicle","_qty"];
 
 _unit = _this select 0;
 
-if(isNull _unit) exitWith {diag_log format ["ERROR: sendToClient is Null: %1",_unit]};
+if(isNull _unit) exitWith {diag_log format["ERROR: sendToClient is Null: %1",_unit]};
 
 _variable 		= _this select 1;
 _arraytosend 	= _this select 2;
 _owner 			= owner _unit;
 
 call {
-	
+
 	if(_variable == "VehHandleDam") exitWith {
 		_vehicle = _arraytosend select 0;
 		if(local _vehicle) then {
@@ -19,7 +19,7 @@ call {
 			_owner publicVariableClient "PVCDZE_vehSH";
 		};
 	};
-	
+
 	if(_variable == "SFuel") exitWith {
 		_vehicle = _arraytosend select 0;
 		_qty = _arraytosend select 1;
@@ -30,37 +30,37 @@ call {
 			_owner publicVariableClient  "PVDZE_veh_SFuel";
 		};
 	};
-	
+
 	if(_variable == "HideBody") exitWith {
 		PVDZE_plr_HideBody = _arraytosend select 0;
 		_owner publicVariableClient "PVDZE_plr_HideBody";
 	};
-	
+
 	if(_variable == "Humanity") exitWith {
 		PVDZE_plr_HumanityChange = _arraytosend;
 		_owner publicVariableClient "PVDZE_plr_HumanityChange";
 	};
-	
+
 	if(_variable == "PZ_BreakLegs") exitWith {
 		usecBreakLegs = _arraytosend;
 		_owner publicVariableClient "usecBreakLegs";
 	};
-	
+
 	if(_variable == "Bleed") exitWith {
 		usecBleed = _arraytosend;
 		_owner publicVariableClient "usecBleed";
 	};
-	
+
 	if(_variable == "HideObj") exitWith {
 		PVDZE_obj_Hide = _arraytosend select 0;
 		_owner publicVariableClient "PVDZE_obj_Hide";
 	};
-	
+
 	if(_variable == "RoadFlare") exitWith {
 		PVDZE_obj_RoadFlare = _arraytosend;
 		_owner publicVariableClient "PVDZE_obj_RoadFlare";
 	};
-	
+
 	if(_variable == "Transfuse") exitWith {
 		usecTransfuse = _arraytosend;
 		_owner publicVariableClient "usecTransfuse";

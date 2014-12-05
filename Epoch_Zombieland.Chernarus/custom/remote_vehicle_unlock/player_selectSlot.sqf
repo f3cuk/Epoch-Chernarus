@@ -1,4 +1,4 @@
-private ["_control","_button","_parent","_group","_pos","_item","_conf","_name","_cfgActions","_numActions","_height","_menu","_config","_type","_script","_outputOriented","_compile","_array","_outputClass","_outputType","_key_colors","_ownerKeyId","_itemsPlayer","_hasKey","_objects","_ownerID","_i","_text","_oldOwner","_ownerKeyName","_erc_cfgActions","_erc_numActions","_temp_keys","_temp_keys_names"];
+private["_control","_button","_parent","_group","_pos","_item","_conf","_name","_cfgActions","_numActions","_height","_menu","_config","_type","_script","_outputOriented","_compile","_array","_outputClass","_outputType","_key_colors","_ownerKeyId","_itemsPlayer","_hasKey","_objects","_ownerID","_i","_text","_oldOwner","_ownerKeyName","_erc_cfgActions","_erc_numActions","_temp_keys","_temp_keys_names"];
 
 disableSerialization;
 
@@ -11,23 +11,23 @@ if(!DZE_SelfTransfuse && ((gearSlotData _control) == "ItemBloodBag")) exitWith {
 if(_button == 1) then {
 	//dayzClickTime = time;
 	_group = _parent displayCtrl 6902;
-	
+
 	_pos = 		ctrlPosition _group;
-	_pos set [0,((_this select 2) + 0.48)];
-	_pos set [1,((_this select 3) + 0.07)];
-	
+	_pos set[0,((_this select 2) + 0.48)];
+	_pos set[1,((_this select 3) + 0.07)];
+
 	_item = gearSlotData _control;
-	
+
 	_conf = configFile >> "cfgMagazines" >> _item;
 	if(!isClass _conf) then {
 		_conf = configFile >> "cfgWeapons" >> _item;
 	};
 	_name = getText(_conf >> "displayName");
-	
+
 	_cfgActions = _conf >> "ItemActions";
 	_numActions = (count _cfgActions);
 	_height = 0;
-	
+
 	//Populate Menu
 	for "_i" from 0 to (_numActions - 1) do 
 	{
@@ -52,11 +52,11 @@ if(_button == 1) then {
 			_name = getText (configFile >> _outputType >> _outputClass >> "displayName");
 			_compile = format["_id = ['%2',%3] %1;",_script,_item,_array];
 		};
-		
+
 		_menu ctrlSetText format[_type,_name];
-		_menu ctrlSetEventHandler ["ButtonClick",_compile];
+		_menu ctrlSetEventhandler["ButtonClick",_compile];
 	};
-	
+
 	// Add extra context menus
 	_erc_cfgActions = (missionConfigFile >> "ExtraRc" >> _item);
 	_erc_numActions = (count _erc_cfgActions);
@@ -71,14 +71,14 @@ if(_button == 1) then {
 			_height = _height + (0.025 * safezoneH);
 			uiNamespace setVariable['uiControl',_control];
 			_menu ctrlSetText _text;
-			_menu ctrlSetEventHandler ["ButtonClick",_script];
+			_menu ctrlSetEventhandler["ButtonClick",_script];
 		};
 	};	
 	/*
 		Begin: Vehicle remote lock/unlock
 	*/
 		_itemsPlayer = items player;
-		
+
 		_temp_keys = [];
 		_temp_keys_names = [];
 		// find available keys
@@ -86,8 +86,8 @@ if(_button == 1) then {
 		if(configName(inheritsFrom(configFile >> "CfgWeapons" >> _item)) in _key_colors) then {
 			_ownerKeyId = getNumber(configFile >> "CfgWeapons" >> _item >> "keyid");
 			_ownerKeyName = getText(configFile >> "CfgWeapons" >> _item >> "displayName");
-			_temp_keys_names set [_ownerKeyId,_ownerKeyName];
-			
+			_temp_keys_names set[_ownerKeyId,_ownerKeyName];
+
 			_objects = nearestObjects[[player] call FNC_GetPos,["LandVehicle","Helicopter","Plane","Ship"],50];
 			_i = 0;
 			{
@@ -106,7 +106,7 @@ if(_button == 1) then {
 							_height = _height + (0.025 * safezoneH);
 							uiNamespace setVariable['uiControl',_control];
 							_menu ctrlSetText _text;
-							_menu ctrlSetEventHandler ["ButtonClick",_script];
+							_menu ctrlSetEventhandler["ButtonClick",_script];
 						} else {
 							//Lock
 							_menu = _parent displayCtrl (1600 + _numActions);
@@ -116,7 +116,7 @@ if(_button == 1) then {
 							_height = _height + (0.025 * safezoneH);
 							uiNamespace setVariable['uiControl',_control];
 							_menu ctrlSetText _text;
-							_menu ctrlSetEventHandler ["ButtonClick",_script];
+							_menu ctrlSetEventhandler["ButtonClick",_script];
 						};
 						//Engine start
 						_menu = _parent displayCtrl (1600 + _numActions + 1);
@@ -126,9 +126,9 @@ if(_button == 1) then {
 						_height = _height + (0.025 * safezoneH);
 						uiNamespace setVariable['uiControl',_control];
 						_menu ctrlSetText _text;
-						_menu ctrlSetEventHandler ["ButtonClick",_script];
+						_menu ctrlSetEventhandler["ButtonClick",_script];
 					};
-					
+
 					_i = _i + 1;
 				};
 			} forEach _objects;
@@ -136,8 +136,8 @@ if(_button == 1) then {
 	/*
 		End: Vehicle remote lock/unlock
 	*/
-	
-	_pos set [3,_height];
+
+	_pos set[3,_height];
 	//hint format["Obj: %1 \nHeight: %2\nPos: %3",_item,_height,_grpPos];		
 
 	_group ctrlShow true;

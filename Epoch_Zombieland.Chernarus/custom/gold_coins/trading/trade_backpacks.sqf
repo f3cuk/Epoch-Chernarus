@@ -1,4 +1,4 @@
-private ["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_finished","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID","_price","_curr_new","_newM","_removed","_myMoney"];
+private["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_finished","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID","_price","_curr_new","_newM","_removed","_myMoney"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
@@ -43,7 +43,7 @@ if(_qty >= _qty_in) then {
 		_finished = false;
 
 		sleep 1.5;
-		
+
 		if((position player) distance _oldPosition <= 0.1) then {
 			_finished = true;
 		};
@@ -80,23 +80,23 @@ if(_qty >= _qty_in) then {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
 			};
 			publicVariableServer "PVDZE_log";
-	
+
 			// waitUntil {!isNil "dayzTradeResult"};
 			dayzTradeResult = "PASS";
 
 			if(dayzTradeResult == "PASS") then {
 
 				if(_buy_o_sell == "buy") then {
-			
+
 					_curr_new = _qty - _qty_in;
-				
+
 					player setVariable["cashMoney",_curr_new,true];
-					
+
 					_newM 		= player getVariable["cashMoney",0];
 					_removed 	= _qty - _newM;
-														
+
 					if(_removed == _qty_in) then {
-					
+
 						_price = [_qty_in] call BIS_fnc_numberText;
 
 						removeBackpack player;
@@ -109,13 +109,13 @@ if(_qty >= _qty_in) then {
 					// Sell
 					if((typeOf (unitBackpack player)) == _part_in) then {
 						removeBackpack player;
-						
+
 						_price = [_qty_out] call BIS_fnc_numberText;
-						
+
 						_myMoney = player getVariable["cashMoney",0];
 						_myMoney = _myMoney + _qty_out;
 						player setVariable["cashMoney",_myMoney,true];
-						
+
 						cutText[format["[Trade] Sold a %1 for %2 %3",_textPartIn,_price,CurrencyName],"PLAIN DOWN"];
 
 					};
@@ -127,14 +127,14 @@ if(_qty >= _qty_in) then {
 
 				s_player_parts = [];
 				s_player_parts_crtl = -1;
-	
+
 			} else {
 				cutText[format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
 			};
 			dayzTradeResult = nil;
 		};
 	};
-	
+
 } else {
 	_needed = _qty_in - _qty;
 	cutText[format["You need %1 more %2",_needed,_textPartIn] ,"PLAIN DOWN"];

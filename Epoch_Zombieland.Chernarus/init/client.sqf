@@ -1,4 +1,4 @@
-private ["_nil"];
+private["_nil"];
 
 _nil = [] execVM "custom\remote\remote.sqf";
 
@@ -17,7 +17,7 @@ _nil = [] execVM "custom\remote\remote.sqf";
 
 [] spawn {
 
-	private ["_markers","_color"];
+	private["_markers","_color"];
 
 	waitUntil{!isNil "allMarkers"};
 
@@ -39,14 +39,14 @@ _nil = [] execVM "custom\remote\remote.sqf";
 				_radius = _x select 3;
 				_color	= _x select 4;
 
-				_marker = createMarkerLocal [(_type + _name),_pos];
+				_marker = createMarkerLocal[(_type + _name),_pos];
 				_marker setMarkerColorLocal _color;
 				_marker setMarkerShapeLocal "ELLIPSE";
 				_marker setMarkerBrushLocal "SolidBorder";
-				_marker setMarkerSizeLocal [_radius,_radius];
+				_marker setMarkerSizeLocal[_radius,_radius];
 				_marker setMarkerTextLocal _name;
 
-				_dot = createMarkerLocal [("mil_dot" + _name),_pos];
+				_dot = createMarkerLocal[("mil_dot" + _name),_pos];
 				_dot setMarkerColorLocal _color;
 				_dot setMarkerTypeLocal "mil_dot";
 				_dot setMarkerTextLocal _name;
@@ -54,12 +54,12 @@ _nil = [] execVM "custom\remote\remote.sqf";
 			};
 
 			if(_type == "icon") exitWith {
-				
+
 				private["_marker","_icon"];
 
 				_icon = _x select 3;
 
-				_marker = createMarkerLocal [(_type + _name + _icon),_pos];
+				_marker = createMarkerLocal[(_type + _name + _icon),_pos];
 				_marker setMarkerColorLocal "ColorBlack";
 				_marker setMarkerTypeLocal _icon;
 				_marker setMarkerTextLocal _name;
@@ -72,8 +72,8 @@ _nil = [] execVM "custom\remote\remote.sqf";
 };
 
 [] spawn {
-	
-	private ["_idKey","_type","_ownerID","_worldspace","_damage","_dir","_pos","_ownerPUID","_object"];
+
+	private["_idKey","_type","_ownerID","_worldspace","_damage","_dir","_pos","_ownerPUID","_object"];
 
 	waitUntil {!isNil "localObjects"};
 
@@ -94,36 +94,35 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		_dir		= 0;
 		_pos		= [0,0,0];
 
-		if(count _worldspace >= 2) then
-		{
+		if(count _worldspace >= 2) then {
 			if((typeName (_worldspace select 0)) == "STRING") then {
-				_worldspace set [0,call compile (_worldspace select 0)];
-				_worldspace set [1,call compile (_worldspace select 1)];
+				_worldspace set[0,call compile (_worldspace select 0)];
+				_worldspace set[1,call compile (_worldspace select 1)];
 			};
 
 			_dir = _worldspace select 0;
-			
+
 			if(count (_worldspace select 1) == 3) then {
 				_pos = _worldspace select 1;
 			};
 		};
 
 		if(count _worldspace < 3) then {
-			_worldspace set [count _worldspace,"0"];
+			_worldspace set[count _worldspace,"0"];
 		};
 
 		_ownerPUID = _worldspace select 2;
 
 		if(_damage < 1) then {
-			_object = _type createVehicleLocal [0,0,0];
+			_object = _type createVehicleLocal[0,0,0];
 			_object setVariable["lastUpdate",time];
 			_object setVariable["ObjectID",_idKey];
 			_object setVariable["OwnerPUID",_ownerPUID];
 			_object setVariable["CharacterID",_ownerID];
 			_object setdir _dir;
-			_object setPos _pos;
+			_object setPosATL _pos;
 			_object setDamage _damage;
-			_object addEventHandler ["HandleDamage",{false}];
+			_object addEventhandler["HandleDamage",{false}];
 			_object enableSimulation false;
 
 			if((typeOf _object) in dayz_allowedObjects) then {
@@ -134,23 +133,22 @@ _nil = [] execVM "custom\remote\remote.sqf";
 			spawnedIds set[count spawnedIds,parseNumber(_idKey)];
 		};
 	} count localObjects;
-	
+
 	spawnedLoaded = true;
 
 };
 
 [] spawn {
 
-	private ["_total","_object","_t"];
+	private["_total","_object","_t"];
 
 	waitUntil {!isNil "allObjects"};
 
-	_total 	= count allObjects;
-	_t 		= diag_tickTime;
+	_total	= count allObjects;
+	_t		= diag_tickTime;
 
 	{
-
-		_object = (_x select 0) createVehicleLocal [0,0,0];
+		_object = (_x select 0) createVehicleLocal[0,0,0];
 		_object setDir (_x select 2);
 		_object setPos (_x select 1);
 		_object allowDammage false;
@@ -160,8 +158,8 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		};
 	} count allObjects;
 
-	_object 	= nil;
-	allObjects 	= nil;
+	_object		= nil;
+	allObjects	= nil;
 
 	diag_log format["[DynObj] Initializing %2 objects in %1s ",str(diag_tickTime - _t),_total];
 
@@ -172,10 +170,10 @@ _nil = [] execVM "custom\remote\remote.sqf";
 };
 
 [] spawn {
-	
+
 	client_remove_object = {
 
-		private ["_removed"];
+		private["_removed"];
 
 		waitUntil {(spawnedLoaded)};
 
@@ -184,9 +182,9 @@ _nil = [] execVM "custom\remote\remote.sqf";
 		if(!isNil "removed_objects") then { _removed = _removed - removed_objects;};
 
 		diag_log format["[EpochBuild Remover] Removing %1 objects",(count _removed)];
-		
+
 		_t = diag_tickTime;
-		
+
 		{
 			if((_x select 0) in _removed) then {
 				deletevehicle (_x select 1);

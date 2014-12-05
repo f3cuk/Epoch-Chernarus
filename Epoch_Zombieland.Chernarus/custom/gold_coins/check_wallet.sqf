@@ -1,4 +1,4 @@
-private ["_body","_player_near","_hisMoney","_myMoney"];
+private["_body","_player_near","_hisMoney","_myMoney"];
 
 _body 			= _this select 3;
 _player_near 	= _body call dze_isnearest_player;

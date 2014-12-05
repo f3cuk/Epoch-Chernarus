@@ -12,10 +12,10 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1),0],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle[_crate_type,[(_position select 0) - 20,(_position select 1),0],[],0,"CAN_COLLIDE"];
+
 	//Medical Tent
-	_baserunover 	= createVehicle ["USMC_WarfareBFieldhHospital",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
+	_baserunover 	= createVehicle["USMC_WarfareBFieldhHospital",[(_position select 0) - 40,(_position select 1),-0.2],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -23,7 +23,7 @@ if(isServer) then {
 	[[_position select 0,_position select 1,0],_rndnum,"Hard",["Random","AT"],4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
 	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Hero","Random","Hero",_mission] call spawn_group;
-	
+
 	[[_position select 0,_position select 1,0],_rndnum,"Hard","Random",4,"Random","Doctor","Random",["Hero",200],_mission] call spawn_group;
 	 
 	//Static Guns
@@ -31,15 +31,15 @@ if(isServer) then {
 		[(_position select 0) + 10,(_position select 1) + 10,0],
 		[(_position select 0) + 10,(_position select 1) - 10,0]
 	],"M2StaticMG","Hard","Hero","Hero",0,2,"Random","Random",_mission] call spawn_static;
-	
+
 	//Spawn vehicles
 	_vehclass 		= "MV22_DZ";
 	_vehicle		= [_vehclass,_position,_mission] call custom_publish;
-	
+
 	if(debug_mode) then {
 		diag_log format["WAI: [Bandit] captured_mv22 spawned a MV22 at %1",_position];
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_crate],	// mission number and crate
@@ -55,6 +55,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Captured MV22]: Ended at %1",_position];
-	
+
 	b_missionsrunning = b_missionsrunning - 1;
 };

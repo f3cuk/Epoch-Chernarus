@@ -307,7 +307,7 @@ if(isServer) then {
 	DZE_DYN_AntiStuck		= 0;
 	DZE_DYN_AntiStuck2nd	= 0;
 	DZE_DYN_AntiStuck3rd	= 0;
-	
+
 	if(isNil "dayz_fullMoonNights")		then { dayz_fullMoonNights = false; };
 	if(isNil "EpochEvents")				then { EpochEvents = []; };
 	if(isNil "DZE_vehicleAmmo")			then { DZE_vehicleAmmo = 0; };
@@ -343,7 +343,7 @@ if(!isDedicated) then {
 	humanity_CHK				= -1;
 	money_CHK					= -1;
 	restart_CHK					= -1;
-	
+
 	dayz_temperatur 			= 36;
 	dayz_temperaturnormal 		= 36;
 	dayz_temperaturmax 			= 42;
@@ -418,7 +418,7 @@ if(!isDedicated) then {
 	if(isNil "DZE_AntiWallLimit")			then { DZE_AntiWallLimit = 3; };
 	if(isNil "DZE_requireplot")				then { DZE_requireplot = 1; };
 	if(isNil "DZE_R3F_WEIGHT")				then { DZE_R3F_WEIGHT = true; };
-	
+
 	DZE_ActionInProgress 	= false;
 	DZE_AntiWallCounter		= 0;
 	DZE_FreshSpawn			= false;

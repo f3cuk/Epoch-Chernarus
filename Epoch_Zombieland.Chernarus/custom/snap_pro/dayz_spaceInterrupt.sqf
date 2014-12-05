@@ -1,4 +1,4 @@
-private ["_dikCode","_handled","_primaryWeapon","_secondaryWeapon","_nearbyObjects","_nill","_shift","_ctrl","_alt","_dropPrimary","_dropSecondary","_iItem","_removed","_iPos","_radius","_item","_vehicle","_inVehicle","_onLadder","_canDo","_doors"];
+private["_dikCode","_handled","_primaryWeapon","_secondaryWeapon","_nearbyObjects","_nill","_shift","_ctrl","_alt","_dropPrimary","_dropSecondary","_iItem","_removed","_iPos","_radius","_item","_vehicle","_inVehicle","_onLadder","_canDo","_doors"];
 _dikCode = 	_this select 1;
 
 _handled = false;
@@ -27,12 +27,12 @@ if(_dikCode == 0x01 && r_player_dead) then {
 
 // surrender 
 if(_dikCode in actionKeys "Surrender") then {
-	
+
 	_vehicle = vehicle player;
 	_inVehicle = (_vehicle != player);
 	_onLadder =	(getNumber (configFile >> "CfgMovesMaleSdr" >> "States" >> (animationState player) >> "onLadder")) == 1;
 	_canDo = (!r_drag_sqf && !r_player_unconscious && !_onLadder && !_inVehicle);
-	
+
 	if(_canDo && !DZE_Surrender && !(player isKindOf  "PZombie_VB")) then {
 		DZE_Surrender = true;
 		_dropPrimary = false;
@@ -52,8 +52,8 @@ if(_dikCode in actionKeys "Surrender") then {
 			player playActionNow "PutDown";
 			_iPos = [player] call FNC_GetPos;
 			_radius = 1;
-			_item = createVehicle ["WeaponHolder",_iPos,[],_radius,"CAN_COLLIDE"];
-			_item setPos _iPos;
+			_item = createVehicle["WeaponHolder",_iPos,[],_radius,"CAN_COLLIDE"];
+			_item setPosATL _iPos;
 			if(_dropPrimary) then {
 				_iItem = _primaryWeapon;
 				_removed = ([player,_iItem,1] call BIS_fnc_invRemove);
@@ -107,7 +107,7 @@ if((_dikCode in actionKeys "Gear") && (vehicle player != player) && !_shift && !
 };
 
 if(_dikCode in (actionKeys "GetOver")) then {
-	
+
 	if(player isKindOf  "PZombie_VB") then {
 		_handled = true;
 		DZE_PZATTACK = true;

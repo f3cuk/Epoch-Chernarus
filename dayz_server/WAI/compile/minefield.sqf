@@ -7,18 +7,18 @@ if(isServer) then {
 	_area_max 	= _this select 2;
 	_num_mines	= _this select 3;
 	_allmines 	= [];
-	
+
 	for "_x" from 1 to _num_mines do {
 
 		private["_mine_pos","_mine"];
-		
+
 		_mine_pos = [_position,_area_min,_area_max,10,0,2000,0] call BIS_fnc_findSafePos;
-		_mine = createVehicle ["Mine",_mine_pos,[],0,"CAN_COLLIDE"];
+		_mine = createVehicle["Mine",_mine_pos,[],0,"CAN_COLLIDE"];
 
 		_mine spawn {
 
 			private["_vehicle_near","_bomb"];
-			
+
 			waitUntil
 			{
 				_vehicle_near = false;
@@ -35,10 +35,10 @@ if(isServer) then {
 			deleteVehicle _this;
 		};
 
-		_allmines set [(count _allmines),_mine];
+		_allmines set[(count _allmines),_mine];
 
 	};
-	
+
 	_allmines;
 
 };

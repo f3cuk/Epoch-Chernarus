@@ -7,15 +7,15 @@ if(isServer) then {
 
 	_position		= [40] call find_position;
 	[_mission,_position,"Hard","Mayors Mansion","MainHero",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Mayors Mansion]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_large call BIS_fnc_selectRandom;
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_crate 			= createVehicle["BAF_VehicleBox",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	 
 	//Mayors Mansion
-	_baserunover 	= createVehicle ["Land_A_Villa_EP1",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_baserunover 	= createVehicle["Land_A_Villa_EP1",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -27,15 +27,15 @@ if(isServer) then {
 	//The Mayor Himself
 	_mayor = [_position,1,"Hard","Random",4,"Random","Special","Random",["Bandit",500],_mission] call spawn_group;
 	_mayor_himself = (units _mayor) select 0;
-	
+
 	//Put the Mayor in his room
 	_room = (6 + ceil(random(3)));
 	_mayor_himself disableAI "MOVE";
-	_mayor_himself setPos (_baserunover buildingPos _room);
-	
+	_mayor_himself setPosATL (_baserunover buildingPos _room);
+
 	//Let him move once player is near
 	_mayor_himself spawn {
-		private ["_mayor","_player_near"];
+		private["_mayor","_player_near"];
 		_mayor = _this;
 		_player_near = false;
 		waitUntil {

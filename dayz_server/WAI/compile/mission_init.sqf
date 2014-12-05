@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_mines","_difficulty","_mission","_type","_color","_dot","_position","_marker","_name","_show_marker"];
+	private["_mines","_difficulty","_mission","_type","_color","_dot","_position","_marker","_name","_show_marker"];
 
 	_mission	= _this select 0;
 	_position	= _this select 1;
@@ -15,8 +15,8 @@ if(isServer) then {
 	};
 
 	if(debug_mode) then { diag_log("WAI: Starting Mission number " + str(_mission)); };
-	wai_mission_data select _mission set [1,_type];
-	wai_mission_data select _mission set [3,_position];
+	wai_mission_data select _mission set[1,_type];
+	wai_mission_data select _mission set[3,_position];
 
 	if(wai_enable_minefield && _mines) then {
 		call {
@@ -25,7 +25,7 @@ if(isServer) then {
 			if(_difficulty == "hard")		exitWith {_mines = [_position,50,75,100] call minefield;};
 			if(_difficulty == "extreme")	exitWith {_mines = [_position,60,90,150] call minefield;};
 		};
-		wai_mission_data select _mission set [2,_mines];
+		wai_mission_data select _mission set[2,_mines];
 	};
 
 	_marker	= "";
@@ -57,11 +57,11 @@ if(isServer) then {
 			_name 		= _this select 2;
 			_mission 	= _this select 3;
 			_running 	= true;
-			
+
 			while {_running} do {
 
 				_type = (wai_mission_data select _mission) select 1;
-				
+
 				_marker = createMarker [_type + str(_mission),_position];
 				_marker setMarkerColor _color;
 				_marker setMarkerShape "ELLIPSE";

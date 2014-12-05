@@ -4,16 +4,16 @@
 	Made for DayZ Epoch please ask permission to use/edit/distrubute email vbawol@veteranbastards.com.
 */
 
-private ["_date","_key","_result","_outcome","_handle","_datestr"];
+private["_date","_key","_result","_outcome","_handle","_datestr"];
 
 diag_log("EPOCH EVENTS INIT");
 EventSchedulerLastTime = "";
 
 epoch_eventIsAny = {
-	private ["_boolReturn","_event","_date","_bool","_index"];
+	private["_boolReturn","_event","_date","_bool","_index"];
     _event = _this select 0;
 	_date = _this select 1;
-	
+
 	_boolReturn = false;
 
 	_index = 0;
@@ -32,7 +32,7 @@ epoch_eventIsAny = {
 };
 
 while {1 == 1} do {
-	
+
 	// Find current time from server
 	_key = "CHILD:307:";
 	_result = _key call server_hiveReadWrite;
@@ -41,7 +41,7 @@ while {1 == 1} do {
 		_date = _result select 1;
 		_datestr  = str(_date);
 		if(EventSchedulerLastTime != _datestr) then {
-			
+
 			// internal timestamp
 			ServerCurrentTime = [(_date select 3),(_date select 4)];
 

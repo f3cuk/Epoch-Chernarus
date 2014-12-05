@@ -1,4 +1,4 @@
-private ["_id","_uid","_key","_activatingPlayer"];
+private["_id","_uid","_key","_activatingPlayer"];
 
 _id 				= _this select 0;
 _uid 				= _this select 1;

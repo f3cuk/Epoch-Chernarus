@@ -1,4 +1,4 @@
-private ["_object","_worldspace","_class","_uid","_dam","_hitpoints","_selection","_dam_array","_damage","_fuel","_key","_spawn_damage","_characterID","_continue","_result","_outcome"];
+private["_object","_worldspace","_class","_uid","_dam","_hitpoints","_selection","_dam_array","_damage","_fuel","_key","_spawn_damage","_characterID","_continue","_result","_outcome"];
 
 _object			= _this select 0;
 _worldspace		= _this select 1;
@@ -19,9 +19,9 @@ if(_spawn_damage) then {
 		{
 			_dam = call generate_new_damage;
 			_selection = getText(configFile >> "cfgVehicles" >> _class >> "HitPoints" >> _x >> "name");
-			
+
 			if(_dam > 0) then {
-				_dam_array set [count _dam_array,[_selection,_dam]];
+				_dam_array set[count _dam_array,[_selection,_dam]];
 			};
 		} count _hitpoints;	
 
@@ -62,7 +62,7 @@ _object setDamage _damage;
 _object setFuel _fuel;
 _object setvelocity [0,0,1];
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 
 _object call fnc_veh_ResetEH;
 

@@ -222,7 +222,7 @@ class RscDisplayCharacterSelect
 {
 	idd = -1;
 	enableDisplay = 1;
-	
+
 	onLoad = "uiNamespace setVariable['CharacterSelectDisplay',_this select 0]; diag_log 'CharacterSelectDisplay.onLoad';";
 
 	class Controls {

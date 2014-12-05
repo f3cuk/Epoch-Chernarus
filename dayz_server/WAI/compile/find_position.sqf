@@ -1,6 +1,6 @@
 if(isServer) then {
-	
-	private ["_i","_traders","_safepos","_validspot","_position"];
+
+	private["_i","_traders","_safepos","_validspot","_position"];
 
 	markerready = false;
 
@@ -14,7 +14,7 @@ if(isServer) then {
 	_i 			= 1;
 
 	while{!_validspot} do {
-	
+
 		sleep 1;
 
 		_position 	= _safepos call BIS_fnc_findSafePos;
@@ -52,10 +52,10 @@ if(isServer) then {
 		if(_validspot) then {
 
 			if(debug_mode) then { diag_log("Loop complete,valid position " +str(_position) + " in " + str(_i) + " attempts"); };
-	
+
 		};
 
 	};
-	_position set [2,0];
+	_position set[2,0];
 	_position
 };

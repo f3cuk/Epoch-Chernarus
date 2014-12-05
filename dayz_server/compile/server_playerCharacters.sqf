@@ -1,4 +1,4 @@
-private ["_player","_playerId","_key","_data","_doLoop","_charArray","_hiveVersion"];
+private["_player","_playerId","_key","_data","_doLoop","_charArray","_hiveVersion"];
 
 _player = _this;
 _playerId = getPlayerUID _player;

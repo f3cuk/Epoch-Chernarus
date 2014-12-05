@@ -1,4 +1,4 @@
-private ["_item","_onLadder","_hasclothesitem","_config","_text","_myModel","_itemNew","_currentSex","_newSex","_model"];
+private["_item","_onLadder","_hasclothesitem","_config","_text","_myModel","_itemNew","_currentSex","_newSex","_model"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_83") ,"PLAIN DOWN"] };
 
@@ -25,7 +25,7 @@ _itemNew 			= "Skin_" + _myModel;
 
 if( (isClass(_config >> _itemNew)) ) then {
 	if( (isClass(_config >> _item)) ) then {
-		
+
 		_currentSex = getText (configFile >> "CfgSurvival" >> "Skins" >> _itemNew >> "sex");
 		_newSex = getText (configFile >> "CfgSurvival" >> "Skins" >> _item >> "sex");
 

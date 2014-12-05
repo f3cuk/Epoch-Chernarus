@@ -1,4 +1,4 @@
-private ["_maintained","_total_count","_total_damage","_newWealth","_missing","_missingQty","_proceed","_itemIn","_countIn","_target","_objectClasses","_range","_objects","_requirements","_count","_cost","_option","_wealth","_objects_filtered"];
+private["_maintained","_total_count","_total_damage","_newWealth","_missing","_missingQty","_proceed","_itemIn","_countIn","_target","_objectClasses","_range","_objects","_requirements","_count","_cost","_option","_wealth","_objects_filtered"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "STR_EPOCH_ACTIONS_2") ,"PLAIN DOWN"]; };
 
@@ -28,7 +28,7 @@ if(_maintained) exitWith {
 _objects_filtered = [];
 {
 	if(damage _x >= DZE_DamageBeforeMaint) then {
-		_objects_filtered set [count _objects_filtered,_x];
+		_objects_filtered set[count _objects_filtered,_x];
 		_total_damage = _total_damage + damage _x;
 	};
 } count _objects;
@@ -102,7 +102,7 @@ call {
 			};
 			_cost = _cost + (str(_countIn) + " " + CurrencyName);
 		} count _requirements;
-		cutText[format[(localize "STR_EPOCH_ACTIONS_7"),format["\n%1 of %2 objects need maintainance (~%3 percent damage)\n",_count,_total_count,round(_total_damage*100)],_cost],"PLAIN DOWN"];
+		cutText[format["%1 of %2 objects need maintainance (~%3 percent damage)\nCosts %4 coins",_count,_total_count,round(_total_damage*100),_cost],"PLAIN DOWN"];
 	};
 };
 

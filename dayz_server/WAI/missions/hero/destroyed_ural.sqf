@@ -7,15 +7,15 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Easy","Ural Attack","MainHero",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Hero] Ural Attack]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_medium call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
+	_crate 			= createVehicle[_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
 
 	//Base
-	_baserunover 	= createVehicle ["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
+	_baserunover 	= createVehicle["UralWreck",[(_position select 0),(_position select 1),0],[],14,"FORM"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -27,7 +27,7 @@ if(isServer) then {
 	for "_i" from 0 to _rndgro do {
 		[[_position select 0,_position select 1,0],_rndnum,"Easy","Random",4,"Random","Bandit","Random","Bandit",_mission] call spawn_group;
 	};
-	
+
 	//Condition
 	_complete = [
 		[_mission,_crate],		// mission number and crate
@@ -43,6 +43,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Mission:[Hero] Ural Attack]: Ended at %1",_position];
-	
+
 	h_missionsrunning = h_missionsrunning - 1;
 };

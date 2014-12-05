@@ -1,4 +1,4 @@
-private ["_spawnChance","_spawnRadius","_markerRadius","_loot","_loot_box","_wait_time","_spawnRoll","_position","_loot_pos","_loot_lists","_clutter"];
+private["_spawnChance","_spawnRadius","_markerRadius","_loot","_loot_box","_wait_time","_spawnRoll","_position","_loot_pos","_loot_lists","_clutter"];
 
 _markerRadius 	= 500;
 _loot_box 		= "USVehicleBox";
@@ -55,11 +55,11 @@ _loot_pos = [_position,0,(_markerRadius - 100),10,0,2000,0] call BIS_fnc_findSaf
 
 diag_log(format["CRATE: SPAWNING CONSTRUCTION CRATE AT %1",_loot_pos]);
 
-_loot_box = createVehicle [_loot_box,_loot_pos,[],0,"CAN_COLLIDE"];
+_loot_box = createVehicle[_loot_box,_loot_pos,[],0,"CAN_COLLIDE"];
 clearMagazineCargoGlobal _loot_box;
 clearWeaponCargoGlobal _loot_box;
 
-_clutter = createVehicle ["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
+_clutter = createVehicle["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
 _clutter setPos _loot_pos;
 
 {

@@ -1,4 +1,4 @@
-private ["_object","_type","_objectID","_uid","_lastUpdate","_needUpdate","_object_position","_object_inventory","_object_damage","_isNotOk","_parachuteWest","_firstTime","_object_killed","_object_repair","_isbuildable"];
+private["_object","_type","_objectID","_uid","_lastUpdate","_needUpdate","_object_position","_object_inventory","_object_damage","_isNotOk","_parachuteWest","_firstTime","_object_killed","_object_repair","_isbuildable"];
 
 _object = _this select 0;
 
@@ -82,10 +82,10 @@ _object_damage = {
 		{
 			_hit = [_object,_x] call object_getHit;
 			_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
-			if(_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+			if(_hit > 0) then {_array set[count _array,[_selection,_hit]]};
 			_object setHit ["_selection",_hit];
 		} count _hitpoints;
-	
+
 		_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
 		_key call server_hiveWrite;
 		_object setVariable["needUpdate",false,true];
@@ -99,11 +99,11 @@ _object_killed = {
 	{
 		_hit = [_object,_x] call object_getHit;
 		_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
-		if(_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+		if(_hit > 0) then {_array set[count _array,[_selection,_hit]]};
 		_hit = 1;
 		_object setHit ["_selection",_hit];
 	} count _hitpoints;
-	
+
 	if(_objectID == "0") then {
 		_key = format["CHILD:306:%1:%2:%3:",_uid,_array,_damage];
 	} else {
@@ -130,7 +130,7 @@ _object_killed = {
 
 _object_repair = {
 	private["_hitpoints","_array","_hit","_selection","_key","_damage"];
-	
+
 	_hitpoints = _object call vehicle_getHitpoints;
 	_damage = damage _object;
 	_array = [];
@@ -138,10 +138,10 @@ _object_repair = {
 	{
 		_hit = [_object,_x] call object_getHit;
 		_selection = getText (configFile >> "CfgVehicles" >> (typeOf _object) >> "HitPoints" >> _x >> "name");
-		if(_hit > 0) then {_array set [count _array,[_selection,_hit]]};
+		if(_hit > 0) then {_array set[count _array,[_selection,_hit]]};
 		_object setHit ["_selection",_hit];
 	} count _hitpoints;
-	
+
 	_key = format["CHILD:306:%1:%2:%3:",_objectID,_array,_damage];
 	_key call server_hiveWrite;
 	_object setVariable["needUpdate",false,true];
@@ -157,7 +157,7 @@ call {
 		};
 	if(_type == "position") exitWith {
 		if(!(_object in needUpdate_objects)) then {
-			needUpdate_objects set [count needUpdate_objects,_object];
+			needUpdate_objects set[count needUpdate_objects,_object];
 		};
 	};
 	if(_type == "gear") exitWith {
@@ -168,7 +168,7 @@ call {
 			call _object_damage;
 		} else {
 			if(!(_object in needUpdate_objects)) then {
-				needUpdate_objects set [count needUpdate_objects,_object];
+				needUpdate_objects set[count needUpdate_objects,_object];
 			};
 		};
 	};

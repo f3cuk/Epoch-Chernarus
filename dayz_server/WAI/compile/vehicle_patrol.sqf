@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill","_gunner","_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
+	private["_ainum","_vehicle","_aiskin","_skin","_mission","_aitype","_aicskill","_gunner","_wpnum","_radius","_skillarray","_startingpos","_veh_class","_veh","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 				= _this select 0;
 	_startingpos 			= _this select 1;
@@ -48,24 +48,24 @@ if(isServer) then {
 
 	_pilot 					= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
 	[_pilot] 				joinSilent _unitGroup;
-	
+
 	call {
 		if(_aitype == "hero") 		exitWith { _pilot setVariable["Hero",true,true]; };
 		if(_aitype == "bandit") 	exitWith { _pilot setVariable["Bandit",true,true]; };
 		if(_aitype == "special") 	exitWith { _pilot setVariable["Special",true,true]; };
 	};
-	
+
 	ai_vehicle_units 		= (ai_vehicle_units + 1);
 
-	_vehicle 				= createVehicle [_veh_class,[(_startingpos select 0),(_startingpos select 1),0],[],0,"CAN_COLLIDE"];
+	_vehicle 				= createVehicle[_veh_class,[(_startingpos select 0),(_startingpos select 1),0],[],0,"CAN_COLLIDE"];
 	_vehicle 				setFuel 1;
 	_vehicle 				engineOn true;
 	_vehicle 				setVehicleAmmo 1;
-	_vehicle 				addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
+	_vehicle 				addEventhandler["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
 	_vehicle 				allowCrewInImmobile true; 
 	_vehicle 				lock true;
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_vehicle];
+	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_vehicle];
 
 	_pilot assignAsDriver 	_vehicle;
 	_pilot moveInDriver 	_vehicle;
@@ -74,13 +74,13 @@ if(isServer) then {
 	_gunner 				assignAsGunner _vehicle;
 	_gunner 				moveInTurret [_vehicle,[0]];
 	[_gunner] 				joinSilent _unitGroup;
-	
+
 	call {
 		if(_aitype == "hero") 		exitWith { _gunner setVariable["Hero",true,true]; };
 		if(_aitype == "bandit") 	exitWith { _gunner setVariable["Bandit",true,true]; };
 		if(_aitype == "special") 	exitWith { _gunner setVariable["Special",true,true]; };
 	};
-	
+
 	{
 		_gunner setSkill [(_x select 0),(_x select 1)];
 	} count _aicskill;
@@ -98,7 +98,7 @@ if(isServer) then {
 	} count (units _unitgroup);
 
 	{
-		_x addEventHandler ["Killed",{[_this select 0,_this select 1,"vehicle"] call on_kill;}];
+		_x addEventhandler["Killed",{[_this select 0,_this select 1,"vehicle"] call on_kill;}];
 	} forEach (units _unitgroup);
 
 	if(!isNil "_mission") then {
@@ -106,7 +106,7 @@ if(isServer) then {
 		_vehicle setVariable["mission",_mission];
 		{
 			_ainum = (wai_mission_data select _mission) select 0;
-			wai_mission_data select _mission set [0,(_ainum + 1)];
+			wai_mission_data select _mission set[0,(_ainum + 1)];
 			_x setVariable["mission",_mission]; 
 		} count (crew _vehicle);
 	};
@@ -146,6 +146,6 @@ if(isServer) then {
 	_wp = _unitGroup addWaypoint [[(_position select 0),(_position select 1),0],100];
 	_wp setWaypointType "CYCLE";
 	_wp setWaypointCompletionRadius 200;
-	
+
 	_unitGroup
 };

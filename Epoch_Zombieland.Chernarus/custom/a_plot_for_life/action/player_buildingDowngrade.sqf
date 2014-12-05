@@ -1,4 +1,4 @@
-private ["_location","_dir","_classname","_text","_object","_objectID","_objectUID","_newclassname","_refund","_obj","_upgrade","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_i","_invResult","_itemOut","_countOut","_abortInvAdd","_addedItems","_playerUID"];
+private["_location","_dir","_classname","_text","_object","_objectID","_objectUID","_newclassname","_refund","_obj","_upgrade","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_i","_invResult","_itemOut","_countOut","_abortInvAdd","_addedItems","_playerUID"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_48") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
@@ -20,7 +20,7 @@ _findNearestPole 	= [];
 
 {
 	if(alive _x) then {
-		_findNearestPole set [(count _findNearestPole),_x];
+		_findNearestPole set[(count _findNearestPole),_x];
 	};
 } count _findNearestPoles;
 
@@ -88,7 +88,7 @@ if((count _upgrade) > 0) then {
 			};
 			if(_invResult) then {
 				_i = _i + 1;
-				_addedItems set [(count _addedItems),[_itemOut,1]];
+				_addedItems set[(count _addedItems),[_itemOut,1]];
 			};
 		};
 
@@ -107,9 +107,9 @@ if((count _upgrade) > 0) then {
 		};
 
 		_classname = _newclassname;
-		_object = createVehicle [_classname,[0,0,0],[],0,"CAN_COLLIDE"];
+		_object = createVehicle[_classname,[0,0,0],[],0,"CAN_COLLIDE"];
 		_object setDir _dir;
-		_object setPos _location;
+		_object setPosATL _location;
 		_object setVariable["ownerPUID",_ownerID,true];
 
 		cutText[format[(localize "str_epoch_player_142"),_text],"PLAIN DOWN",5];

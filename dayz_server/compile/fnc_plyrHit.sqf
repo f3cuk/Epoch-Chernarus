@@ -1,10 +1,10 @@
-private ["_victim","_vehicle"];
+private["_victim","_vehicle"];
 
 _victim = _this select 0;
 
 if(isPlayer _victim) then {
 
-	private ["_attacker","_weapon","_distance","_damage"];
+	private["_attacker","_weapon","_distance","_damage"];
 
 	_attacker 	= _this select 1;
 	_damage 	= _this select 2;
@@ -30,7 +30,7 @@ if(isPlayer _victim) then {
 	if(isNil "_weapon") then {
 
 		_vehicle = typeOf (vehicle _attacker);
-		
+
 		if(!isNil "_vehicle") then {
 			_weapon = getText (configFile >> "CfgVehicles" >> _vehicle >> "displayName");
 		} else {
@@ -46,5 +46,5 @@ if(isPlayer _victim) then {
 	_victim setVariable["AttackedByName",(name _attacker)];
 	_victim setVariable["AttackedByWeapon",_weapon];
 	_victim setVariable["AttackedFromDistance",_distance];
-	
+
 };

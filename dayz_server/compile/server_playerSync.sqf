@@ -1,4 +1,4 @@
-private ["_removebackpack","_cashMoney","_inTransit","_empty","_name","_playerwasNearby","_character","_magazines","_force","_characterID","_charPos","_isInVehicle","_timeSince","_humanity","_debug","_distance","_isNewMed","_isNewPos","_isNewGear","_playerPos","_playerGear","_playerBackp","_medical","_distanceFoot","_lastPos","_backpack","_kills","_killsB","_killsH","_headShots","_lastTime","_timeGross","_timeLeft","_currentWpn","_currentAnim","_config","_onLadder","_isTerminal","_currentModel","_muzzles","_temp","_currentState","_array","_key","_forceGear","_friendlies","_arrayToSave"];
+private["_removebackpack","_cashMoney","_inTransit","_empty","_name","_playerwasNearby","_character","_magazines","_force","_characterID","_charPos","_isInVehicle","_timeSince","_humanity","_debug","_distance","_isNewMed","_isNewPos","_isNewGear","_playerPos","_playerGear","_playerBackp","_medical","_distanceFoot","_lastPos","_backpack","_kills","_killsB","_killsH","_headShots","_lastTime","_timeGross","_timeLeft","_currentWpn","_currentAnim","_config","_onLadder","_isTerminal","_currentModel","_muzzles","_temp","_currentState","_array","_key","_forceGear","_friendlies","_arrayToSave"];
 
 _character 			= _this select 0;
 _magazines 			= _this select 1;
@@ -53,7 +53,7 @@ if(_characterID != "0") then {
 	_playerBackp 	= [];
 	_medical 		= [];
 	_distanceFoot 	=	0;
-		
+
 	if(_isNewPos || _force) then {
 		if(((_charPos select 0) == 0) && ((_charPos select 1) == 0)) then {
 			//Zero Position
@@ -95,7 +95,7 @@ if(_characterID != "0") then {
 		};
 		_character setVariable["medForceUpdate",false,true];
 	};
-	
+
 	//Process update
 	if(_characterID != "0") then {
 		_kills 		= ["zombieKills",_character] 	call server_getDiff;
@@ -121,11 +121,11 @@ if(_characterID != "0") then {
 		_onLadder 		= (getNumber (_config >> "onLadder")) == 1;
 		_isTerminal 	= (getNumber (_config >> "terminal")) == 1;
 		_currentModel 	= typeOf _character;
-		
+
 		if(_onLadder || _isInVehicle || _isTerminal) then {
 			_currentAnim = "";
 			if((count _playerPos > 0) && !_isTerminal) then {
-				_charPos set [2,0];
+				_charPos set[2,0];
 				_playerPos set[1,_charPos];					
 			};
 		};
@@ -153,7 +153,7 @@ if(_characterID != "0") then {
 			_arrayToSave = (_character getVariable["friendlies",[]]);
 			if(isNil "_arrayToSave") then {_arrayToSave = [];};
 			_friendlies = [_arrayToSave,4] call array_reduceSizeReverse;
-			_currentState set [(count _currentState),_friendlies];
+			_currentState set[(count _currentState),_friendlies];
 		};
 		/*
 			Everything is ready,now publish to HIVE
@@ -162,10 +162,10 @@ if(_characterID != "0") then {
 			_array = [];
 			{
 				if(_x > dayz_minpos && _x < dayz_maxpos) then {
-					_array set [count _array,_x];
+					_array set[count _array,_x];
 				};
 			} count (_playerPos select 1);
-			_playerPos set [1,_array];
+			_playerPos set[1,_array];
 		};
 
 		if(!isNull _character) then {
@@ -177,10 +177,10 @@ if(_characterID != "0") then {
 
 		if(vehicle _character != _character) then {
 			if(!(vehicle _character in needUpdate_objects)) then {
-				needUpdate_objects set [count needUpdate_objects,vehicle _character];
+				needUpdate_objects set[count needUpdate_objects,vehicle _character];
 			};
 		};
-		
+
 		{
 			[_x,"gear"] call server_updateObject;
 		} count (nearestObjects[_charPos,dayz_updateObjects,10]);
@@ -188,7 +188,7 @@ if(_characterID != "0") then {
 		if(_timeSince > 0) then {
 			_character setVariable["lastTime",(time - _timeLeft)];
 		};
-		
+
 	};
-	
+
 };

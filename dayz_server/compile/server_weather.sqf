@@ -1,4 +1,4 @@
-private ["_weather","_windX","_windY","_weatherOptions","_numWeatherOptions","_forcastTime"];
+private["_weather","_windX","_windY","_weatherOptions","_numWeatherOptions","_forcastTime"];
  
 //[overCast,Fog,wind,rain]
 //wind is split randomly in to east-west/north-south direction
@@ -51,7 +51,7 @@ _weather = _weatherOptions select CurrentWeatherOption;
 
 _windX = floor(random(_weather select 2));
 _windY = (_weather select 2) - _windX;
-_weather set [2,[_windX,_windY]];
+_weather set[2,[_windX,_windY]];
 
 diag_log format["Weather %1",_weather];
  

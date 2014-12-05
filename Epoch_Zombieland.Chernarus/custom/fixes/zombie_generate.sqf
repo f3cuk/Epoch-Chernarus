@@ -1,4 +1,4 @@
-private ["_dice","_position","_unitTypes","_radius","_method","_agent","_loot_count","_index","_weights","_loot","_array","_lootType","_favStance","_tooClose","_type","_rnd","_id","_doLoiter","_maxControlledZombies","_cantSee"];
+private["_dice","_position","_unitTypes","_radius","_method","_agent","_loot_count","_index","_weights","_loot","_array","_lootType","_favStance","_tooClose","_type","_rnd","_id","_doLoiter","_maxControlledZombies","_cantSee"];
 
 _position 	= _this select 0;
 _doLoiter 	= _this select 1;
@@ -6,7 +6,7 @@ _unitTypes 	= _this select 2;
 _maxControlledZombies = round(dayz_maxLocalZombies);
 
 _cantSee = {
-	private ["_isok","_deg","_eye","_ed","_xasl","_zPos","_fov","_safeDistance","_farDistance"];
+	private["_isok","_deg","_eye","_ed","_xasl","_zPos","_fov","_safeDistance","_farDistance"];
 
 	_isok = true;
 	_zPos = +(_this select 0);
@@ -20,7 +20,7 @@ _cantSee = {
 	_fov 			= _this select 1;
 	_safeDistance 	= _this select 2;
 	_farDistance 	= _this select 3;
-	_zPos set [2,(_zPos select 2) + 1.7];
+	_zPos set[2,(_zPos select 2) + 1.7];
 
 	{
 		_xasl = getPosASL _x;
@@ -94,7 +94,7 @@ if((dayz_spawnZombies < _maxControlledZombies) && (dayz_CurrentNearByZombies < d
 			if(isText _lootType) then {
 				_array = [];
 				{
-					_array set [count _array,_x select 0]
+					_array set[count _array,_x select 0]
 				} forEach getArray (configFile >> "cfgLoot" >> getText(_lootType));
 				if(count _array > 0) then {
 					_index = dayz_CLBase find getText(_lootType);

@@ -1,4 +1,4 @@
-private ["_invehicle","_isplayernearby","_playerObj","_id","_playerUID","_playerName","_characterID","_timeout","_message","_magazines","_playerPos","_i","_pos","_backpack","_weapons","_weapons_backpack","_current_magazine","_magazines_backpack","_money","_loot_box","_removebackpack"];
+private["_invehicle","_isplayernearby","_playerObj","_id","_playerUID","_playerName","_characterID","_timeout","_message","_magazines","_playerPos","_i","_pos","_backpack","_weapons","_weapons_backpack","_current_magazine","_magazines_backpack","_money","_loot_box","_removebackpack"];
 
 _playerUID 	= _this select 0;
 _playerName = _this select 1;
@@ -12,7 +12,7 @@ _removebackpack = false;
 
 if(isNil "_playerObj") then {
 	diag_log format["nil player object attempting PV,:%1",_this];
-	
+
 	_playerObj = call compile format["PVDZE_player%1",_playerUID];
 };
 
@@ -49,7 +49,7 @@ if(!isNull _playerObj) then {
 		_current_magazine	= currentMagazine _playerObj;
 		_magazines_backpack = getMagazineCargo _backpack;
 		_money 				= _playerObj getVariable["cashMoney",0];
-		_loot_box 			= createVehicle ["USBasicAmmunitionBox",_pos,[],0,"CAN_COLLIDE"];
+		_loot_box 			= createVehicle["USBasicAmmunitionBox",_pos,[],0,"CAN_COLLIDE"];
 
 		clearMagazineCargoGlobal _loot_box;
 		clearWeaponCargoGlobal _loot_box;
@@ -60,7 +60,7 @@ if(!isNull _playerObj) then {
 			_loot_box addWeaponCargoGlobal [_x,1];
 		} count (_weapons);
 
-		_magazines set [(count _magazines),_current_magazine];
+		_magazines set[(count _magazines),_current_magazine];
 
 		{
 			_loot_box addMagazineCargoGlobal [_x,1];
@@ -89,7 +89,7 @@ if(!isNull _playerObj) then {
 		};
 
 		_loot_box addBackpackCargoGlobal[(typeOf _backpack),1];
-	
+
 		diag_log format["COMBAT LOGGED: %1 (%2) at location %3 - DEBUG: Weapons: ( %4 - %5) / Magazines: (%6 - %7) / Backpack: (%8) / Money: (%9)",_playerName,_timeout,([_playerObj] call FNC_GetPos),_weapons,_weapons_backpack,_magazines,_magazines_backpack,_backpack,_money];
 
 		_message = format["PLAYER COMBAT LOGGED: %1",_playerName];

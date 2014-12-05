@@ -7,16 +7,16 @@ if(isServer) then {
 
 	_position		= [30] call find_position;
 	[_mission,_position,"Easy","Medical Supply Camp","MainBandit",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Bandit] Medical Supply Camp]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle [_crate_type,[(_position select 0) + 15,(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
+	_crate 			= createVehicle[_crate_type,[(_position select 0) + 15,(_position select 1) + 5,0],[],0,"CAN_COLLIDE"];
 
 	//Medical Supply Camp
-	_baserunover1 	= createVehicle ["Land_fortified_nest_big",[(_position select 0) +15,(_position select 1) -20,0],[],0,"CAN_COLLIDE"];
-	_baserunover2 	= createVehicle ["Land_Fort_Watchtower",[(_position select 0) +25,(_position select 1) +10,0],[],0,"CAN_COLLIDE"];
+	_baserunover1 	= createVehicle["Land_fortified_nest_big",[(_position select 0) +15,(_position select 1) -20,0],[],0,"CAN_COLLIDE"];
+	_baserunover2 	= createVehicle["Land_Fort_Watchtower",[(_position select 0) +25,(_position select 1) +10,0],[],0,"CAN_COLLIDE"];
 	_baserunover 	= [_baserunover1,_baserunover2];
 
 	{ _x setVectorUp surfaceNormal position  _x; } count _baserunover;
@@ -41,6 +41,6 @@ if(isServer) then {
 	};
 
 	diag_log format["WAI: [Mission:[Bandit] Medical Supply Camp]: Ended at %1",_position];
-	
+
 	b_missionsrunning = b_missionsrunning - 1;
 };

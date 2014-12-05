@@ -2,7 +2,7 @@
 	File: AHconfig.sqf
 	Author: Chris(tian) "infiSTAR" Lorenzen
 	Contact: infiSTAR23@gmail.com
-	
+
 	Description:
 	Arma AntiHack & AdminTools - infiSTAR.de
 	-
@@ -24,10 +24,10 @@
 /*  WHITELIST UIDs HERE   */ _WHITELIST = []; //do not have a , at the end.
 /* ********************************************************************************* */
 /*  Top esc menu TXT      */ _TopOfESC = "ZeroDays Epoch"; //do not use " in this text.
-/*  Bottom esc menu TXT   */ _LowerTop = "AntiHack / AdminTool"; //do not use " in this text.
-/*  Bottom esc menu TXT2  */ _LowerBottom = "by infiSTAR.de"; //do not use " in this text.
+/*  Bottom esc menu TXT   */ _LowerTop = "Teamspeak"; //do not use " in this text.
+/*  Bottom esc menu TXT2  */ _LowerBottom = "ts.dayzepoch.nl"; //do not use " in this text.
 /*  Color esc menu TXT    */ _EscColor = [1,1,1,1];
-/*  DebugMonitor TXT      */ _BottomDebug = "infiSTAR.de"; //do not use " in this text.
+/*  DebugMonitor TXT      */ _BottomDebug = "www.dayzepoch.nl"; //do not use " in this text.
 /*  DebugMonitor Key      */ _ODK = 0xCF;	/* google DIK_KeyCodes (0xCF is END) */
 /*  Use DebugMonitor      */ _DMS = false;	/* true or false */	/* starts up with debugmonitor ON if true */
 /*  DebugMonitor Action   */ _DMW = false;	/* true or false */	/* "Debug" option on mousewheel */
@@ -158,12 +158,12 @@ _dayzActions =
 ];
 /* ********************************************************************************* */
 	//	NEW (EXPERIMENTAL):
-	_UDP = false;	// Use Dupe Protection			/* true or false */
+	_UDP = true;	// Use Dupe Protection			/* true or false */
 	_URG = false;	// Antirefuel & AntiCargod		/* true or false */
 	_UIC = false;	// Vehicle ID Check				/* true or false */
 	_UCL = false;	// Use Anti Combat Log			/* true or false */
-	
-	
+
+
 	/*
 		"_UIM": Use Incognito Mode, makes it for the most part look like you don't run infiSTAR to the normal player.
 		But for that it disables for example:
@@ -172,8 +172,8 @@ _dayzActions =
 		So it will make the server more unsecure! but look like it's a default one.
 	*/
 	_UIM = false;	/* true or false */
-	
-	
+
+
 	/*
 		"_sUptime": Server Uptime in seconds!
 		Using this will show "Restart in: xh xxmin"
@@ -181,16 +181,16 @@ _dayzActions =
 		_sUptime = 0;
 	*/
 	_sUptime = 0;
-	
-	
+
+
 	/*
 		"_UDN": Players can Vote if they want Day- or NighTime
 		!vote day,/vote day, vote day,
 		!vote night,/vote night, vote night
 	*/
 	_UDN = true;	/* true or false */
-	
-	
+
+
 	/*
 		"_FRC": FNCRestored Check.
 		When "_BHF = true;" which it always should be in my opinion, then this will check if "_BHF" is persistent.

@@ -7,15 +7,15 @@ if(isServer) then {
 
 	_position		= [50] call find_position;
 	[_mission,_position,"Extreme","Presidents in Town","MainBandit",true] call mission_init;
-	
+
 	diag_log 		format["WAI: [Mission:[Bandit] Presidents in Town]: Starting... %1",_position];
 
 	//Setup the crate
 	_crate_type 	= crates_small call BIS_fnc_selectRandom;
-	_crate 			= createVehicle ["BAF_VehicleBox",[(_position select 0),(_position select 1),.1],[],0,"CAN_COLLIDE"];
-	
+	_crate 			= createVehicle["BAF_VehicleBox",[(_position select 0),(_position select 1),.1],[],0,"CAN_COLLIDE"];
+
 	//Hotel
-	_baserunover 	= createVehicle ["Land_A_Office01",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
+	_baserunover 	= createVehicle["Land_A_Office01",[(_position select 0),(_position select 1),0],[],0,"CAN_COLLIDE"];
 	_baserunover 	setVectorUp surfaceNormal position _baserunover;
 
 	//Troops
@@ -38,7 +38,7 @@ if(isServer) then {
 	[[(_position select 0),(_position select 1),0],[0,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
 	[[(_position select 0) + 50,(_position select 1),0],[50,50,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
 	[[(_position select 0) + 100,(_position select 1),0],[100,0,0],800,"UH60M_EP1_DZE",6,"Random","Random",4,"Random","Hero","Random","Hero",false,_mission] spawn heli_para;
-	
+
 	//Static guns
 	[[
 		[(_position select 0) - 13.135,(_position select 1) + 5.025,5.27],

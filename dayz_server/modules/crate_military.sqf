@@ -1,4 +1,4 @@
-private ["_spawnChance","_spawnRadius","_markerRadius","_loot","_loot_box","_wait_time","_spawnRoll","_position","_loot_pos","_loot_lists","_clutter"];
+private["_spawnChance","_spawnRadius","_markerRadius","_loot","_loot_box","_wait_time","_spawnRoll","_position","_loot_pos","_loot_lists","_clutter"];
  
 _markerRadius 	= 500;
 _loot_box 		= "RUVehicleBox";
@@ -25,7 +25,7 @@ _loot_lists 	=
 			["10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107","10Rnd_127x99_m107"]
 		],
 		[
-			["DMR","M4SPR","M8_sharpshooter","M24","M40A3"],
+			["DMR_DZ","M4SPR","M8_sharpshooter","M24","M40A3"],
 			["20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24","20Rnd_762x51_DMR","5Rnd_762x51_M24"]
 		],
 		[
@@ -53,11 +53,11 @@ _loot_pos = [_position,0,(_markerRadius - 100),10,0,2000,0] call BIS_fnc_findSaf
 
 diag_log(format["CRATE: SPAWNING MILITARY CRATE AT %1",_loot_pos]);
 
-_loot_box = createVehicle [_loot_box,_loot_pos,[],0,"CAN_COLLIDE"];
+_loot_box = createVehicle[_loot_box,_loot_pos,[],0,"CAN_COLLIDE"];
 clearMagazineCargoGlobal _loot_box;
 clearWeaponCargoGlobal _loot_box;
 
-_clutter = createVehicle ["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
+_clutter = createVehicle["ClutterCutter_small_2_EP1",_loot_pos,[],0,"CAN_COLLIDE"];
 _clutter setPos _loot_pos;
 
 {

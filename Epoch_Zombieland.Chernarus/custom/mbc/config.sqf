@@ -1,4 +1,4 @@
-private ["_junk_group","_food_group","_military_group","_medical_group","_vehicle_repair_group","_common_group","_assault_group","_lmg_group","_sniper_group","_tools_group","_chainbullets_group","_rares_group","_rare_weapons_group","_legend_group","_chainsaw_group"];
+private["_junk_group","_food_group","_military_group","_medical_group","_vehicle_repair_group","_common_group","_assault_group","_lmg_group","_sniper_group","_tools_group","_chainbullets_group","_rares_group","_rare_weapons_group","_legend_group","_chainsaw_group"];
 
 MBT_NAME = "EpochPacks"; //Name of the item that spawns the reward (this is just a visual thing,code won't break if you change this to something random)
 MBT_CRATEDELAY = 900; //How long until the reward crate disappears (in seconds) Default: 900 (15 minutes)
@@ -52,7 +52,7 @@ MBC_REWARDLIST = [
 	//		raritylevel - the level of rarity from 1 to 4 (1 = least rare,4 = rarest),this is just visual for the UI
 	//		rarity - how likely this item will be picked in percentage (from 0 to 100)
 	//			Note: total sum of rarity must equal 100
-	
+
 	// Bad luck (junk items with low possibility)
 	 ["group_mag",_junk_group,1,1,4]
 	 
@@ -72,7 +72,7 @@ MBC_REWARDLIST = [
 	,["magazine","ItemGoldBar10oz",3,2,3]
 	,["magazine","PartPlywoodPack",15,2,3]
 	,["magazine","PartPlankPack",15,2,3]
-	
+
 	// Rare
 	,["group_wep",_rare_weapons_group,1,3,5]
 	,["group_mag",_rares_group,1,3,5]
@@ -83,7 +83,7 @@ MBC_REWARDLIST = [
 	,["magazine","PartPlywoodPack",30,3,2]
 	,["magazine","PartPlankPack",30,3,2]
 	,["magazine","ItemPole",30,3,2]
-	
+
 	// Legendary
 	,["group_wep",_chainsaw_group,1,4,1]
 	,["group_mag",_legend_group,1,4,1]

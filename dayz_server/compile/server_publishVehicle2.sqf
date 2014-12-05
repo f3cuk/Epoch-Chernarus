@@ -1,4 +1,4 @@
-private ["_object","_worldspace","_class","_donotusekey","_keySelected","_activatingPlayer","_isOK","_characterID","_dir","_location","_uid","_key","_result","_outcome","_continue","_object_para","_oid"];
+private["_object","_worldspace","_class","_donotusekey","_keySelected","_activatingPlayer","_isOK","_characterID","_dir","_location","_uid","_key","_result","_outcome","_continue","_object_para","_oid"];
 
 _object 			= _this select 0;
 _worldspace 		= _this select 1;
@@ -46,11 +46,11 @@ while {!_continue} do {
 deleteVehicle _object;
 
 if(DZE_TRADER_SPAWNMODE) then {
-	_object_para = createVehicle ["ParachuteMediumWest",[0,0,0],[],0,"CAN_COLLIDE"];
-	_object_para setPos [_location select 0,_location select 1,(_location select 2) + 65];
-	_object = createVehicle [_class,[0,0,0],[],0,"CAN_COLLIDE"];
+	_object_para = createVehicle["ParachuteMediumWest",[0,0,0],[],0,"CAN_COLLIDE"];
+	_object_para setPosATL [_location select 0,_location select 1,(_location select 2) + 65];
+	_object = createVehicle[_class,[0,0,0],[],0,"CAN_COLLIDE"];
 } else {
-	_object = createVehicle [_class,_location,[],0,"CAN_COLLIDE"];
+	_object = createVehicle[_class,_location,[],0,"CAN_COLLIDE"];
 };
 
 if(!_donotusekey) then {
@@ -72,7 +72,7 @@ if(DZE_TRADER_SPAWNMODE) then {
 	deleteVehicle _object_para;
 };
 
-PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_object];
+PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 
 _object call fnc_veh_ResetEH;
 

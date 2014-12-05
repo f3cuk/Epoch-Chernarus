@@ -1,4 +1,4 @@
-private ["_validMarkers","_findNearestPoles","_sphere","_plotpole","_distance"];
+private["_validMarkers","_findNearestPoles","_sphere","_plotpole","_distance"];
 
 _distance = (DZE_PlotPole select 0) + 10;
 
@@ -8,9 +8,9 @@ _validMarkers 		= [];
 
 {
 	_sphere = _x getVariable["inventory",[]];
-	
+
 	if(_sphere select 0 == "PPMarker") then {
-		_validMarkers set [count _validMarkers,_x];
+		_validMarkers set[count _validMarkers,_x];
 	};
 } count _findNearestPoles;
 

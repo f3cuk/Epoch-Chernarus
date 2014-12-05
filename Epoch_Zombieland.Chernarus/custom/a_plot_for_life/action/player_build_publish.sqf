@@ -1,4 +1,4 @@
-private ["_cancel","_position","_reason","_classnametmp","_classname","_tmpbuilt","_dir","_location","_text","_limit","_isOk","_proceed","_counter","_dis","_sfx","_started","_finished","_animState","_isMedic","_num_removed","_lockable","_combinationDisplay","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_combination_1_Display","_playerUID","_OwnerUID","_y_top","_y_bottom","_isAllowedUnderGround","_isPole","_restricted_area"];
+private["_cancel","_position","_reason","_classnametmp","_classname","_tmpbuilt","_dir","_location","_text","_limit","_isOk","_proceed","_counter","_dis","_sfx","_started","_finished","_animState","_isMedic","_num_removed","_lockable","_combinationDisplay","_combination_1","_combination_2","_combination_3","_combination_4","_combination","_combination_1_Display","_playerUID","_OwnerUID","_y_top","_y_bottom","_isAllowedUnderGround","_isPole","_restricted_area"];
 
 _cancel 				= _this select 0;
 _position 				= _this select 1;
@@ -43,7 +43,7 @@ isNearWater = {
 	_result 	= false;
 	_position 	= _this select 0;
 	_radius		= _this select 1;
-	
+
 	for "_i" from 0 to 359 step 45 do {
 		_position = [(_position select 0) + (sin(_i)*_radius),(_position select 1) + (cos(_i)*_radius)];
 		if(surfaceIsWater _position) exitWith {
@@ -57,7 +57,7 @@ isNearWater = {
 
 _restricted_area = _position call {
 
-	private ["_result","_position","_y"];
+	private["_result","_position","_y"];
 
 	_result 	= false;
 	_position 	= _this;
@@ -76,19 +76,19 @@ if(_restricted_area) then { _cancel = true; _reason = "[Restricted] Cannot build
 if(!_cancel) then {
 
 	_classname 	= _classnametmp;
-	_tmpbuilt 	= createVehicle [_classname,_location,[],0,"CAN_COLLIDE"];
+	_tmpbuilt 	= createVehicle[_classname,_location,[],0,"CAN_COLLIDE"];
 	_tmpbuilt setdir _dir;
 	_location 	= _position;
 
 	if((_isAllowedUnderGround == 0) && ((_location select 2) < 0)) then {
-		_location set [2,0];
+		_location set[2,0];
 	};
 
 	if(surfaceIsWater _location) then {
 		_tmpbuilt setPosASL _location;
 		_location = ASLtoATL _location;
 	} else {
-		_tmpbuilt setPos _location;
+		_tmpbuilt setPosATL _location;
 	};
 
 	cutText[format[(localize "str_epoch_player_138"),_text],"PLAIN DOWN"];
@@ -108,7 +108,7 @@ if(!_cancel) then {
 		[10,10] call dayz_HungerThirst;
 
 		player playActionNow "Medic";
-		
+
 		_dis = 20;
 		_sfx = "repair";
 
@@ -223,7 +223,7 @@ if(!_cancel) then {
 
 				_tmpbuilt setVariable["CharacterID",_combination,true];
 				_tmpbuilt setVariable["ownerPUID",_OwnerUID,true];
-				
+
 				PVDZE_obj_Publish = [_combination,_tmpbuilt,[_dir,_location,_playerUID],_classname];
 				publicVariableServer "PVDZE_obj_Publish";
 
@@ -233,11 +233,11 @@ if(!_cancel) then {
 
 				_tmpbuilt setVariable["CharacterID",dayz_characterID,true];
 				_tmpbuilt setVariable["ownerPUID",_OwnerUID,true];
-			
+
 				if(_tmpbuilt isKindOf "Land_Fire_DZ") then {
 					_tmpbuilt spawn player_fireMonitor;
 				} else {
-					
+
 					PVDZE_obj_Publish = [dayz_characterID,_tmpbuilt,[_dir,_location,_playerUID],_classname];
 					publicVariableServer "PVDZE_obj_Publish";
 				};

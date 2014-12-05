@@ -1,4 +1,4 @@
-private ["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_alreadyPacking","_lockedClass","_text","_playerNear","_characterID","_PlayerUID","_objType"];
+private["_objectID","_objectUID","_obj","_ownerID","_dir","_pos","_holder","_weapons","_magazines","_backpacks","_alreadyPacking","_lockedClass","_text","_playerNear","_characterID","_PlayerUID","_objType"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_10") ,"PLAIN DOWN"]; };
 
@@ -62,11 +62,11 @@ if(!isNull _obj) then {
 	deleteVehicle _obj;
 
 	//place vault
-	_holder = createVehicle [_lockedClass,_pos,[],0,"CAN_COLLIDE"];
+	_holder = createVehicle[_lockedClass,_pos,[],0,"CAN_COLLIDE"];
 	_holder setdir _dir;
-	_holder setPos _pos;
+	_holder setPosATL _pos;
 	player reveal _holder;
-	
+
 	_holder setVariable["CharacterID",_characterID,true];
 	_holder setVariable["ObjectID",_objectID,true];
 	_holder setVariable["ObjectUID",_objectUID,true];

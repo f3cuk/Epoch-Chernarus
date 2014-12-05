@@ -1,4 +1,4 @@
-private ["_updates","_charID","_humanity","_worldspace","_model","_friendlies","_fractures","_medical","_zombieKills","_headShots","_humanKills","_banditKills","_tagList","_cashMoney"];
+private["_updates","_charID","_humanity","_worldspace","_model","_friendlies","_fractures","_medical","_zombieKills","_headShots","_humanKills","_banditKills","_tagList","_cashMoney"];
 
 _charID 	= _this select 1;
 _model 		= _this select 2;
@@ -7,13 +7,13 @@ if(typeOF player == _model) exitWith {cutText['You already wear this Skin!','PLA
 
 player allowDamage false;
 
-player removeEventHandler ["FiredNear",eh_player_killed];
-player removeEventHandler ["HandleDamage",mydamage_eh1];
-player removeEventHandler ["Killed",mydamage_eh3];
-player removeEventHandler ["Fired",mydamage_eh2];
+player removeEventhandler["FiredNear",eh_player_killed];
+player removeEventhandler["HandleDamage",mydamage_eh1];
+player removeEventhandler["Killed",mydamage_eh3];
+player removeEventhandler["Fired",mydamage_eh2];
 
 _updates = player getVariable["updatePlayer",[false,false,false,false,false]];
-_updates set [0,true];
+_updates set[0,true];
 player setVariable["updatePlayer",_updates,true];
 dayz_unsaved = true;
 
@@ -44,14 +44,14 @@ if(count _medical > 0) then {
 	player setVariable["USEC_BloodQty",(_medical select 7),true];
 	player setVariable["unconsciousTime",(_medical select 10),true];
 	player setVariable["messing",(_medical select 11),true];
-	
+
 	//Add Wounds
 	{
 		player setVariable[_x,true,true];
 		usecBleed = [player,_x,0];
 		publicVariable "usecBleed";
 	} count (_medical select 8);
-	
+
 	//Add fractures
 	_fractures = (_medical select 9);
 	[player,"legs",(_fractures select 0)] call object_setHit;
@@ -79,12 +79,12 @@ player setVariable["cashMoney",_cashMoney,true];
 
 call dayz_resetSelfActions;
 
-eh_player_killed = player addeventhandler ["FiredNear",{_this call player_weaponFiredNear;} ];
+eh_player_killed = player addeventhandler["FiredNear",{_this call player_weaponFiredNear;} ];
 
 [player] call fnc_usec_damageHandle;
 
 player allowDamage true;
 player addWeapon "Loot";
 player addWeapon "Flare";
-	
+
 sleep 0.1;

@@ -12,7 +12,7 @@ TraderItemList 			= -1;
 
 TraderDialogLoadItemList = {
 
-	private ["_index","_trader_id","_activatingPlayer","_distance","_item_list"];
+	private["_index","_trader_id","_activatingPlayer","_distance","_item_list"];
 
 	TraderItemList = -1;
 	_index = _this select 0;
@@ -44,13 +44,13 @@ TraderDialogLoadItemList = {
 
 	_item_list = [];
 	{
-		private ["_header","_item","_name","_type","_textPart","_qty","_buy","_bqty","_bname","_btype","_btextCurrency","_sell","_sqty","_sname","_stype","_stextCurrency","_order","_order","_afile","_File","_count","_bag","_bagclass","_index","_image"];
-		
+		private["_header","_item","_name","_type","_textPart","_qty","_buy","_bqty","_bname","_btype","_btextCurrency","_sell","_sqty","_sname","_stype","_stextCurrency","_order","_order","_afile","_File","_count","_bag","_bagclass","_index","_image"];
+
 		_header 	= _x select 0;
 		_item 		= _x select 1;
 		_name 		= _item select 0;
 		_type 		= _item select 1;
-		
+
 		call {
 			if(_type == 1) exitWith { _type = "CfgMagazines"; }; 
 			if(_type == 2) exitWith { _type = "CfgVehicles"; }; 
@@ -86,9 +86,9 @@ TraderDialogLoadItemList = {
 
 		_order = _x select 5;
 		_afile = _x select 7;
-		
+
 		_File = "custom\gold_coins\trading\" + _afile + ".sqf";
-			
+
 		_count = 0;
 		if(_type == "CfgVehicles") then {
 			if(_afile == "trade_backpacks") then {
@@ -118,7 +118,7 @@ TraderDialogLoadItemList = {
 		if(_type == "CfgWeapons") then {
 			_count = {_x == _name} count weapons player;
 		};
-		
+
 		if(_name in ["ItemBriefcase_Base","ItemSilvercase_Base"]) then {
 			call {
 				if(_name == "ItemBriefcase_Base") 	exitWith { _index = lbAdd[TraderDialogItemList,"EpochPack Premium"]; };
@@ -135,7 +135,7 @@ TraderDialogLoadItemList = {
 		_image = getText(configFile >> _type >> _name >> "picture");
 		lbSetPicture [TraderDialogItemList,_index,_image];
 
-		_item_list set [count _item_list,[_name,_textPart,_bqty,"bname",_btextCurrency,_sqty,"sname",_stextCurrency,_header,_File]];
+		_item_list set[count _item_list,[_name,_textPart,_bqty,"bname",_btextCurrency,_sqty,"sname",_stextCurrency,_header,_File]];
 
 	} forEach PVDZE_plr_TradeMenuResult;
 
@@ -144,7 +144,7 @@ TraderDialogLoadItemList = {
 
 TraderDialogShowPrices = {
 
-	private ["_index","_item","_buyprice","_sellprice"];
+	private["_index","_item","_buyprice","_sellprice"];
 
 	_index = _this select 0;
 
@@ -164,12 +164,12 @@ TraderDialogShowPrices = {
 
 TraderDialogBuy = {
 
-	private ["_index","_item","_data"];
+	private["_index","_item","_data"];
 
 	_index = _this select 0;
 
 	if(_index < 0) exitWith { 	cutText[(localize "str_epoch_player_6"),"PLAIN DOWN"]; };
-		
+
 	_item = TraderItemList select _index;
 	_data = [_item select 0,_item select 3,1,_item select 2,"buy",_item select 4,_item select 1,_item select 8];
 	[0,player,'',_data] execVM (_item select 9);
@@ -179,7 +179,7 @@ TraderDialogBuy = {
 
 TraderDialogSell = {
 
-	private ["_index","_item","_data"];
+	private["_index","_item","_data"];
 
 	_index = _this select 0;
 

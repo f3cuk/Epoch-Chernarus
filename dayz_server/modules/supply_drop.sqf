@@ -1,4 +1,4 @@
-private ["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_crashModel","_lootTable","_spawnRoll","_position","_crash","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
+private["_guaranteedLoot","_randomizedLoot","_spawnChance","_spawnMarker","_spawnRadius","_crashModel","_lootTable","_spawnRoll","_position","_crash","_num","_itemTypes","_weights","_cntWeights","_nearby","_itemType","_needsrelocated","_istoomany","_pos","_lootPos","_maxLootRadius","_index1","_index2","_CBLBase","_minLootRadius"];
 
 _guaranteedLoot = 4;
 _randomizedLoot = 8;
@@ -26,9 +26,7 @@ if(_spawnRoll <= _spawnChance) then {
 	diag_log(format["CRASHSPAWNER: Spawning '%1' with loot table '%2' NOW! (%3) at: %4",_crashModel,_lootTable,time,str(_position)]);
 
 	_crash = createVehicle[_crashModel,_position,[],0,"CAN_COLLIDE"];
-
 	_crash setDir round(random 360);
-
 	_crash setPos _position;
 	_pos = [_crash] call FNC_GetPos;
 	_crash enableSimulation false;

@@ -1,4 +1,4 @@
-private ["_cnt","_pos"];
+private["_cnt","_pos"];
 
 _pos = [player] call FNC_GetPos;
 _cnt = count (_pos nearObjects ["All",DZE_checkNearbyRadius]);

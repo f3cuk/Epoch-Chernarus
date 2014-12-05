@@ -1,11 +1,11 @@
-private ["_location","_isOk","_pondPos","_isPond","_dir","_dis","_sfx","_classname","_object","_playerPos","_item","_hastentitem","_building","_config","_text","_objectsPond","_playerUID","_OwnerUID"];
+private["_location","_isOk","_pondPos","_isPond","_dir","_dis","_sfx","_classname","_object","_playerPos","_item","_hastentitem","_building","_config","_text","_objectsPond","_playerUID","_OwnerUID"];
 //check if can pitch here
 call gear_ui_init;
 _playerPos = 	[player] call FNC_GetPos;
 _item = _this;
 _hastentitem = _this in magazines player;
 _location = player modeltoworld [0,2.5,0];
-_location set [2,0];
+_location set[2,0];
 _building = nearestObject [(vehicle player),"HouseBase"];
 _isOk = [(vehicle player),_building] call fnc_isInsideBuilding;
 
@@ -46,24 +46,24 @@ if(!_isOk) then {
 	//remove tentbag
 	player removeMagazine _item;
 	_dir = round(direction player);	
-	
+
 	[1,1] call dayz_HungerThirst;
 	//wait a bit
 	player playActionNow "Medic";
 	sleep 1;
-	
+
 	_dis=20;
 	_sfx = "tentunpack";
 	[player,_sfx,0,false,_dis] call dayz_zombieSpeak;  
 	[player,_dis,true,([player] call FNC_GetPos)] spawn player_alertZombies;
-	
+
 	_classname = 	getText (configFile >> "CfgMagazines" >> _item >> "ItemActions" >> "Pitch" >> "create");
 
 	sleep 5;
 	//place tent (local)
-	_object = createVehicle [_classname,_location,[],0,"CAN_COLLIDE"];
+	_object = createVehicle[_classname,_location,[],0,"CAN_COLLIDE"];
 	_object setdir _dir;
-	_object setPos _location;
+	_object setPosATL _location;
 	player reveal _object;
 	_location = [_object] call FNC_GetPos;
 
@@ -73,7 +73,7 @@ if(!_isOk) then {
 	//["PVDZE_obj_Publish",[dayz_characterID,_tent,[_dir,_location],_classname]] call callRpcProcedure;
 	PVDZE_obj_Publish = [dayz_characterID,_object,[_dir,_location,_playerUID],_classname];
 	publicVariableServer "PVDZE_obj_Publish";
-	
+
 	cutText[localize "str_success_tent_pitch","PLAIN DOWN"];
 } else {
 	cutText[localize "str_fail_tent_pitch","PLAIN DOWN"];

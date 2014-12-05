@@ -1,4 +1,4 @@
-private ["_player","_name","_traderid","_buyorsell","_data","_result","_key","_outcome","_clientID","_classname","_traderCity","_currency","_qty","_price"];
+private["_player","_name","_traderid","_buyorsell","_data","_result","_key","_outcome","_clientID","_classname","_traderCity","_currency","_qty","_price"];
 
 _player 		= _this select 0;
 _traderID 		= _this select 1;
@@ -8,7 +8,7 @@ _traderCity 	= _this select 4;
 _currency 		= _this select 5;
 _qty 			= _this select 6;
 _clientID 		= owner _player;
-_price 			= format ["%2x %1",_currency,_qty];
+_price 			= format["%2x %1",_currency,_qty];
 _name 			= if(alive _player) then { name _player; } else { "Dead Player"; };
 
 if(_buyorsell == 0) then {
@@ -22,7 +22,7 @@ if(DZE_ConfigTrader) then {
 } else {
 	_key 		= format["CHILD:398:%1:%2:",_traderID,_buyorsell];
 	_data 		= "HiveEXT" callExtension _key;
-	_result 	= call compile format ["%1",_data];
+	_result 	= call compile format["%1",_data];
 	_outcome	= _result select 0;
 };
 

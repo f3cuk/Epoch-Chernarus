@@ -1,4 +1,4 @@
-private ["_passArray","_classname","_enableGhost","_ghost","_location1","_object","_objectHelper","_helperColor","_offset"];
+private["_passArray","_classname","_enableGhost","_ghost","_location1","_object","_objectHelper","_helperColor","_offset"];
 
 _classname 		= _this select 0;
 _ghost 			= _this select 1;
@@ -15,9 +15,9 @@ if(_enableGhost) then {
 	};
 };
 
-_object = createVehicle [_classname,[0,0,0],[],0,"CAN_COLLIDE"];
+_object = createVehicle[_classname,[0,0,0],[],0,"CAN_COLLIDE"];
 
-_objectHelper 	= "Sign_sphere10cm_EP1" createVehicle [0,0,0];
+_objectHelper 	= "Sign_sphere10cm_EP1" createVehicle[0,0,0];
 _helperColor 	= "#(argb,8,8,3)color(0,0,0,0,ca)";
 _objectHelper setobjecttexture [0,_helperColor];
 _objectHelper attachTo [player,_offset];

@@ -21,7 +21,7 @@ class RscStructuredText {
 
 class RscTitles 
 {
-	
+
 	class playerStatusGUI {
 
 		idd = 6900;
@@ -29,7 +29,7 @@ class RscTitles
 		duration = 100000;
 		name = "statusBorder";
 		onLoad = "uiNamespace setVariable['DAYZ_GUI_display',_this select 0];";
-		
+
 		class ControlsBackground {
 			class RscStructuredText_1199 : RscStructuredText {
 				idc = 1199;
@@ -152,7 +152,7 @@ class RscTitles
 				colorText[] = {1,1,1,0.7};
 			};
 		};
-		
+
 		class Controls {
 			// Restart timer
 			class RscText_81300: RscTextGUIK {

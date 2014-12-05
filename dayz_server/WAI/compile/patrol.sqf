@@ -2,7 +2,7 @@ if(isServer) then {
 
 	_this spawn {
 
-		private ["_vehicle","_position","_unitgroup","_waypoint_data","_num_waypoints","_leader","_count_wp","_waypoint_prev","_msg","_wp","_rand_nr","_waypoint"];
+		private["_vehicle","_position","_unitgroup","_waypoint_data","_num_waypoints","_leader","_count_wp","_waypoint_prev","_msg","_wp","_rand_nr","_waypoint"];
 
 		_vehicle 		= _this select 0;
 		_position 		= _this select 1;
@@ -46,7 +46,7 @@ if(isServer) then {
 
 		[_vehicle,_unitgroup] spawn {
 
-			private ["_vehicle","_unitgroup","_runmonitor","_wp"];
+			private["_vehicle","_unitgroup","_runmonitor","_wp"];
 
 			_vehicle 	= _this select 0;
 			_unitgroup 	= _this select 1;
@@ -85,9 +85,9 @@ if(isServer) then {
 			_waypoint 	= (_waypoint_data select _rand_nr);
 			_waypoint_data set[_rand_nr,-1];
 			_waypoint_data	= _waypoint_data - [-1];
-			
+
 			_wp = _unitgroup addWaypoint [(_waypoint select 1),0];
-			
+
 			if(_i == _num_waypoints) then { 
 				_wp setWaypointType "GUARD";
 			} else { 
@@ -102,16 +102,16 @@ if(isServer) then {
 			} else {
 				_msg = format["[RADIO] The patrol is seen moving towards %1",(_waypoint select 0)];
 			};
-			
+
 			sleep random(10);
-			
+
 			if(wai_radio_announce) then {
 				RemoteMessage = ["radio",_msg];
 				publicVariable "RemoteMessage";
 			} else {
 				[nil,nil,rTitleText,_msg,"PLAIN",10] call RE;
 			};
-			
+
 			waitUntil{sleep 1; (_vehicle distance (_waypoint select 1) < 30)};
 
 			_waypoint_prev = (_waypoint select 0);

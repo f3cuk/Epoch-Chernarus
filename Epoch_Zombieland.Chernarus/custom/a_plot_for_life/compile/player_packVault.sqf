@@ -1,7 +1,7 @@
 /*
 [_obj] spawn player_packVault;
 */
-private ["_money","_player_money","_activatingPlayer","_obj","_ownerID","_objectID","_objectUID","_alreadyPacking","_location1","_location2","_dir","_pos","_bag","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_packedClass","_text","_playerNear","_playerUID","_combination","_itemOut","_countOut"];
+private["_money","_player_money","_activatingPlayer","_obj","_ownerID","_objectID","_objectUID","_alreadyPacking","_location1","_location2","_dir","_pos","_bag","_holder","_weapons","_magazines","_backpacks","_objWpnTypes","_objWpnQty","_countr","_packedClass","_text","_playerNear","_playerUID","_combination","_itemOut","_countOut"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_15") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
@@ -48,7 +48,7 @@ sleep 1;
 _location1 = [player] call FNC_GetPos;
 sleep 5;
 _location2 = [player] call FNC_GetPos;
-	
+
 if(_location1 distance _location2 > 0.1) exitWith {
 	cutText[format[(localize "str_epoch_player_122"),_text] ,"PLAIN DOWN"];
 	_obj setVariable["packing",0];
@@ -69,19 +69,19 @@ if(!isNull _obj && alive _obj) then {
 	_weapons = 		getWeaponCargo _obj;
 	_magazines = 	getMagazineCargo _obj;
 	_backpacks = 	getBackpackCargo _obj;
-	
+
 	// Remove from database
 	PVDZE_obj_Delete = [_objectID,_objectUID,_activatingPlayer];
 	publicVariableServer "PVDZE_obj_Delete";
-	
+
 	// Set down vault "take" item
-	_bag = createVehicle [_packedClass,_pos,[],0,"CAN_COLLIDE"];
-	
+	_bag = createVehicle[_packedClass,_pos,[],0,"CAN_COLLIDE"];
+
 	// Delete original
 	deleteVehicle _obj;
 
 	_bag setdir _dir;
-	_bag setPos _pos;
+	_bag setPosATL _pos;
 	player reveal _bag;
 
 	// give the player the money that was inside the safe
@@ -90,12 +90,12 @@ if(!isNull _obj && alive _obj) then {
 
 	// Empty weapon holder 
 	_holder = _bag;
-	
+
 	// add seed item
 	_itemOut = getText(configFile >> "CfgVehicles" >> _packedClass >> "seedItem");
 	_countOut = 1;
 	_holder addMagazineCargoGlobal[_itemOut,_countOut];
-	
+
 	//Add weapons
 	_objWpnTypes = 	_weapons select 0;
 	_objWpnQty = 	_weapons select 1;
@@ -104,7 +104,7 @@ if(!isNull _obj && alive _obj) then {
 		_holder addweaponcargoGlobal [_x,(_objWpnQty select _countr)];
 		_countr = _countr + 1;
 	} count _objWpnTypes;
-	
+
 	//Add Magazines
 	_objWpnTypes = _magazines select 0;
 	_objWpnQty = _magazines select 1;
@@ -122,7 +122,7 @@ if(!isNull _obj && alive _obj) then {
 		_holder addbackpackcargoGlobal [_x,(_objWpnQty select _countr)];
 		_countr = _countr + 1;
 	} count _objWpnTypes;
-	
+
 	cutText[format[(localize "str_epoch_player_123"),_text],"PLAIN DOWN"];
 
 	player action["Gear",_holder];

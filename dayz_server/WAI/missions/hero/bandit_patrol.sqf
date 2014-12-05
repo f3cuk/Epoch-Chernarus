@@ -1,7 +1,7 @@
 if(isServer) then {
 	// Mission by Havoc302
 
-    private ["_vehclass","_vehicle","_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
+    private["_vehclass","_vehicle","_complete","_crate","_mission","_position","_num_guns","_num_tools","_num_items","_rndnum","_rndgro","_crate_type","_baserunover"];
 
 	// Get mission number,important we do this early
 	_mission 		= count wai_mission_data -1;
@@ -15,7 +15,7 @@ if(isServer) then {
 
 	//Setup the crate
 	_crate_type  = crates_small call BIS_fnc_selectRandom;
-	_crate  = createVehicle [_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
+	_crate  = createVehicle[_crate_type,[(_position select 0) - 20,(_position select 1) - 20,0],[],0,"CAN_COLLIDE"];
 
 
 	//Civil vehicle

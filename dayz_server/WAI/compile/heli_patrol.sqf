@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_mission","_aitype","_aiskin","_skin","_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
+	private["_mission","_aitype","_aiskin","_skin","_aicskill","_wpnum","_radius","_gunner2","_gunner","_skillarray","_startingpos","_heli_class","_startPos","_helicopter","_unitGroup","_pilot","_skill","_position","_wp"];
 
 	_position 			= _this select 0;
 	_startingpos 		= _this select 1;
@@ -41,24 +41,24 @@ if(isServer) then {
 	};
 
 	_pilot 				= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
-	
+
 	[_pilot] joinSilent _unitGroup;
-	
+
 	call {
 		if(_aitype == "Hero") 		exitWith { _pilot setVariable["Hero",true,true]; };
 		if(_aitype == "Bandit") 	exitWith { _pilot setVariable["Bandit",true,true]; };
 		if(_aitype == "Special") 	exitWith { _pilot setVariable["Special",true,true]; };
 	};
-	
+
 	ai_air_units 		= (ai_air_units +1);
 
-	_helicopter 		= createVehicle [_heli_class,[(_startingpos select 0),(_startingpos select 1),200],[],0,"FLY"];
+	_helicopter 		= createVehicle[_heli_class,[(_startingpos select 0),(_startingpos select 1),200],[],0,"FLY"];
 	_helicopter 		setFuel 1;
 	_helicopter 		engineOn true;
 	_helicopter 		setVehicleAmmo 1;
 	_helicopter 		flyInHeight 150;
 	_helicopter 		lock true;
-	_helicopter 		addEventHandler ["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
+	_helicopter 		addEventhandler["GetOut",{(_this select 0) setFuel 0;(_this select 0) setDamage 1;}];
 
 	_pilot 				assignAsDriver _helicopter;
 	_pilot 				moveInDriver _helicopter;
@@ -74,7 +74,7 @@ if(isServer) then {
 		if(_aitype == "Bandit") 	exitWith { _gunner setVariable["Bandit",true,true]; };
 		if(_aitype == "Special") 	exitWith { _gunner setVariable["Special",true,true]; };
 	};
-	
+
 	ai_air_units 		= (ai_air_units + 1);
 
 	_gunner2 			= _unitGroup createUnit [_aiskin,[0,0,0],[],1,"NONE"];
@@ -106,10 +106,10 @@ if(isServer) then {
 	} count (units _unitgroup);
 
 	{
-		_x addEventHandler ["Killed",{[_this select 0,_this select 1,"air"] call on_kill;}];
+		_x addEventhandler["Killed",{[_this select 0,_this select 1,"air"] call on_kill;}];
 	} forEach (units _unitgroup);
 
-	PVDZE_serverObjectMonitor set [count PVDZE_serverObjectMonitor,_helicopter];
+	PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_helicopter];
 	[_helicopter] spawn vehicle_monitor;
 
 	_unitGroup allowFleeing 0;

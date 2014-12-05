@@ -1,4 +1,4 @@
-private ["_location","_dir","_classname","_missing","_text","_proceed","_num_removed","_object","_missingQty","_itemIn","_countIn","_qty","_removed","_removed_total","_tobe_removed_total","_objectID","_temp_removed_array","_textMissing","_newclassname","_requirements","_obj","_upgrade","_lockable","_combination_1","_combination_2","_combination_3","_combination","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_playerUID"];
+private["_location","_dir","_classname","_missing","_text","_proceed","_num_removed","_object","_missingQty","_itemIn","_countIn","_qty","_removed","_removed_total","_tobe_removed_total","_objectID","_temp_removed_array","_textMissing","_newclassname","_requirements","_obj","_upgrade","_lockable","_combination_1","_combination_2","_combination_3","_combination","_objectCharacterID","_canBuildOnPlot","_friendlies","_nearestPole","_ownerID","_distance","_needText","_findNearestPoles","_findNearestPole","_IsNearPlot","_playerUID"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_52") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
@@ -14,7 +14,7 @@ _findNearestPole	= [];
 
 {
 	if(alive _x) then {
-		_findNearestPole set [(count _findNearestPole),_x];
+		_findNearestPole set[(count _findNearestPole),_x];
 	};
 } count _findNearestPoles;
 
@@ -24,10 +24,10 @@ _canBuildOnPlot = false;
 if(_IsNearPlot == 0) then {
 	_canBuildOnPlot = true;
 } else {
-	
+
 	_nearestPole	= _findNearestPole select 0;
 	_ownerID		= _nearestPole getVariable["ownerPUID","0"];
-	
+
 	if(DZE_APlotforLife) then {
 		_playerUID = [player] call FNC_GetPlayerUID;
 	} else {
@@ -73,10 +73,10 @@ if((count _upgrade) > 0) then {
 	};
 
 	_requirements = _upgrade select 1;
-	
+
 	_missingQty = 0;
 	_missing = "";
-	
+
 	_proceed = true;
 	{
 		_itemIn = _x select 0;
@@ -84,16 +84,16 @@ if((count _upgrade) > 0) then {
 		_qty = { (_x == _itemIn) || (configName(inheritsFrom(configFile >> "cfgMagazines" >> _x)) == _itemIn) } count magazines player;
 		if(_qty < _countIn) exitWith { _missing = _itemIn; _missingQty = (_countIn - _qty); _proceed = false; };
 	} forEach _requirements;
-	
+
 	if(_proceed) then {
 		[1,1] call dayz_HungerThirst;
 		player playActionNow "Medic";
 		[player,20,true,([player] call FNC_GetPos)] spawn player_alertZombies;
-	
+
 		_temp_removed_array = [];
 		_removed_total = 0;
 		_tobe_removed_total = 0;
-		
+
 		{
 			_removed = 0;
 			_itemIn = _x select 0;
@@ -106,7 +106,7 @@ if((count _upgrade) > 0) then {
 					_removed = _removed + _num_removed;
 					_removed_total = _removed_total + _num_removed;
 					if(_num_removed >= 1) then {
-						_temp_removed_array set [count _temp_removed_array,_x];
+						_temp_removed_array set[count _temp_removed_array,_x];
 					};
 				};
 			} count magazines player;
@@ -120,9 +120,9 @@ if((count _upgrade) > 0) then {
 			_ownerID			= _obj getVariable["ownerPUID","0"];
 			_classname			= _newclassname;
 
-			_object = createVehicle [_classname,[0,0,0],[],0,"CAN_COLLIDE"];
+			_object = createVehicle[_classname,[0,0,0],[],0,"CAN_COLLIDE"];
 			_object setDir _dir;
-			_object setPos _location;
+			_object setPosATL _location;
 			_object setVariable["ownerPUID",_ownerID,true];
 
 			if(_lockable == 3) then {
@@ -130,9 +130,9 @@ if((count _upgrade) > 0) then {
 				_combination_2 = floor(random 10);
 				_combination_3 = floor(random 10);
 				_combination = format["%1%2%3",_combination_1,_combination_2,_combination_3];
-				
+
 				_objectCharacterID = _combination;
-				
+
 				cutText[format[(localize "str_epoch_player_158"),_combination,_text],"PLAIN DOWN",5];
 			} else {	
 				cutText[format[(localize "str_epoch_player_159"),_text],"PLAIN DOWN",5];

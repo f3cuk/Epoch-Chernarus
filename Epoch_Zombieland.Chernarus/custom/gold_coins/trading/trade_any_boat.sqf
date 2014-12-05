@@ -1,4 +1,4 @@
-private ["_oldPosition","_veh","_location","_isOk","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_obj","_objectID","_objectUID","_bos","_finished","_dir","_helipad","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_config","_okToSell","_needed","_activatingPlayer","_textPartIn","_textPartOut","_traderID","_price","_object_name","_curr_new","_newM","_myMoney"];
+private["_oldPosition","_veh","_location","_isOk","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_obj","_objectID","_objectUID","_bos","_finished","_dir","_helipad","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_config","_okToSell","_needed","_activatingPlayer","_textPartIn","_textPartOut","_traderID","_price","_object_name","_curr_new","_newM","_myMoney"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103"),"PLAIN DOWN"]; };
 
@@ -49,7 +49,7 @@ if(_qty >= _qty_in) then {
 			r_interrupt = false;
 			cutText["Cancelled trade" ,"PLAIN DOWN"];
 		};
-	
+
 	// # F3 FAST TRADING
 
 	if(_finished) then {
@@ -71,7 +71,7 @@ if(_qty >= _qty_in) then {
 				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
 			};
 			publicVariableServer "PVDZE_log";
-	
+
 			// waitUntil {!isNil "dayzTradeResult"};
 			dayzTradeResult = "PASS";
 
@@ -83,28 +83,28 @@ if(_qty >= _qty_in) then {
 					_keyNumber 		= (floor(random 2500)) + 1;
 					_keySelected 	= format[("ItemKey%1%2"),_keyColor,_keyNumber];
 					_isKeyOK 		= isClass(configFile >> "CfgWeapons" >> _keySelected);
-					
+
 					_config 		= _keySelected;
 					_isOk 			= [player,_config] call BIS_fnc_invAdd;
 
 					waitUntil {!isNil "_isOk"};
-					
+
 					if(_isOk and _isKeyOK) then {
-					
+
 						_curr_new = _qty - _qty_in;
-					
+
 						player setVariable["cashMoney",_curr_new,true];
-						
+
 						_newM 		= player getVariable["cashMoney",0];
 						_removed 	= _qty - _newM;
-															
+
 						if(_removed == _qty_in) then {
-						
+
 							_price 			= [_qty_in] call BIS_fnc_numberText;
 							_object_name 	= getText (configFile >> "CfgVehicles" >> _part_out >> "displayName");
-						
-							systemChat format ['Bought a %1 for %2 %3',_object_name,_price,CurrencyName];
-							
+
+							systemChat format['Bought a %1 for %2 %3',_object_name,_price,CurrencyName];
+
 							_dir = round(random 360);
 
 							_helipad = nearestObjects[player,["HeliHCivil","HeliHempty"],100];
@@ -113,11 +113,11 @@ if(_qty >= _qty_in) then {
 							} else {
 								_location = [(position player),0,20,1,2,2000,0] call BIS_fnc_findSafePos;
 							};
-	
-							_veh = createVehicle ["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
+
+							_veh = createVehicle["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
 
 							_location = ([_veh] call FNC_GetPos);
-					
+
 							PVDZE_veh_Publish2 = [_veh,[_dir,_location],_part_out,false,_keySelected,_activatingPlayer];
 
 							publicVariableServer  "PVDZE_veh_Publish2";
@@ -132,7 +132,7 @@ if(_qty >= _qty_in) then {
 						cutText[(localize "str_epoch_player_107"),"PLAIN DOWN"];
 					};
 				} else {
-					
+
 					_obj = _obj select 0;
 
 					_okToSell = true;
@@ -159,7 +159,7 @@ if(_qty >= _qty_in) then {
 						cutText[(localize "str_epoch_player_245"),"PLAIN DOWN"];
 					};
 				};
-	
+
 				{player removeAction _x} forEach s_player_parts;s_player_parts = [];
 				s_player_parts_crtl = -1;
 

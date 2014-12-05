@@ -1,4 +1,4 @@
-private ["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih","_null"];
+private["_player_pos","_ownerID","_objects","_i","_ownerID2","_vehicle","_sounddist","_tvih","_null"];
 
 _ownerID 	= _this select 0;
 _sounddist 	= 10;
@@ -20,27 +20,27 @@ _i = 0;
 					s_player_lockUnlock_crtl = 1;
 
 					PVDZE_veh_Lock = [_vehicle,true];
-					
+
 					if(local _vehicle) then {
 						PVDZE_veh_Lock spawn local_lockUnlock;
 					} else {
 						publicVariable "PVDZE_veh_Lock"; 
 					};
-					
+
 					player action["lightOn",_vehicle];
 					_null = [objNull,_vehicle,rSAY,"carLock",_sounddist] call RE;
 					sleep 0.5;
 					player action["lightOff",_vehicle];
-					
+
 					_tvih = typeOf _vehicle;
 					cutText[format["%1 has been locked",_tvih],"PLAIN DOWN"];
-					
+
 					s_player_lockUnlock_crtl = -1;
 					DZE_ActionInProgress = false;
 				};
 			};
 		};
-		
+
 		_i = _i + 1;
 	};
 } count _objects;

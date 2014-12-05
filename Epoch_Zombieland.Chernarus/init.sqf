@@ -42,7 +42,7 @@ if(!isDedicated) then {
 
 	diag_log format["%1: Server done loading",servertime];
 
-	player addEventHandler ["Respawn",{_id = [] spawn player_death;}];
+	player addEventhandler["Respawn",{_id = [] spawn player_death;}];
 	execVM "custom\character_select\player_monitor.sqf";
 
 	diag_log format["%1: Player monitor initialized",servertime];
@@ -57,7 +57,7 @@ if(!isDedicated) then {
 	diag_log format["%1: Add-on ojects received from server",servertime];
 	waitUntil {!isNil "localObjects"};
 	diag_log format["%1: Buildables received from server",servertime];
-	#include "init\client.sqf"
+	execVM "init\client.sqf";
 
 	waitUntil {((!isNil "objectsLoaded") && (objectsLoaded))};
 	diag_log format["%1: Add-ons have loaded",servertime];
@@ -70,7 +70,6 @@ if(!isDedicated) then {
 	};
 
 	preload_done = true;
-
 };
 
 execVM "\z\addons\dayz_code\external\DynamicWeatherEffects.sqf";

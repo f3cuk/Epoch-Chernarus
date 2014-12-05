@@ -1,4 +1,4 @@
-/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg,DayZ Player Monitor">*/
+/*%FSM<COMPILE "C:\Program Files (x86)\Bohemia Interactive\Tools\FSM Editor Personal Edition\scriptedFSM.cfg, DayZ Player Monitor">*/
 /*%FSM<HEAD>*/
 /*
 item0[] = {"init",0,250,-75.000000,-350.000000,25.000000,-300.000000,0.000000,"init"};
@@ -33,9 +33,9 @@ item28[] = {"Bad_Version",4,218,50.000000,800.000000,150.000000,850.000000,0.000
 item29[] = {"ERROR__Bad_Versi",2,250,175.000000,800.000000,275.000000,850.000000,0.000000,"ERROR:" \n "Bad Version"};
 item30[] = {"Display_Ready",4,218,-175.000000,1050.000000,-75.000000,1100.000000,0.000000,"Display" \n "Ready"};
 item31[] = {"Preload_Display",2,250,-75.000000,1100.000000,25.000000,1150.000000,0.000000,"Preload" \n "Display"};
-item32[] = {"Preload_Done",4,4314,-175.000000,1150.000000,-75.000000,1200.000000,0.000000,"Preload" \n "Done"};
+item32[] = {"Preload_Done",4,218,-175.000000,1150.000000,-75.000000,1200.000000,0.000000,"Preload" \n "Done"};
 item33[] = {"Initialize",2,250,-75.000000,1200.000000,25.000000,1250.000000,0.000000,"Initialize"};
-item34[] = {"Finish",1,250,-75.000000,1300.000000,25.000000,1350.000000,0.000000,"Finish"};
+item34[] = {"Finish",1,4346,-75.000000,1300.000000,25.000000,1350.000000,0.000000,"Finish"};
 item35[] = {"True",8,218,25.000000,1250.000000,125.000000,1300.000000,0.000000,"True"};
 item36[] = {"Too_Long",4,218,300.000000,150.000000,400.000000,200.000000,0.000000,"Too" \n "Long"};
 item37[] = {"Too_Long",4,218,300.000000,500.000000,400.000000,550.000000,0.000000,"Too" \n "Long"};
@@ -180,8 +180,8 @@ link92[] = {79,73};
 link93[] = {80,81};
 link94[] = {81,82};
 link95[] = {82,71};
-globals[] = {25.000000,1,0,0,0,640,480,1,153,6316128,1,-456.056610,331.594330,1261.496216,686.217529,1261,921,1};
-window[] = {2,-1,-1,-1,-1,808,50,1539,50,3,1279};
+globals[] = {25.000000,1,0,0,0,640,480,1,153,6316128,1,-618.621765,494.154205,1380.225464,567.484314,1261,921,1};
+window[] = {2,-1,-1,-1,-1,958,200,1689,200,3,1279};
 *//*%FSM</HEAD>*/
 class FSM
 {
@@ -300,9 +300,9 @@ class FSM
            "  _max =   getNumber (configFile >> ""CfgMagazines"" >> _item >> ""count"");" \n
            "  if(_item != """") then {" \n
            "    if(_val != _max) then {" \n
-           "      _magazineArray set [count _magazineArray,[_item,_val]];" \n
+           "      _magazineArray set[count _magazineArray,[_item,_val]];" \n
            "    } else {" \n
-           "      _magazineArray set [count _magazineArray,_item];" \n
+           "      _magazineArray set[count _magazineArray,_item];" \n
            "    };" \n
            "  };" \n
            "};" \n
@@ -316,9 +316,9 @@ class FSM
            "  _max =   getNumber (configFile >> ""CfgMagazines"" >> _item >> ""count"");" \n
            "  if(_item != """") then {" \n
            "    if(_val != _max) then {" \n
-           "      _magazineArray set [count _magazineArray,[_item,_val]];" \n
+           "      _magazineArray set[count _magazineArray,[_item,_val]];" \n
            "    } else {" \n
-           "      _magazineArray set [count _magazineArray,_item];" \n
+           "      _magazineArray set[count _magazineArray,_item];" \n
            "    };" \n
            "  };" \n
            "};" \n
@@ -347,7 +347,7 @@ class FSM
            "    _currentAnim = """";" \n
            "    //If position to be updated,make sure it is at ground level!" \n
            "    if((count _playerPos > 0) && !_isTerminal) then {" \n
-           "      _charPos set [2,0];" \n
+           "      _charPos set[2,0];" \n
            "      _playerPos set[1,_charPos];" \n
            "    };" \n
            "  };" \n
@@ -769,17 +769,17 @@ class FSM
        "" \n
        "if(dayz_paraSpawn && (freshSpawn == 2)) then {" \n
        "  player setDir _setDir;" \n
-       "  player setPos [(_setPos select 0),(_setPos select 1),2000];" \n
+       "  player setPosATL [(_setPos select 0),(_setPos select 1),2000];" \n
        "  [player,2000] spawn BIS_fnc_halo;" \n
        "} else {" \n
        "" \n
        "  // make protective box" \n
-       "  DZE_PROTOBOX = createVehicle [""DebugBoxPlayer_DZ"",_setPos,[],0,""CAN_COLLIDE""];" \n
+       "  DZE_PROTOBOX = createVehicle[""DebugBoxPlayer_DZ"",_setPos,[],0,""CAN_COLLIDE""];" \n
        "  DZE_PROTOBOX setDir _setDir;" \n
-       "  DZE_PROTOBOX setPos _setPos;" \n
+       "  DZE_PROTOBOX setPosATL _setPos;" \n
        "" \n
        "  player setDir _setDir;" \n
-       "  player setPos _setPos;" \n
+       "  player setPosATL _setPos;" \n
        "};" \n
        "" \n
        "{" \n
@@ -893,9 +893,7 @@ class FSM
        "//Hunger/Thirst" \n
        "_messing =     player getVariable[""messing"",[0,0]];" \n
        "dayz_hunger =  _messing select 0;" \n
-       "dayz_thirst =    _messing select 1;" \n
-       "" \n
-       "//player setVariable[""humanity"",-3000,true];"/*%FSM</STATEINIT""">*/;
+       "dayz_thirst =    _messing select 1;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -950,15 +948,12 @@ class FSM
     class Position
     {
       name = "Position";
-      init = /*%FSM<STATEINIT""">*/"//Location" \n
-       "_myLoc = [player] call FNC_GetPos;" \n
+      init = /*%FSM<STATEINIT""">*/"_myLoc = [player] call FNC_GetPos;" \n
        "" \n
        "dayz_loadScreenMsg = ""Setup Completed,please wait..."";" \n
        "" \n
-       "//GUI" \n
        "3 cutRsc [""playerStatusGUI"",""PLAIN"",0];" \n
        "" \n
-       "//Update GUI" \n
        "call player_updateGui;" \n
        "_id = [] spawn {" \n
        "  disableSerialization;" \n
@@ -966,7 +961,7 @@ class FSM
        "  _control = _display displayCtrl 1204;" \n
        "  _control ctrlShow false;" \n
        "  if(!r_player_injured) then {" \n
-       "    _ctrlBleed = _display displayCtrl 1303;" \n
+       "    _ctrlBleed = _display displayCtrl 81209;" \n
        "    _ctrlBleed ctrlShow false;" \n
        "  };" \n
        "  if(!r_fracture_legs && !r_fracture_arms) then {" \n
@@ -1074,10 +1069,10 @@ class FSM
       name = "Preload_Display";
       init = /*%FSM<STATEINIT""">*/"dayz_lastCheckBit = 0;" \n
        "" \n
-       "(findDisplay 46) displayAddEventHandler [""KeyDown"",""_this call dayz_spaceInterrupt""];" \n
+       "(findDisplay 46) displayAddEventhandler[""KeyDown"",""_this call dayz_spaceInterrupt""];" \n
        "player disableConversation true;" \n
        "" \n
-       "eh_player_killed = player addeventhandler [""FiredNear"",{_this call player_weaponFiredNear;} ];" \n
+       "eh_player_killed = player addeventhandler[""FiredNear"",{_this call player_weaponFiredNear;} ];" \n
        "" \n
        "_playerObjName = format[""PVDZE_player%1"",_playerUID];" \n
        "call compile format[""PVDZE_player%1 = player;"",_playerUID];" \n
@@ -1153,9 +1148,7 @@ class FSM
        "    call player_zombieCheck;" \n
        "    sleep 1;" \n
        "  };" \n
-       "};" \n
-       "" \n
-       ""/*%FSM</STATEINIT""">*/;
+       "};"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -1176,8 +1169,7 @@ class FSM
     class Initialize
     {
       name = "Initialize";
-      init = /*%FSM<STATEINIT""">*/"//Medical" \n
-       "dayz_medicalH =  [] execVM ""\z\addons\dayz_code\medical\init_medical.sqf""; //Medical Monitor Script (client only)" \n
+      init = /*%FSM<STATEINIT""">*/"dayz_medicalH =  [] execVM ""\z\addons\dayz_code\medical\init_medical.sqf"";" \n
        "[player] call fnc_usec_damageHandle;" \n
        "if(r_player_unconscious) then {" \n
        "  r_player_timeout = player getVariable[""unconsciousTime"",0];" \n
@@ -1188,11 +1180,10 @@ class FSM
        "0 cutText["""",""BLACK IN"",3];" \n
        "dayz_playerName = name player;" \n
        "" \n
-       "//Add core tools" \n
        "player addWeapon ""Loot"";" \n
        "player addWeapon ""Flare"";" \n
        "if((currentWeapon player == """")) then { player action[""SWITCHWEAPON"",player,player,1]; };" \n
-       "//load in medical details" \n
+       "" \n
        "r_player_dead =    player getVariable[""USEC_isDead"",false];" \n
        "r_player_unconscious = player getVariable[""NORRN_unconscious"",false];" \n
        "r_player_infected =  player getVariable[""USEC_infected"",false];" \n
@@ -1264,7 +1255,6 @@ class FSM
        "  };" \n
        "};" \n
        "" \n
-       "// TODO: questionably" \n
        "{ _x call fnc_veh_ResetEH; } count vehicles;" \n
        "" \n
        "private[""_fadeFire""];" \n
@@ -1277,7 +1267,7 @@ class FSM
        "" \n
        "// remove box " \n
        "[] spawn {" \n
-       "  private [""_counter""];" \n
+       "  private[""_counter""];" \n
        "  _counter = 0;" \n
        "  while {true} do {" \n
        "    if((player getVariable[""combattimeout"",0] >= time) || (_counter >= 60) || (player distance DZE_PROTOBOX > 2)) exitWith {" \n
@@ -1323,8 +1313,7 @@ class FSM
        "PVDZE_plr_LoginRecord = [_playerUID,_charID,0];" \n
        "publicVariableServer ""PVDZE_plr_LoginRecord"";" \n
        "" \n
-       "endLoadingScreen;" \n
-       ""/*%FSM</STATEINIT""">*/;
+       "endLoadingScreen;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
       class Links
       {
@@ -1535,7 +1524,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"endLoadingScreen;" \n
        "" \n
        "// disable player interaction && move him off site" \n
-       "// player setPos [10,10,100000];" \n
+       "// player setPosATL [10,10,100000];" \n
        " player enableSimulation false;" \n
        "" \n
        "diag_log (""End Mission"");" \n
@@ -1684,7 +1673,7 @@ class FSM
        "" \n
        "diag_log [time,""createDialog RscDisplayCharacterSelect""];" \n
        "" \n
-       "private [""_data"",""_charArray"",""_hiveVersion"",""_fnc_formatTime"",""_currentSlot"",""_switchBlock"",""_lastLoginMin"",""_dialog"",""_playerName"",""_waitTime"",""_charId"",""_slot"",""_wordspace"",""_alive"",""_generation"",""_humanity"",""_stats"",""_distanceFoot"",""_model"",""_infected"",""_lastLogin"",""_survivalTime"",""_killsZ"",""_headshotsZ"",""_killsH"",""_killsB"",""_humanityColor"",""_position"",""_nearestCities"",""_nearestCity"",""_locationName"",""_deadBodyNearby"",""_skin"",""_skinName"",""_sex"",""_text""];" \n
+       "private[""_data"",""_charArray"",""_hiveVersion"",""_fnc_formatTime"",""_currentSlot"",""_switchBlock"",""_lastLoginMin"",""_dialog"",""_playerName"",""_waitTime"",""_charId"",""_slot"",""_wordspace"",""_alive"",""_generation"",""_humanity"",""_stats"",""_distanceFoot"",""_model"",""_infected"",""_lastLogin"",""_survivalTime"",""_killsZ"",""_headshotsZ"",""_killsH"",""_killsB"",""_humanityColor"",""_position"",""_nearestCities"",""_nearestCity"",""_locationName"",""_deadBodyNearby"",""_skin"",""_skinName"",""_sex"",""_text""];" \n
        "" \n
        "_data = PVDZE_plr_CharactersRes;" \n
        "" \n
@@ -1700,7 +1689,7 @@ class FSM
        "};" \n
        "" \n
        "_fnc_formatTime = {" \n
-       "  private [""_min"",""_days"",""_hours"",""_time""];" \n
+       "  private[""_min"",""_days"",""_hours"",""_time""];" \n
        "  _min = round _this;" \n
        "  _days = 0;" \n
        "  _hours = 0;" \n
@@ -1812,7 +1801,7 @@ class FSM
        "    _sex = getText (configFile >> ""CfgSurvival"" >> ""Skins"" >> _skin >> ""sex"");" \n
        "    " \n
        "    with uiNamespace do {" \n
-       "      private [""_titleControl"",""_pictureControl"",""_textControl"",""_buttonControl""];" \n
+       "      private[""_titleControl"",""_pictureControl"",""_textControl"",""_buttonControl""];" \n
        "      _titleControl = CharacterSelectDisplay displayCtrl (1000 + _slot);" \n
        "      _pictureControl = CharacterSelectDisplay displayCtrl (1200 + _slot);" \n
        "      _textControl = CharacterSelectDisplay displayCtrl (1100 + _slot);" \n

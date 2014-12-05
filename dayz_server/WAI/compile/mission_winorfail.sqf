@@ -1,6 +1,6 @@
 if(isServer) then {
 
-	private ["_start","_resource","_mission_units","_player_near","_map_marker","_node","_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
+	private["_start","_resource","_mission_units","_player_near","_map_marker","_node","_max_ai","_timeout_time","_currenttime","_starttime","_msglose","_msgwin","_msgstart","_objectives","_crate","_marker","_in_range","_objectivetarget","_position","_type","_complete","_timeout","_mission","_killpercent","_delete_mines","_cleanunits","_clearmission","_baseclean"];
 
 	_mission	= (_this select 0) select 0;
 	_crate		= (_this select 0) select 1;
@@ -10,7 +10,7 @@ if(isServer) then {
 	_msgwin		= _this select 4;
 	_msglose	= _this select 5;
 
-	_position		= position _crate;
+	_position		= [_crate] call FNC_Getpos;
 	_timeout 		= false;
 	_player_near	= false;
 	_complete		= false;
@@ -26,28 +26,28 @@ if(isServer) then {
 	};
 
 	{
-		
+
 		if(_x getVariable["mission",nil] == _mission) then {
-			_mission_units set [count _mission_units,_x];
+			_mission_units set[count _mission_units,_x];
 		};
 
 	} count allUnits;
-	
+
 	if(wai_radio_announce) then {
 		RemoteMessage = ["radio","[RADIO] " + _msgstart];
 		publicVariable "RemoteMessage";
 	} else {
 		[nil,nil,rTitleText,_msgstart,"PLAIN",10] call RE;
 	};
-	
+
 	clearWeaponCargoGlobal _crate;
 	clearMagazineCargoGlobal _crate;
 
 	_crate setVariable["ObjectID","1",true];
 	_crate setVariable["permaLoot",true];
 
-	_crate addEventHandler ["HandleDamage",{}];
-	
+	_crate addEventhandler["HandleDamage",{}];
+
 	markerready = true;
 
 	while {!_start && !_timeout} do {
@@ -84,13 +84,13 @@ if(isServer) then {
 			if((isPlayer _x) && (_x distance _position <= wai_timeout_distance)) then {
 				_player_near = true;
 			};
-			
+
 		} count playableUnits;
 
 		if(_currenttime - _starttime >= _timeout_time && !_player_near) then {
 			_timeout = true;
 		};
-		
+
 		call {
 
 			if(_type == "crate") exitWith {
@@ -128,7 +128,7 @@ if(isServer) then {
 					_complete = true;
 				};
 			};
-			
+
 			if(_type == "assassinate") exitWith {
 				_objectivetarget = (_this select 1) select 1;
 				{
@@ -158,18 +158,18 @@ if(isServer) then {
 		if(typeOf(_crate) in (crates_large + crates_medium + crates_small)) then {
 
 			if(wai_crates_smoke && sunOrMoon == 1) then {
-				_marker = "smokeShellPurple" createVehicle [_crate] call FNC_GetPos;
-				_marker setPos ([_crate] call FNC_GetPos);
+				_marker = "smokeShellPurple" createVehicle _position;
+				_marker setPos _position;
 				_marker attachTo [_crate,[0,0,0]];
 			};
 
 			if(wai_crates_flares && sunOrMoon != 1) then {
-				_marker = "RoadFlare" createVehicle [_crate] call FNC_GetPos;
-				_marker setPos ([_crate] call FNC_GetPos);
+				_marker = "RoadFlare" createVehicle _position;
+				_marker setPos _position;
 				_marker attachTo [_crate,[0,0,0]];
-				
+
 				_in_range = _crate nearEntities ["CAManBase",1250];
-				
+
 				{
 					if(isPlayer _x && _x != player) then {
 						PVDZE_send = [_x,"RoadFlare",[_marker,0]];
@@ -184,35 +184,35 @@ if(isServer) then {
 		_delete_mines = ((wai_mission_data select _mission) select 2);
 
 		if(count _delete_mines > 0) then {
-		
+
 			{
 				if(typeName _x == "ARRAY") then {
-				
+
 					{
 						deleteVehicle _x;
 					} count _x;
-				
+
 				} else {
 
 					deleteVehicle _x;
-					
+
 				};
-				
+
 			} forEach _delete_mines;
-			
+
 		};
-		
+
 		if(wai_radio_announce) then {
 			RemoteMessage = ["radio","[RADIO] " + _msgwin];
 			publicVariable "RemoteMessage";
 		} else {
 			[nil,nil,rTitleText,_msgwin,"PLAIN",10] call RE;
 		};
-		
+
 		if(wai_clean_mission) then {
 
 			[_position,_baseclean] spawn {
-				private ["_pos","_clean","_finish_time","_cleaned","_playernear","_currenttime"];
+				private["_pos","_clean","_finish_time","_cleaned","_playernear","_currenttime"];
 				_pos = _this select 0;
 				_clean = _this select 1;
 				_finish_time = time;
@@ -231,43 +231,43 @@ if(isServer) then {
 
 						{
 							if(typeName _x == "ARRAY") then {
-							
+
 								{
 									if((_x getVariable["ObjectID",nil]) == nil) then {
 										deleteVehicle _x;
 									};
 								} count _x;
-							
+
 							} else {
 								if((_x getVariable["ObjectID",nil]) == nil) then {
 									deleteVehicle _x;
 								};
 							};
-							
+
 						} forEach _clean;
 
 						_cleaned = true;
 
 					};
-					
+
 					sleep 1;
 				};
 			};
 		};
 	};
-	
+
 	if(_timeout) then {
 
 		{
-		
+
 			if(_x getVariable["mission",nil] == _mission) then {
-			
+
 				if(alive _x) then {
 
 					_cleanunits = _x getVariable["missionclean",nil];
-		
+
 					if(!isNil "_cleanunits") then {
-				
+
 						call {
 							if(_cleanunits == "ground") 	exitWith { ai_ground_units = (ai_ground_units -1); };
 							if(_cleanunits == "air") 		exitWith { ai_air_units = (ai_air_units -1); };
@@ -276,24 +276,24 @@ if(isServer) then {
 						};
 					};
 				};
-				
+
 				deleteVehicle _x;
 			};
 
 		} count allUnits + vehicles + allDead;
-		
+
 		{
 			if(typeName _x == "ARRAY") then {
-			
+
 				{
 					deleteVehicle _x;
 				} count _x;
-			
+
 			} else {
-			
+
 				deleteVehicle _x;
 			};
-			
+
 		} forEach _baseclean + ((wai_mission_data select _mission) select 2) + [_crate];
 
 		if(wai_radio_announce) then {
@@ -302,12 +302,12 @@ if(isServer) then {
 		} else {
 			[nil,nil,rTitleText,_msglose,"PLAIN",10] call RE;
 		};
-		
+
 	};
-	
+
 	_map_marker = (wai_mission_data select _mission) select 1;
 	wai_mission_markers = wai_mission_markers - [(_map_marker + str(_mission))];
-	wai_mission_data set [_mission,-1];
+	wai_mission_data set[_mission,-1];
 	_complete
 
 };

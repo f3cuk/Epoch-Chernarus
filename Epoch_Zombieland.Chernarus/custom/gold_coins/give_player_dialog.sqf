@@ -1,4 +1,4 @@
-private ["_dialog"];
+private["_dialog"];
 
 createDialog 'RscDisplayPassword';
 ctrlSetText[1001,'Give money'];

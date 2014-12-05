@@ -1,4 +1,4 @@
-private ["_activatingPlayer","_obj","_objectID","_objectUID","_started","_finished","_animState","_isMedic","_isOk","_proceed","_counter","_limit","_objType","_sfx","_dis","_itemOut","_countOut","_selectedRemoveOutput","_friendlies","_nearestPole","_ownerID","_refundpart","_isWreck","_findNearestPoles","_findNearestPole","_IsNearPlot","_brokenTool","_removeTool","_isDestructable","_isRemovable","_objOwnerID","_isOwnerOfObj","_preventRefund","_ipos","_item","_radius","_isWreckBuilding","_nameVehicle","_isModular","_playerUID","_gems","_gem","_isMine"];
+private["_activatingPlayer","_obj","_objectID","_objectUID","_started","_finished","_animState","_isMedic","_isOk","_proceed","_counter","_limit","_objType","_sfx","_dis","_itemOut","_countOut","_selectedRemoveOutput","_friendlies","_nearestPole","_ownerID","_refundpart","_isWreck","_findNearestPoles","_findNearestPole","_IsNearPlot","_brokenTool","_removeTool","_isDestructable","_isRemovable","_objOwnerID","_isOwnerOfObj","_preventRefund","_ipos","_item","_radius","_isWreckBuilding","_nameVehicle","_isModular","_playerUID","_gems","_gem","_isMine"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_88") ,"PLAIN DOWN"]; };
 DZE_ActionInProgress = true;
@@ -48,7 +48,7 @@ else {
 
 _findNearestPoles = nearestObjects[player,["Plastic_Pole_EP1_DZ"],30];
 _findNearestPole = [];
-{if(alive _x) then {_findNearestPole set [(count _findNearestPole),_x];};} count _findNearestPoles;
+{if(alive _x) then {_findNearestPole set[(count _findNearestPole),_x];};} count _findNearestPoles;
 
 _IsNearPlot = count (_findNearestPole);
 
@@ -186,7 +186,7 @@ if(_proceed) then {
 		if(_isWreck) then {
 			// Find one random part to give back
 			_refundpart = ["PartEngine","PartGeneric","PartFueltank","PartWheel","PartGlass","ItemJerrycan"] call BIS_fnc_selectRandom;
-			_selectedRemoveOutput set [count _selectedRemoveOutput,[_refundpart,1]];
+			_selectedRemoveOutput set[count _selectedRemoveOutput,[_refundpart,1]];
 		} else {
 			if(_isWreckBuilding) then {
 				_selectedRemoveOutput = getArray (configFile >> "CfgVehicles" >> _objType >> "removeoutput");
@@ -202,7 +202,7 @@ if(_proceed) then {
 		};
 
 		if(_ipos select 2 < 0) then {
-			_ipos set [2,0];
+			_ipos set[2,0];
 		};
 
 		_radius = 1;
@@ -211,13 +211,13 @@ if(_proceed) then {
 			if((random 10) <= 4) then {
 				_gems = ["ItemTopaz","ItemObsidian","ItemSapphire","ItemAmethyst","ItemEmerald","ItemCitrine","ItemRuby"];
 				_gem = _gems select (floor(random (count _gems)));
-				_selectedRemoveOutput set [(count _selectedRemoveOutput),[_gem,1]];
+				_selectedRemoveOutput set[(count _selectedRemoveOutput),[_gem,1]];
 			};
 		};
 
 		// give refund items
 		if((count _selectedRemoveOutput) > 0 && !_preventRefund) then {
-			_item = createVehicle ["WeaponHolder",_iPos,[],_radius,"CAN_COLLIDE"];
+			_item = createVehicle["WeaponHolder",_iPos,[],_radius,"CAN_COLLIDE"];
 			{
 				_itemOut = _x select 0;
 				_countOut = _x select 1;
@@ -227,10 +227,9 @@ if(_proceed) then {
 				_item addMagazineCargoGlobal [_itemOut,_countOut];
 			} count _selectedRemoveOutput;
 
-			_item setPos _iPos;
+			_item setPosATL _iPos;
 
 			player reveal _item;
-
 			player action["Gear",_item];
 		};
 	} else {
