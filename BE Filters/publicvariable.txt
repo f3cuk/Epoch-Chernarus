@@ -1,0 +1,13 @@
+//new
+5 "" !"PVDZE_" !"norrn" !"usec" !="remExField" !="remExFP" !="AD_AntiDupePlayer" !="currentInvites" !="drn_AskServerDynamicWeatherEventArgs" !="norrinRAlie" !="BIS_effects_gepv" !="dayzPlayerLogin" !="dayzPlayerLogin2" !"PVAHR_" !="PVAH_AdminReq" !="PVAH_WriteLogReq"
+5 "norrn" !="norrnRACarUp" !="norrnRAPicUp" !="norrnRaDrag" !="norrnR180" !="norrnRalie" !="norrnRLact" !="norrnRALW" !="norrnRDead"
+5 "usec" !="usecMorphine" !="usecBandage" !="usecBleed"
+5 "PVDZE_" !"PVDZE_vault_Get" !"PVDZE_vault_Save" 1="PVDZE_deploy_bike" !"PVDZE_log" !"PVDZE_player" !="PVDZE_send" !="PVDZE_log_lockUnlock" !="PVDZE_Server_Simulation" !="PVDZE_veh_Update" !="PVDZE_plr_GutBody" !="PVDZE_plr_GutBodyZ" !="PVDZE_veh_Lock" !="PVDZE_plr_DeathB" !="PVDZE_maintainArea" !="PVDZE_obj_Publish" !="PVDZE_obj_Swap" !="PVDZE_plr_Save" !="PVDZE_obj_Delete" !="PVDZE_obj_Trade" !="PVDZE_veh_Publish2" !="PVDZE_zed_Spawn" !="PVDZE_plr_Died" !="PVDZE_plr_TradeMenu" !="PVDZE_veh_Upgrade" !="PVDZE_atp" !="PVDZE_plr_Login" !="PVDZE_plr_Login2" !="PVDZE_plr_LoginRecord" !="PVDZE_plr_DeathBResult" !="PVDZE_veh_SFix" !="PVDZE_plr_Hit" !="PVDZE_plr_HitV" !="PVDZE_veh_SFuel" !="PVDZE_plr_HideBody" !="PVDZE_plr_Morph" !="PVDZE_veh_Publish" !="PVDZE_plr_Characters" !="PVDZE_lockVault" !="PVDZE_obj_setlocalVars" !="PVDZE_obj_getlocalVars" !="PVDZE_bank_Save" !="PVDZE_account_Doublecheck"
+5 "PVAHR_" !"PVAHR_0_"
+1 "PVAH"
+5 "remExFP" !="\"remExFP\" = \[,,\"per\",\"execVM\",\"ca\\Modules\\Functions\\init.sqf\"\]" !"\[,,\"per\",\"execVM\",\"ca\\Modules\\Functions\\init.sqf\"\]"
+5="player"
+5="server"
+5 "fnc_plyrHit"
+5 "AntiHack"
+1 "Delete"

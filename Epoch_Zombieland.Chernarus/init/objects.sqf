@@ -51,8 +51,13 @@
 			_object setPosATL _pos;
 			_object setDamage _damage;
 			_object addEventhandler["HandleDamage",{false}];
-			_object enableSimulation false;
-
+		
+			if(_type in localLights) then { 
+				_object enableSimulation true;
+			} else {
+				_object enableSimulation false;
+			};
+			
 			if((typeOf _object) in dayz_allowedObjects) then {
 				_object setVariable["OEMPos",_pos];
 			};

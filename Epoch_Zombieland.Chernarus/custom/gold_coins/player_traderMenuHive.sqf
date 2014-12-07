@@ -33,12 +33,14 @@ TraderDialogLoadItemList = {
 
 	_item_list = [];
 	{
-		private["_header","_item","_name","_type","_textPart","_qty","_buy","_bqty","_bname","_btype","_btextCurrency","_sell","_sqty","_sname","_stype","_stextCurrency","_order","_order","_afile","_File","_count","_bag","_bagclass","_index","_image"];
+		private["_sellprice","_buyprice","_header","_item","_name","_type","_textPart","_qty","_buy","_bqty","_bname","_btype","_btextCurrency","_sell","_sqty","_sname","_stype","_stextCurrency","_order","_order","_afile","_File","_count","_bag","_bagclass","_index","_image"];
 
 		_header 	= _x select 0;
 		_item 		= _x select 1;
 		_name 		= _item select 0;
 		_type 		= _item select 1;
+		_buyprice	= [(_x select 3) select 0] call BIS_fnc_numberText;;
+		_sellprice	= [(_x select 4) select 0] call BIS_fnc_numberText;;
 
 		call {
 			if(_type == 1) exitWith { _type = "CfgMagazines"; }; 
@@ -114,7 +116,7 @@ TraderDialogLoadItemList = {
 				if(_name == "ItemSilvercase_Base") 	exitWith { _index = lbAdd[TraderDialogItemList,"EpochPack Silver"]; };
 			};
 		} else {
-			_index = lbAdd[TraderDialogItemList,format["%1 (%2)",_textPart,_name]];
+			_index = lbAdd[TraderDialogItemList,format["%1 - (Buy: %2 - Sell: %3)",_textPart,_buyprice,_sellprice]];
 		};
 
 		if(_count > 0) then {
@@ -141,7 +143,7 @@ TraderDialogShowPrices = {
 
 	while {count TraderItemList < 1} do { sleep 1; };
 
-	_item 	= TraderItemList select _index;
+	_item = TraderItemList select _index;
 
 	_buyprice 	= [_item select 2] call BIS_fnc_numberText;
 	_sellprice	= [_item select 5] call BIS_fnc_numberText;
@@ -157,7 +159,7 @@ TraderDialogBuy = {
 
 	_index = _this select 0;
 
-	if(_index < 0) exitWith { 	cutText[(localize "str_epoch_player_6"),"PLAIN DOWN"]; };
+	if(_index < 0) exitWith { cutText[(localize "str_epoch_player_6"),"PLAIN DOWN"]; };
 
 	_item = TraderItemList select _index;
 	_data = [_item select 0,_item select 3,1,_item select 2,"buy",_item select 4,_item select 1,_item select 8];
