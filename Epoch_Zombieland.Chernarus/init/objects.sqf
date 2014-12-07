@@ -82,7 +82,7 @@
 		_object allowDammage false;
 		
 		if((_x select 0) in localLights) then { 
-			_object enableSimulation false;
+			_object enableSimulation true;
 		} else {
 			_object enableSimulation false;
 		};
