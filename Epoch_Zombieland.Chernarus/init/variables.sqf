@@ -30,6 +30,8 @@ no_output_drink		= ["ItemWaterbottle","ItemWaterbottleBoiled"];
 drink_with_output	= ["ItemSoda","ItemSodaRbull","ItemSodaOrangeSherbet","ItemSodaCoke","ItemSodaPepsi","ItemSodaMdew","ItemSodaMtngreen","ItemSodaR4z0r","ItemSodaClays","ItemSodaSmasht","ItemSodaDrwaste","ItemSodaLemonade","ItemSodaLvg","ItemSodaMzly","ItemSodaRabbit"];
 drink_output		= ["ItemSodaEmpty","ItemSodaEmpty","ItemSodaEmpty","ItemSodaCokeEmpty","ItemSodaPepsiEmpty","ItemSodaMdewEmpty","ItemSodaMtngreenEmpty","ItemSodaR4z0rEmpty","ItemSodaClaysEmpty","ItemSodaSmashtEmpty","ItemSodaDrwasteEmpty","ItemSodaLemonadeEmpty","ItemSodaLvgEmpty","ItemSodaMzlyEmpty",	"ItemSodaRabbitEmpty"];
 boil_tin_cans		= ["TrashTinCan","FoodCanGriffEmpty","FoodCanBadguyEmpty","FoodCanBoneboyEmpty","FoodCanCornEmpty","FoodCanCurgonEmpty","FoodCanDemonEmpty","FoodCanFraggleosEmpty","FoodCanHerpyEmpty","FoodCanOrlokEmpty","FoodCanPowellEmpty","FoodCanTylersEmpty","FoodCanUnlabeledEmpty","ItemSodaEmpty","ItemSodaCokeEmpty","ItemSodaPepsiEmpty","ItemSodaMdewEmpty","ItemSodaMtngreenEmpty","ItemSodaR4z0rEmpty","ItemSodaClaysEmpty","ItemSodaSmashtEmpty","ItemSodaDrwasteEmpty","ItemSodaLemonadeEmpty","ItemSodaLvgEmpty","ItemSodaMzlyEmpty","ItemSodaRabbitEmpty"];
+localLights 		= ["LAND_ASC_Wall_Lamp_New","LAND_ASC_Wall_Lamp_Old","ASC_EU_LHV_lampa_sidlconc","Land_Fire_barrel_burning","ASC_EU_BulbBLUB","ASC_EU_BulbYELB","ASC_EU_BulbGRNB","ASC_EU_BulbPURB","ASC_EU_BulbREDB","LAND_ASC_runway_Yellowlight","LAND_ASC_runway_Bluelight","ASC_runway_BluelightB","ASC_runway_YellowlightB","MAP_fluor_lamp","MAP_lantern","MAP_Light_BathRoom","MAP_light_kitchen_03","Misc_Wall_lamp","Red_Light_Blinking_EP1","ASC_EU_LHVIndE","ASC_EU_LHVIndB","ASC_EU_LHVIndZ","ASC_EU_LHVInd","ASC_EU_LHVSidl3","ASC_EU_LHVSidl2","ASC_EU_LHVSidl1","ASC_EU_LHVStre2","ASC_EU_LHVStre1","ASC_EU_LHVOld","SearchLight","Land_Ind_IlluminantTower","ASC_EU_BulbBLUP","ASC_EU_BulbGRNP","ASC_EU_BulbPURP","ASC_EU_BulbREDP","ASC_EU_BulbYELP","Land_Campfire_burning"];
+
 
 dayz_combination	= "";
 dayz_humanitytarget	= "";
@@ -303,6 +305,7 @@ if(isServer) then {
 	dayz_players 			= [];
 	dead_bodyCleanup		= [];
 	needUpdate_objects		= [];
+	hasSpawnedBike			= [];
 
 	DZE_DYN_AntiStuck		= 0;
 	DZE_DYN_AntiStuck2nd	= 0;

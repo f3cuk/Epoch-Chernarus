@@ -1,15 +1,3 @@
-VaultTransferAmount 			= 13000;
-VaultPlayerBalance 				= 13001;
-VaultBalance 					= 13002;
-
-SCTraderDialogCatList 			= 32000;
-SCTraderDialogItemList 			= 32001;
-SCTraderDialogBuyPrice 			= 32002;
-SCTraderDialogSellPrice 		= 32003;
-
-GivePlayerDialogTransferAmount 	= 14000;
-GivePlayerDialogPlayerBalance 	= 14001;
-
 fnc_removeCoins = {
 
 	private["_player","_player_money","_cost","_return"];

@@ -4,9 +4,9 @@ _unit = _this select 0;
 
 if(isNull _unit) exitWith {diag_log format["ERROR: sendToClient is Null: %1",_unit]};
 
-_variable 		= _this select 1;
-_arraytosend 	= _this select 2;
-_owner 			= owner _unit;
+_variable		= _this select 1;
+_arraytosend	= _this select 2;
+_owner			= owner _unit;
 
 call {
 

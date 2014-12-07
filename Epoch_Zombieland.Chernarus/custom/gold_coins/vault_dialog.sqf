@@ -5,7 +5,7 @@ _vault_action 	= (_this select 3) select 1;
 
 if(typeName _vault == "OBJECT" && !isNull _vault) then {
 
-	_vaultID	= _vault getVariable["ObjectID",false];
+	_vaultID = _vault getVariable["ObjectID",false];
 
 	if(typeName _vaultID == "STRING") then {
 		_vaultID = parseNumber(_vaultID);
@@ -13,12 +13,20 @@ if(typeName _vault == "OBJECT" && !isNull _vault) then {
 
 	if(typeName _vaultID == "SCALAR" && _vaultID != 0) then {
 
-		PVDZE_vault_Get = [_vault,player];
-		publicVariableServer "PVDZE_vault_Get";
+		_money = _vault getVariable["Money",true];
 
-		waitUntil {!isNil "vaultResult"};
+		if(typeName _money == "BOOL") then {
+			PVDZE_vault_Get = [_vault,player];
+			publicVariableServer "PVDZE_vault_Get";
 
-		_money = _vault getVariable["Money",0] call BIS_fnc_numberText;
+			waitUntil {!isNil "vaultResult"};
+
+			vaultResult = nil;
+
+			_money = _vault getVariable["Money",0];
+		};
+
+		_money = _money call BIS_fnc_numberText;
 
 		createDialog 'RscDisplayPassword';
 

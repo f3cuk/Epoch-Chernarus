@@ -792,45 +792,34 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 			_humanity = player getVariable["humanity",0];
 			_traderMenu = call compile format["menu_%1;",_traderType];
 
-			// diag_log ("TRADER = " + str(_traderMenu));
-
 			_low_high = "low";
 			_humanity_logic = false;
-			if((_traderMenu select 2) == "friendly") then {
-				_humanity_logic = (_humanity < -5000);
-			};
-			if((_traderMenu select 2) == "hostile") then {
+
+			if((_traderMenu select 1) == "hostile") then {
 				_low_high = "high";
 				_humanity_logic = (_humanity > -5000);
 			};
-			if((_traderMenu select 2) == "hero") then {
+			if((_traderMenu select 1) == "hero") then {
 				_humanity_logic = (_humanity < 5000);
 			};
 			if(_humanity_logic) then {
 				_cancel = player addaction[format[localize "STR_EPOCH_ACTIONS_HUMANITY",_low_high],"\z\addons\dayz_code\actions\trade_cancel.sqf",["na"],0,true,false,"",""];
 				s_player_parts set[count s_player_parts,_cancel];
 			} else {
-
-				// Static Menu
-				{
-					//diag_log format["DEBUG TRADER: %1",_x];
-					_buy = player addaction[format["Trade %1 %2 for %3 %4",(_x select 3),(_x select 5),(_x select 2),(_x select 6)],"\z\addons\dayz_code\actions\trade_items_wo_db.sqf",[(_x select 0),(_x select 1),(_x select 2),(_x select 3),(_x select 4),(_x select 5),(_x select 6)],(_x select 7),true,true,"",""];
-					s_player_parts set[count s_player_parts,_buy];
-
-				} count (_traderMenu select 1);
 				// Database menu
 				_buy = player addaction[localize "STR_EPOCH_PLAYER_289","\z\addons\dayz_code\actions\show_dialog.sqf",(_traderMenu select 0),999,true,false,"",""];
 				s_player_parts set[count s_player_parts,_buy];
-
 			};
 			s_player_parts_crtl = 1;
 
 		};
 	} else {
-		{player removeAction _x} count s_player_parts;s_player_parts = [];
+		{
+			player removeAction _x
+		} count s_player_parts;
+		s_player_parts = [];
 		s_player_parts_crtl = -1;
 	};
-
 
 	if(dayz_tameDogs) then {
 

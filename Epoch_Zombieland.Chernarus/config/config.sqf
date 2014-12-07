@@ -39,7 +39,7 @@ DZE_SelfTransfuse			= true;
 DZE_selfTransfuse_Values 	= [3000,5,300];
 
 DZE_PlotPole 				= [60,90];
-DZE_BuildingLimit 			= 450;
+DZE_BuildingLimit 			= 500;
 DZE_StaticConstructionCount = 1;
 
 DZE_ForceNameTagsInTrader	= true;
@@ -58,8 +58,8 @@ DZE_APlotforLife			= true;
 DZE_modularBuild			= true;
 DZE_HeliLift				= true;
 
-dayz_sellDistance_vehicle	= 20;
-dayz_sellDistance_boat		= 30;
+dayz_sellDistance_vehicle	= 30;
+dayz_sellDistance_boat		= 40;
 dayz_sellDistance_air		= 40;
 
 EpochEvents = [

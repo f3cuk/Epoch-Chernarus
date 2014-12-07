@@ -30,6 +30,7 @@ fnc_plyrHit					= compile preprocessFileLineNumbers "\z\addons\dayz_server\compi
 server_deaths				= compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_playerDeaths.sqf";
 server_maintainArea			= compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_maintainArea.sqf";
 server_sendToClient			= compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_sendToClient.sqf";
+server_deploy_bike			= compile preprocessFileLineNumbers "\z\addons\dayz_server\compile\server_deploy_bike.sqf";
 
 onPlayerDisconnected {[_uid,_name] call server_onPlayerDisconnect;};
 

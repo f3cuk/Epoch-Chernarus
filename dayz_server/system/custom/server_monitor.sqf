@@ -3,7 +3,7 @@ private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_obj
 dayz_versionNo		= getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo	= getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
 
-_cpcimmune	= ["WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
+_cpcimmune	= ["WoodStairsRails_DZ","BagFenceRound_DZ","FireBarrel_DZ","Hedgehog_DZ","Plastic_Pole_EP1_DZ","LightPole_DZ","WoodLargeWallWin_DZ","StickFence_DZ","WorkBench_DZ","Fort_RazorWire","Sandbag1_DZ","WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
 _hiveLoaded	= false;
 
 waitUntil{initialized};
@@ -13,6 +13,7 @@ if(isnil "MaxVehicleLimit") 	then { MaxVehicleLimit = 50; };
 if(isnil "MaxAmmoBoxes") 		then { MaxAmmoBoxes = 10; };
 
 if(isServer && isNil "sm_done") then {
+
 	serverVehicleCounter = [];
 	_hiveResponse = [];
 	for "_i" from 1 to 5 do {
@@ -267,35 +268,51 @@ if(isServer && isNil "sm_done") then {
 
 	publicVariable "localObjects";
 
+	_BuildingQueue	= nil;
+	_objectQueue	= nil;
+
 	processInitCommands;
 
 	if !(DZE_ConfigTrader) then {
+
+		trader_data = [];
+
 		{
-			_traderData = call compile format["menu_%1;",_x];
+			_traderid	= _x;
+			_key		= format["CHILD:399:%1:",_traderid];
+			_data		= "HiveEXT" callExtension _key;
+			_result		= call compile format["%1",_data];
+			_status		= _result select 0;
 
-			if(!isNil "_traderData") then {
-				{
-					_traderid	= _x select 1;
-					_retrader	= [];
-					_key		= format["CHILD:399:%1:",_traderid];
-					_data		= "HiveEXT" callExtension _key;
-					_result		= call compile format["%1",_data];
-					_status		= _result select 0;
-
-					if(_status == "ObjectStreamStart") then {
-						_val = _result select 1;
-						call compile format["ServerTcache_%1 = [];",_traderid];
-						for "_i" from 1 to _val do {
-							_data = "HiveEXT" callExtension _key;
-							_result = call compile format["%1",_data];
-							call compile format["ServerTcache_%1 set[count ServerTcache_%1,%2]",_traderid,_result];
-							_retrader set[count _retrader,_result];
-						};
-
-					};
-				} forEach (_traderData select 0);
+			if(_status == "ObjectStreamStart") then {
+				private["_items","_val"];
+				_val = _result select 1;
+				trade_items = [];
+				for "_i" from 1 to _val do {
+					private["_data","_result"];
+					_data = "HiveEXT" callExtension _key;
+					_result = call compile format["%1",_data];
+					trade_items set[count trade_items,
+						_result
+						/*
+						[
+							((_result select 1) select 0),
+							((_result select 1) select 1),
+							((_result select 3) select 0),
+							((_result select 4) select 0),
+							(_result select 7)
+						]
+						*/
+					];
+				};
+				trader_data set[_x,trade_items];
 			};
-		} forEach serverTraders;
+		} forEach trader_ids;
+
+		publicVariable "trader_data";
+
+		trade_items = nil;
+		trader_data = nil;
 	};
 
 	if(_hiveLoaded) then {
@@ -351,5 +368,14 @@ if(isServer && isNil "sm_done") then {
 	allowConnection = true;	
 	sm_done = true;
 	publicVariable "sm_done";
+
+	'AD_AntiDupePlayer' addPublicVariableEventHandler {
+	[] spawn {
+		waitUntil {!isNull AD_AntiDupePlayer};
+		_plyr = AD_AntiDupePlayer;
+		_amnt = _plyr getVariable ['ClearToLeave',0];
+		_plyr setVariable ['ClearToLeave',_amnt+1,true];
+	};
+};
 
 };

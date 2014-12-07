@@ -11,7 +11,6 @@
 "PVDZE_plr_Hit" 			addPublicVariableEventHandler {(_this select 1) call fnc_usec_damageHandler};
 "PVDZE_plr_HitV" 			addPublicVariableEventHandler {(_this select 1) call fnc_usec_damageVehicle};
 "usecBreakLegs"				addPublicVariableEventHandler {(_this select 1) call player_breaklegs};
-
 "PVDZE_veh_SFuel"			addPublicVariableEventHandler {(_this select 1) spawn local_setFuel};
 "PVDZE_veh_SFix"			addPublicVariableEventHandler {(_this select 1) call object_setFixServer};
 "PVDZE_plr_HideBody"		addPublicVariableEventHandler {hideBody (_this select 1)};
@@ -23,18 +22,12 @@
 "PVDZE_veh_Init"			addPublicVariableEventHandler {(_this select 1) call fnc_veh_ResetEH};
 "PVDZE_plr_HumanityChange"	addPublicVariableEventHandler {(_this select 1) spawn player_humanityChange};
 "PVDZE_serverObjectMonitor" addPublicVariableEventHandler {PVDZE_serverObjectMonitor = dayz_safety};
-"PVCDZE_vehSH" 				addPublicVariableEventHandler {(_this select 1) call vehicle_handleDamage};
-
-"PVDZE_Server_Simulation" addPublicVariableEventHandler {
-	_agent		= ((_this select 1) select 0);
-	_control	= ((_this select 1) select 1);
-
-	_agent enableSimulation _control;
-};
+"PVCDZE_vehSH"				addPublicVariableEventHandler {(_this select 1) call vehicle_handleDamage};
+"PVDZE_Server_Simulation"	addPublicVariableEventHandler {((_this select 1) select 0) enableSimulation ((_this select 1) select 1);};
 
 if(isServer) then {
-	"PVDZE_send" 			addPublicVariableEventHandler {(_this select 1) call server_sendToClient};
-	"PVDZE_maintainArea" 	addPublicVariableEventHandler {(_this select 1) spawn server_maintainArea};
+	"PVDZE_send"			addPublicVariableEventHandler {(_this select 1) call server_sendToClient};
+	"PVDZE_maintainArea"	addPublicVariableEventHandler {(_this select 1) spawn server_maintainArea};
 	"PVDZE_plr_Died"		addPublicVariableEventHandler {_id = (_this select 1) spawn server_playerDied};
 	"PVDZE_plr_Save"		addPublicVariableEventHandler {_id = (_this select 1) spawn server_playerSync;};
 	"PVDZE_obj_Publish"		addPublicVariableEventHandler {(_this select 1) call server_publishObj};
@@ -53,7 +46,8 @@ if(isServer) then {
 	"PVDZE_veh_Upgrade"		addPublicVariableEventHandler {(_this select 1) spawn server_publishVeh3};
 	"PVDZE_plr_TradeMenu"	addPublicVariableEventHandler {(_this select 1) spawn server_traders};
 	"PVDZE_plr_DeathB"		addPublicVariableEventHandler {(_this select 1) spawn server_deaths};
-	"PVDZE_atp" 			addPublicVariableEventHandler {if(typeName (_this select 1) == "STRING") then { diag_log (_this select 1); };};
+	"PVDZE_atp"				addPublicVariableEventHandler {if(typeName (_this select 1) == "STRING") then { diag_log _x; };};
+	"PVDZE_deploy_bike"		addPublicVariableEventHandler {(_this select 1) spawn server_deploy_bike};
 };
 
 if(!isDedicated) then {

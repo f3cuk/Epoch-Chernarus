@@ -12,7 +12,7 @@ loadScreen 				= "bg.jpg";
 briefing 				= 0;
 debriefing 				= 0;
 
-onPauseScript 			= "";
+onPauseScript 			= "scripts\anti_dupe.sqf";
 
 class Header
 {

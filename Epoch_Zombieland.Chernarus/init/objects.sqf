@@ -80,7 +80,13 @@
 		_object setDir (_x select 2);
 		_object setPos (_x select 1);
 		_object allowDammage false;
-		_object enableSimulation false;
+		
+		if((_x select 0) in localLights) then { 
+			_object enableSimulation false;
+		} else {
+			_object enableSimulation false;
+		};
+
 		if(count _x > 3 && (_x select 3)) then {
 			_object setVehicleLock "LOCKED";
 		};

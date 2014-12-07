@@ -1,12 +1,24 @@
-private["_dist","_dir","_pos","_veh","_canDeployBike"];
+if(isNil "canDeployBike") then {
 
-_canDeployBike = player getvariable["canDeployBike",true];
+	if(!isNil "hasSpawnedBike") then {
 
-if(_canDeployBike) then {
+		if((getPlayerUID player) in hasSpawnedBike) then {
+			canDeployBike = false;
+		} else {
+			canDeployBike = true;
+		};
 
-	CanDeployBike = false;
-	player setVariable["canDeployBike",false];
-	player removeWeapon "ItemToolbox";
+	} else {
+		canDeployBike = true;
+	};
+
+};
+
+if(canDeployBike) then {
+
+	private["_dist","_dir","_pos","_veh"];
+
+	canDeployBike = false;
 
 	_dist 	= 5;
 	_dir 	= getDir vehicle player;
@@ -20,16 +32,13 @@ if(_canDeployBike) then {
 	clearMagazineCargoGlobal _veh;
 	clearWeaponCargoGlobal _veh;
 
-	cutText["You have built a bike!\nNote: Bikes get removed on restart!","PLAIN DOWN",3];
+	cutText["You have built a bike! Note: Bikes get removed on restart.","PLAIN DOWN",3];
 
-	[] spawn {
-
-		sleep 600;
-		player setVariable["canDeployBike",true];
-	};
+	PVDZE_deploy_bike = [getPlayerUID player];
+	publicVariableServer "PVDZE_deploy_bike";
 
 } else {
 
-	cutText["You can only spawn one bike every 10 minutes","PLAIN DOWN",3];	
+	cutText["You can only build one bike each restart","PLAIN DOWN",3];	
 
 };
