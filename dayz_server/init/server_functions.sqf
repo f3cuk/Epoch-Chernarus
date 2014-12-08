@@ -427,7 +427,15 @@ server_getDiff2 =	{
 	_vNew = _object getVariable[_variable,0];
 	_vOld = _object getVariable[(_variable + "_CHK"),_vNew];
 
-	_result = _vNew - _vOld;
+	if(typeName _vNew != "SCALAR") then { _vNew = parseNumber(_vNew); };
+	if(typeName _vOld != "SCALAR") then { _vOld = parseNumber(_vOld); };
+
+	_result = (_vNew - _vOld);
+
+	if(typeName _result != "SCALAR") then { _result = parseNumber(_result); };
+
+	if(_variable == "cashMoney") then { diag_log _result; };
+
 	_object setVariable[(_variable + "_CHK"),_vNew];
 	_result
 };

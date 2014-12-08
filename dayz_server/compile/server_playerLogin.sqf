@@ -8,7 +8,7 @@ _playerID	= _this select 0;
 _playerObj	= _this select 1;
 _playerName	= name _playerObj;
 
-if(_playerName == '__SERVER__' || _playerID == '' || local player) exitWith {};
+if(_playerName == '__SERVER__' || _playerID == '' || local player || typeName _playerObj != "OBJECT" || _playerName == "Error: No vehicle") exitWith {};
 
 if(isNil "sm_done") exitWith { 
 #ifdef DZE_SERVER_DEBUG
