@@ -3,7 +3,7 @@ private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_obj
 dayz_versionNo		= getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo	= getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
 
-_cpcimmune	= ["WoodStairsRails_DZ","BagFenceRound_DZ","FireBarrel_DZ","Hedgehog_DZ","Plastic_Pole_EP1_DZ","LightPole_DZ","WoodLargeWallWin_DZ","StickFence_DZ","WorkBench_DZ","Fort_RazorWire","Sandbag1_DZ","WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
+_cpcimmune	= ["WoodStairsRails_DZ","BagFenceRound_DZ","FireBarrel_DZ","Hedgehog_DZ","LightPole_DZ","WoodLargeWallWin_DZ","StickFence_DZ","WorkBench_DZ","Fort_RazorWire","Sandbag1_DZ","WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
 _hiveLoaded	= false;
 
 waitUntil{initialized};
@@ -130,7 +130,6 @@ if(isServer && isNil "sm_done") then {
 				};
 
 				serverObjects set[parseNumber(_idKey),_object];
-
 				_object = nil;
 
 			};
@@ -293,8 +292,6 @@ if(isServer && isNil "sm_done") then {
 					_data = "HiveEXT" callExtension _key;
 					_result = call compile format["%1",_data];
 					trade_items set[count trade_items,
-						_result
-						/*
 						[
 							((_result select 1) select 0),
 							((_result select 1) select 1),
@@ -302,7 +299,6 @@ if(isServer && isNil "sm_done") then {
 							((_result select 4) select 0),
 							(_result select 7)
 						]
-						*/
 					];
 				};
 				trader_data set[_x,trade_items];

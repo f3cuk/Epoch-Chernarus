@@ -807,7 +807,7 @@ if(!isNull cursorTarget && !_inVehicle && !_isPZombie && (player distance cursor
 				s_player_parts set[count s_player_parts,_cancel];
 			} else {
 				// Database menu
-				_buy = player addaction[localize "STR_EPOCH_PLAYER_289","\z\addons\dayz_code\actions\show_dialog.sqf",(_traderMenu select 0),999,true,false,"",""];
+				_buy = player addaction[localize "STR_EPOCH_PLAYER_289","custom\gold_coins\trading\show_dialog.sqf",(_traderMenu select 0),999,true,false,"",""];
 				s_player_parts set[count s_player_parts,_buy];
 			};
 			s_player_parts_crtl = 1;

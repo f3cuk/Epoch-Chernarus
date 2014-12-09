@@ -434,8 +434,6 @@ server_getDiff2 =	{
 
 	if(typeName _result != "SCALAR") then { _result = parseNumber(_result); };
 
-	if(_variable == "cashMoney") then { diag_log _result; };
-
 	_object setVariable[(_variable + "_CHK"),_vNew];
 	_result
 };

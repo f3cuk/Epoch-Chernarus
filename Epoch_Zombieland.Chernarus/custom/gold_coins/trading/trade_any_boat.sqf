@@ -1,182 +1,178 @@
-private["_oldPosition","_veh","_location","_isOk","_part_out","_part_in","_qty_out","_qty_in","_qty","_buy_o_sell","_obj","_objectID","_objectUID","_bos","_finished","_dir","_helipad","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_config","_okToSell","_needed","_activatingPlayer","_textPartIn","_textPartOut","_traderID","_price","_object_name","_curr_new","_newM","_myMoney"];
+private ["_has_required","_obj","_oldPosition","_finished","_location","_price","_dir","_helipad","_veh","_newM","_removed","_keyColor","_keyNumber","_keySelected","_isKeyOK","_isOk","_damage","_tireDmg","_tires","_okToSell","_objectID","_objectUID","_hitpoints","_player_money","_trade_type","_classname","_display_name","_buyprice","_sellprice"];
 
-if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103"),"PLAIN DOWN"]; };
+if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
-_activatingPlayer = player;
+_trade_type			= (_this select 3) select 0;
+_classname			= (_this select 3) select 1;
+_display_name		= (_this select 3) select 2;
+_buyprice			= (_this select 3) select 3;
+_sellprice			= (_this select 3) select 4;
+_player_money 		= player getVariable["cashMoney",0];
 
-_part_out 		= (_this select 3) select 0;
-_part_in 		= (_this select 3) select 1;
-_qty_out 		= (_this select 3) select 2;
-_qty_in 		= (_this select 3) select 3;
-_buy_o_sell 	= (_this select 3) select 4;
-_textPartIn 	= (_this select 3) select 5;
-_textPartOut 	= (_this select 3) select 6;
-_traderID 		= (_this select 3) select 7;
-_bos = 0;
-
-if(_buy_o_sell == "buy") then {
-	_qty = player getVariable["cashMoney",0];
+if(_trade_type == "buy") then {
+	_has_required = (_player_money >= _buyprice);
 } else {
-	_obj = nearestObjects[([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
-	_qty = count _obj;
-	_bos = 1;
+	_obj = nearestObjects[([player] call FNC_GetPos),[_classname],dayz_sellDistance_boat];
+	_has_required = (count _obj > 0);
 };
 
-
-if(_qty >= _qty_in) then {
+if(_has_required) then {
 
 	cutText[(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 
-	// # F3 FAST TRADING
+	if(isNil "_oldPosition") then {
+		_oldPosition = position player;
+	};
 
-		if(isNil "_oldPosition") then {
-			_oldPosition = position player;
-		};
+	_finished = false;
 
-		_finished = false;
+	sleep .5;
 
-		sleep .5;
+	if((position player) distance _oldPosition <= 0.1) then {
+		_finished = true;
+	};
 
-		if((position player) distance _oldPosition <= 0.3) then {
-			_finished = true;
-		};
-
-		if(!_finished) exitWith { 
-			r_interrupt = false;
-			cutText["Cancelled trade" ,"PLAIN DOWN"];
-		};
-
-	// # F3 FAST TRADING
+	if(!_finished) exitWith { 
+		r_interrupt = false;
+		cutText["Trade cancelled","PLAIN DOWN"];
+	};
 
 	if(_finished) then {
 
-		if(_buy_o_sell == "buy") then {
-			_qty = player getVariable["cashMoney",0]; // get your money variable	
-		} else {
-			_obj = nearestObjects[([player] call FNC_GetPos),[_part_in],dayz_sellDistance_boat];
-			_qty = count _obj;
-		};
+		_player_money = player getVariable["cashMoney",0];
 
-		if(_qty >= _qty_in) then {
+		if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
 
-			if(isNil "_obj") then { _obj = "Unknown Vehicle" };
-			if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
-			if(_bos == 1) then {
-				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_in,inTraderCity,_qty_out,CurrencyName]];
-			} else {
-				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
-			};
-			publicVariableServer "PVDZE_log";
+		if(_trade_type == "buy") then {
+			_price = [_buyprice] call BIS_fnc_numberText;
 
-			// waitUntil {!isNil "dayzTradeResult"};
-			dayzTradeResult = "PASS";
+			if(_player_money >= _buyprice) then {
 
-			if(dayzTradeResult == "PASS") then {
+				_keyColor		= ["Green","Red","Blue","Yellow","Black"] call BIS_fnc_selectRandom;
+				_keyNumber		= (floor(random 2500)) + 1;
+				_keySelected	= format[("ItemKey%1%2"),_keyColor,_keyNumber];	
+				_isKeyOK		= isClass(configFile >> "CfgWeapons" >> _keySelected);
+				_isOk			= [player,_keySelected] call BIS_fnc_invAdd;
 
-				if(_buy_o_sell == "buy") then {	
+				waitUntil {!isNil "_isOk"};
 
-					_keyColor 		= ["Green","Red","Blue","Yellow","Black"] call BIS_fnc_selectRandom;
-					_keyNumber 		= (floor(random 2500)) + 1;
-					_keySelected 	= format[("ItemKey%1%2"),_keyColor,_keyNumber];
-					_isKeyOK 		= isClass(configFile >> "CfgWeapons" >> _keySelected);
+				if(_isOk && _isKeyOK) then {
 
-					_config 		= _keySelected;
-					_isOk 			= [player,_config] call BIS_fnc_invAdd;
+					player setVariable["cashMoney",(_player_money - _buyprice),true];
 
-					waitUntil {!isNil "_isOk"};
+					_newM		= player getVariable["cashMoney",0];
+					_removed	= _player_money - _newM;
 
-					if(_isOk and _isKeyOK) then {
+					if(_removed == _buyprice) then {
 
-						_curr_new = _qty - _qty_in;
+						_dir		= round(random 360);
+						_helipad	= nearestObjects[player,["HeliHCivil","HeliHempty"],100];
 
-						player setVariable["cashMoney",_curr_new,true];
-
-						_newM 		= player getVariable["cashMoney",0];
-						_removed 	= _qty - _newM;
-
-						if(_removed == _qty_in) then {
-
-							_price 			= [_qty_in] call BIS_fnc_numberText;
-							_object_name 	= getText (configFile >> "CfgVehicles" >> _part_out >> "displayName");
-
-							systemChat format['Bought a %1 for %2 %3',_object_name,_price,CurrencyName];
-
-							_dir = round(random 360);
-
-							_helipad = nearestObjects[player,["HeliHCivil","HeliHempty"],100];
-							if(count _helipad > 0) then {
-								_location = (getPosATL (_helipad select 0));
-							} else {
-								_location = [(position player),0,20,1,2,2000,0] call BIS_fnc_findSafePos;
-							};
-
-							_veh = createVehicle["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
-
-							_location = ([_veh] call FNC_GetPos);
-
-							PVDZE_veh_Publish2 = [_veh,[_dir,_location],_part_out,false,_keySelected,_activatingPlayer];
-
-							publicVariableServer  "PVDZE_veh_Publish2";
-
-							player reveal _veh;
-
-							cutText[format[("Bought %3 for %1 %2,key added to toolbelt."),_qty_in,_textPartIn,_textPartOut],"PLAIN DOWN"];
+						if(count _helipad > 0) then {
+							_location = (getPosATL (_helipad select 0));
 						} else {
-							player removeMagazine _keySelected;
+							_location = [(position player),0,20,1,0,2000,0] call BIS_fnc_findSafePos;
 						};
+
+						_veh		= createVehicle["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
+						_location	= ([_veh] call FNC_GetPos);
+
+						PVDZE_veh_Publish2 = [_veh,[_dir,_location],_classname,false,_keySelected,player];
+						publicVariableServer "PVDZE_veh_Publish2";
+
+						cutText[format["Bought a %1 for %2 %3, key added to toolbelt",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
+						systemChat format['[Trade] Bought a %1 for %2 %3',_display_name,_price,CurrencyAbbr];
+
+						PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5 %6",(name player),(getPlayerUID player),_classname,inTraderCity,_price,CurrencyAbbr]];
+						publicVariableServer "PVDZE_log";
+
 					} else {
-						cutText[(localize "str_epoch_player_107"),"PLAIN DOWN"];
+						player removeMagazine _keySelected;
 					};
 				} else {
-
-					_obj = _obj select 0;
-
-					_okToSell = true;
-					if(!local _obj) then {
-						_okToSell = false;
-					};
-
-					if(_okToSell and !isNull _obj and alive _obj) then {
-
-						_myMoney = player getVariable["cashMoney",0];
-						_myMoney = _myMoney + _qty_out;
-						player setVariable["cashMoney",_myMoney ,true];
-
-						_objectID 	= _obj getVariable["ObjectID","0"];
-						_objectUID	= _obj getVariable["ObjectUID","0"];
-
-						PVDZE_obj_Delete = [_objectID,_objectUID,_activatingPlayer];
-						publicVariableServer "PVDZE_obj_Delete";
-
-						deleteVehicle _obj;
-
-						cutText[format[(localize "str_epoch_player_181"),_qty_in,_textPartIn,_qty_out,_textPartOut],"PLAIN DOWN"];
-					} else {
-						cutText[(localize "str_epoch_player_245"),"PLAIN DOWN"];
-					};
+					cutText[(localize "str_epoch_player_107"),"PLAIN DOWN"];
 				};
 
-				{player removeAction _x} forEach s_player_parts;s_player_parts = [];
-				s_player_parts_crtl = -1;
-
 			} else {
-				cutText[format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
+				cutText["Cannot buy vehicle, not enough money","PLAIN DOWN"];
 			};
-			dayzTradeResult = nil;
+
+		} else {
+
+			_price = [_sellprice] call BIS_fnc_numberText;
+
+			_obj = nearestObjects[([player] call FNC_GetPos),[_classname],dayz_sellDistance_boat];
+			_obj = _obj select 0;
+
+			_hitpoints	= _obj call vehicle_getHitpoints;
+			_okToSell	= true;
+			_tires		= 0; 
+			_tireDmg	= 0;
+			_damage		= 0;
+
+			{					
+				if(["Wheel",_x,false] call fnc_inString) then {		
+					_damage		= [_obj,_x] call object_getHit;
+					_tireDmg	= _tireDmg + _damage;
+					_tires		= _tires + 1;
+				};
+			} count _hitpoints;
+
+			if(_tireDmg > 0 && _tires > 0) then {
+				if((_tireDmg / _tires) > 0.75) then {
+					_okToSell = false;
+				};
+			};
+
+			if(local _obj && !isNull _obj && alive _obj) then {
+
+				if(_okToSell) then {
+
+					player setVariable["cashMoney",(_player_money + _sellprice),true];
+
+					_objectID 	= _obj getVariable["ObjectID","0"];
+					_objectUID	= _obj getVariable["ObjectUID","0"];
+
+					PVDZE_obj_Delete = [_objectID,_objectUID,player];
+					publicVariableServer "PVDZE_obj_Delete";
+
+					deleteVehicle _obj; 
+
+					cutText[format["Sold a %1 for %2 %3",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
+					systemChat format['[Trade] Sold a %1 for %2 %3',_display_name,_price,CurrencyAbbr];
+
+					PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5 %6",(name player),(getPlayerUID player),_classname,inTraderCity,_price,CurrencyAbbr]];
+					publicVariableServer "PVDZE_log";
+
+				} else {
+					cutText[format[(localize "str_epoch_player_182"),CurrencyAbbr] ,"PLAIN DOWN"];
+				};
+			} else {
+				cutText[(localize "str_epoch_player_245"),"PLAIN DOWN"];
+			};
+
 		};
+
+		{
+			player removeAction _x
+		} count s_player_parts;
+		s_player_parts = [];
+		s_player_parts_crtl = -1;
+
 	};
 
 } else {
-	_needed = _qty_in - _qty;
-	if(_buy_o_sell == "buy") then {
-		cutText[format["You need %1 %2",_needed,_textPartIn] ,"PLAIN DOWN"]; // edited so it says,You need 5000 coins or you need 1 engine.
+
+	if(_trade_type == "buy") then {
+		cutText["Cannot buy vehicle, not enough money","PLAIN DOWN"];
 	} else {
-		cutText[format[(localize "str_epoch_player_185"),_textPartIn] ,"PLAIN DOWN"];
+		cutText["Cannot sell vehicle, vehicle not found","PLAIN DOWN"];
 	};
+
 };
 
 DZE_ActionInProgress = false;

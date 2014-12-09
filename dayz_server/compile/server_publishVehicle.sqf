@@ -36,7 +36,7 @@ _continue = false;
 
 while {!_continue} do {
 	_result		= nil;
-	_key		 format["CHILD:388:%1:",_uid];
+	_key		= format["CHILD:388:%1:",_uid];
 	_result		= _key call server_hiveReadWrite;
 	_outcome	= _result select 0;
 

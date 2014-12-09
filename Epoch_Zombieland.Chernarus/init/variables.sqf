@@ -1,4 +1,5 @@
 CurrencyName 		= "gold coins";
+CurrencyAbbr		= "Coins";
 dayz_wealth			= -1;
 targetvault 		= nil;
 

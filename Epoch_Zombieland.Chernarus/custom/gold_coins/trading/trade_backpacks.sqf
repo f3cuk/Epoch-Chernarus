@@ -1,143 +1,112 @@
-private["_oldPosition","_part_out","_part_in","_qty_out","_qty_in","_qty","_bos","_bag","_class","_finished","_needed","_activatingPlayer","_buy_o_sell","_textPartIn","_textPartOut","_traderID","_price","_curr_new","_newM","_removed","_myMoney"];
+private["_has_required","_oldPosition","_finished","_price","_newM","_removed","_trade_type","_classname","_display_name","_buyprice","_sellprice","_player_money"];
 
 if(DZE_ActionInProgress) exitWith { cutText[(localize "str_epoch_player_103") ,"PLAIN DOWN"]; };
 
 DZE_ActionInProgress = true;
 
-_activatingPlayer = player;
+_trade_type			= (_this select 3) select 0;
+_classname			= (_this select 3) select 1;
+_display_name		= (_this select 3) select 2;
+_buyprice			= (_this select 3) select 3;
+_sellprice			= (_this select 3) select 4;
+_player_money 		= player getVariable["cashMoney",0];
 
-_part_out 		= (_this select 3) select 0;
-_part_in 		= (_this select 3) select 1;
-_qty_out 		= (_this select 3) select 2;
-_qty_in 		= (_this select 3) select 3;
-_buy_o_sell 	= (_this select 3) select 4;
-_textPartIn 	= (_this select 3) select 5;
-_textPartOut 	= (_this select 3) select 6;
-_traderID 		= (_this select 3) select 7;
-_bos = 0;
-
-if(_buy_o_sell == "buy") then {
-	_qty = player getVariable["cashMoney",0];
+if(_trade_type == "buy") then {
+	_has_required = (_player_money >= _buyprice);
 } else {
-	_bos = 1;
-	_qty = 0;
-	_bag = unitBackpack player;
-	_class = typeOf _bag;
-	if(_class == _part_in) then {
-		_qty = 1;
-	};
+	_has_required = (typeOf (unitBackpack player) == _classname);
 };
 
-if(_qty >= _qty_in) then {
+if(_has_required) then {
 
 	cutText[(localize "str_epoch_player_105"),"PLAIN DOWN"];
 	 
 	[1,1] call dayz_HungerThirst;
 
-	// # F3 FAST TRADING
+	if(isNil "_oldPosition") then {
+		_oldPosition = position player;
+	};
 
-		if(isNil "_oldPosition") then {
-			_oldPosition = position player;
-		};
+	_finished = false;
 
-		_finished = false;
+	sleep 1.5;
 
-		sleep 1.5;
+	if((position player) distance _oldPosition <= 0.1) then {
+		_finished = true;
+	};
 
-		if((position player) distance _oldPosition <= 0.1) then {
-			_finished = true;
-		};
-
-		if(!_finished) exitWith { 
-			r_interrupt = false;
-			cutText["Cancelled trade" ,"PLAIN DOWN"];
-		};
-
-	// # F3 FAST TRADING
+	if(!_finished) exitWith { 
+		r_interrupt = false;
+		cutText["Cancelled trade" ,"PLAIN DOWN"];
+	};
 
 	if(_finished) then {
 
-		// Double check we still have parts
-		if(_buy_o_sell == "buy") then {
-			//_qty = {_x == _part_in} count magazines player;
-			_qty = player getVariable["cashMoney",0]; // get your money variable	
-		} else {
-			_qty = 0;
-			_bag = unitBackpack player;
-			_class = typeOf _bag;
-			if(_class == _part_in) then {
-				_qty = 1;
-			};
-		};
+		if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
 
-		if(_qty >= _qty_in) then {
+		if(_trade_type == "buy") then {
+			_price = [_buyprice] call BIS_fnc_numberText;
 
-			if(isNil "_bag") then { _bag = "Unknown Backpack" };
-			if(isNil "inTraderCity") then { inTraderCity = "Unknown Trader City" };
-			if(_bos == 1) then {
-				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_in,inTraderCity,_qty_out,CurrencyName]];
-			} else {
-				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5x %6",(name _activatingPlayer),(getPlayerUID _activatingPlayer),_part_out,inTraderCity,_qty_in,CurrencyName]];
-			};
-			publicVariableServer "PVDZE_log";
+			if(_player_money >= _buyprice) then {
 
-			// waitUntil {!isNil "dayzTradeResult"};
-			dayzTradeResult = "PASS";
+				player setVariable["cashMoney",(_player_money - _buyprice),true];
 
-			if(dayzTradeResult == "PASS") then {
+				_newM 		= player getVariable["cashMoney",0];
+				_removed 	= _player_money - _newM;
 
-				if(_buy_o_sell == "buy") then {
+				if(_removed == _buyprice) then {
 
-					_curr_new = _qty - _qty_in;
+					_price = [_buyprice] call BIS_fnc_numberText;
 
-					player setVariable["cashMoney",_curr_new,true];
+					removeBackpack player;
+					player addBackpack _classname;
 
-					_newM 		= player getVariable["cashMoney",0];
-					_removed 	= _qty - _newM;
+					cutText[format["Bought a %1 for %2 %3",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
+					systemChat format['[Trade] Bought a %1 for %2 %3',_display_name,_price,CurrencyAbbr];
 
-					if(_removed == _qty_in) then {
+					PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5 %6",(name player),(getPlayerUID player),_classname,inTraderCity,_price,CurrencyAbbr]];
+					publicVariableServer "PVDZE_log";
 
-						_price = [_qty_in] call BIS_fnc_numberText;
-
-						removeBackpack player;
-						player addBackpack _part_out;
-
-						cutText[format["[Trade] Bought a %1 for %2 %3",_textPartOut,_price,CurrencyName],"PLAIN DOWN"];
-
-					};
-				} else {
-					// Sell
-					if((typeOf (unitBackpack player)) == _part_in) then {
-						removeBackpack player;
-
-						_price = [_qty_out] call BIS_fnc_numberText;
-
-						_myMoney = player getVariable["cashMoney",0];
-						_myMoney = _myMoney + _qty_out;
-						player setVariable["cashMoney",_myMoney,true];
-
-						cutText[format["[Trade] Sold a %1 for %2 %3",_textPartIn,_price,CurrencyName],"PLAIN DOWN"];
-
-					};
 				};
 
-				{
-					player removeAction _x
-				} forEach s_player_parts;
-
-				s_player_parts = [];
-				s_player_parts_crtl = -1;
-
 			} else {
-				cutText[format[(localize "str_epoch_player_183"),_textPartOut] ,"PLAIN DOWN"];
+				cutText["Cannot buy backpack, not enough money","PLAIN DOWN"];
 			};
-			dayzTradeResult = nil;
+		} else {
+			_price = [_sellprice] call BIS_fnc_numberText;
+
+			if((typeOf (unitBackpack player)) == _classname) then {
+				removeBackpack player;
+
+				_price = [_sellprice] call BIS_fnc_numberText;
+				player setVariable["cashMoney",(_player_money + _sellprice),true];
+
+				cutText[format["Sold a %1 for %2 %3",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
+				systemChat format['[Trade] Sold a %1 for %2 %3',_display_name,_price,CurrencyAbbr];
+
+				PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) sold a %3 in/at %4 for %5 %6",(name player),(getPlayerUID player),_classname,inTraderCity,_price,CurrencyAbbr]];
+				publicVariableServer "PVDZE_log";
+
+			};
 		};
+
+		{
+			player removeAction _x
+		} forEach s_player_parts;
+
+		s_player_parts = [];
+		s_player_parts_crtl = -1;
+
 	};
 
 } else {
-	_needed = _qty_in - _qty;
-	cutText[format["You need %1 more %2",_needed,_textPartIn] ,"PLAIN DOWN"];
+
+	if(_trade_type == "buy") then {
+		cutText["Cannot buy backpack, not enough money","PLAIN DOWN"];
+	} else {
+		cutText["Cannot sell backpack, backpack not found","PLAIN DOWN"];
+	};
+
 };
 
 DZE_ActionInProgress = false;
