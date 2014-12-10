@@ -103,7 +103,7 @@ if(_trade_type == "buy") then {
 			player setVariable["cashMoney",(_player_money - (_buyprice * _trade_num)),true];
 
 			for "_i" from 1 to _trade_num do {
-				player addMagazine[_classname,1];
+				player addMagazine _classname;
 			};
 
 			PVDZE_plr_Save = [player,(magazines player),true,true];
@@ -159,12 +159,11 @@ if(_trade_type == "buy") then {
 
 		tradeNum = parseNumber(tradeNum);
 
-		if(typeName tradeNum != "SCALAR" || tradeNum < 1 || tradeNum > _total_trades) then {
+		if(typeName tradeNum != "SCALAR" || tradeNum < 1 || tradeNum > _total_trades) exitWith {
 			cutText["Incorrect value","PLAIN DOWN"];
 			call _finish_trade;
-		} else {
-			_trade_num = tradeNum;
 		};
+		_trade_num = tradeNum;
 		tradeNum = nil;
 	};
 

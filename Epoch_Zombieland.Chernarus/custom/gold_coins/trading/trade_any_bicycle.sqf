@@ -71,10 +71,10 @@ if(_has_required) then {
 					_veh		= createVehicle["Sign_arrow_down_large_EP1",_location,[],0,"CAN_COLLIDE"];
 					_location	= ([_veh] call FNC_GetPos);
 
-					PVDZE_veh_Publish2 = [_veh,[_dir,_location],_classname,false,dayz_characterID,player];
+					PVDZE_veh_Publish2 = [_veh,[_dir,_location],_classname,true,dayz_characterID,player];
 					publicVariableServer "PVDZE_veh_Publish2";
 
-					cutText[format["Bought a %1 for %2 %3, key added to toolbelt",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
+					cutText[format["Bought a %1 for %2 %3",_display_name,_price,CurrencyAbbr],"PLAIN DOWN"];
 					systemChat format['[Trade] Bought a %1 for %2 %3',_display_name,_price,CurrencyAbbr];
 
 					PVDZE_log = [format["EPOCH SERVERTRADE: Player: %1 (%2) bought a %3 in/at %4 for %5 %6",(name player),(getPlayerUID player),_classname,inTraderCity,_price,CurrencyAbbr]];

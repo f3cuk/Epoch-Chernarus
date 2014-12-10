@@ -690,47 +690,28 @@ server_spawnCleanFire = {
 };
 
 server_spawnCleanLoot = {
-	private["_created","_delQty","_nearby","_age","_keep","_qty","_missionObjs","_dateNow"];
-
-	if(DZE_DYN_AntiStuck > 3) then { DZE_DYN_cleanLoot = nil; DZE_DYN_AntiStuck = 0; };
-	if(!isNil "DZE_DYN_cleanLoot") exitWith { DZE_DYN_AntiStuck = DZE_DYN_AntiStuck + 1; };
-
-	DZE_DYN_cleanLoot = true;
+	private["_delQty","_nearby","_keep","_qty","_missionObjs","_dateNow"];
 
 	_missionObjs	= allMissionObjects "ReammoBox";
 	_delQty			= 0;
-	_dateNow		= (DateToNumber date);
 
 	{
 		if(!isNull _x) then {
 			_keep = _x getVariable["permaLoot",false];
 			if(!_keep) then {
-				_created = _x getVariable["created",-0.1];
-				if(_created == -0.1) then {
-					_x setVariable["created",_dateNow,false];
-					_created = _dateNow;
-				} else {
-					_age = (_dateNow - _created) * 525948;
-
-					if(_age > 20) then {
-						_nearby = { (isPlayer _x) && (alive _x) } count(_x nearEntities[["CAManBase","AllVehicles"],130]);
-						if(_nearby == 0) then {
-							deleteVehicle _x;
-							sleep 0.025;
-							_delQty = _delQty + 1;
-						};
-					};
+				_nearby = {(isPlayer _x)} count(_x nearEntities[["CAManBase","AllVehicles"],750]);
+				if(_nearby == 0) then {
+					deleteVehicle _x;
+					_delQty = _delQty + 1;
 				};
 			};
 		};
-	} count  _missionObjs;
+	} forEach _missionObjs;
 
 	if(_delQty > 0) then {
 		_qty = count _missionObjs;
 		diag_log (format["CLEANUP: Deleted %1 Loot Piles out of %2",_delQty,_qty]);
 	};
-
-	DZE_DYN_cleanLoot = nil;
 
 };
 
@@ -748,7 +729,7 @@ server_spawnCleanAnimals = {
 			if(!alive _x) then {
 				_pos = [_x] call FNC_GetPos;
 				if(count _pos > 0) then {
-					_nearby = {(isPlayer _x) && (alive _x)} count (_pos nearEntities [["CAManBase","AllVehicles"],130]);
+					_nearby = {(isPlayer _x)} count (_pos nearEntities [["CAManBase","AllVehicles"],130]);
 					if(_nearby==0) then {
 						_x call dayz_perform_purge;
 						sleep 0.05;
@@ -837,7 +818,7 @@ KK_fnc_positionToString = {
 				_result = _key call server_hiveReadWrite;
 
 				if(count _result == 1) then {
-					_vault setVariable["Money",_result select 0,true];
+					_vault setVariable["Money",(_result select 0),true];
 					_finished	= true;
 					vaultResult = true;
 					_clientID publicVariableClient "vaultResult";

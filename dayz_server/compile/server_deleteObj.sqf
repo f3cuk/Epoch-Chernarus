@@ -18,10 +18,18 @@ if(isServer) then {
 		diag_log format["DELETE: Object with ID: %2 deleted by %1",_activatingPlayer,_id];
 
 		if(_id in localIds) then {
-			// only send pv when object is rendered local
-			deleteObjects set[count deleteObjects,_id];
-			publicVariable "deleteObjects";
 			deleteVehicle (serverObjects select _id);
+
+			_id spawn {
+				private["_delChk"];
+				deleteObjects set[count deleteObjects,_this];
+				DZE_delChk = DZE_delChk + 1;
+				_delChk = DZE_delChk;
+				sleep 1;
+				if(DZE_delChk == _delChk) then {
+					publicVariable "deleteObjects";
+				};
+			};
 		};
 
 	} else {

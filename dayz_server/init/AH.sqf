@@ -10904,29 +10904,19 @@ PV_AdminMainCode = {
 			showcommandingMenu "#USER:BCConfirmBaseDelete";
 		};
 		fn_BCConfirmDelete = {
-			private["_position", "_distance", "_nearest_objects"];
-			if(isNil "BC_Center" or isNil "BC_radius") exitWith
-			{
-				systemChat "Center not set";
-			};
-			if(BC_radius == 0) exitWith
-			{
-				systemChat "Radius is 0";
-			};
+			private["_position","_distance","_nearest_objects"];
+
+			_object_ids = [];
+
+			if(isNil "BC_Center" or isNil "BC_radius") exitWith { systemChat "Center not set"; };
+			if(BC_radius == 0) exitWith { systemChat "Radius is 0"; };
+
 			_position = BC_center;
 			_distance = BC_radius;
 
-
-			_objs_to_delete = dayz_allowedObjects;
-			_objs_to_delete = _objs_to_delete - ["VaultStorageLocked"];
-			_objs_to_delete = _objs_to_delete - ["LockboxStorageLocked"];
-			_nearest_objects = nearestObjects[[_position select 0, _position select 1], _objs_to_delete, _distance];
-
 			uiSleep 1;
-			PVAH_AdminReq = [-2,player,_nearest_objects];
+			PVAH_AdminReq = [-2,player,[-1,BC_CENTER,BC_RADIUS]];
 			publicVariableServer "PVAH_AdminReq";
-
-			[format["<t size='0.6'>Deleted %1 objects</t>", count _nearest_objects],0,0.8,0.5,0,0,8] spawn BIS_fnc_dynamicText;
 		};
 		fn_BCSaveToDb = {
 			{
@@ -11759,19 +11749,15 @@ diag_log ("infiSTAR.de - ADDING PublicVariableEventHandlers");
 		{
 			_deletethis = _array select 2;
 			_sl = '';
-			if(typeName _deletethis == 'ARRAY') then
-			{
-				{
-					if(!isNull _x) then
+			if(typeName _deletethis == 'ARRAY') then {
+				if((_deletethis select 0) == -1) then {
+					_objects = nearestObjects[[(_deletethis select 1) select 0,(_deletethis select 1) select 1],dayz_allowedObjects,(_deletethis select 2)];
 					{
-						_objectID 	= _x getVariable['ObjectID','0'];
-						_objectUID	= _x getVariable['ObjectUID','0'];
-						deleteVehicle _x;
-						[_objectID,_objectUID,_clientUID] call server_deleteObj;
-					};
-					true
-				} count _deletethis;
-				_sl = format['%1 (%2) deleted %3 objects @%4 - characterID %5 - objectID: %6 - objectUID: %7',_clientName,_clientUID,count _deletethis,mapGridPosition _playerObj];
+						[(_x getVariable['ObjectID','0']),0,_clientUID] call server_deleteObj;						
+						if(local _x) then { deleteVehicle _X; };
+					} forEach _objects;
+				};
+				_sl = format['%1 (%2) deleted %3 objects @%4',_clientName,_clientUID,str(count _objects),mapGridPosition _playerObj];
 			}
 			else
 			{

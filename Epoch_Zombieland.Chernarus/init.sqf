@@ -43,10 +43,10 @@ if(!isDedicated) then {
 	waitUntil {(!isNil "allObjects" && !isNil "localObjects")};
 		diag_log format["%1: Epoch buildables and map add-ons received",servertime];
 
-	execVM "init\objects.sqf";
+	call compile preprocessFileLineNumbers "init\objects.sqf";
 
-	waitUntil {(objectsLoaded && spawnedLoaded)};
-		diag_log format["%1: Epoch buildables and map add-ons loaded",servertime];
+	waitUntil {(epochObjectsLoaded && missionObjectsLoaded)};
+		diag_log format["%1: Epoch buildables and mision objects loaded",servertime];
 
 	player addEventhandler["Respawn",{_id = [] spawn player_death;}];
 	execVM "custom\character_select\player_monitor.sqf";

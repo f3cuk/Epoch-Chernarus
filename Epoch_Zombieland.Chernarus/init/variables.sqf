@@ -308,6 +308,7 @@ if(isServer) then {
 	needUpdate_objects		= [];
 	hasSpawnedBike			= [];
 
+	DZE_delChk 				= 0;
 	DZE_DYN_AntiStuck		= 0;
 	DZE_DYN_AntiStuck2nd	= 0;
 	DZE_DYN_AntiStuck3rd	= 0;
@@ -325,8 +326,11 @@ if(isServer) then {
 
 if(!isDedicated) then {
 	dayz_spawnPos				= getPosATL player;
-	spawnedLoaded				= false;
-	objectsLoaded				= false;
+	epochObjectsLoaded			= false;
+	missionObjectsLoaded		= false;
+
+	spawned						= [];
+	already_removed				= [];
 
 	dayz_buildingMonitor		= [];
 	dayz_bodyMonitor			= [];
@@ -422,6 +426,7 @@ if(!isDedicated) then {
 	if(isNil "DZE_AntiWallLimit")			then { DZE_AntiWallLimit = 3; };
 	if(isNil "DZE_requireplot")				then { DZE_requireplot = 1; };
 	if(isNil "DZE_R3F_WEIGHT")				then { DZE_R3F_WEIGHT = true; };
+	if(isNil "deleteObjects")				then { deleteObjects = []; };
 
 	DZE_ActionInProgress 	= false;
 	DZE_AntiWallCounter		= 0;
