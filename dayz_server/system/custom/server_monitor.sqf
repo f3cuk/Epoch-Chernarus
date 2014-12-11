@@ -1,4 +1,4 @@
-private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_val","_traderid","_retrader","_traderData","_id","_lockable","_debugMarkerPosition","_vehicle_0","_bQty","_vQty","_BuildingQueue","_objectQueue","_superkey","_shutdown","_res","_hiveLoaded","_skip","_ownerPUID","_cpcimmune"];
+private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_traderid","_id","_lockable","_debugMarkerPosition","_vehicle_0","_hiveLoaded","_skip","_ownerPUID","_cpcimmune","_objects"];
 
 dayz_versionNo		= getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo	= getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
@@ -14,31 +14,26 @@ if(isnil "MaxAmmoBoxes") 		then { MaxAmmoBoxes = 10; };
 
 if(isServer && isNil "sm_done") then {
 
-	serverVehicleCounter = [];
-	_hiveResponse = [];
-	for "_i" from 1 to 5 do {
-		diag_log "HIVE: trying to get objects";
-		_key = format["CHILD:302:%1:",dayZ_instance];
-		_hiveResponse = _key call server_hiveReadWrite;  
-		if((((isnil "_hiveResponse") || {(typeName _hiveResponse != "ARRAY")}) || {((typeName (_hiveResponse select 1)) != "SCALAR")})) then {
-			if((_hiveResponse select 1) == "Instance already initialized") then {
-				_superkey = profileNamespace getVariable "SUPERKEY";
-				_shutdown = format["CHILD:400:%1:",_superkey];
-				_res = _shutdown call server_hiveReadWrite;
-				diag_log ("HIVE: attempt to kill.. HiveExt response:"+str(_res));
-			} else {
-				diag_log ("HIVE: connection problem... HiveExt response:"+str(_hiveResponse));
-			};
-			_hiveResponse = ["",0];
-		} else {
-			diag_log ("HIVE: found "+str(_hiveResponse select 1)+" objects" );
-			_i = 99; 
-		};
+	serverVehicleCounter	= [];
+	_hiveResponse			= [];
+
+	diag_log format["HIVE: trying to get objects for instance %1",dayZ_instance];
+
+	_key = format["CHILD:302:%1:",dayZ_instance];
+	_hiveResponse = _key call server_hiveReadWrite;
+	_objectCount = _hiveResponse select 1;
+
+	if(!isNil "_hiveResponse" && typeName _hiveResponse == "ARRAY" && typeName _objectCount == "SCALAR") then {
+		diag_log format["HIVE: Found %1 objects to load",(_objectCount)];
+		_hiveLoaded = true;
 	};
 
-	_BuildingQueue 	= [];
-	_objectQueue 	= [];
-	localObjects 	= [];
+	if(!_hiveLoaded) exitWith {
+		diag_log format["HIVE: Error could not load hive (DEBUG: %1)",_hiveResponse];
+	};
+
+	_objects		= [];
+	localObjects	= [];
 	deleteObjects	= [];
 	localIds		= [];
 	serverObjects	= [];
@@ -47,25 +42,16 @@ if(isServer && isNil "sm_done") then {
 
 		profileNamespace setVariable["SUPERKEY",(_hiveResponse select 2)];
 
-		_hiveLoaded = true;
-		diag_log ("HIVE: Commence Object Streaming...");
+		diag_log format["HIVE: SUPERKEY set (%1), retrieving (%2) objects..",(_hiveResponse select 2),_objectCount];
 
 		_key = format["CHILD:302:%1:",dayZ_instance];
-		_objectCount = _hiveResponse select 1;
-		_bQty = 0;
-		_vQty = 0;
+
 		for "_i" from 1 to _objectCount do {
 			_hiveResponse = _key call server_hiveReadWriteLarge;
-
-			if((_hiveResponse select 2) isKindOf "ModularItems") then {
-				_BuildingQueue set[_bQty,_hiveResponse];
-				_bQty = _bQty + 1;
-			} else {
-				_objectQueue set[_vQty,_hiveResponse];
-				_vQty = _vQty + 1;
-			};
+			_objects set[count _objects,_hiveResponse];
 		};
-		diag_log ("HIVE: got " + str(_bQty) + " Epoch Objects and " + str(_vQty) + " Vehicles");
+
+		diag_log format["HIVE: All objects received, continue with spawning them on the server and client..",_objectCount];
 	};
 
 	_totalvehicles = 0;
@@ -263,12 +249,11 @@ if(isServer && isNil "sm_done") then {
 				PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 			};
 		};
-	} forEach (_BuildingQueue + _objectQueue);
+	} forEach _objects;
 
 	publicVariable "localObjects";
 
-	_BuildingQueue	= nil;
-	_objectQueue	= nil;
+	_objects = nil;
 
 	processInitCommands;
 
@@ -311,16 +296,15 @@ if(isServer && isNil "sm_done") then {
 		trader_data = nil;
 	};
 
-	if(_hiveLoaded) then {
-		_vehLimit = MaxVehicleLimit - _totalvehicles;
-		if(_vehLimit > 0) then {
-			diag_log ("HIVE: Spawning # of Vehicles: " + str(_vehLimit));
-			for "_x" from 1 to _vehLimit do {
-				[] spawn spawn_vehicles;
-			};
-		} else {
-			diag_log "HIVE: Vehicle Spawn limit reached!";
+	_vehLimit = MaxVehicleLimit - _totalvehicles;
+
+	if(_vehLimit > 0) then {
+		diag_log ("HIVE: Spawning # of Vehicles: " + str(_vehLimit));
+		for "_x" from 1 to _vehLimit do {
+			[] spawn spawn_vehicles;
 		};
+	} else {
+		diag_log "HIVE: Vehicle Spawn limit reached!";
 	};
 
 	diag_log ("HIVE: Spawning # of Ammo Boxes: " + str(MaxAmmoBoxes));
@@ -366,12 +350,12 @@ if(isServer && isNil "sm_done") then {
 	publicVariable "sm_done";
 
 	'AD_AntiDupePlayer' addPublicVariableEventHandler {
-	[] spawn {
-		waitUntil {!isNull AD_AntiDupePlayer};
-		_plyr = AD_AntiDupePlayer;
-		_amnt = _plyr getVariable ['ClearToLeave',0];
-		_plyr setVariable ['ClearToLeave',_amnt+1,true];
+		[] spawn {
+			private["_plyr","_amnt"];
+			waitUntil {!isNull AD_AntiDupePlayer};
+			_plyr = AD_AntiDupePlayer;
+			_amnt = _plyr getVariable['ClearToLeave',0];
+			_plyr setVariable['ClearToLeave',_amnt+1,true];
+		};
 	};
-};
-
 };
