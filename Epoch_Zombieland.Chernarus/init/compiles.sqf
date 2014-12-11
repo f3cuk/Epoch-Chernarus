@@ -416,15 +416,18 @@ if(!isDedicated) then {
 			_control1 = _display displayctrl 8400;
 			_control2 = _display displayctrl 102;
 		};
+
 		if(!isNil "dayz_DisplayGenderSelect") then {
 			waitUntil {!dayz_DisplayGenderSelect};
 		};
+
 		if(isNil "sm_done") then {
 			_loadstatus = 1;
-			_maxtimeOut = 180; 
+			_maxtimeOut = 240; 
 		} else {
-			_maxtimeOut = 60;
+			_maxtimeOut = 120;
 		};
+
 		while { _timeOut < _maxtimeOut } do {
 			if(dayz_clientPreload && dayz_authed) exitWith { diag_log "PLOGIN: Login loop completed!"; };
 			if(!isNil "_display") then {
@@ -455,7 +458,7 @@ if(!isDedicated) then {
 				endLoadingScreen;
 				endMission "END1";
 			};
-			sleep 1;
+			uiSleep 1.2;
 		};
 	};
 

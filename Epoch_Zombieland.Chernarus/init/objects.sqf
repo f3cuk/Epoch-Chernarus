@@ -90,12 +90,16 @@ spawn_epoch_object = {
 	spawnedIds		= [];
 	_total			= 0;
 	_t				= diag_tickTime;
+	totalobjects	= count (localObjects + allObjects);
+	loadedobjects	= 0;
 
-	dayz_loadScreenMsg = "Loading Player Bases..";
+	dayz_loadScreenMsg = format["Loading objects (0/%1)",totalobjects];
 
 	diag_log format["[Epoch Objects] Spawning %1 industructable Epoch buildables",_total];
 
 	{
+
+		loadedobjects = loadedobjects + 1;
 
 		private["_object","_id"];
 
@@ -108,7 +112,10 @@ spawn_epoch_object = {
 			spawnedIds set[count spawnedIds,_id];
 
 			_total = _total + 1;
+			
 		};
+
+		dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
 
 	} count localObjects;
 
@@ -129,13 +136,13 @@ spawn_epoch_object = {
 	_total			= count allObjects;
 	_t				= diag_tickTime;
 
-	dayz_loadScreenMsg = "Loading Mission Objects..";
-
 	diag_log format["[Mission Objects] Spawning %1 mission objects",_total];
 
 	{
+		loadedobjects = loadedobjects + 1;
 		_object = [_x] call spawn_mission_object;
 		spawned set[count spawned,[-1,_object,_x]];
+		dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
 	} count allObjects;
 
 	_object		= nil;
