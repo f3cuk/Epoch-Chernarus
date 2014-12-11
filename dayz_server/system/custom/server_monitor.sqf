@@ -32,7 +32,6 @@ if(isServer && isNil "sm_done") then {
 		diag_log format["HIVE: Error could not load hive (DEBUG: %1)",_hiveResponse];
 	};
 
-	_objects		= [];
 	localObjects	= [];
 	deleteObjects	= [];
 	localIds		= [];
@@ -42,218 +41,218 @@ if(isServer && isNil "sm_done") then {
 
 		profileNamespace setVariable["SUPERKEY",(_hiveResponse select 2)];
 
-		diag_log format["HIVE: SUPERKEY set (%1), retrieving (%2) objects..",(_hiveResponse select 2),_objectCount];
+		diag_log format["HIVE: SUPERKEY set (%1), retrieving and spawning (%2) objects",(_hiveResponse select 2),_objectCount];
 
 		_key = format["CHILD:302:%1:",dayZ_instance];
 
+		_totalvehicles = 0;
+
 		for "_i" from 1 to _objectCount do {
 			_hiveResponse = _key call server_hiveReadWriteLarge;
-			_objects set[count _objects,_hiveResponse];
-		};
 
-		diag_log format["HIVE: All objects received, continue with spawning them on the server and client..",_objectCount];
-	};
+			_idKey		= _hiveResponse select 1;
+			_type		= _hiveResponse select 2;
+			_ownerID	= _hiveResponse select 3;
+			_worldspace	= _hiveResponse select 4;
+			_inventory	= _hiveResponse select 5;
+			_hitPoints	= _hiveResponse select 6;
+			_fuel		= _hiveResponse select 7;
+			_damage		= _hiveResponse select 8;
+			_dir		= 0;
+			_pos		= [0,0,0];
+			_wsDone		= false;
+			_skip		= false;
 
-	_totalvehicles = 0;
-
-	{
-		_idKey		= _x select 1;
-		_type		= _x select 2;
-		_ownerID	= _x select 3;
-		_worldspace	= _x select 4;
-		_inventory	= _x select 5;
-		_hitPoints	= _x select 6;
-		_fuel		= _x select 7;
-		_damage		= _x select 8;
-		_dir		= 0;
-		_pos		= [0,0,0];
-		_wsDone		= false;
-		_skip		= false;
-
-		if(_type in _cpcimmune) then {
-			localObjects set[count localObjects,[_idKey,_type,_ownerID,_worldspace,_damage]];
-			localIds set[count localIds,parseNumber(_idKey)];
-			_skip = true;
-		};
-
-		if(count _worldspace >= 2) then
-		{
-			if((typeName (_worldspace select 0)) == "STRING") then {
-				_worldspace set[0,call compile (_worldspace select 0)];
-				_worldspace set[1,call compile (_worldspace select 1)];
+			if(_type in _cpcimmune) then {
+				localObjects set[count localObjects,[_idKey,_type,_ownerID,_worldspace,_damage]];
+				localIds set[count localIds,parseNumber(_idKey)];
+				_skip = true;
 			};
 
-			_dir = _worldspace select 0;
-
-			if(count (_worldspace select 1) == 3) then {
-				_pos = _worldspace select 1;
-				_wsDone = true;
-			};
-		};
-
-		if(_skip) then {
-
-			if(count _worldspace < 3) then {
-				_worldspace set[count _worldspace,"0"];
-			};
-
-			_ownerPUID = _worldspace select 2;
-
-			if(_damage < 1) then {
-				_object = _type createVehicleLocal[0,0,0];
-				_object setVariable["lastUpdate",time];
-				_object setVariable["ObjectID",_idKey];
-				_object setVariable["OwnerPUID",_ownerPUID];
-				_object setVariable["CharacterID",_ownerID];
-				_object setdir _dir;
-				_object setPosATL _pos;
-				_object setDamage _damage;
-				_object addEventhandler["HandleDamage",{false}];
-				_object enableSimulation false;
-
-				if((typeOf _object) in dayz_allowedObjects) then {
-					_object setVariable["OEMPos",_pos];
+			if(count _worldspace >= 2) then
+			{
+				if((typeName (_worldspace select 0)) == "STRING") then {
+					_worldspace set[0,call compile (_worldspace select 0)];
+					_worldspace set[1,call compile (_worldspace select 1)];
 				};
 
-				serverObjects set[parseNumber(_idKey),_object];
-				_object = nil;
+				_dir = _worldspace select 0;
 
+				if(count (_worldspace select 1) == 3) then {
+					_pos = _worldspace select 1;
+					_wsDone = true;
+				};
 			};
 
-		} else {
+			if(_skip) then {
 
-			if(!_wsDone) then {
-				if(count _worldspace >= 1) then { _dir = _worldspace select 0; };
-				_pos = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
-
-				if(count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
-				diag_log ("MOVED OBJ: " + str(_idKey) + " of class " + _type + " to pos: " + str(_pos));
-			};
-
-			if(count _worldspace < 3) then {
-				_worldspace set[count _worldspace,"0"];
-			};
-
-			_ownerPUID = _worldspace select 2;
-
-			if(_damage < 1) then {
-				_object = createVehicle[_type,_pos,[],0,"CAN_COLLIDE"];
-				_object setVariable["lastUpdate",time];
-				_object setVariable["ObjectID",_idKey,true];
-				_object setVariable["OwnerPUID",_ownerPUID,true];
-				_lockable = 0;
-
-				if(isNumber (configFile >> "CfgVehicles" >> _type >> "lockable")) then {
-					_lockable = getNumber(configFile >> "CfgVehicles" >> _type >> "lockable");
+				if(count _worldspace < 3) then {
+					_worldspace set[count _worldspace,"0"];
 				};
 
-				if(_lockable == 4) then {
-					_codeCount = (count (toArray _ownerID));
-					if(_codeCount == 3) then { _ownerID = format["0%1",_ownerID]; };
-					if(_codeCount == 2) then { _ownerID = format["00%1",_ownerID]; };
-					if(_codeCount == 1) then { _ownerID = format["000%1",_ownerID]; };
-				};
+				_ownerPUID = _worldspace select 2;
 
-				if(_lockable == 3) then {
-					_codeCount = (count (toArray _ownerID));
-					if(_codeCount == 2) then { _ownerID = format["0%1",_ownerID]; };
-					if(_codeCount == 1) then { _ownerID = format["00%1",_ownerID]; };
-				};
-				_object setVariable["CharacterID",_ownerID,true];
-				clearWeaponCargoGlobal _object;
-				clearMagazineCargoGlobal _object;
-				_object setdir _dir;
-				_object setPosATL _pos;
-				_object setDamage _damage;
-
-				if((typeOf _object) in dayz_allowedObjects) then {
-					if(DZE_GodModeBase) then {
-						_object addEventhandler["HandleDamage",{false}];
-					} else {
-						_object addMPEventhandler["MPKilled",{_this call object_handleServerKilled;}];
-					};
+				if(_damage < 1) then {
+					_object = _type createVehicleLocal[0,0,0];
+					_object setVariable["lastUpdate",time];
+					_object setVariable["ObjectID",_idKey];
+					_object setVariable["OwnerPUID",_ownerPUID];
+					_object setVariable["CharacterID",_ownerID];
+					_object setdir _dir;
+					_object setPosATL _pos;
+					_object setDamage _damage;
+					_object addEventhandler["HandleDamage",{false}];
 					_object enableSimulation false;
-					_object setVariable["OEMPos",_pos,true];
-				};
 
-				if(count _inventory > 0) then {
-					if(_type in DZE_LockedStorage) then {
-						_object setVariable["WeaponCargo",(_inventory select 0),true];
-						_object setVariable["MagazineCargo",(_inventory select 1),true];
-						_object setVariable["BackpackCargo",(_inventory select 2),true];
-					} else {
-						_objWpnTypes = (_inventory select 0) select 0;
-						_objWpnQty = (_inventory select 0) select 1;
-						_countr = 0;					
-						{
-							if(_x in (DZE_REPLACE_WEAPONS select 0)) then {
-								_x = (DZE_REPLACE_WEAPONS select 1) select ((DZE_REPLACE_WEAPONS select 0) find _x);
-							};
-							_isOK = isClass(configFile >> "CfgWeapons" >> _x);
-
-							if(_isOK) then {
-								_object addWeaponCargoGlobal [_x,(_objWpnQty select _countr)];
-							};
-							_countr = _countr + 1;
-						} count _objWpnTypes;
-
-						_objWpnTypes	= (_inventory select 1) select 0;
-						_objWpnQty		= (_inventory select 1) select 1;
-						_countr			= 0;
-
-						{
-							if(_x == "BoltSteel") then { _x = "WoodenArrow" };
-							if(_x == "ItemTent") then { _x = "ItemTentOld" };
-
-							_isOK = isClass(configFile >> "CfgMagazines" >> _x);
-							if(_isOK) then {
-								_object addMagazineCargoGlobal [_x,(_objWpnQty select _countr)];
-							};
-							_countr = _countr + 1;
-						} count _objWpnTypes;
-
-						_objWpnTypes	= (_inventory select 2) select 0;
-						_objWpnQty		= (_inventory select 2) select 1;
-						_countr			= 0;
-
-						{
-							_isOK = isClass(configFile >> "CfgVehicles" >> _x);
-
-							if(_isOK) then {
-								_object addBackpackCargoGlobal [_x,(_objWpnQty select _countr)];
-							};
-							_countr = _countr + 1;
-						} count _objWpnTypes;
+					if((typeOf _object) in dayz_allowedObjects) then {
+						_object setVariable["OEMPos",_pos];
 					};
+
+					serverObjects set[parseNumber(_idKey),_object];
+					_object = nil;
+
 				};
 
-				if(_object isKindOf "AllVehicles") then {
-					{
-						_selection = _x select 0;
-						_dam = _x select 1;
+			} else {
 
-						if(_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};
-						[_object,_selection,_dam] call object_setFixServer;
-					} count _hitpoints;
-					_object setFuel _fuel;
+				if(!_wsDone) then {
+					if(count _worldspace >= 1) then { _dir = _worldspace select 0; };
+					_pos = [getMarkerPos "center",0,4000,10,0,2000,0] call BIS_fnc_findSafePos;
 
-					if(!((typeOf _object) in dayz_allowedObjects)) then {
-						_object call fnc_veh_ResetEH;		
-						if(_ownerID != "0" && !(_object isKindOf "Bicycle")) then {
-							_object setvehiclelock "locked";
+					if(count _pos < 3) then { _pos = [_pos select 0,_pos select 1,0]; };
+					diag_log ("MOVED OBJ: " + str(_idKey) + " of class " + _type + " to pos: " + str(_pos));
+				};
+
+				if(count _worldspace < 3) then {
+					_worldspace set[count _worldspace,"0"];
+				};
+
+				_ownerPUID = _worldspace select 2;
+
+				if(_damage < 1) then {
+					_object = createVehicle[_type,_pos,[],0,"CAN_COLLIDE"];
+					_object setVariable["lastUpdate",time];
+					_object setVariable["ObjectID",_idKey,true];
+					_object setVariable["OwnerPUID",_ownerPUID,true];
+					_lockable = 0;
+
+					if(isNumber (configFile >> "CfgVehicles" >> _type >> "lockable")) then {
+						_lockable = getNumber(configFile >> "CfgVehicles" >> _type >> "lockable");
+					};
+
+					if(_lockable == 4) then {
+						_codeCount = (count (toArray _ownerID));
+						if(_codeCount == 3) then { _ownerID = format["0%1",_ownerID]; };
+						if(_codeCount == 2) then { _ownerID = format["00%1",_ownerID]; };
+						if(_codeCount == 1) then { _ownerID = format["000%1",_ownerID]; };
+					};
+
+					if(_lockable == 3) then {
+						_codeCount = (count (toArray _ownerID));
+						if(_codeCount == 2) then { _ownerID = format["0%1",_ownerID]; };
+						if(_codeCount == 1) then { _ownerID = format["00%1",_ownerID]; };
+					};
+					_object setVariable["CharacterID",_ownerID,true];
+					clearWeaponCargoGlobal _object;
+					clearMagazineCargoGlobal _object;
+					_object setdir _dir;
+					_object setPosATL _pos;
+					_object setDamage _damage;
+
+					if((typeOf _object) in dayz_allowedObjects) then {
+						if(DZE_GodModeBase) then {
+							_object addEventhandler["HandleDamage",{false}];
+						} else {
+							_object addMPEventhandler["MPKilled",{_this call object_handleServerKilled;}];
 						};
-						_totalvehicles = _totalvehicles + 1;
-						serverVehicleCounter set[count serverVehicleCounter,_type];
+						_object enableSimulation false;
+						_object setVariable["OEMPos",_pos,true];
 					};
+
+					if(count _inventory > 0) then {
+						if(_type in DZE_LockedStorage) then {
+							_object setVariable["WeaponCargo",(_inventory select 0),true];
+							_object setVariable["MagazineCargo",(_inventory select 1),true];
+							_object setVariable["BackpackCargo",(_inventory select 2),true];
+						} else {
+							_objWpnTypes = (_inventory select 0) select 0;
+							_objWpnQty = (_inventory select 0) select 1;
+							_countr = 0;					
+							{
+								if(_x in (DZE_REPLACE_WEAPONS select 0)) then {
+									_x = (DZE_REPLACE_WEAPONS select 1) select ((DZE_REPLACE_WEAPONS select 0) find _x);
+								};
+								_isOK = isClass(configFile >> "CfgWeapons" >> _x);
+
+								if(_isOK) then {
+									_object addWeaponCargoGlobal [_x,(_objWpnQty select _countr)];
+								};
+								_countr = _countr + 1;
+							} count _objWpnTypes;
+
+							_objWpnTypes	= (_inventory select 1) select 0;
+							_objWpnQty		= (_inventory select 1) select 1;
+							_countr			= 0;
+
+							{
+								if(_x == "BoltSteel") then { _x = "WoodenArrow" };
+								if(_x == "ItemTent") then { _x = "ItemTentOld" };
+
+								_isOK = isClass(configFile >> "CfgMagazines" >> _x);
+								if(_isOK) then {
+									_object addMagazineCargoGlobal [_x,(_objWpnQty select _countr)];
+								};
+								_countr = _countr + 1;
+							} count _objWpnTypes;
+
+							_objWpnTypes	= (_inventory select 2) select 0;
+							_objWpnQty		= (_inventory select 2) select 1;
+							_countr			= 0;
+
+							{
+								_isOK = isClass(configFile >> "CfgVehicles" >> _x);
+
+								if(_isOK) then {
+									_object addBackpackCargoGlobal [_x,(_objWpnQty select _countr)];
+								};
+								_countr = _countr + 1;
+							} count _objWpnTypes;
+						};
+					};
+
+					if(_object isKindOf "AllVehicles") then {
+						{
+							_selection = _x select 0;
+							_dam = _x select 1;
+
+							if(_selection in dayZ_explosiveParts && _dam > 0.8) then {_dam = 0.8};
+							[_object,_selection,_dam] call object_setFixServer;
+						} count _hitpoints;
+						_object setFuel _fuel;
+
+						if(!((typeOf _object) in dayz_allowedObjects)) then {
+							_object call fnc_veh_ResetEH;		
+							if(_ownerID != "0" && !(_object isKindOf "Bicycle")) then {
+								_object setvehiclelock "locked";
+							} else {
+								_totalvehicles = _totalvehicles + 1;
+								serverVehicleCounter set[count serverVehicleCounter,_type];
+							};
+						};
+					};
+					PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 				};
-				PVDZE_serverObjectMonitor set[count PVDZE_serverObjectMonitor,_object];
 			};
 		};
-	} forEach _objects;
+
+		_hiveResponse = nil;
+
+		diag_log format["HIVE: Objects spawned on the server, sending %1 objects to clients",(count localObjects)];
+	};
 
 	publicVariable "localObjects";
 
-	_objects = nil;
+	localObjects = nil;
 
 	processInitCommands;
 

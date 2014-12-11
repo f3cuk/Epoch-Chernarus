@@ -451,14 +451,14 @@ if(!isDedicated) then {
 				};
 				_control2 ctrlSetText format["%1",_timeOut];
 			};
-			_timeOut = _timeOut + 1;
+			_timeOut = _timeOut + .1;
 			if(_timeOut >= _maxtimeOut) then {
 				1 cutText[localize "str_player_login_timeout","PLAIN DOWN"];
 				sleep 5;
 				endLoadingScreen;
 				endMission "END1";
 			};
-			uiSleep 1.2;
+			uiSleep .1;
 		};
 	};
 

@@ -19,7 +19,7 @@ dayz_minpos					= -1;
 dayz_maxpos					= 16000;
 dayz_MapArea				= 14000;
 
-MaxVehicleLimit				= 330;
+MaxVehicleLimit				= 125;
 MaxDynamicDebris			= 0;
 DZE_LootSpawnTimer			= 3;
 
