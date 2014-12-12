@@ -248,11 +248,11 @@ if(isServer && isNil "sm_done") then {
 		_hiveResponse = nil;
 
 		diag_log format["HIVE: Objects spawned on the server, sending %1 objects to clients",(count localObjects)];
+
+		publicVariable "localObjects";
+
+		localObjects = nil;
 	};
-
-	publicVariable "localObjects";
-
-	localObjects = nil;
 
 	processInitCommands;
 

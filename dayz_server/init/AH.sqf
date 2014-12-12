@@ -1328,7 +1328,6 @@ publicVariable '"+_randvar28+"';
 		"+_randvar20+" = _PVAH_AdminReq;
 		'PVAH_AdminReq' addPublicVariableEventHandler {_this call "+_randvar20+";};
 
-		dze_diag_fps = {};
 		_mPos = "+str _mPos+";
 		_debug = createMarker ['respawn_west',_mPos];
 		_cmPos = (getMarkerPos 'respawn_west');
