@@ -15,6 +15,15 @@ fnc_remote_message = {
 			}; 
 		};
 		if(_type == "global")		exitWith { systemChat _message; };
+		if(_type == "dynamic_text")	exitWith { 
+			[
+				format["<t size='0.40' color='#FFFFFF' align='right'>%1</t><br /><t size='0.70' color='#d5a040' align='right'>%2</t>",(_message select 0),(_message select 1)],
+				[safezoneX + safezoneW - 0.8,0.50],
+				[safezoneY + safezoneH - 0.8,0.7],
+				10,
+				0.5
+			] spawn BIS_fnc_dynamicText; 
+		};
 	};
 };
 

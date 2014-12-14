@@ -18,7 +18,7 @@ if(isServer) then {
 	find_position			= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\find_position.sqf";
 	load_ammo				= compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\load_ammo.sqf";
 
-	call					compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\functions.sqf";
+	call compile preprocessFileLineNumbers "\z\addons\dayz_server\WAI\compile\functions.sqf";
 
 	if(isNil("DZMSInstalled")) then {
 
@@ -72,5 +72,5 @@ if(isServer) then {
 	if(wai_mission_system) then {
 		ExecVM "\z\addons\dayz_server\WAI\missions\init.sqf";
 	};
-
+	
 };

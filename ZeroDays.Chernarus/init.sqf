@@ -27,8 +27,8 @@ progressLoadingScreen 1.0;
 setToneMapping "filmic";
 
 if(isServer) then {
-	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\traders.sqf";
-	execVM "\z\addons\dayz_server\missions\Epoch_Zombieland.Chernarus\init.sqf";
+	execVM "\z\addons\dayz_server\missions\ZeroDays.Chernarus\traders.sqf";
+	execVM "\z\addons\dayz_server\missions\ZeroDays.Chernarus\init.sqf";
 	execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 };
 

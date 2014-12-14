@@ -767,6 +767,14 @@ KK_fnc_positionToString = {
 	]
 };
 
+"START_ROYALE" addPublicVariableEventHandler {
+	execVM "\z\addons\dayz_server\royale\init.sqf";	
+};
+
+"STOP_ROYALE" addPublicVariableEventHandler {
+	STOP_ROYALE = true;
+};
+
 "PVDZE_log" addPublicVariableEventHandler {
 
 	private["_data","_log"];
