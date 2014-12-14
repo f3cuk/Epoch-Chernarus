@@ -35,21 +35,19 @@ player setVariable["NORRN_unconscious",false,true];
 player setVariable["unconsciousTime",0,true];
 player setVariable["USEC_isCardiac",false,true];
 player setVariable["medForceUpdate",true,true];
-player setVariable["startcombattimer",0];
+player setVariable["startcombattimer",0,true];
 r_player_unconscious = false;
 r_player_cardiac = false;
 
-_array = _this;
-if(count _array > 0) then {
-	_source = _array select 0;
-	_method = _array select 1;
+if(count _this > 0) then {
+	_source = _this select 0;
+	_method = _this select 1;
 	if((!isNull _source) && (_source != player)) then {
-		_canHitFree = player getVariable["freeTarget",false];
-		_isBandit = (player getVariable["humanity",0]) <= -2000;
-		_punishment = _canHitFree || _isBandit; //if u are bandit || start first - player will not receive humanity drop
+		_canHitFree = (player getVariable["freeTarget",false]);
+		_isBandit = (player getVariable["humanity",0]) <= -5000;
+		_punishment = _canHitFree || _isBandit;
 		_humanityHit = 0;
 		if(!_punishment) then {
-			//i'm "not guilty" - kill me && be punished
 			_myKills = ((player getVariable["humanKills",0]) / 30) * 1000;
 			_humanityHit = -(2000 - _myKills);
 			_kills = _source getVariable["humanKills",0];
@@ -57,7 +55,6 @@ if(count _array > 0) then {
 			PVDZE_send = [_source,"Humanity",[_source,_humanityHit,300]];
 			publicVariableServer "PVDZE_send";
 		} else {
-			//i'm "guilty" - kill me as bandit
 			_killsV = _source getVariable["banditKills",0];
 			_source setVariable["banditKills",(_killsV + 1),true];
 		};
@@ -74,9 +71,21 @@ terminate dayz_gui;
 
 r_player_dead = true;
 
-// Begin adding skin to player body
-call compile preprocessFileLineNumbers "custom\take_clothes\take_clothes.sqf";
-// End adding skin to player body
+[] spawn {
+	private["_skin","_okSkin","_result","_bp","_body"];
+	_body = player;
+	_skin = (typeOf _body);
+	_skin = "Skin_" + _skin;
+	_okSkin = isClass (configFile >> "CfgMagazines" >> _skin);
+
+	if(_okSkin) then {
+		 _result = [player,_skin] call BIS_fnc_invAdd;
+		if(!_result) then {
+			_bp = unitBackpack player;
+			_bp addMagazineCargoGlobal[_skin,1];
+		};
+	};
+};
 
 "dynamicBlur" ppEffectEnable true;"dynamicBlur" ppEffectAdjust [4]; "dynamicBlur" ppEffectCommit 0.2;
 
@@ -84,7 +93,6 @@ call compile preprocessFileLineNumbers "custom\take_clothes\take_clothes.sqf";
 "colorCorrections" ppEffectAdjust [1,1,0,[1,1,1,0.0],[1,1,1,0.01], [1,1,1,0.0]];
 "colorCorrections" ppEffectCommit 1;
 
-//Player is Dead!
 3 fadeSound 0;
 sleep 1;
 
@@ -99,7 +107,6 @@ selectPlayer dayz_originalPlayer;
 
 _body setVariable["combattimeout",0,true];
 
-//["dayzFlies",player] call broadcastRpcCallAll;
 sleep 2;
 
 1 cutRsc ["DeathScreen","BLACK OUT",3];
@@ -109,9 +116,9 @@ playMusic "dayz_track_death_1";
 "dynamicBlur" ppEffectAdjust [0]; "dynamicBlur" ppEffectCommit 5;
 "colorCorrections" ppEffectAdjust [1,1,0,[1,1,1,0.0],[1,1,1,1], [1,1,1,1]];"colorCorrections" ppEffectCommit 5;
 
-sleep 2;
+sleep 5;
 
-for  "_x" from 5 to 1 step -1 do {
+for  "_x" from 15 to 1 step -1 do {
 	titleText [format[localize "str_return_lobby",_x],"PLAIN DOWN",1];
 	sleep 1;
 };

@@ -945,7 +945,7 @@ class FSM
       name = "Position";
       init = /*%FSM<STATEINIT""">*/"_myLoc = [player] call FNC_GetPos;" \n
        "" \n
-       "dayz_loadScreenMsg = ""Setup Completed,please wait..."";" \n
+       "dayz_loadScreenMsg = ""Setup Completed, please wait..."";" \n
        "" \n
        "3 cutRsc [""playerStatusGUI"",""PLAIN"",0];" \n
        "" \n
@@ -1037,7 +1037,7 @@ class FSM
        "selectNoPlayer;" \n
        "_myTime = diag_tickTime;" \n
        "" \n
-       "dayz_loadScreenMsg = ""You are running an incorrect version,please download update from dayzepoch.com."";" \n
+       "dayz_loadScreenMsg = ""You are running an incorrect version, please download update from dayzepoch.com."";" \n
        "" \n
        "1 cutText[format[localize ""str_player_18"",dayz_versionNo,_version],""PLAIN""];" \n
        "" \n
@@ -1567,7 +1567,7 @@ class FSM
       init = /*%FSM<STATEINIT""">*/"//diag_log (""PLOGIN:Wrong DayZ Version ("" + dayz_versionNo + "")"");" \n
        "diag_log format[localize ""str_player_18"",dayz_versionNo,_version];" \n
        "" \n
-       "dayz_loadScreenMsg = ""You are running an incorrect version of DAYZ_CODE,please download this file from dayzepoch.com."";" \n
+       "dayz_loadScreenMsg = ""You are running an incorrect version of DAYZ_CODE, please download this file from dayzepoch.com."";" \n
        "" \n
        "progressLoadingScreen 1;"/*%FSM</STATEINIT""">*/;
       precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;

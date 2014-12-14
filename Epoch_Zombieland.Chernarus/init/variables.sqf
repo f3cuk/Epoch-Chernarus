@@ -321,7 +321,12 @@ if(isServer) then {
 	if(isNil "DZE_DeathMsgGlobal")		then { DZE_DeathMsgGlobal = false; };
 	if(isNil "DZE_DeathMsgSide")		then { DZE_DeathMsgSide = false; };
 	if(isNil "DZE_DeathMsgTitleText")	then { DZE_DeathMsgTitleText = false; };
+	if(isnil "MaxVehicleLimit")			then { MaxVehicleLimit = 50; };
+	if(isnil "MaxAmmoBoxes")			then { MaxAmmoBoxes = 10; };
+
 	DZE_safeVehicle	= ["ParachuteWest","ParachuteC"];
+
+	immune_objects = ["WoodStairsRails_DZ","BagFenceRound_DZ","FireBarrel_DZ","Hedgehog_DZ","LightPole_DZ","WoodLargeWallWin_DZ","StickFence_DZ","WorkBench_DZ","Fort_RazorWire","Sandbag1_DZ","WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
 };
 
 if(!isDedicated) then {
@@ -394,14 +399,14 @@ if(!isDedicated) then {
 	dayzClickTime				= 0;
 	dayz_spawnZombies			= 0;
 	dayz_swarmSpawnZombies		= 3;
-	dayz_maxLocalZombies		= 12;
+	dayz_maxLocalZombies		= 6;
 	dayz_CurrentNearByZombies	= 0;
-	dayz_maxNearByZombies		= 12;
+	dayz_maxNearByZombies		= 9;
 	dayz_currentGlobalZombies	= 0;
 	dayz_maxGlobalZeds			= 350;
 	dayz_spawnDelay				= 150;
 	dayz_spawnWait				= -150;
-	dayz_lootDelay				= 2;
+	dayz_lootDelay				= 5;
 	dayz_lootWait				= -150;
 	dayz_CurrentZombies			= 0;
 	dayz_tickTimeOffset			= 0;

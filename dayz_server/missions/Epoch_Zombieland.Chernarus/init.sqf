@@ -1,4 +1,32 @@
-private["_object"];
+private["_object","_dynamic_military","_clutter","_military"];
+
+_dynamic_military = 1 + floor(random 4);
+_clutter = ["76n6ClamShell","BMP2_HQ_CDF_unfolded","BMP2_HQ_INS_unfolded","BRDM2_HQ_Gue_unfolded","BTR90_HQ_unfolded","CDF_WarfareBBarracks","CDF_WarfareBAircraftFactory","CDF_WarfareBArtilleryRadar","GUE_WarfareBMGNest_PK"];
+_military = [];
+
+for "_i" from 1 to _dynamic_military do {
+	private["_pos"];
+
+	_pos = [getMarkerPos "center",0,7500,20,0,.7,0] call BIS_fnc_findSafePos;
+
+	_military set[count _military,["Land_Mil_Barracks_i",[(_pos select 0),(_pos select 1),0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0),(_pos select 1) + 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0),(_pos select 1) - 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0),(_pos select 1),0],0]];
+	_military set[count _military,["Land_Mil_Barracks_i",[(_pos select 0),(_pos select 1) + 10,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) + 10,(_pos select 1) + 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) + 10,(_pos select 1) - 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) + 10,(_pos select 1),0],0]];
+	_military set[count _military,["Land_Mil_Barracks_i",[(_pos select 0),(_pos select 1) - 10,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) - 10,(_pos select 1) + 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) - 10,(_pos select 1) - 9,0],0]];
+	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0) - 10,(_pos select 1),0],0]];
+	_military set[count _military,[_clutter call BIS_fnc_selectrandom,[(_pos select 0) + (10 + random 10),(_pos select 1) - (10 + random 20),0],(random 360)]];
+	_military set[count _military,[_clutter call BIS_fnc_selectrandom,[(_pos select 0) - (10 + random 10),(_pos select 1) + (10 + random 20),0],(random 360)]];
+
+	diag_log format["[Compound] Spawned a dynamic compound at %1 (%2)",(mapGridPosition _pos),_pos];
+
+};
 
 allMarkers = [
 	["Trader City Stary",[6326.48,7809.48],"ellipse",100,"ColorBlack"],
@@ -1688,6 +1716,8 @@ AllowedVehiclesList = [
 	["pook_H13_civ_black",2]
 ];
 
+allObjects = allObjects + _military;
+
 publicVariable "allMarkers";
 publicVariable "allObjects";
 
@@ -1708,6 +1738,7 @@ init_done = true;
 publicVariable "init_done";
 
 _object		= nil;
+_military	= nil;
 allMarkers	= nil;
 allObjects	= nil;
 init_done	= nil;

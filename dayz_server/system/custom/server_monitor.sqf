@@ -1,16 +1,11 @@
-private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_traderid","_id","_lockable","_debugMarkerPosition","_vehicle_0","_hiveLoaded","_skip","_ownerPUID","_cpcimmune","_objects"];
+private["_result","_pos","_wsDone","_dir","_isOK","_countr","_objWpnTypes","_objWpnQty","_dam","_selection","_totalvehicles","_object","_idKey","_type","_ownerID","_worldspace","_inventory","_hitPoints","_fuel","_damage","_key","_vehLimit","_hiveResponse","_objectCount","_codeCount","_data","_status","_traderid","_id","_lockable","_debugMarkerPosition","_vehicle_0","_hiveLoaded","_skip","_ownerPUID","_objects"];
 
 dayz_versionNo		= getText(configFile >> "CfgMods" >> "DayZ" >> "version");
 dayz_hiveVersionNo	= getNumber(configFile >> "CfgMods" >> "DayZ" >> "hiveVersion");
 
-_cpcimmune	= ["WoodStairsRails_DZ","BagFenceRound_DZ","FireBarrel_DZ","Hedgehog_DZ","LightPole_DZ","WoodLargeWallWin_DZ","StickFence_DZ","WorkBench_DZ","Fort_RazorWire","Sandbag1_DZ","WoodFloor_DZ","WoodFloorHalf_DZ","WoodFloorQuarter_DZ","WoodLargeWallWin_DZ","WoodLargeWall_DZ","WoodSmallWallDoor_DZ","WoodSmallWallWin_DZ","Land_DZE_WoodDoor","Land_DZE_LargeWoodDoor","WoodLadder_DZ","WoodStairsSans_DZ","WoodStairs_DZ","WoodSmallWall_DZ","WoodSmallWallThird_DZ","CinderWallHalf_DZ","CinderWall_DZ","CinderWallDoorway_DZ","MetalFloor_DZ","Land_HBarrier1_DZ","Land_HBarrier3_DZ","Land_HBarrier5_DZ","FuelPump_DZ","WoodRamp_DZ"];
 _hiveLoaded	= false;
 
 waitUntil{initialized};
-waituntil{isNil "sm_done"};
-
-if(isnil "MaxVehicleLimit") 	then { MaxVehicleLimit = 50; };
-if(isnil "MaxAmmoBoxes") 		then { MaxAmmoBoxes = 10; };
 
 if(isServer && isNil "sm_done") then {
 
@@ -63,7 +58,7 @@ if(isServer && isNil "sm_done") then {
 			_wsDone		= false;
 			_skip		= false;
 
-			if(_type in _cpcimmune) then {
+			if(_type in immune_objects) then {
 				localObjects set[count localObjects,[_idKey,_type,_ownerID,_worldspace,_damage]];
 				localIds set[count localIds,parseNumber(_idKey)];
 				_skip = true;

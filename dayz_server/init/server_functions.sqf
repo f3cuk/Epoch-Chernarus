@@ -280,7 +280,7 @@ spawn_vehicles = {
 			};
 		};
 
-		if((count _position) == 2) then { 
+		if((count _position) == 2) then {
 
 			_dir = round(random 180);
 
@@ -289,7 +289,7 @@ spawn_vehicles = {
 
 			_veh = createVehicle[_vehicle,_position,[],0,"CAN_COLLIDE"];
 			_veh setdir _dir;
-			_veh setPosATL _position;		
+			_veh setPos _position;		
 
 			if(DZEdebug) then {
 				_marker = createMarker [str(_position) ,_position];
@@ -300,9 +300,9 @@ spawn_vehicles = {
 
 			_objPosition = [_veh] call FNC_GetPos;
 
-			clearWeaponCargoGlobal  _veh;
-			clearMagazineCargoGlobal  _veh;
-			_num = floor(random 4);
+			clearWeaponCargoGlobal _veh;
+			clearMagazineCargoGlobal _veh;
+			_num = floor(random 8);
 			_allCfgLoots = ["trash","civilian","food","generic","medical","military","policeman","hunter","worker","clothes","militaryclothes","specialclothes","trash"];
 
 			for "_x" from 1 to _num do {

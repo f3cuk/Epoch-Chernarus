@@ -133,8 +133,8 @@ spawn_epoch_object = {
 
 	waitUntil {!isNil "allObjects"};
 
-	_total			= count allObjects;
-	_t				= diag_tickTime;
+	_total	= count allObjects;
+	_t		= diag_tickTime;
 
 	diag_log format["[Mission Objects] Spawning %1 mission objects",_total];
 
@@ -202,12 +202,14 @@ spawn_epoch_object = {
 
 [] spawn {
 
-	private ["_upd_range","_pos_player","_t","_moved","_a","_r","_i"];
+	private["_upd_range","_diameter","_pos_player","_moved","_i"];
+	if(DZEdebug) then { private["_t","_a","_r"]; };
 
 	waitUntil {!isNil "dayz_animalCheck"};
 	
 	hidden		= [];
 	_upd_range 	= 300;
+	_diameter	= 1500;
 	_pos_player = [0,0,0];
 
 	while{true} do {
@@ -231,7 +233,7 @@ spawn_epoch_object = {
 
 				private["_object","_id","_removed"];
 
-				if(player distance (_x select 2) < 1500) then {
+				if(player distance (_x select 2) < _diameter) then {
 					
 					if((_x select 0) == -1) then {
 						_object = [_x select 1] call spawn_mission_object;
@@ -255,7 +257,7 @@ spawn_epoch_object = {
 
 			{
 
-				if(player distance (_x select 1) > 1250) then {
+				if(player distance (_x select 1) > (_diameter - 250)) then {
 					spawned set[_i,-1];
 					hidden set[count hidden,[(_x select 0),(_x select 2),[(_x select 1)] call FNC_GetPos]];
 					deleteVehicle (_x select 1);
@@ -273,7 +275,7 @@ spawn_epoch_object = {
 		};
 
 		if(_moved > _upd_range-(_upd_range/4)) then {
-			sleep 3; // almost at the edge, updating faster
+			sleep 3;
 		} else {
 			sleep 6;
 		};
@@ -286,7 +288,7 @@ spawn_epoch_object = {
 	uiSleep 180;
 	if(!preload_done) then {
 		player enableSimulation false;
-		cutText["Something went wrong with loading the objects,auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
+		cutText["Something went wrong with loading the objects, auto moving you to the lobby in 5 seconds. Please relog.","BLACK"];
 		PVDZE_log = [format["[NO_OBJECTS] Player %1 (%2) was kicked to the lobby because of no objects.",(name player),(getPlayerUID player)]];
 		publicVariableServer "PVDZE_log";
 		uiSleep 5;

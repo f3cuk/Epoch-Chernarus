@@ -422,13 +422,13 @@ if(!isDedicated) then {
 		};
 
 		if(isNil "sm_done") then {
-			_loadstatus = 1;
-			_maxtimeOut = 240; 
+			_maxtimeOut = 240;
+			dayz_loadScreenMsg = "Server starting, please wait..";
 		} else {
 			_maxtimeOut = 120;
 		};
 
-		while { _timeOut < _maxtimeOut } do {
+		while {true} do {
 			if(dayz_clientPreload && dayz_authed) exitWith { diag_log "PLOGIN: Login loop completed!"; };
 			if(!isNil "_display") then {
 				if( isNull _display ) then {
@@ -438,25 +438,22 @@ if(!isDedicated) then {
 					_control1 = _display displayctrl 8400;
 					_control2 = _display displayctrl 102;
 				};
-				if(isNil "sm_done") then {
-					call {
-						if(_loadstatus == 1) exitWith { _loadstatus = 2; dayz_loadScreenMsg = "Server starting ."; };
-						if(_loadstatus == 2) exitWith { _loadstatus = 3; dayz_loadScreenMsg = "Server starting .."; };
-						if(_loadstatus == 3) exitWith { _loadstatus = 1; dayz_loadScreenMsg = "Server starting ..."; };
-					};
-				};
 				if(dayz_loadScreenMsg != "") then {
 					_control1 ctrlSetText dayz_loadScreenMsg;
 					dayz_loadScreenMsg = "";
 				};
-				_control2 ctrlSetText format["%1",_timeOut];
+				_control2 ctrlSetText format["%1",round(_timeOut)];
 			};
 			_timeOut = _timeOut + .1;
-			if(_timeOut >= _maxtimeOut) then {
-				1 cutText[localize "str_player_login_timeout","PLAIN DOWN"];
-				sleep 5;
-				endLoadingScreen;
-				endMission "END1";
+			if(_timeOut >= _maxtimeOut) exitWith {
+
+				[] spawn {
+					1 cutText[localize "str_player_login_timeout","PLAIN DOWN"];
+					sleep 5;
+					endLoadingScreen;
+					endMission "END1";
+				};
+
 			};
 			uiSleep .1;
 		};
@@ -467,7 +464,7 @@ if(!isDedicated) then {
 		_magType = ([] + getArray (configFile >> "CfgWeapons" >> _wpnType >> "magazines")) select 0;
 		_meleeNum = ({_x == _magType} count magazines player);
 		if(_meleeNum < 1) then {
-				player addMagazine _magType;
+			player addMagazine _magType;
 		};
 	};
 
@@ -512,7 +509,7 @@ player_breaklegs			= compile preprocessFileLineNumbers "\z\addons\dayz_code\medi
 player_medPainkiller		= compile preprocessFileLineNumbers "\z\addons\dayz_code\medical\publicEH\medPainkiller.sqf";
 world_isDay 				= {if((daytime < (24 - dayz_sunRise)) && (daytime > dayz_sunRise)) then {true} else {false}};
 player_humanityChange		= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\player_humanityChange.sqf";
-spawn_loot					= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot.sqf";
+spawn_loot					= compile preprocessFileLineNumbers "custom\fixes\spawn_loot.sqf";
 spawn_loot_small			= compile preprocessFileLineNumbers "\z\addons\dayz_code\compile\spawn_loot_small.sqf";
 
 FNC_GetPlayerUID = {

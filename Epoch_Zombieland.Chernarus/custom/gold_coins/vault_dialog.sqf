@@ -45,9 +45,9 @@ if(typeName _vault == "OBJECT" && !isNull _vault) then {
 		};
 
 	} else {
-		cutText[format["Cannot find ID (%1) of safe/lockbox (%2),please try again in a few seconds",typeName _vaultID,_vault],"PLAIN DOWN"];
+		cutText[format["Cannot find ID (%1) of safe/lockbox (%2), please try again in a few seconds",typeName _vaultID,_vault],"PLAIN DOWN"];
 	};
 
 } else {
-	cutText["Something went wrong trying,please try again in a few seconds.","PLAIN DOWN"];
+	cutText["Something went wrong trying, please try again in a few seconds.","PLAIN DOWN"];
 };
