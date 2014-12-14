@@ -68,6 +68,8 @@ _clutter setPos _loot_pos;
 	_loot_box addMagazineCargoGlobal [_x,1];
 } count (_loot select 1);
 
+_loot_box setVariable["permaLoot",true];
+
 RemoteMessage 	= ["radio",format["[RADIO] A special forces unit lost it's cargo,reports suggest %1 is it approximate position",mapGridPosition _position]];
 RemoteMarker 	= ["ItemRadio",_position,"ELLIPSE","ColorRed",_markerRadius,0.5,_wait_time,"military_drop_marker"];
 

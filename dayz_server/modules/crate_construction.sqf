@@ -66,6 +66,8 @@ _clutter setPos _loot_pos;
 	_loot_box addMagazineCargoGlobal [_x,1];
 } count (_loot select 0);
 
+_loot_box setVariable["permaLoot",true];
+
 RemoteMessage 	= ["radio",format["[RADIO] An Ikea truck has lost it's cargo,it has last been spotted around %1",mapGridPosition _position]];
 RemoteMarker 	= ["ItemRadio",_position,"ELLIPSE","ColorGreen",_markerRadius,0.5,_wait_time,"construction_drop_marker"];
 

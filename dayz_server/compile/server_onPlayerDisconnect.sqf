@@ -89,8 +89,9 @@ if(!isNull _playerObj) then {
 		};
 
 		_loot_box addBackpackCargoGlobal[(typeOf _backpack),1];
+		_loot_box setVariable["permaLoot",true];
 
-		diag_log format["COMBAT LOGGED: %1 (%2) at location %3 - DEBUG: Weapons: ( %4 - %5) / Magazines: (%6 - %7) / Backpack: (%8) / Money: (%9)",_playerName,_timeout,([_playerObj] call FNC_GetPos),_weapons,_weapons_backpack,_magazines,_magazines_backpack,_backpack,_money];
+		diag_log format["COMBAT LOGGED: %1 (%2) at location %3 - DEBUG: Weapons: (%4 - %5) / Magazines: (%6 - %7) / Backpack: (%8) / Money: (%9)",_playerName,_timeout,([_playerObj] call FNC_GetPos),_weapons,_weapons_backpack,_magazines,_magazines_backpack,_backpack,_money];
 
 		_message = format["PLAYER COMBAT LOGGED: %1",_playerName];
 
