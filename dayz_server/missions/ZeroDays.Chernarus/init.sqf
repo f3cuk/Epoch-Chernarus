@@ -7,7 +7,7 @@ _military = [];
 for "_i" from 1 to _dynamic_military do {
 	private["_pos"];
 
-	_pos = [getMarkerPos "center",0,7500,20,0,.7,0] call BIS_fnc_findSafePos;
+	_pos = [getMarkerPos "center",0,7500,20,0,.5,0] call BIS_fnc_findSafePos;
 
 	_military set[count _military,["Land_Mil_Barracks_i",[(_pos select 0),(_pos select 1),0],0]];
 	_military set[count _military,["ClutterCutter_EP1",[(_pos select 0),(_pos select 1) + 9,0],0]];
@@ -42,7 +42,7 @@ allMarkers = [
 	["Boat Dealer Cherno",[7989.36,2901],"icon","mil_dot"]
 ];
 
-allObjects = [
+missionObjects = [
 	// CHERNARUS
 	["Land_Toilet",[11467.155,11341.848,0],305.48679],
 	["ClutterCutter_EP1",[11467.027,11364.092,0],-7.4119859],
@@ -1716,10 +1716,10 @@ AllowedVehiclesList = [
 	["pook_H13_civ_black",2]
 ];
 
-allObjects = allObjects + _military;
+missionObjects = missionObjects + _military;
 
 publicVariable "allMarkers";
-publicVariable "allObjects";
+publicVariable "missionObjects";
 
 _objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
 
@@ -1732,15 +1732,13 @@ _objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (pre
 	if(count _x > 3 && (_x select 3)) then {
 		_object setVehicleLock "LOCKED";
 	};
-} count allObjects;
+} count missionObjects;
 
 init_done = true;
 publicVariable "init_done";
 
-_object		= nil;
-_military	= nil;
-allMarkers	= nil;
-allObjects	= nil;
-init_done	= nil;
-
-processInitCommands;
+_object			= nil;
+_military		= nil;
+allMarkers		= nil;
+missionObjects	= nil;
+init_done		= nil;

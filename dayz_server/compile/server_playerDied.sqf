@@ -8,6 +8,7 @@ _infected		= _this select 4;
 
 _victimName		= name _victim;
 _victimGroup	= group _victim;
+_royale			= _victim getVariable["Royale",false];
 
 deleteGroup _victimGroup;
 
@@ -40,7 +41,12 @@ if((typeName _killer) == "OBJECT") then {
 			_killerName = format["[AI] %1",_killerName];
 		};
 
-		_message		= format["[KILL] %1 was killed with a %2 from about %3m",_victimName,_weapon,round(_distance)];
+		if(_royale) then {
+			_message = format["[ROYALE] %1 was killed by %2 with a %3 from about %4m",_victimName,_killerName,_weapon,round(_distance)];
+		} else {
+			_message = format["[KILL] %1 was killed with a %2 from about %3m",_victimName,_weapon,round(_distance)];
+		};
+		
 		_loc_message	= format["PDEATH: %1 (%5) was killed by %2 with a %3 from %4m",_victimName,_killerName,_weapon,_distance,_playerID];
 		_death_record	= [_victimName,_killerName,_weapon,_distance,ServerCurrentTime];
 

@@ -27,7 +27,7 @@ if(isServer && isNil "sm_done") then {
 		diag_log format["HIVE: Error could not load hive (DEBUG: %1)",_hiveResponse];
 	};
 
-	localObjects	= [];
+	epochObjects	= [];
 	deleteObjects	= [];
 	localIds		= [];
 	serverObjects	= [];
@@ -59,7 +59,7 @@ if(isServer && isNil "sm_done") then {
 			_skip		= false;
 
 			if(_type in immune_objects) then {
-				localObjects set[count localObjects,[_idKey,_type,_ownerID,_worldspace,_damage]];
+				epochObjects set[count epochObjects,[_idKey,_type,_ownerID,_worldspace,_damage]];
 				localIds set[count localIds,parseNumber(_idKey)];
 				_skip = true;
 			};
@@ -241,17 +241,17 @@ if(isServer && isNil "sm_done") then {
 		};
 
 		_hiveResponse = nil;
-
-		diag_log format["HIVE: Objects spawned on the server, sending %1 objects to clients",(count localObjects)];
-
-		publicVariable "localObjects";
-
-		localObjects = nil;
 	};
+
+	diag_log format["HIVE: Objects spawned on the server, sending %1 objects to clients",(count epochObjects)];
+
+	publicVariable "epochObjects";
+
+	epochObjects = nil;
 
 	processInitCommands;
 
-	if !(DZE_ConfigTrader) then {
+	if!(DZE_ConfigTrader) then {
 
 		trader_data = [];
 

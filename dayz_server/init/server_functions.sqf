@@ -768,11 +768,12 @@ KK_fnc_positionToString = {
 };
 
 "START_ROYALE" addPublicVariableEventHandler {
-	execVM "\z\addons\dayz_server\royale\init.sqf";	
+	diag_log format["ROYAL EVENT: %1",_this];
+	[(_this select 1) select 0] execVM "\z\addons\dayz_server\royale\init.sqf";	
 };
 
 "STOP_ROYALE" addPublicVariableEventHandler {
-	STOP_ROYALE = true;
+	[] spawn royale_end;
 };
 
 "PVDZE_log" addPublicVariableEventHandler {

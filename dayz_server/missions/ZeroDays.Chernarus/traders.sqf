@@ -49,4 +49,5 @@ _traders = [
 	_unit setBehaviour 'CARELESS';
 	_unit forceSpeed 0;
 	_unit enableSimulation false;
+	processInitCommands;
 } forEach _traders;

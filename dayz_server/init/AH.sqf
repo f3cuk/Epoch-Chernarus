@@ -8915,7 +8915,7 @@ PV_AdminMainCode = {
 		if(isNil 'ryl') then {ryl = true;} else {ryl = !ryl};
 		if(ryl) then
 		{
-			START_ROYALE = true;
+			START_ROYALE = [player,true];
 			publicVariableServer "START_ROYALE";
 
 			systemChat format['Royale is starting'];
@@ -8926,8 +8926,8 @@ PV_AdminMainCode = {
 			STOP_ROYALE = true;
 			publicVariableServer "STOP_ROYALE";
 
-			systemChat 'Royale has stopped';
-			_log = 'Royale stopped';
+			systemChat 'Royale has ended';
+			_log = 'Royale ended';
 		};
 		hint _log;
 		cutText[_log, 'PLAIN'];

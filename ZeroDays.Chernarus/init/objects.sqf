@@ -1,3 +1,45 @@
+client_remove_object = {
+
+	private["_removed","_t","_i"];
+
+	waitUntil {(epochObjectsLoaded && missionObjectsLoaded)};
+
+	_removed = _this select 1;
+
+	if(!isNil "already_removed") then {_removed = _removed - already_removed;};
+
+	diag_log format["[EpochBuild Remover] Removing %1 objects",(count _removed)];
+
+	_t = diag_tickTime;
+	_i = 0;
+
+	{
+		if((_x select 0) in _removed) then {
+			deletevehicle (_x select 1);
+			already_removed set[count already_removed,(_x select 0)];
+			spawned set[_i,-1];
+		};
+		_i = _i + 1;
+	} count spawned;
+
+	spawned = spawned - [-1];
+	_i = 0;
+
+	{
+		if((_x select 0) in _removed) then {
+			already_removed set[count already_removed,(_x select 0)];
+			hidden set[_i,-1];
+		};
+		_i = _i + 1;
+	} count hidden;
+
+	hidden = hidden - [-1];
+
+	diag_log format["[EpochBuild Remover] Removed %1 objects in %2s",(count _removed),str(diag_tickTime - _t)];
+};
+
+"deleteObjects" addPublicVariableEventHandler { (_this) spawn client_remove_object; };
+
 spawn_mission_object = {
 
 	private["_object","_object_array"];
@@ -83,120 +125,77 @@ spawn_epoch_object = {
 
 [] spawn {
 
-	private["_t","_total"];
-
-	waitUntil {!isNil "localObjects"};
+	waitUntil {!isNil "epochObjects" && !isNil "missionObjects"};
 
 	spawnedIds		= [];
-	_total			= 0;
-	_t				= diag_tickTime;
-	totalobjects	= count (localObjects + allObjects);
+	totalobjects	= count (epochObjects + missionObjects);
 	loadedobjects	= 0;
 
 	dayz_loadScreenMsg = format["Loading objects (0/%1)",totalobjects];
 
-	diag_log format["[Epoch Objects] Spawning %1 industructable Epoch buildables",_total];
+	[] spawn {
 
-	{
+		private["_t","_object","_total"];
 
-		loadedobjects = loadedobjects + 1;
+		_total			= 0;
+		_t				= diag_tickTime;
 
-		private["_object","_id"];
-
-		if(!((_x select 0) in deleteObjects)) then {
-
-			_object = [_x] call spawn_epoch_object;
-			_id 	= parseNumber(_object select 1);
-
-			spawned set[count spawned,[_id,(_object select 0),_X]];
-			spawnedIds set[count spawnedIds,_id];
-
-			_total = _total + 1;
-			
-		};
-
-		dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
-
-	} count localObjects;
-
-	localObjects = nil;
-
-	diag_log format["[Epoch Objects] Initialized %2 Epoch buildables in %1s ",str(diag_tickTime - _t),_total];
-
-	epochObjectsLoaded = true;
-
-};
-
-[] spawn {
-
-	private["_total","_object","_t"];
-
-	waitUntil {!isNil "allObjects"};
-
-	_total	= count allObjects;
-	_t		= diag_tickTime;
-
-	diag_log format["[Mission Objects] Spawning %1 mission objects",_total];
-
-	{
-		loadedobjects = loadedobjects + 1;
-		_object = [_x] call spawn_mission_object;
-		spawned set[count spawned,[-1,_object,_x]];
-		dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
-	} count allObjects;
-
-	_object		= nil;
-	allObjects	= nil;
-
-	diag_log format["[Mission Objects] Initialized %2 mission objects in %1s ",str(diag_tickTime - _t),_total];
-
-	missionObjectsLoaded = true;
-
-};
-
-[] spawn {
-
-	client_remove_object = {
-
-		private["_removed","_t","_i"];
-
-		waitUntil {(epochObjectsLoaded && missionObjectsLoaded)};
-
-		_removed = _this select 1;
-
-		if(!isNil "already_removed") then {_removed = _removed - already_removed;};
-
-		diag_log format["[EpochBuild Remover] Removing %1 objects",(count _removed)];
-
-		_t = diag_tickTime;
-		_i = 0;
+		diag_log format["[Epoch Objects] Spawning %1 industructable Epoch buildables",_total];
 
 		{
-			if((_x select 0) in _removed) then {
-				deletevehicle (_x select 1);
-				already_removed set[count already_removed,(_x select 0)];
-				spawned set[_i,-1];
-			};
-			_i = _i + 1;
-		} count spawned;
 
-		spawned = spawned - [-1];
-		_i = 0;
+			loadedobjects = loadedobjects + 1;
+
+			private["_object","_id"];
+
+			if(!((_x select 0) in deleteObjects)) then {
+
+				_object = [_x] call spawn_epoch_object;
+				_id 	= parseNumber(_object select 1);
+
+				spawned set[count spawned,[_id,(_object select 0),_X]];
+				spawnedIds set[count spawnedIds,_id];
+
+				_total = _total + 1;
+				
+			};
+
+			dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
+
+		} count epochObjects;
+
+		epochObjects = nil;
+
+		diag_log format["[Epoch Objects] Initialized %2 Epoch buildables in %1s ",str(diag_tickTime - _t),_total];
+
+		epochObjectsLoaded = true;
+
+	}
+
+	[] spawn {
+
+		private["_total","_object","_t"];
+
+		_total	= count missionObjects;
+		_t		= diag_tickTime;
+
+		diag_log format["[Mission Objects] Spawning %1 mission objects",_total];
 
 		{
-			if((_x select 0) in _removed) then {
-				already_removed set[count already_removed,(_x select 0)];
-				hidden set[_i,-1];
-			};
-			_i = _i + 1;
-		} count hidden;
+			loadedobjects = loadedobjects + 1;
+			_object = [_x] call spawn_mission_object;
+			spawned set[count spawned,[-1,_object,_x]];
+			dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
+		} count missionObjects;
 
-		hidden = hidden - [-1];
+		_object			= nil;
+		missionObjects	= nil;
 
-		diag_log format["[EpochBuild Remover] Removed %1 objects in %2s",(count _removed),str(diag_tickTime - _t)];
+		diag_log format["[Mission Objects] Initialized %2 mission objects in %1s ",str(diag_tickTime - _t),_total];
+
+		missionObjectsLoaded = true;
+
 	};
-
-	"deleteObjects" addPublicVariableEventHandler { (_this) spawn client_remove_object; };
 
 };
 
