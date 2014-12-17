@@ -170,7 +170,7 @@ spawn_epoch_object = {
 
 		epochObjectsLoaded = true;
 
-	}
+	};
 
 	[] spawn {
 

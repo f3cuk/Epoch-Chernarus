@@ -40,7 +40,7 @@ if(!isDedicated) then {
 	
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
 
-	waitUntil {(!isNil "allObjects" && !isNil "localObjects")};
+	waitUntil {(!isNil "epochObjects" && !isNil "missionObjects")};
 		diag_log format["%1: Epoch buildables and map add-ons received",servertime];
 
 	call compile preprocessFileLineNumbers "init\objects.sqf";

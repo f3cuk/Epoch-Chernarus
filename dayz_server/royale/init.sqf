@@ -180,6 +180,7 @@ if(royale_vehicle == _player) then {
 
 			{
 				if(!(alive _x)) then { 
+					royale_death set[count royale_death,[name (royale_contenders select _forEachIndex),serverTime]];
 					royale_contenders set[_forEachIndex,-1];
 				};
 			} forEach royale_contenders;
@@ -188,6 +189,7 @@ if(royale_vehicle == _player) then {
 			_new_alive			= count royale_contenders;
 
 			if(_new_alive != _alive || _new_alive < 2) then {
+				_diff = _alive - _new_alive;
 				_alive = _new_alive;
 				if(_alive > 1) then {
 					RemoteMessage = ["dynamic_text",[royale_name,format["%1 players left alive",_alive]]];
@@ -202,6 +204,17 @@ if(royale_vehicle == _player) then {
 
 						diag_log format["[%1] Entering final stage with %2",royale_name,_names];
 					};
+
+					/*
+
+						[_diff] spawn {
+							for "_i" from 1 to (_this select 0) do {
+								[objNull,royale_marker,rSAY,"Royale_One_Down",25] call RE;
+								sleep 3;
+							};
+						};
+
+					*/
 				} else {
 
 					ROYALE_FINISHED = true;
@@ -209,7 +222,7 @@ if(royale_vehicle == _player) then {
 					if(_alive == 1) exitWith {
 						_winner = (royale_contenders select 0);
 
-						diag_log format["[%1]: Has ended, winner %2 (%3)",royale_name,name _winner,getPlayerUID _winner];
+						diag_log format["[%1] Has ended, winner %2 (%3)",royale_name,name _winner,getPlayerUID _winner];
 
 						deleteMarker royale_marker;
 						deleteMarker royale_dot;
@@ -332,6 +345,10 @@ if(royale_vehicle == _player) then {
 			};
 		} count allDead;
 
+		diag_log format["[%1] Ended, winner %1 runners-up %2",royale_name,name (royale_contenders select 0),royale_death];
+
+		royale_death = nil;
+
 	};
 
 	royale_timer = {
@@ -388,6 +405,11 @@ if(royale_vehicle == _player) then {
 	};
 
 	[_player] spawn {
+		private["_notnear"];
+		_notnear = true;
+
+		royale_vehicle setVehicleLock "LOCKED";
+
 		{
 
 			if(_x != (_this select 0)) then {
@@ -401,6 +423,37 @@ if(royale_vehicle == _player) then {
 		clearBackpackCargoGlobal royale_vehicle;
 
 		royale_total_contenders = count royale_contenders;
+
+		while {_notnear} do {
+			sleep 1;
+			_pos = getPos royale_vehicle;
+			_pos set[2,0];
+
+			if(_pos distance royale_pos < 125) then {
+				_notnear = false;
+			};
+		};
+
+		royale_vehicle setVehicleLock "UNLOCKED";
+		sleep .5;
+
+		{
+			private["_tmpu","_do"];
+			_do = format["if(getPlayerUID player == '%1') then {
+				[] spawn {
+					player action['eject',(vehicle player)];
+					sleep 1;
+					player spawn BIS_fnc_halo;
+					player setvelocity[0,96,0];
+					player setdir 0;
+				};
+			};",(getPlayerUID _x)];
+			_tmpu = createAgent['Rabbit',[2500,2500,0],[],0,'FORM'];
+			_tmpu setVehicleInit _do;
+			processInitCommands;
+			clearVehicleInit _tmpu;
+			deleteVehicle _tmpu;
+		} count royale_contenders;
 	};
 
 	[] spawn {
@@ -413,9 +466,10 @@ if(royale_vehicle == _player) then {
 		winner_loottime	= 600;					// How many seconds does the winner get to loot before being teleported to winner_location
 		royale_radius	= 680;					// Event radius
 		current_radius	= royale_radius;		// Event starting radius
-		royale_max_time	= 2700;					// Max time Skalisty should take (in seconds)
+		royale_max_time	= 900;					// Max time Skalisty should take (in seconds)
 		_num_weapons	= 20;					// Number of weapon crate spawns
 		_num_items		= 20;					// Number of item crate spawns
+		royale_death	= [];					// 
 
 		for "_i" from 1 to _num_weapons do {
 			private["_crate_type","_pos","_crate"];
@@ -447,22 +501,27 @@ if(royale_vehicle == _player) then {
 		royale_dot setMarkerType "o_inf";
 		royale_dot setMarkerText royale_name;
 
-		RemoteMessage = ["dynamic_text",[royale_name,"Let the games begin!"]];
+		RemoteMessage = ["dynamic_text",[royale_name,format["Welcome to %1",royale_name]]];
 		publicVariable "RemoteMessage";
 
 		sleep 15;
 
-		RemoteMessage = ["dynamic_text",[royale_name,format["We've got a total of %1 players, good luck everyone!",royale_total_contenders]]];
+		RemoteMessage = ["dynamic_text",[royale_name,format["We've got a total of %1 players",royale_total_contenders]]];
+		publicVariable "RemoteMessage";
+
+		sleep 15;
+
+		RemoteMessage = ["dynamic_text",[royale_name,format["No leaving or coming back! There can be only one winner."]]];
+		publicVariable "RemoteMessage";
+
+		sleep 15;
+
+		RemoteMessage = ["dynamic_text",[royale_name,format["Good luck everyone! Let the games begin.",royale_total_contenders]]];
 		publicVariable "RemoteMessage";
 
 		[] spawn royale_alive_check;
 		[] spawn royale_remove_unwanted;
 		[] spawn royale_timer;
-
-		sleep 15;
-
-		RemoteMessage = ["dynamic_text",["Remember the rules",format["No leaving or coming back! There can be only one winner.",royale_total_contenders]]];
-		publicVariable "RemoteMessage";
 
 	};
 
