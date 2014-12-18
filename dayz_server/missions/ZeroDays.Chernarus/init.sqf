@@ -1703,6 +1703,13 @@ AllowedVehiclesList = [
 	};
 } count missionObjects;
 
+missionObjects = missionObjects;
+
+publicVariable "allMarkers";
+publicVariable "missionObjects";
+
+_objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
+
 for "_i" from 1 to _dynamic_military do {
 	private["_pos"];
 
@@ -1728,23 +1735,12 @@ for "_i" from 1 to _dynamic_military do {
 };
 
 {
-	_object = (_x select 0) createVehicleLocal[0,0,0];
+	_object = (_x select 0) createVehicle [0,0,0];
 	_object setDir (_x select 2);
 	_object setPos (_x select 1);
 	_object allowDammage false;
 	_object enableSimulation false;
-	if(count _x > 3 && (_x select 3)) then {
-		_object setVehicleLock "LOCKED";
-	};
 } count _military;
-
-
-missionObjects = missionObjects + _military;
-
-publicVariable "allMarkers";
-publicVariable "missionObjects";
-
-_objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
 
 init_done = true;
 publicVariable "init_done";

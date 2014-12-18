@@ -164,7 +164,7 @@ spawn_epoch_object = {
 
 		} count epochObjects;
 
-		epochObjects = nil;
+		//epochObjects = nil;
 
 		diag_log format["[Epoch Objects] Initialized %2 Epoch buildables in %1s ",str(diag_tickTime - _t),_total];
 
@@ -189,7 +189,7 @@ spawn_epoch_object = {
 		} count missionObjects;
 
 		_object			= nil;
-		missionObjects	= nil;
+		//missionObjects	= nil;
 
 		diag_log format["[Mission Objects] Initialized %2 mission objects in %1s ",str(diag_tickTime - _t),_total];
 

@@ -40,8 +40,21 @@ if(!isDedicated) then {
 	
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
 
+	[] spawn {
+		sleep 20;
+		if(isNil "epochObjects" || isNil "missionObjects") then {
+			player enableSimulation false;
+			cutText["Did not retrieve objects from the server, moving you back to the lobby in 5 seconds. Please relog.","BLACK"];
+			PVDZE_log = [format["[Objects] Player %1 (%2) was kicked to the lobby because objects were not properly received.",(name player),(getPlayerUID player)]];
+			publicVariableServer "PVDZE_log";
+			uiSleep 5;
+			endMission "END1";
+		};
+	};
+
 	waitUntil {(!isNil "epochObjects" && !isNil "missionObjects")};
 		diag_log format["%1: Epoch buildables and map add-ons received",servertime];
+		sleep 5; // Hopefully reduce chance of EOL errors
 
 	call compile preprocessFileLineNumbers "init\objects.sqf";
 
