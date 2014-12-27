@@ -345,7 +345,7 @@ if(royale_vehicle == _player) then {
 			};
 		} count allDead;
 
-		diag_log format["[%1] Ended, winner %1 runners-up %2",royale_name,name (royale_contenders select 0),royale_death];
+		diag_log format["[%1] Ended, winner %2 runners-up %3",royale_name,name (royale_contenders select 0),royale_death];
 
 		royale_death = nil;
 
@@ -466,10 +466,10 @@ if(royale_vehicle == _player) then {
 		winner_loottime	= 600;					// How many seconds does the winner get to loot before being teleported to winner_location
 		royale_radius	= 680;					// Event radius
 		current_radius	= royale_radius;		// Event starting radius
-		royale_max_time	= 900;					// Max time Skalisty should take (in seconds)
+		royale_max_time	= 2700;					// Max time Skalisty should take (in seconds)
 		_num_weapons	= 20;					// Number of weapon crate spawns
 		_num_items		= 20;					// Number of item crate spawns
-		royale_death	= [];					// 
+		royale_death	= [];					// Keep score of who died when
 
 		for "_i" from 1 to _num_weapons do {
 			private["_crate_type","_pos","_crate"];

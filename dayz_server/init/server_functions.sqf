@@ -767,6 +767,28 @@ KK_fnc_positionToString = {
 	]
 };
 
+KK_fnc_inString = { 
+
+	private ["_needle","_haystack","_needleLen","_hay","_found"];
+
+	_needle		= [_this, 0, "", [""]] call BIS_fnc_param;
+	_haystack	= toArray ([_this, 1, "", [""]] call BIS_fnc_param);
+	_needleLen 	= count toArray _needle;
+	_hay		= +_haystack;
+	
+	_hay resize _needleLen;
+	_found = false;
+
+	for "_i" from _needleLen to count _haystack do { 
+		if (toString _hay == _needle) exitWith {_found = true};
+		_hay set [_needleLen, _haystack select _i];
+		_hay set [0, "x"];
+		_hay = _hay - ["x"] 
+	};
+
+	_found
+};
+
 "START_ROYALE" addPublicVariableEventHandler {
 	diag_log format["ROYAL EVENT: %1",_this];
 	[(_this select 1) select 0] execVM "\z\addons\dayz_server\royale\init.sqf";	

@@ -1,8 +1,9 @@
-private["_object","_dynamic_military","_clutter","_military"];
+private["_object","_dynamic_military","_clutter","_military","_serverobjects"];
 
 _dynamic_military = 1 + floor(random 4);
 _clutter = ["76n6ClamShell","BMP2_HQ_CDF_unfolded","BMP2_HQ_INS_unfolded","BRDM2_HQ_Gue_unfolded","BTR90_HQ_unfolded","CDF_WarfareBBarracks","CDF_WarfareBAircraftFactory","CDF_WarfareBArtilleryRadar","GUE_WarfareBMGNest_PK"];
 _military = [];
+_server_objects = [];
 
 allMarkers = [
 	["Trader City Stary",[6326.48,7809.48],"ellipse",100,"ColorBlack"],
@@ -1693,20 +1694,29 @@ AllowedVehiclesList = [
 ];
 
 {
-	_object = (_x select 0) createVehicleLocal[0,0,0];
-	_object setDir (_x select 2);
-	_object setPos (_x select 1);
-	_object allowDammage false;
-	_object enableSimulation false;
-	if(count _x > 3 && (_x select 3)) then {
-		_object setVehicleLock "LOCKED";
-	};
-} count missionObjects;
 
-missionObjects = missionObjects;
+	if(["Land_",(_x select 0)] call KK_fnc_inString) then {
+		missionObjects set[_forEachIndex,-1];
+		_serverobjects set[count _serverObjects,_x];
+	} else {
+		_object = (_x select 0) createVehicleLocal[0,0,0];
+		_object setDir (_x select 2);
+		_object setPos (_x select 1);
+		_object allowDammage false;
+		_object enableSimulation false;
+		if(count _x > 3 && (_x select 3)) then {
+			_object setVehicleLock "LOCKED";
+		};
+	};
+} forEach missionObjects;
+
+missionObjects = missionObjects - [-1];
+
+totalMissionObjects = count missionObjects;
 
 publicVariable "allMarkers";
 publicVariable "missionObjects";
+publicVariable "totalMissionObjects";
 
 _objcomp = [[8073.1211,3378.5618],642.56134,"BunkerMedium09"] call (compile (preprocessFileLineNumbers "ca\modules\dyno\data\scripts\objectmapper.sqf"));
 
@@ -1731,7 +1741,6 @@ for "_i" from 1 to _dynamic_military do {
 	_military set[count _military,[_clutter call BIS_fnc_selectrandom,[(_pos select 0) - (10 + random 10),(_pos select 1) + (10 + random 20),0],(random 360)]];
 
 	diag_log format["[Compound] Spawned a dynamic compound at %1 (%2)",(mapGridPosition _pos),_pos];
-
 };
 
 {
@@ -1740,7 +1749,7 @@ for "_i" from 1 to _dynamic_military do {
 	_object setPos (_x select 1);
 	_object allowDammage false;
 	_object enableSimulation false;
-} count _military;
+} count (_military + _serverobjects);
 
 init_done = true;
 publicVariable "init_done";

@@ -1,12 +1,10 @@
-if(!isDedicated) then {
-	startLoadingScreen ["","RscDisplayLoadCustom"];
-	cutText["","BLACK OUT"];
-	enableSaving [false,false];
-	player setVariable["BIS_noCoreConversations",true];
-	enableRadio true;
-	enableSentences false;
-	preload_done = false;
-};
+startLoadingScreen ["","RscDisplayLoadCustom"];
+cutText["","BLACK OUT"];
+enableSaving [false,false];
+player setVariable["BIS_noCoreConversations",true];
+enableRadio true;
+enableSentences false;
+preload_done = false;
 
 #include "config\config.sqf"
 
@@ -27,9 +25,10 @@ progressLoadingScreen 1.0;
 setToneMapping "filmic";
 
 if(isServer) then {
+	waitUntil{!isnil "bis_fnc_init"};
+	execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 	execVM "\z\addons\dayz_server\missions\ZeroDays.Chernarus\traders.sqf";
 	execVM "\z\addons\dayz_server\missions\ZeroDays.Chernarus\init.sqf";
-	execVM "\z\addons\dayz_server\system\custom\server_monitor.sqf";
 };
 
 if(!isDedicated) then {
@@ -41,22 +40,16 @@ if(!isDedicated) then {
 	dayz_loadScreenMsg = (localize "STR_AUTHENTICATING");
 
 	[] spawn {
-		sleep 20;
-		if(isNil "epochObjects" || isNil "missionObjects") then {
-			player enableSimulation false;
-			cutText["Did not retrieve objects from the server, moving you back to the lobby in 5 seconds. Please relog.","BLACK"];
-			PVDZE_log = [format["[Objects] Player %1 (%2) was kicked to the lobby because objects were not properly received.",(name player),(getPlayerUID player)]];
-			publicVariableServer "PVDZE_log";
-			uiSleep 5;
-			endMission "END1";
+		uiSleep 45;
+		if(!preload_done) then {
+			dayz_loadScreenMsg = "Loading is taking unusually long, consider relogging.. If the problem persist checkout dayzepoch.nl/#help for help.";
 		};
 	};
 
-	waitUntil {(!isNil "epochObjects" && !isNil "missionObjects")};
+	waitUntil {(!isNil "epochObjects" && !isNil "missionObjects" && !isNil "totalMissionObjects" && !isNil "totalEpochObjects")};
 		diag_log format["%1: Epoch buildables and map add-ons received",servertime];
-		sleep 5; // Hopefully reduce chance of EOL errors
 
-	call compile preprocessFileLineNumbers "init\objects.sqf";
+	execVM "init\objects.sqf";
 
 	waitUntil {(epochObjectsLoaded && missionObjectsLoaded)};
 		diag_log format["%1: Epoch buildables and mision objects loaded",servertime];

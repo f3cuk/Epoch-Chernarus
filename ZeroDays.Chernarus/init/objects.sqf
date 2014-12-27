@@ -125,7 +125,13 @@ spawn_epoch_object = {
 
 [] spawn {
 
-	waitUntil {!isNil "epochObjects" && !isNil "missionObjects"};
+	dayz_loadScreenMsg = "Initializing object spawn..";
+
+	waitUntil {sleep .2; (count epochObjects == totalEpochObjects) && (count missionObjects == totalmissionObjects)};
+
+	sleep 0.1;
+
+	dayz_loadScreenMsg = "Starting object spawn..";
 
 	spawnedIds		= [];
 	totalobjects	= count (epochObjects + missionObjects);
@@ -137,10 +143,10 @@ spawn_epoch_object = {
 
 		private["_t","_object","_total"];
 
-		_total			= 0;
-		_t				= diag_tickTime;
+		_total	= 0;
+		_t		= diag_tickTime;
 
-		diag_log format["[Epoch Objects] Spawning %1 industructable Epoch buildables",_total];
+		diag_log format["[Epoch Objects] Spawning %1 industructable Epoch buildables",totalEpochObjects];
 
 		{
 
@@ -160,11 +166,11 @@ spawn_epoch_object = {
 				
 			};
 
-			dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,totalobjects];
+			dayz_loadScreenMsg = format["Loading objects (%1/%2)",loadedobjects,_total];
 
 		} count epochObjects;
 
-		//epochObjects = nil;
+		epochObjects = nil;
 
 		diag_log format["[Epoch Objects] Initialized %2 Epoch buildables in %1s ",str(diag_tickTime - _t),_total];
 
@@ -174,12 +180,11 @@ spawn_epoch_object = {
 
 	[] spawn {
 
-		private["_total","_object","_t"];
+		private["_object","_t"];
 
-		_total	= count missionObjects;
-		_t		= diag_tickTime;
+		_t = diag_tickTime;
 
-		diag_log format["[Mission Objects] Spawning %1 mission objects",_total];
+		diag_log format["[Mission Objects] Spawning %1 mission objects",totalmissionObjects];
 
 		{
 			loadedobjects = loadedobjects + 1;
@@ -189,9 +194,9 @@ spawn_epoch_object = {
 		} count missionObjects;
 
 		_object			= nil;
-		//missionObjects	= nil;
+		missionObjects	= nil;
 
-		diag_log format["[Mission Objects] Initialized %2 mission objects in %1s ",str(diag_tickTime - _t),_total];
+		diag_log format["[Mission Objects] Initialized %2 mission objects in %1s ",str(diag_tickTime - _t),totalmissionObjects];
 
 		missionObjectsLoaded = true;
 

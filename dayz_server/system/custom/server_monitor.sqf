@@ -245,6 +245,9 @@ if(isServer && isNil "sm_done") then {
 
 	diag_log format["HIVE: Objects spawned on the server, sending %1 objects to clients",(count epochObjects)];
 
+	totalepochObjects = count epochObjects;
+
+	publicVariable "totalepochObjects";
 	publicVariable "epochObjects";
 
 	epochObjects = nil;
